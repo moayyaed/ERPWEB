@@ -273,11 +273,10 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
         }
 
-        public string validar(cp_orden_pago_Info info)
+        public bool validar(cp_orden_pago_Info info, ref string msg)
         {
             try
             {
-                string mensaje = "";
                 info.detalle = new List<cp_orden_pago_det_Info> {
                     new cp_orden_pago_det_Info
                     {
@@ -292,32 +291,53 @@ namespace Core.Erp.Bus.CuentasPorPagar
                     }
                 };
                 if (info.detalle == null)
-                    mensaje = "No existe detalle de pago";
+                {
+                    msg = "No existe detalle de pago";
+                    return false;
+                }
                 if (info.detalle.Count() == 0)
-                    mensaje = "No existe detalle de pago";
-
+                {
+                    msg = "No existe detalle de pago";
+                    return false;
+                }
                 if (info.IdTipo_op != "FACT_PROVEE")
                 {
                     if (info.info_comprobante.lst_ct_cbtecble_det == null)
-                        mensaje = "No existe diario contable";
-
+                    {
+                        msg = "No existe diario contable";
+                        return false;
+                    }
                     if (info.info_comprobante.lst_ct_cbtecble_det.Count() == 0)
-                        mensaje = "No existe diario contable";
+                    {
+                        msg = "No existe diario contable";
+                        return false;
+                    }
+                    
 
                     if (Math.Round(info.info_comprobante.lst_ct_cbtecble_det.Sum(v => v.dc_Valor), 2) != 0)
-                        mensaje = "El diario contable esta descuadrado";
+                    {
+                        msg = "El diario contable esta descuadrado";
+                        return false;
+                    }
 
                     foreach (var item in info.info_comprobante.lst_ct_cbtecble_det)
                     {
                         if (item.IdCtaCble == null | item.IdCtaCble == "")
-                            mensaje = "Falta cuenta contable";
+                        {
+                            msg = "Falta cuenta contable";
+                            return false;
+                        }
                     }
                 }
                 
                 if (info.IdEstadoAprobacion == null)
-                    mensaje = "Falta parametrizar el estado de aprobación en la OP";              
+                {
+                    msg = "Falta parametrizar el estado de aprobación en la OP";
+                    return false;
+                }
+                
 
-                return mensaje;
+                return true;
             }
             catch (Exception)
             {

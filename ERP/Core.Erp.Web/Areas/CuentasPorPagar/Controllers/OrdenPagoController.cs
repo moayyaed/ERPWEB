@@ -222,19 +222,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             model.info_comprobante.IdTipoCbte =(int) info_param_op.IdTipoCbte_OP;
             model.IdEstadoAprobacion = info_param_op.IdEstadoAprobacion;
             model.IdUsuario = SessionFixed.IdUsuario;
-            string mensaje = bus_orden_pago.validar(model);
-
-            if (!validar(model, ref mensaje))
+            if(!bus_orden_pago.validar(model, ref mensaje))
             {
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-            if (mensaje != "")
+
+            if (!validar(model, ref mensaje))
             {
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
-
                 return View(model);
             }
             else
@@ -321,8 +319,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             info_param_op = bus_orden_pago_tipo.get_info(model.IdEmpresa,model.IdTipo_op);
             model.info_comprobante.IdTipoCbte = (int)info_param_op.IdTipoCbte_OP;
             model.IdEstadoAprobacion = info_param_op.IdEstadoAprobacion;
-            mensaje = bus_orden_pago.validar(model);
-            if (mensaje != "")
+            if (!bus_orden_pago.validar(model, ref mensaje))
             {
                 cargar_combos(model.IdEmpresa);
                 ViewBag.mensaje = mensaje;
