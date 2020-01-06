@@ -22,7 +22,8 @@ namespace Core.Erp.Data.Contabilidad
                         IdTipoCbte_SaldoInicial = Entity.IdTipoCbte_SaldoInicial,
                         P_Se_Muestra_Todas_las_ctas_en_combos = Entity.P_Se_Muestra_Todas_las_ctas_en_combos,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
-                        EsCentroCostoObligatorio = Entity.EsCentroCostoObligatorio
+                        EsCentroCostoObligatorio = Entity.EsCentroCostoObligatorio,
+                        AnularConFechaDeDocumento = Entity.AnularConFechaDeDocumento ?? false
                     };
                 }
                 return info;
@@ -50,7 +51,8 @@ namespace Core.Erp.Data.Contabilidad
                             IdTipoCbte_AsientoCierre_Anual = info.IdTipoCbte_AsientoCierre_Anual,
                             P_Se_Muestra_Todas_las_ctas_en_combos = info.P_Se_Muestra_Todas_las_ctas_en_combos,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
-                            EsCentroCostoObligatorio = info.EsCentroCostoObligatorio
+                            EsCentroCostoObligatorio = info.EsCentroCostoObligatorio,
+                            AnularConFechaDeDocumento = info.AnularConFechaDeDocumento
                         };
                     Context.ct_parametro.Add(Entity);
                     }
@@ -61,6 +63,7 @@ namespace Core.Erp.Data.Contabilidad
                         Entity.P_Se_Muestra_Todas_las_ctas_en_combos = info.P_Se_Muestra_Todas_las_ctas_en_combos;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
                         Entity.EsCentroCostoObligatorio = info.EsCentroCostoObligatorio;
+                        Entity.AnularConFechaDeDocumento = info.AnularConFechaDeDocumento;
                     }
                     Context.SaveChanges();
                 }

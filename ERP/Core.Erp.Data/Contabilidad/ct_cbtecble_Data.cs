@@ -265,6 +265,10 @@ namespace Core.Erp.Data.Contabilidad
                     ct_cbtecble Entity = Context.ct_cbtecble.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte && q.IdCbteCble == info.IdCbteCble);
                     if (Entity == null) return false;
 
+                    var parametro = Context.ct_parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
+                    if (parametro == null)
+                        return false;
+
                     //Si ya esta anulado no volverlo a anular
                     if (Entity.cb_Estado == "I")
                         return true;
@@ -281,11 +285,11 @@ namespace Core.Erp.Data.Contabilidad
                         IdCbteCble = get_id(Entity.IdEmpresa, e_tipo.IdTipoCbte_Anul),
                         IdSucursal = Entity.IdSucursal,
                         cb_Estado = Entity.cb_Estado = "A",
-                        cb_Fecha = DateTime.Now.Date,
+                        cb_Fecha = (parametro.AnularConFechaDeDocumento ?? false) ? Entity.cb_Fecha : DateTime.Now.Date,
                         cb_Observacion = "**REVERSO DE DIARIO tipo: "+ Entity.IdTipoCbte.ToString()+ " #cbte: "+ Entity.IdCbteCble.ToString()+"** "+ Entity.cb_Observacion,
                         cb_Valor = Entity.cb_Valor,
                         CodCbteCble = "ANU"+ Entity.CodCbteCble,
-                        IdPeriodo = Entity.IdPeriodo = Convert.ToInt32(DateTime.Now.ToString("yyyyMM")),
+                        IdPeriodo = Entity.IdPeriodo = Convert.ToInt32(((parametro.AnularConFechaDeDocumento ?? false) ? Entity.cb_Fecha : DateTime.Now).ToString("yyyyMM")),
 
                         IdUsuario = info.IdUsuarioAnu,
                         cb_FechaTransac = DateTime.Now
