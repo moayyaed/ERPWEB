@@ -818,6 +818,12 @@
     <Compile Include="Reportes\Contabilidad\CONTA_012_Rpt.Designer.cs">
       <DependentUpon>CONTA_012_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Rpt.Designer.cs">
+      <DependentUpon>CONTA_013_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10436,6 +10442,7 @@
     <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\_CmbCuenta_TipoGastoPadre.cshtml" />
     <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Modificar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Anular.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_013.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10554,6 +10561,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10703,6 +10711,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_012_Rpt.resx">
       <DependentUpon>CONTA_012_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_013_Rpt.resx">
+      <DependentUpon>CONTA_013_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.resx">
       <DependentUpon>CXC_001_diario_Rpt.cs</DependentUpon>

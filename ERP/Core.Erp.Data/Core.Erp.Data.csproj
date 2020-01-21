@@ -1835,6 +1835,7 @@
     <Compile Include="Reportes\Contabilidad\CONTA_009_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_008_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_007_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_011_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_012_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
