@@ -1565,6 +1565,9 @@
     <Compile Include="Reportes\Base\VWCONTA_010.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWCONTA_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\VWCXC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>

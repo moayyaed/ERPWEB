@@ -914,6 +914,41 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCONTA_010' no tiene d
           <Property Name="Haber" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCONTA_013' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWCONTA_013">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="secuencia" />
+            <PropertyRef Name="IdCtaCble" />
+            <PropertyRef Name="pc_Cuenta" />
+            <PropertyRef Name="dc_Valor" />
+            <PropertyRef Name="cb_Fecha" />
+            <PropertyRef Name="tc_TipoCbte" />
+            <PropertyRef Name="TituloGrupo" />
+            <PropertyRef Name="TituloTotalGrupo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencia" Type="int" Nullable="false" />
+          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="dc_Valor" Type="float" Nullable="false" />
+          <Property Name="cb_Observacion" Type="varchar(max)" />
+          <Property Name="IdPunto_cargo_grupo" Type="int" />
+          <Property Name="IdPunto_cargo" Type="int" />
+          <Property Name="nom_punto_cargo" Type="varchar(max)" />
+          <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" />
+          <Property Name="cb_Fecha" Type="datetime" Nullable="false" />
+          <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TituloGrupo" Type="varchar" MaxLength="523" Nullable="false" />
+          <Property Name="TituloTotalGrupo" Type="varchar" MaxLength="506" Nullable="false" />
+          <Property Name="nom_punto_cargo_grupoFiltro" Type="varchar(max)" />
+          <Property Name="TotalFinal" Type="varchar(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXC_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWCXC_001">
           <Key>
@@ -1508,7 +1543,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXP_003_cancelaciones
           <Property Name="IdEmpresa_cxp" Type="int" />
           <Property Name="IdTipoCbte_cxp" Type="int" />
           <Property Name="IdCbteCble_cxp" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Referencia" Type="varchar" MaxLength="25" />
+          <Property Name="Referencia" Type="varchar" MaxLength="55" />
           <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="MontoAplicado" Type="float" Nullable="false" />
           <Property Name="IdEmpresa_pago" Type="int" Nullable="false" />
@@ -5925,6 +5960,28 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
     [VWCONTA_010].[Haber] AS [Haber]
     FROM [web].[VWCONTA_010] AS [VWCONTA_010]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VWCONTA_013" EntityType="Self.VWCONTA_013" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWCONTA_013].[IdEmpresa] AS [IdEmpresa], 
+    [VWCONTA_013].[IdTipoCbte] AS [IdTipoCbte], 
+    [VWCONTA_013].[IdCbteCble] AS [IdCbteCble], 
+    [VWCONTA_013].[secuencia] AS [secuencia], 
+    [VWCONTA_013].[IdCtaCble] AS [IdCtaCble], 
+    [VWCONTA_013].[pc_Cuenta] AS [pc_Cuenta], 
+    [VWCONTA_013].[dc_Valor] AS [dc_Valor], 
+    [VWCONTA_013].[cb_Observacion] AS [cb_Observacion], 
+    [VWCONTA_013].[IdPunto_cargo_grupo] AS [IdPunto_cargo_grupo], 
+    [VWCONTA_013].[IdPunto_cargo] AS [IdPunto_cargo], 
+    [VWCONTA_013].[nom_punto_cargo] AS [nom_punto_cargo], 
+    [VWCONTA_013].[nom_punto_cargo_grupo] AS [nom_punto_cargo_grupo], 
+    [VWCONTA_013].[cb_Fecha] AS [cb_Fecha], 
+    [VWCONTA_013].[tc_TipoCbte] AS [tc_TipoCbte], 
+    [VWCONTA_013].[TituloGrupo] AS [TituloGrupo], 
+    [VWCONTA_013].[TituloTotalGrupo] AS [TituloTotalGrupo], 
+    [VWCONTA_013].[nom_punto_cargo_grupoFiltro] AS [nom_punto_cargo_grupoFiltro], 
+    [VWCONTA_013].[TotalFinal] AS [TotalFinal]
+    FROM [web].[VWCONTA_013] AS [VWCONTA_013]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VWCXC_001" EntityType="Self.VWCXC_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [VWCXC_001].[IdEmpresa] AS [IdEmpresa], 
@@ -9111,7 +9168,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Name="IdEmpresa_cxp" Type="Int32" />
           <Property Name="IdTipoCbte_cxp" Type="Int32" />
           <Property Name="IdCbteCble_cxp" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Referencia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="55" FixedLength="false" Unicode="false" />
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MontoAplicado" Type="Double" Nullable="false" />
           <Property Name="IdEmpresa_pago" Type="Int32" Nullable="false" />
@@ -12246,6 +12303,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
             <Parameter Name="IdClaseProveedorFin" Mode="In" Type="Int32" />
             <Parameter Name="FiltrarPorContable" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="VWCONTA_013" EntityType="Model_reportes.VWCONTA_013" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14832,6 +14890,39 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="Int32" Name="DiasVcto" Nullable="true" />
           <Property Type="DateTime" Name="co_FechaContabilizacion" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="VWCONTA_013">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte" />
+            <PropertyRef Name="IdCbteCble" />
+            <PropertyRef Name="secuencia" />
+            <PropertyRef Name="IdCtaCble" />
+            <PropertyRef Name="pc_Cuenta" />
+            <PropertyRef Name="dc_Valor" />
+            <PropertyRef Name="cb_Fecha" />
+            <PropertyRef Name="tc_TipoCbte" />
+            <PropertyRef Name="TituloGrupo" />
+            <PropertyRef Name="TituloTotalGrupo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dc_Valor" Type="Double" Nullable="false" />
+          <Property Name="cb_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
+          <Property Name="IdPunto_cargo" Type="Int32" />
+          <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TituloGrupo" Type="String" Nullable="false" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="TituloTotalGrupo" Type="String" Nullable="false" MaxLength="506" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupoFiltro" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalFinal" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19387,6 +19478,30 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWCONTA_013">
+            <EntityTypeMapping TypeName="Model_reportes.VWCONTA_013">
+              <MappingFragment StoreEntitySet="VWCONTA_013">
+                <ScalarProperty Name="TotalFinal" ColumnName="TotalFinal" />
+                <ScalarProperty Name="nom_punto_cargo_grupoFiltro" ColumnName="nom_punto_cargo_grupoFiltro" />
+                <ScalarProperty Name="TituloTotalGrupo" ColumnName="TituloTotalGrupo" />
+                <ScalarProperty Name="TituloGrupo" ColumnName="TituloGrupo" />
+                <ScalarProperty Name="tc_TipoCbte" ColumnName="tc_TipoCbte" />
+                <ScalarProperty Name="cb_Fecha" ColumnName="cb_Fecha" />
+                <ScalarProperty Name="nom_punto_cargo_grupo" ColumnName="nom_punto_cargo_grupo" />
+                <ScalarProperty Name="nom_punto_cargo" ColumnName="nom_punto_cargo" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="cb_Observacion" ColumnName="cb_Observacion" />
+                <ScalarProperty Name="dc_Valor" ColumnName="dc_Valor" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
