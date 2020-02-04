@@ -224,7 +224,7 @@ namespace Core.Erp.Data.Contabilidad
                         IdCtaCble = Entity.IdCtaCble,
                         pc_Cuenta = Entity.pc_Cuenta,
                         IdCtaCblePadre = Entity.IdCtaCblePadre,
-                        pc_Cuenta_padre = Entity.ct_plancta2.pc_Cuenta,
+                        pc_Cuenta_padre = Entity.ct_plancta2 == null ? null : Entity.ct_plancta2.pc_Cuenta,
                         pc_Naturaleza = Entity.pc_Naturaleza,
                         IdNivelCta = Entity.IdNivelCta,
                         IdGrupoCble = Entity.IdGrupoCble,
