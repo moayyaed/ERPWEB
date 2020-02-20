@@ -841,28 +841,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             Total = Math.Round(Total, 2, MidpointRounding.AwayFromZero);
             #region Armar diario sin inventario
 
-            #region Proveedor
-            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
-            {
-                IdCtaCble = info_proveedor.IdCtaCble_CXP,
-                dc_Valor_haber = Math.Round(Total, 2, MidpointRounding.AwayFromZero),
-                dc_Valor = Math.Round(Total * -1, 2, MidpointRounding.AwayFromZero),
-                dc_Observacion = observacion,
-            }, IdTransaccionSession);
-            #endregion
-
-            #region I.V.A.
-            if (IVA > 0)
-            {
-                list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
-                {
-                    IdCtaCble = info_parametro.pa_ctacble_iva,
-                    dc_Valor_debe = Math.Round(IVA, 2),
-                    dc_Valor = Math.Round(IVA, 2),
-                    dc_Observacion = observacion,
-                }, IdTransaccionSession);                
-            }
-            #endregion
+            
 
             #region Subtotal
             if (TipoDiario == "NA")
@@ -923,6 +902,29 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     cont++;
                 }
             }
+            #endregion
+
+            #region I.V.A.
+            if (IVA > 0)
+            {
+                list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
+                {
+                    IdCtaCble = info_parametro.pa_ctacble_iva,
+                    dc_Valor_debe = Math.Round(IVA, 2),
+                    dc_Valor = Math.Round(IVA, 2),
+                    dc_Observacion = observacion,
+                }, IdTransaccionSession);
+            }
+            #endregion
+
+            #region Proveedor
+            list_ct_cbtecble_det.AddRow(new ct_cbtecble_det_Info
+            {
+                IdCtaCble = info_proveedor.IdCtaCble_CXP,
+                dc_Valor_haber = Math.Round(Total, 2, MidpointRounding.AwayFromZero),
+                dc_Valor = Math.Round(Total * -1, 2, MidpointRounding.AwayFromZero),
+                dc_Observacion = observacion,
+            }, IdTransaccionSession);
             #endregion
 
             #endregion
