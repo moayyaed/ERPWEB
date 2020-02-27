@@ -209,6 +209,7 @@ namespace Core.Erp.Info.Helps
         }
 
         public int[] IntArray { get; set; }
+        public object QuebrarPagina { get; set; }
     }
 
     public class cl_filtros_facturacion_Info

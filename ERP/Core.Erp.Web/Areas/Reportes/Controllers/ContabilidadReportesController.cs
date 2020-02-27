@@ -355,6 +355,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdNivel = 6,
                 balance = "ER",
+                QuebrarPagina = true,
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
 
@@ -373,6 +374,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_balance.Value = model.balance;
             report.p_IdSucursal.Value = model.IdSucursal;
             report.p_MostrarSaldoAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.p_QuebrarPagina.Value = model.QuebrarPagina;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
@@ -400,6 +402,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
                 report.p_balance.Value = model.balance;
                 report.p_IdSucursal.Value = model.IdSucursal;
+                report.p_QuebrarPagina.Value = model.QuebrarPagina;
                 report.p_MostrarSaldoAcumulado.Value = model.MostrarSaldoAcumulado;
                 report.usuario = SessionFixed.IdUsuario;
                 report.empresa = SessionFixed.NomEmpresa;
@@ -419,6 +422,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
                 report.p_balance.Value = model.balance;
                 report.p_IdSucursal.Value = model.IdSucursal;
+                report.p_QuebrarPagina.Value = model.QuebrarPagina;
                 report.p_MostrarSaldoAcumulado.Value = model.MostrarSaldoAcumulado;
                 report.usuario = SessionFixed.IdUsuario;
                 report.empresa = SessionFixed.NomEmpresa;

@@ -2,6 +2,7 @@
 using Core.Erp.Bus.Reportes.Contabilidad;
 using Core.Erp.Info.Reportes.Contabilidad;
 using System;
+using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             bool MostrarSaldoAcumulado = string.IsNullOrEmpty(p_MostrarSaldoAcumulado.Value.ToString()) ? false : Convert.ToBoolean(p_MostrarSaldoAcumulado.Value);
             CONTA_003_balances_Bus bus_rpt = new CONTA_003_balances_Bus();
             string Sucursal = "";
+            bool QuebrarPagina = string.IsNullOrEmpty(p_QuebrarPagina.Value.ToString()) ? false : Convert.ToBoolean(p_QuebrarPagina.Value);
 
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
             Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
@@ -56,6 +58,11 @@ namespace Core.Erp.Web.Reportes.Contabilidad
                     ImageConverter obj = new ImageConverter();
                     lbl_imagen.Image = (Image)obj.ConvertFrom(emp.em_logo);
                 }
+            }
+
+            if (QuebrarPagina)
+            {
+                GroupHeaderGrupoCuenta.PageBreak = PageBreak.BeforeBand;
             }
         }
     }

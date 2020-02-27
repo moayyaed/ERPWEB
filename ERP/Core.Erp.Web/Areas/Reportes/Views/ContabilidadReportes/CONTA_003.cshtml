@@ -188,6 +188,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="checkbox">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.QuebrarPagina,
+                         settings =>
+                         {
+                             settings.Name = "QuebrarPagina";
+                             settings.Checked = false;
+                             settings.Text = "Quebrar grupos por página";
+                         }
+                     ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->
@@ -215,7 +229,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+            [@Core.Erp.Web.Helps.SessionFixed.IdEmpresa] @Core.Erp.Web.Helps.SessionFixed.NomEmpresa
         </div>
         <!-- /.box-footer-->
     </div>
