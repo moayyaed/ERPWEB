@@ -384,6 +384,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_006_diario_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_006_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_007_Info.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_019_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_008_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_009_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_009_resumen_Info.cs" />

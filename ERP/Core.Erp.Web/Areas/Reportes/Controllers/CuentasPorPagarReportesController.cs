@@ -749,5 +749,67 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult CXP_019()
+        {
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IdProveedor = 0,
+                mostrar_agrupado = false
+            };
+            cargar_combos(true);
+            CXP_019_Rpt report = new CXP_019_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_019");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_mostrarGrupo.Value = model.mostrar_agrupado;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_fecha.Value = model.fecha_fin;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
+            report.p_no_mostrar_en_conciliacion.Value = model.no_mostrar_en_conciliacion;
+            report.p_no_mostrar_saldo_0.Value = model.no_mostrar_saldo_en_0;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CXP_019(cl_filtros_Info model)
+        {
+            CXP_019_Rpt report = new CXP_019_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_019");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_mostrarGrupo.Value = model.mostrar_agrupado;
+            report.p_fecha.Value = model.fecha_fin;
+            report.p_IdProveedor.Value = model.IdProveedor;
+            report.p_IdClaseProveedor.Value = model.IdClaseProveedor;
+            report.p_no_mostrar_en_conciliacion.Value = model.no_mostrar_en_conciliacion;
+            report.p_no_mostrar_saldo_0.Value = model.no_mostrar_saldo_en_0;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            cargar_combos(true);
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
     }
 }

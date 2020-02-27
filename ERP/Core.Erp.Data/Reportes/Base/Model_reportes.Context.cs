@@ -21,10 +21,7 @@ namespace Core.Erp.Data.Reportes.Base
             : base("name=Entities_reportes")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -2099,6 +2096,43 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("FiltrarPorContable", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_018_Result>("SPCXP_018", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idProveedorIniParameter, idProveedorFinParameter, fechaCorteParameter, mostrarSaldo0Parameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, filtrarPorContableParameter);
+        }
+    
+        public virtual ObjectResult<SPCXP_019_Result> SPCXP_019(Nullable<int> idempresa, Nullable<System.DateTime> fecha, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<int> idClaseProveedorIni, Nullable<int> idClaseProveedorFin, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFIn)
+        {
+            var idempresaParameter = idempresa.HasValue ?
+                new ObjectParameter("idempresa", idempresa) :
+                new ObjectParameter("idempresa", typeof(int));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            var idClaseProveedorIniParameter = idClaseProveedorIni.HasValue ?
+                new ObjectParameter("IdClaseProveedorIni", idClaseProveedorIni) :
+                new ObjectParameter("IdClaseProveedorIni", typeof(int));
+    
+            var idClaseProveedorFinParameter = idClaseProveedorFin.HasValue ?
+                new ObjectParameter("IdClaseProveedorFin", idClaseProveedorFin) :
+                new ObjectParameter("IdClaseProveedorFin", typeof(int));
+    
+            var idProveedorIniParameter = idProveedorIni.HasValue ?
+                new ObjectParameter("idProveedorIni", idProveedorIni) :
+                new ObjectParameter("idProveedorIni", typeof(decimal));
+    
+            var idProveedorFInParameter = idProveedorFIn.HasValue ?
+                new ObjectParameter("idProveedorFIn", idProveedorFIn) :
+                new ObjectParameter("idProveedorFIn", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_019_Result>("SPCXP_019", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, idProveedorIniParameter, idProveedorFInParameter);
         }
     }
 }
