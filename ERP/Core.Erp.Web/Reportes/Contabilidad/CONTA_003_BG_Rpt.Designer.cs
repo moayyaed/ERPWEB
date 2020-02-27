@@ -80,7 +80,7 @@
             this.xrTableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.GroupHeaderGrupoCuenta = new DevExpress.XtraReports.UI.GroupHeaderBand();
             this.xrTable5 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow9 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell31 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -112,6 +112,7 @@
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.p_IdSucursal = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_MostrarSaldoAcumulado = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_QuebrarPagina = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -628,15 +629,17 @@
             this.xrTableCell17.TextFormatString = "{0:n2}";
             this.xrTableCell17.Weight = 0.9999987589517203D;
             // 
-            // GroupHeader1
+            // GroupHeaderGrupoCuenta
             // 
-            this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.GroupHeaderGrupoCuenta.BackColor = System.Drawing.SystemColors.Window;
+            this.GroupHeaderGrupoCuenta.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable5});
-            this.GroupHeader1.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            this.GroupHeaderGrupoCuenta.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("gc_Orden", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
             new DevExpress.XtraReports.UI.GroupField("IdGrupoCble", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
-            this.GroupHeader1.HeightF = 20F;
-            this.GroupHeader1.Name = "GroupHeader1";
+            this.GroupHeaderGrupoCuenta.HeightF = 20F;
+            this.GroupHeaderGrupoCuenta.Name = "GroupHeaderGrupoCuenta";
+            this.GroupHeaderGrupoCuenta.StylePriority.UseBackColor = false;
             // 
             // xrTable5
             // 
@@ -909,6 +912,11 @@
             this.p_MostrarSaldoAcumulado.Name = "p_MostrarSaldoAcumulado";
             this.p_MostrarSaldoAcumulado.Visible = false;
             // 
+            // p_QuebrarPagina
+            // 
+            this.p_QuebrarPagina.Name = "p_QuebrarPagina";
+            this.p_QuebrarPagina.Visible = false;
+            // 
             // CONTA_003_BG_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -917,7 +925,7 @@
             this.BottomMargin,
             this.PageHeader,
             this.ReportFooter,
-            this.GroupHeader1,
+            this.GroupHeaderGrupoCuenta,
             this.GroupFooter1,
             this.PageFooter});
             this.CalculatedFields.AddRange(new DevExpress.XtraReports.UI.CalculatedField[] {
@@ -941,8 +949,9 @@
             this.p_mostrarSaldo0,
             this.p_balance,
             this.p_IdSucursal,
-            this.p_MostrarSaldoAcumulado});
-            this.Version = "17.2";
+            this.p_MostrarSaldoAcumulado,
+            this.p_QuebrarPagina});
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CONTA_003_BG_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -966,7 +975,7 @@
         private DevExpress.XtraReports.UI.XRTable xrTable2;
         private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
         private DevExpress.XtraReports.UI.ReportFooterBand ReportFooter;
-        private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader1;
+        private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeaderGrupoCuenta;
         private DevExpress.XtraReports.UI.XRTable xrTable5;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow9;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell31;
@@ -1039,5 +1048,6 @@
         private DevExpress.XtraReports.UI.XRTableCell lblTelefono;
         private DevExpress.XtraReports.UI.XRLabel xrLabel2;
         private DevExpress.XtraReports.UI.XRLabel xrLabel1;
+        public DevExpress.XtraReports.Parameters.Parameter p_QuebrarPagina;
     }
 }
