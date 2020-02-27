@@ -18,7 +18,6 @@ namespace Core.Erp.Data.Reportes.Base
         public decimal IdProveedor { get; set; }
         public string nom_proveedor { get; set; }
         public Nullable<double> Valor_a_pagar { get; set; }
-        public Nullable<double> Valor_a_pagar1 { get; set; }
         public Nullable<double> MontoAplicado { get; set; }
         public Nullable<double> Saldo { get; set; }
         public string Ruc_Proveedor { get; set; }

@@ -14949,7 +14949,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
           <Property Type="String" Name="nom_proveedor" Nullable="false" MaxLength="200" />
           <Property Type="Double" Name="Valor_a_pagar" Nullable="true" />
-          <Property Type="Double" Name="Valor_a_pagar1" Nullable="true" />
           <Property Type="Double" Name="MontoAplicado" Nullable="true" />
           <Property Type="Double" Name="Saldo" Nullable="true" />
           <Property Type="String" Name="Ruc_Proveedor" Nullable="false" MaxLength="50" />
@@ -19552,7 +19551,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
                 <ScalarProperty Name="nom_proveedor" ColumnName="nom_proveedor" />
                 <ScalarProperty Name="Valor_a_pagar" ColumnName="Valor_a_pagar" />
-                <ScalarProperty Name="Valor_a_pagar1" ColumnName="Valor_a_pagar1" />
                 <ScalarProperty Name="MontoAplicado" ColumnName="MontoAplicado" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
                 <ScalarProperty Name="Ruc_Proveedor" ColumnName="Ruc_Proveedor" />
