@@ -138,7 +138,7 @@ namespace Core.Erp.Data.General
                         em_nombre = info.em_nombre,
                         RazonSocial = info.RazonSocial,
                         NombreComercial = info.NombreComercial,
-                        ContribuyenteEspecial = info.ContribuyenteEspecial,
+                        ContribuyenteEspecial = info.ContribuyenteEspecial ?? "",
                         em_ruc = info.em_ruc,
                         em_gerente = info.em_gerente,
                         em_contador = info.em_contador,
@@ -177,14 +177,17 @@ namespace Core.Erp.Data.General
                     Entity.em_nombre = info.em_nombre;
                     Entity.RazonSocial = info.RazonSocial;
                     Entity.NombreComercial = info.NombreComercial;
-                    Entity.ContribuyenteEspecial = info.ContribuyenteEspecial;
+                    Entity.ContribuyenteEspecial = info.ContribuyenteEspecial ?? "";
                     Entity.em_ruc = info.em_ruc;
                     Entity.em_gerente = info.em_gerente;
                     Entity.em_contador = info.em_contador;
                     Entity.em_rucContador = info.em_rucContador;
                     Entity.em_telefonos = info.em_telefonos;
                     Entity.em_direccion = info.em_direccion;
-                    Entity.em_logo = info.em_logo;
+                    if (info.em_logo != null)
+                    {
+                        Entity.em_logo = info.em_logo;
+                    }
                     Entity.em_fechaInicioContable = info.em_fechaInicioContable;
                     Entity.em_fechaInicioActividad = Convert.ToDateTime(info.em_fechaInicioActividad);
                     Entity.cod_entidad_dinardap = info.cod_entidad_dinardap;

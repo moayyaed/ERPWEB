@@ -133,14 +133,15 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
-        public bool validar_existe_IdPresentacion(string IdPresentacion)
+        public bool validar_existe_IdPresentacion(int IdEmpresa, string IdPresentacion)
         {
             try
             {
                 using (Entities_inventario Context = new Entities_inventario())
                 {
                     var lst = from q in Context.in_presentacion
-                              where IdPresentacion == q.IdPresentacion
+                              where IdEmpresa == q.IdEmpresa
+                              && IdPresentacion == q.IdPresentacion                              
                               select q;
 
                     if (lst.Count() > 0)

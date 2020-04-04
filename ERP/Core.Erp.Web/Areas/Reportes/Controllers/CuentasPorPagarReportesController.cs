@@ -811,5 +811,24 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
             return View(model);
         }
+
+        public ActionResult CXP_020(int IdTipoCbte_Ogiro = 0, decimal IdCbteCble_Ogiro = 0)
+        {
+            CXP_020_Rpt model = new CXP_020_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "CXP_020");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.p_IdTipoCbte.Value = IdTipoCbte_Ogiro;
+            model.p_IdCbteCble.Value = IdCbteCble_Ogiro;
+            model.RequestParameters = false;
+            return View(model);
+        }
     }
 }

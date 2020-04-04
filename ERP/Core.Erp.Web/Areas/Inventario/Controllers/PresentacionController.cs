@@ -41,7 +41,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Nuevo(in_presentacion_Info model)
         {
-            if (bus_presentacion.validar_existe_IdPresentacion(model.IdPresentacion))
+            if (bus_presentacion.validar_existe_IdPresentacion(Convert.ToInt32(model.IdEmpresa), model.IdPresentacion))
             {
                 ViewBag.mensaje = "El código ya se encuentra registrado";
                 return View(model);

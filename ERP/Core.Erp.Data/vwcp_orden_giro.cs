@@ -63,5 +63,7 @@ namespace Core.Erp.Data
         public string pe_nombreCompleto { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string Descripcion { get; set; }
+        public bool ManejaTalonario { get; set; }
+        public Nullable<System.DateTime> FechaInicioTalonario { get; set; }
     }
 }

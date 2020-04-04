@@ -22,6 +22,7 @@ using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.Compras;
 using Core.Erp.Info.Compras;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
+using Core.Erp.Info.Facturacion;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -166,7 +167,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool MostrarDocumentosElectronicos = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
@@ -174,7 +175,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (IdSucursal == 0)
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             ViewBag.IdSucursal = IdSucursal;
-            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.MostrarDocumentosElectronicos = MostrarDocumentosElectronicos;
+            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, MostrarDocumentosElectronicos);
             return PartialView("_GridViewPartial_deudas", model);
         }
 
@@ -277,6 +279,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.lst_tipo_doc = new List<cp_TipoDocumento_Info>();
 
+            }
+
+            ViewBag.lst_puntoVtaLiq = new List<fa_PuntoVta_Info>();
+            var documento = lst_doc_tipo.Where(q => q.CodTipoDocumento == model.IdOrden_giro_Tipo).FirstOrDefault();
+            if (documento != null)
+            {
+                var lst_puntoVtaLiq = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, documento.Codigo);
+                ViewBag.lst_puntoVtaLiq = lst_puntoVtaLiq;
             }
 
 
@@ -430,6 +440,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
 
             }
+            model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
+            model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
             if (info_proveedor.info_persona.pe_cedulaRuc != SessionFixed.Ruc)
                 model.IdSucursal_cxp = null;
             string mensaje = bus_orden_giro.validar(model);
@@ -449,10 +462,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
-
-            model.lst_det = List_det.get_list(model.IdTransaccionSession);
-            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
-            model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
 
             if (!bus_orden_giro.guardarDB(model))
             {
@@ -501,6 +510,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 model.TieneRetencion = 1;
                 model.FechaRetencion = model.info_retencion.fecha;
             }
+
+            if (model.IdPuntoVta != null)
+            {
+                model.EsDocumentoElectronico = 1;
+            }else
+                model.EsDocumentoElectronico = 0;
 
             List_ct_cbtecble_det_List_retencion.set_list(model.info_retencion.info_comprobante.lst_ct_cbtecble_det, model.IdTransaccionSession);
             List_cp_retencion_det.set_list(model.info_retencion.detalle, model.IdTransaccionSession);
@@ -573,6 +588,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (info_proveedor.info_persona.pe_cedulaRuc != SessionFixed.Ruc)
                 model.IdSucursal_cxp = null;
 
+            model.lst_det = List_det.get_list(model.IdTransaccionSession);
+            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
+            model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
             string mensaje = bus_orden_giro.validar(model);
             if (mensaje != "")
             {
@@ -592,11 +610,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.MostrarBoton = true;
                 return View(model);
             }
-
-            model.lst_det = List_det.get_list(model.IdTransaccionSession);
-            model.lst_det_oc = ListaDetalleOC.get_list(model.IdTransaccionSession);
-            model.lst_det_os = ListaDetalleOS.get_list(model.IdTransaccionSession);
-
+            
             if (bus_orden_giro.ValidarExisteOrdenPAgo(model.IdEmpresa, model.IdTipoCbte_Ogiro, model.IdCbteCble_Ogiro) == true)
             {
                if(!bus_orden_giro.ModificarDBCabecera(model))
@@ -641,10 +655,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (model.info_retencion.IdRetencion == 0)
             {
                 model.TieneRetencion = 0;
+                model.FechaRetencion = Convert.ToDateTime(model.co_FechaContabilizacion);
             }
             else
             {
                 model.TieneRetencion = 1;
+                model.FechaRetencion = model.info_retencion.fecha;
             }
 
             model.lst_det_oc = bus_orden_giro_det_ing_x_oc.get_list(model.IdEmpresa, model.IdCbteCble_Ogiro, model.IdTipoCbte_Ogiro);
@@ -719,9 +735,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #endregion
 
         #region json
+
+
         public JsonResult AutorizarSRI(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
         {
             string retorno = string.Empty;
+
+            bus_orden_giro.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
 
             if (bus_retencion.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro))
                 retorno = "Autorización exitosa";
@@ -789,6 +809,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public JsonResult get_list_tipo_doc(int IdEmpresa = 0, decimal IdProveedor = 0, string codigoSRI = "")
         {
             var list_tipo_doc = bus_tipo_documento.get_list(IdEmpresa, IdProveedor, codigoSRI);
+            if (list_tipo_doc == null)
+                list_tipo_doc = new List<cp_TipoDocumento_Info>();
             return Json(list_tipo_doc, JsonRequestBehavior.AllowGet);
         }
 
@@ -1031,7 +1053,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             return Json("", JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetListPuntoVenta(int IdEmpresa = 0, string CodDocumentoTipo = "", int IdSucursal = 0)
+        {
+            List<fa_PuntoVta_Info> Lista = new List<fa_PuntoVta_Info>();
+            var documento = bus_tipo_documento.GetInfo(CodDocumentoTipo);
+            if (documento != null)
+            {
+                Lista = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, documento.Codigo);
+            }
 
+            return Json(new { Mostrar = Lista.Count > 0 ? 1 : 0, Lista = Lista }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetUltimoDocumento(int IdEmpresa=0, int IdSucursal = 0, int IdPuntoVta = 0, int TieneRetencion= 0)
         {
             tb_sis_Documento_Tipo_Talonario_Info resultado = new tb_sis_Documento_Tipo_Talonario_Info();

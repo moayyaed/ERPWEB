@@ -2111,6 +2111,66 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXP_017' no tiene def
           <Property Name="Referencia" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWCXP_020' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWCXP_020">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="NomDocumento" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="co_subtotal_iva" />
+            <PropertyRef Name="co_subtotal_siniva" />
+            <PropertyRef Name="co_subtotal" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="co_valoriva" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="Subtotal" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="ValorIva" />
+            <PropertyRef Name="TotalDetalle" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="CostoUni" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="int" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NomDocumento" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="co_serie" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="co_factura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Num_Autorizacion" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_autorizacion" Type="datetime" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Su_Direccion" Type="varchar" MaxLength="100" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="co_FechaFactura" Type="datetime" Nullable="false" />
+          <Property Name="co_observacion" Type="varchar" MaxLength="1000" />
+          <Property Name="IdFormaPago" Type="varchar" MaxLength="2" />
+          <Property Name="nom_FormaPago" Type="varchar" MaxLength="500" />
+          <Property Name="co_subtotal_iva" Type="float" Nullable="false" />
+          <Property Name="co_subtotal_siniva" Type="float" Nullable="false" />
+          <Property Name="co_subtotal" Type="float" Nullable="false" />
+          <Property Name="co_total" Type="float" Nullable="false" />
+          <Property Name="co_valoriva" Type="float" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Subtotal" Type="float" Nullable="false" />
+          <Property Name="Descuento" Type="float" Nullable="false" />
+          <Property Name="ValorIva" Type="float" Nullable="false" />
+          <Property Name="TotalDetalle" Type="float" Nullable="false" />
+          <Property Name="pr_direccion" Type="varchar" MaxLength="500" />
+          <Property Name="pr_correo" Type="varchar" MaxLength="200" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
+          <Property Name="CostoUni" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWFAC_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWFAC_001">
           <Key>
@@ -6708,6 +6768,41 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
     [VWCXP_017].[Su_Descripcion] AS [Su_Descripcion], 
     [VWCXP_017].[Referencia] AS [Referencia]
     FROM [web].[VWCXP_017] AS [VWCXP_017]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VWCXP_020" EntityType="Self.VWCXP_020" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [VWCXP_020].[IdEmpresa] AS [IdEmpresa], 
+    [VWCXP_020].[IdTipoCbte_Ogiro] AS [IdTipoCbte_Ogiro], 
+    [VWCXP_020].[IdCbteCble_Ogiro] AS [IdCbteCble_Ogiro], 
+    [VWCXP_020].[NomDocumento] AS [NomDocumento], 
+    [VWCXP_020].[co_serie] AS [co_serie], 
+    [VWCXP_020].[co_factura] AS [co_factura], 
+    [VWCXP_020].[Num_Autorizacion] AS [Num_Autorizacion], 
+    [VWCXP_020].[fecha_autorizacion] AS [fecha_autorizacion], 
+    [VWCXP_020].[Su_Descripcion] AS [Su_Descripcion], 
+    [VWCXP_020].[Su_Direccion] AS [Su_Direccion], 
+    [VWCXP_020].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWCXP_020].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [VWCXP_020].[co_FechaFactura] AS [co_FechaFactura], 
+    [VWCXP_020].[co_observacion] AS [co_observacion], 
+    [VWCXP_020].[IdFormaPago] AS [IdFormaPago], 
+    [VWCXP_020].[nom_FormaPago] AS [nom_FormaPago], 
+    [VWCXP_020].[co_subtotal_iva] AS [co_subtotal_iva], 
+    [VWCXP_020].[co_subtotal_siniva] AS [co_subtotal_siniva], 
+    [VWCXP_020].[co_subtotal] AS [co_subtotal], 
+    [VWCXP_020].[co_total] AS [co_total], 
+    [VWCXP_020].[co_valoriva] AS [co_valoriva], 
+    [VWCXP_020].[pr_descripcion] AS [pr_descripcion], 
+    [VWCXP_020].[pr_codigo] AS [pr_codigo], 
+    [VWCXP_020].[Subtotal] AS [Subtotal], 
+    [VWCXP_020].[Descuento] AS [Descuento], 
+    [VWCXP_020].[ValorIva] AS [ValorIva], 
+    [VWCXP_020].[TotalDetalle] AS [TotalDetalle], 
+    [VWCXP_020].[pr_direccion] AS [pr_direccion], 
+    [VWCXP_020].[pr_correo] AS [pr_correo], 
+    [VWCXP_020].[Cantidad] AS [Cantidad], 
+    [VWCXP_020].[CostoUni] AS [CostoUni]
+    FROM [web].[VWCXP_020] AS [VWCXP_020]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWFAC_001" EntityType="Self.VWFAC_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
@@ -12324,6 +12419,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
             <Parameter Name="idProveedorIni" Mode="In" Type="Decimal" />
             <Parameter Name="idProveedorFIn" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="VWCXP_020" EntityType="Model_reportes.VWCXP_020" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -14964,6 +15060,64 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
           <Property Type="String" Name="descripcion_clas_prove" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="EsRelacionado" Nullable="false" MaxLength="14" />
         </ComplexType>
+        <EntityType Name="VWCXP_020">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="NomDocumento" />
+            <PropertyRef Name="co_serie" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="co_subtotal_iva" />
+            <PropertyRef Name="co_subtotal_siniva" />
+            <PropertyRef Name="co_subtotal" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="co_valoriva" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="Subtotal" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="ValorIva" />
+            <PropertyRef Name="TotalDetalle" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="CostoUni" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NomDocumento" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="co_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num_Autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_autorizacion" Type="DateTime" Precision="3" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="co_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IdFormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="nom_FormaPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="co_subtotal_iva" Type="Double" Nullable="false" />
+          <Property Name="co_subtotal_siniva" Type="Double" Nullable="false" />
+          <Property Name="co_subtotal" Type="Double" Nullable="false" />
+          <Property Name="co_total" Type="Double" Nullable="false" />
+          <Property Name="co_valoriva" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Subtotal" Type="Double" Nullable="false" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="ValorIva" Type="Double" Nullable="false" />
+          <Property Name="TotalDetalle" Type="Double" Nullable="false" />
+          <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="CostoUni" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19568,6 +19722,43 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.VWROL_028' no tiene def
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWCXP_020">
+            <EntityTypeMapping TypeName="Model_reportes.VWCXP_020">
+              <MappingFragment StoreEntitySet="VWCXP_020">
+                <ScalarProperty Name="CostoUni" ColumnName="CostoUni" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="pr_correo" ColumnName="pr_correo" />
+                <ScalarProperty Name="pr_direccion" ColumnName="pr_direccion" />
+                <ScalarProperty Name="TotalDetalle" ColumnName="TotalDetalle" />
+                <ScalarProperty Name="ValorIva" ColumnName="ValorIva" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="co_valoriva" ColumnName="co_valoriva" />
+                <ScalarProperty Name="co_total" ColumnName="co_total" />
+                <ScalarProperty Name="co_subtotal" ColumnName="co_subtotal" />
+                <ScalarProperty Name="co_subtotal_siniva" ColumnName="co_subtotal_siniva" />
+                <ScalarProperty Name="co_subtotal_iva" ColumnName="co_subtotal_iva" />
+                <ScalarProperty Name="nom_FormaPago" ColumnName="nom_FormaPago" />
+                <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
+                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
+                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Su_Direccion" ColumnName="Su_Direccion" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="fecha_autorizacion" ColumnName="fecha_autorizacion" />
+                <ScalarProperty Name="Num_Autorizacion" ColumnName="Num_Autorizacion" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="co_serie" ColumnName="co_serie" />
+                <ScalarProperty Name="NomDocumento" ColumnName="NomDocumento" />
+                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

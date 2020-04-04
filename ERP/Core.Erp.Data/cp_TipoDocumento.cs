@@ -30,5 +30,7 @@ namespace Core.Erp.Data
         public string GeneraRetencion { get; set; }
         public string Codigo_Secuenciales_Transaccion { get; set; }
         public string Sustento_Tributario { get; set; }
+        public bool ManejaTalonario { get; set; }
+        public Nullable<System.DateTime> FechaInicioTalonario { get; set; }
     }
 }

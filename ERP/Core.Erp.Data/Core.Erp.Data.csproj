@@ -1655,6 +1655,9 @@
     <Compile Include="Reportes\Base\VWCXP_017.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWCXP_020.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\VWFAC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1881,6 +1884,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_017_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_020_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_002_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
@@ -2515,6 +2519,9 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_det_ing_x_os_x_cruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_LiquidacionDeCompras.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_SinRetencion.cs">

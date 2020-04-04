@@ -46,6 +46,12 @@
         var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.info_retencion.IdRetencion, '_blank');
         win.focus();
     }
+
+    function ImprimirRIDEElectronico() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_020?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
+        win.focus();
+    }
     function AutorizarSRI() {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -135,7 +141,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#co_plazo").val(data.info_os.oc_plazo); 
+                $("#co_plazo").val(data.info_os.oc_plazo);
                 var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(data.info_os.oc_plazo, 'days'));
                 co_FechaFactura_vct.SetValue(date);
             },
@@ -158,10 +164,13 @@
     @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
     @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
+    @Html.HiddenFor(q => q.EsDocumentoElectronico, new { @id = "EsDocumentoElectronico" })
+    
     @Html.HiddenFor(q => q.co_fechaOg)
 
     @Html.HiddenFor(q => q.info_retencion.IdRetencion);
     @Html.HiddenFor(q => q.info_retencion.IdEmpresa);
+
 
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdTipoCbte);
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdCbteCble);
@@ -189,26 +198,35 @@
 
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-offset-4 col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE">
-                    <i class="fa fa-print"></i>  RIDE
+        <div class="col-md-6">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary form-control" id="rideFact" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
+                    <i class="fa fa-print"></i>  RIDE Doc.
                 </button>
             </div>
-
-            <div class="col-md-1">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención">
+                    <i class="fa fa-print"></i>  RIDE Ret.
+                </button>
+            </div>
+            <div class="col-md-2">
                 <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
                 </button>
             </div>
-            <div class="col-md-offset-4 col-md-1">
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-offset-8 col-md-2">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
                     </button>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Deudas",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
                         <i class="fa fa-plus"></i>
@@ -575,6 +593,22 @@
 
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.MueveInventario,
+                         settings =>
+                         {
+                             settings.Name = "MueveInventario";
+                             settings.Checked = false;
+                             settings.Text = "Genera movimiento de inventario";
+                         }
+                        ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -1184,12 +1218,25 @@
     function MostrarBotonesSRI() {
         if($("#TieneRetencion").val() == 0){
             $("#ride").hide();
-            $("#sri").hide();
         }
         else{
             $("#ride").show();
+        }
+        if($("#EsDocumentoElectronico").val() == 1){
+            $("#rideFact").show();
+        }else
+        {
+            $("#rideFact").hide();
+        }
+            
+
+        if ($("#TieneRetencion").val() == 0 && $("#EsDocumentoElectronico").val() == 0) {
+            $("#sri").hide();
+        }else
+        {
             $("#sri").show();
         }
+            
     }
 
     function CambiarVcto() {

@@ -32,11 +32,11 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
-        public bool validar_existe_IdPresentacion(string IdPresentacion)
+        public bool validar_existe_IdPresentacion(int IdEmpresa, string IdPresentacion)
         {
             try
             {
-                return odata.validar_existe_IdPresentacion(IdPresentacion);
+                return odata.validar_existe_IdPresentacion(IdEmpresa, IdPresentacion);
             }
             catch (Exception)
             {

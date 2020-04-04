@@ -315,7 +315,7 @@
                     @Html.DropDownListFor(q => q.IdIden_credito, new SelectList(ViewBag.lst_codigos_sri, "IdCodigo_SRI", "co_descripcion"), new { @class = "form-control", @id = "IdIden_credito" })
                     @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>            
         </div>
 
         <div class="col-md-6">
@@ -411,27 +411,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
                 </div>
-            </div>                
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
+            </div>  
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="co_observacion">Observación*</label>
-                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
-                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
+                    <label for="IdOrden_giro_Tipo">Punto de venta</label>
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_puntoVtaLiq, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVtaTipoDocumento" })
+                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>              
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="DivNumeroDocumento">
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
@@ -452,6 +448,17 @@
                     <label for="co_factura">Número autorización*</label>
                     @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -635,6 +642,22 @@
 
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.MueveInventario,
+                         settings =>
+                         {
+                             settings.Name = "MueveInventario";
+                             settings.Checked = false;
+                             settings.Text = "Genera movimiento de inventario";
+                         }
+                        ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -824,6 +847,9 @@
         GetUltimoDocumento();
     });
 
+    $("#IdOrden_giro_Tipo").change(function () {
+        CargarPuntoVtaTipoDocumento();
+    });
 
     $("#co_subtotal_iva").change(function () {
         actualizar_valores();
@@ -849,10 +875,50 @@
         } else {
             get_list_tipo_doc();
         }
+        CargarPuntoVtaTipoDocumento();
     });
     $("#co_plazo").change(function () {
         CambiarVcto();
     });
+
+    function CargarPuntoVtaTipoDocumento() {
+        $("#IdPuntoVtaTipoDocumento").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            CodDocumentoTipo: $("#IdOrden_giro_Tipo").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPuntoVenta", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.Mostrar == 1) {
+                    $.each(data.Lista, function (i, row) {
+                        $("#IdPuntoVtaTipoDocumento").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    });
+                    $("#DivNumeroDocumento").hide();
+                    $("#co_serie").val("000-000");
+                    $("#co_factura").val("000000000");
+                    $("#Num_Autorizacion").val("0123456789");
+                }else {
+                    $("#DivNumeroDocumento").show();
+                    if ($("#co_serie").val() == "000-000") {
+                        $("#co_serie").val("");
+                        $("#co_factura").val("");
+                        $("#Num_Autorizacion").val("");
+                    }
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
 
     function CambiarVcto() {
         var plazo = Number($("#co_plazo").val());
@@ -867,21 +933,6 @@
 
         }
     }
-
-    //$("#IdIden_credito").change(function () {
-
-    //    var tipo_doc = $("#IdIden_credito").val();
-
-    //    if (tipo_doc == "04")
-    //    {
-    //        $("#tab_documento_modificado").show();
-    //    }
-    //    else
-    //    {
-    //        $("#tab_documento_modificado").hide();
-
-    //    }
-    //});
 
 
     function actualizar_valores() {
@@ -987,7 +1038,6 @@
                     $("#co_valoriva").val(data.IVA);
                     $("#co_Por_iva").val(12);
                     $("#co_total").val(data.Total);
-                    //GridViewPartial_deudas_dc.PerformCallback();
                     GridView_comprobante_detalle.PerformCallback();
                 },
                 error: function (error) {
@@ -1174,33 +1224,33 @@
                     $("#serie2").attr('readonly', false);;
                     $("#NumRetencion").attr('readonly', false);
                     $("#FechaRetencion").attr('readonly', false);
-                    if (data.data_puntovta != null) 
+                    if (data.data_puntovta != null)
                     {
-                        if (data.data_puntovta.EsElectronico == true) 
+                        if (data.data_puntovta.EsElectronico == true)
                         {
                             $("#datos_punto_venta1").hide();
                             $("#datos_punto_venta2").hide();
                             $("#datos_punto_venta3").hide();
                             $("#FechaRetencion").show();
                         }
-                        else 
+                        else
                         {
                             $("#datos_punto_venta1").show();
                             $("#datos_punto_venta2").show();
                             $("#datos_punto_venta3").show();
                             $("#FechaRetencion").show();
 
-                            if (data.data_talonario != null) 
+                            if (data.data_talonario != null)
                             {
                                 $("#serie1").val(data.data_talonario.Establecimiento);
                                 $("#serie2").val(data.data_talonario.PuntoEmision);
                                 $("#NumRetencion").val(data.data_talonario.NumDocumento);
-                            }                     
+                            }
                         }
                     }
                 }
                 else
-                {                    
+                {
                     $("#serie1").attr('readonly', true);
                     $("#serie2").attr('readonly', true);;
                     $("#NumRetencion").attr('readonly', true);
@@ -1208,7 +1258,7 @@
 
                     $("#datos_punto_venta1").show();
                     $("#datos_punto_venta2").show();
-                    $("#datos_punto_venta3").show(); 
+                    $("#datos_punto_venta3").show();
                     $("#FechaRetencion").show();
                 }
             },

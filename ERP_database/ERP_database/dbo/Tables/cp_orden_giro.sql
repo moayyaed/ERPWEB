@@ -51,6 +51,8 @@
     [aut_doc_Modificar]             VARCHAR (100)  NULL,
     [IdTipoMovi]                    INT            NULL,
     [aprobada_enviar_sri]           BIT            NOT NULL,
+    [IdPuntoVta]                    INT            NULL,
+    [MueveInventario]               BIT            NULL,
     CONSTRAINT [PK_cp_orden_giro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdCbteCble_Ogiro] ASC, [IdTipoCbte_Ogiro] ASC),
     CONSTRAINT [FK_cp_orden_giro_caj_Caja_Movimiento_Tipo] FOREIGN KEY ([IdEmpresa], [IdTipoMovi]) REFERENCES [dbo].[caj_Caja_Movimiento_Tipo] ([IdEmpresa], [IdTipoMovi]),
     CONSTRAINT [FK_cp_orden_giro_cp_codigo_SRI] FOREIGN KEY ([IdCod_ICE]) REFERENCES [dbo].[cp_codigo_SRI] ([IdCodigo_SRI]),
@@ -62,6 +64,8 @@
     CONSTRAINT [FK_cp_orden_giro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
     CONSTRAINT [FK_cp_orden_giro_tb_sucursal1] FOREIGN KEY ([IdEmpresa], [IdSucursal_cxp]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

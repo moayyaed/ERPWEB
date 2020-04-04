@@ -83,11 +83,13 @@
         });
 
         settings.Columns.Add("IdCtaCble","ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("pc_Cuenta","Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(30);
+        settings.Columns.Add("pc_Cuenta","Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(20);
         settings.Columns.Add("IdCtaCblePadre","ID padre").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(30);
+        settings.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("pc_Naturaleza", "Naturaleza").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add("IdNivelCta","Nivel").Width = System.Web.UI.WebControls.Unit.Percentage(5);
-        settings.Columns.Add("pc_EsMovimiento", "Tiene movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("pc_EsMovimiento", "Tiene movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        settings.Columns.Add("IdGrupoCble", "Grupo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";

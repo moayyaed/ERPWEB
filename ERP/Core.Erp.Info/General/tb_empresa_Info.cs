@@ -24,8 +24,6 @@ namespace Core.Erp.Info.General
         [Required(ErrorMessage = "El campo nombre comercial es obligatorio")]
         [StringLength(300, MinimumLength = 1, ErrorMessage = "el campo nombre comercial debe tener mínimo 1 caracter y máximo 300")]
         public string NombreComercial { get; set; }
-        [Required(ErrorMessage = "El campo # contribuyente especial es obligatorio")]
-        [StringLength(5, MinimumLength = 1, ErrorMessage = "el campo # contribuyente debe tener mínimo 1 caracter y máximo 5")]
         public string ContribuyenteEspecial { get; set; }
         [Required(ErrorMessage = "El campo RUC es obligatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "el campo RUC debe tener mínimo 1 caracter y máximo 50")]

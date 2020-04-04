@@ -28,11 +28,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
         cp_retencion_Data bus_retencion = new cp_retencion_Data();
 
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
-        public List<cp_orden_giro_Info> get_lst(int IdEmpresa,int IdSucursal, DateTime fi, DateTime ff)
+        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime fi, DateTime ff, bool MostrarDocumentosElectronicos)
         {
             try
             {
-                return data.get_lst(IdEmpresa,IdSucursal, fi,ff);
+                return data.get_lst(IdEmpresa, IdSucursal, fi, ff, MostrarDocumentosElectronicos);
             }
             catch (Exception)
             {
@@ -341,7 +341,23 @@ namespace Core.Erp.Bus.CuentasPorPagar
 
                 throw;
             }
+
         }
+
+        public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+
+        {
+            try
+            {
+                return data.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public cp_orden_giro_Info get_info(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
         {
             try
@@ -478,6 +494,12 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 {
                     if(string.IsNullOrEmpty(item.IdCtaCble))
                         mensaje = "El producto "+item.pr_descripcion+" no tiene cuenta contable, por favor asigne";
+                }
+
+                info.lst_det = info.lst_det == null ? new List<cp_orden_giro_det_Info>() : info.lst_det;
+                if (info.IdPuntoVta != null && info.lst_det.Count == 0)
+                {
+                    mensaje = "Debe ingresar el detalle de la factura para poder registrar un documento electrónico";
                 }
                 return mensaje;
 

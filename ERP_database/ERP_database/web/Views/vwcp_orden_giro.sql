@@ -1,21 +1,20 @@
-﻿CREATE VIEW web.vwcp_orden_giro
+﻿
+
+CREATE VIEW [web].[vwcp_orden_giro]
 AS
-SELECT        dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.co_fechaOg, 
-                         dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_FechaContabilizacion, dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_plazo, 
-                         dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, 
-                         dbo.cp_orden_giro.IdCod_ICE,  
-                         dbo.cp_orden_giro.co_total, dbo.cp_orden_giro.co_vaCoa, dbo.cp_orden_giro.IdIden_credito, 
-                         dbo.cp_orden_giro.IdCod_101, dbo.cp_orden_giro.co_valorpagar, null IdTipoFlujo, dbo.cp_orden_giro.IdTipoServicio,  
-                         dbo.cp_orden_giro.Estado, dbo.cp_orden_giro.IdSucursal, 
-                         dbo.cp_orden_giro.PagoLocExt, dbo.cp_orden_giro.PaisPago, dbo.cp_orden_giro.ConvenioTributacion, dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, 
-                         dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, 
-                         dbo.cp_orden_giro.cp_es_comprobante_electronico, dbo.cp_orden_giro.Tipodoc_a_Modificar, dbo.cp_orden_giro.estable_a_Modificar, dbo.cp_orden_giro.ptoEmi_a_Modificar, dbo.cp_orden_giro.num_docu_Modificar, 
-                         dbo.cp_orden_giro.aut_doc_Modificar, dbo.cp_orden_giro.IdTipoMovi, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_nombreCompleto, 
-                         dbo.tb_persona.pe_cedulaRuc, dbo.cp_TipoDocumento.Descripcion
-FROM            dbo.cp_orden_giro INNER JOIN
-                         dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
-                         dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                         dbo.cp_TipoDocumento ON dbo.cp_orden_giro.IdOrden_giro_Tipo = dbo.cp_TipoDocumento.CodTipoDocumento
+SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.co_fechaOg, 
+                  dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_FechaContabilizacion, dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_plazo, 
+                  dbo.cp_orden_giro.co_observacion, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_Por_iva, dbo.cp_orden_giro.co_valoriva, 
+                  dbo.cp_orden_giro.IdCod_ICE, dbo.cp_orden_giro.co_total, dbo.cp_orden_giro.co_vaCoa, dbo.cp_orden_giro.IdIden_credito, dbo.cp_orden_giro.IdCod_101, dbo.cp_orden_giro.co_valorpagar, NULL AS IdTipoFlujo, 
+                  dbo.cp_orden_giro.IdTipoServicio, dbo.cp_orden_giro.Estado, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.PagoLocExt, dbo.cp_orden_giro.PaisPago, dbo.cp_orden_giro.ConvenioTributacion, 
+                  dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, 
+                  dbo.cp_orden_giro.cp_es_comprobante_electronico, dbo.cp_orden_giro.Tipodoc_a_Modificar, dbo.cp_orden_giro.estable_a_Modificar, dbo.cp_orden_giro.ptoEmi_a_Modificar, dbo.cp_orden_giro.num_docu_Modificar, 
+                  dbo.cp_orden_giro.aut_doc_Modificar, dbo.cp_orden_giro.IdTipoMovi, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
+                  dbo.cp_TipoDocumento.Descripcion, dbo.cp_TipoDocumento.ManejaTalonario, dbo.cp_TipoDocumento.FechaInicioTalonario
+FROM     dbo.cp_orden_giro INNER JOIN
+                  dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.cp_TipoDocumento ON dbo.cp_orden_giro.IdOrden_giro_Tipo = dbo.cp_TipoDocumento.CodTipoDocumento
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

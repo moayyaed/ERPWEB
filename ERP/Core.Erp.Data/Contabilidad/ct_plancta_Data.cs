@@ -126,7 +126,7 @@ namespace Core.Erp.Data.Contabilidad
                                      IdGrupoCble = q.IdGrupoCble,
                                      pc_Cuenta_padre = padre.pc_Cuenta,
                                      IdNivelCta = q.IdNivelCta,
-
+                                     pc_Naturaleza = q.pc_Naturaleza,
                                      EstadoBool = q.pc_Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -150,7 +150,7 @@ namespace Core.Erp.Data.Contabilidad
                                      IdGrupoCble = q.IdGrupoCble,
                                      pc_Cuenta_padre = padre.pc_Cuenta,
                                      IdNivelCta = q.IdNivelCta,
-
+                                     pc_Naturaleza = q.pc_Naturaleza,
                                      EstadoBool = q.pc_Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -172,7 +172,7 @@ namespace Core.Erp.Data.Contabilidad
                                      IdGrupoCble = q.IdGrupoCble,
                                      IdNivelCta = q.IdNivelCta,
                                      pc_Cuenta_padre = padre.pc_Cuenta,
-
+                                     pc_Naturaleza = q.pc_Naturaleza,
                                      EstadoBool = q.pc_Estado == "A" ? true : false
                                  }).ToList();
                     else
@@ -194,7 +194,7 @@ namespace Core.Erp.Data.Contabilidad
                                      IdGrupoCble = q.IdGrupoCble,
                                      IdNivelCta = q.IdNivelCta,
                                      pc_Cuenta_padre = padre.pc_Cuenta,
-
+                                     pc_Naturaleza = q.pc_Naturaleza,
                                      EstadoBool = q.pc_Estado == "A" ? true : false
                                  }).ToList();
 

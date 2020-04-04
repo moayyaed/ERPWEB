@@ -5,7 +5,7 @@
     {
         settings.Name = "IdProveedor";
         settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1000);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
         settings.CallbackRouteValues = new { Controller = "Deudas", Action = "CmbProveedor_CXP", Area = "CuentasPorPagar" };
         settings.Properties.CallbackPageSize = 15;
@@ -17,7 +17,7 @@
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
         settings.Properties.NullText = "== Seleccione ==";
         settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){limpiar_grids(); get_list_tipo_doc(); }";
-
+        
         settings.Properties.Columns.Add("IdEntidad", "ID", 10);
         settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 20);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Proveedor", 70);

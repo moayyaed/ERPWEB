@@ -8,18 +8,36 @@ using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Data.General;
 using Core.Erp.Info.General;
+using Core.Erp.Data.Facturacion;
 
 namespace Core.Erp.Data.CuentasPorPagar
 {
     public class cp_orden_giro_Data
     {
+        tb_sis_Documento_Tipo_Talonario_Data odata_tal = new tb_sis_Documento_Tipo_Talonario_Data();
         in_Ing_Egr_Inven_Data data_inv = new in_Ing_Egr_Inven_Data();
+        fa_PuntoVta_Data odata_pv = new fa_PuntoVta_Data();
+        tb_sucursal_Data odata_suc = new tb_sucursal_Data();
         public bool guardarDB(cp_orden_giro_Info info)
         {
             try
             {
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
+                    if (info.IdPuntoVta != null)
+                    {
+                        var pto_vta = odata_pv.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
+                        if (pto_vta != null)
+                        {
+                            string Establecimiento = pto_vta.Su_CodigoEstablecimiento;
+                            var talonario = odata_tal.GetUltimoNoUsado(info.IdEmpresa, pto_vta.codDocumentoTipo, Establecimiento, pto_vta.cod_PuntoVta, true, true);
+                            if (talonario != null)
+                            {
+                                info.co_serie = talonario.Establecimiento + "-" + talonario.PuntoEmision;
+                                info.co_factura = talonario.NumDocumento;
+                            }
+                        }
+                    }
                     cp_orden_giro Entity = new cp_orden_giro
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -66,42 +84,43 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Estado = "A",
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now,
-                        IdBodega = info.IdBodega,    
-                        IdSucursal_cxp = info.IdSucursal_cxp
+                        IdBodega = info.IdBodega,
+                        IdSucursal_cxp = info.IdSucursal_cxp,
+                        IdPuntoVta = info.IdPuntoVta,
+                        MueveInventario = info.MueveInventario
                     };
 
-                    if (info.lst_det.Count > 0)
+                    int secuencia = 1;
+                    foreach (var item in info.lst_det)
                     {
-                        int secuencia = 1;
-                        foreach (var item in info.lst_det)
+                        Context.cp_orden_giro_det.Add(new cp_orden_giro_det
                         {
-                            Context.cp_orden_giro_det.Add(new cp_orden_giro_det
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
-                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
-                                Secuencia = secuencia++,
-                                IdProducto = item.IdProducto,
-                                Cantidad = item.Cantidad,
-                                CostoUni = item.CostoUni,
-                                PorDescuento = item.PorDescuento,
-                                PorIva = item.PorIva,
-                                DescuentoUni = item.DescuentoUni,
-                                IdUnidadMedida = item.IdUnidadMedida,
-                                CostoUniFinal = item.CostoUniFinal,
-                                IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
-                                Subtotal = item.Subtotal,
-                                ValorIva = item.ValorIva,
-                                Total = item.Total,
-                                IdCtaCbleInv = item.IdCtaCbleInv,
+                            IdEmpresa = info.IdEmpresa,
+                            IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                            IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                            Secuencia = secuencia++,
+                            IdProducto = item.IdProducto,
+                            Cantidad = item.Cantidad,
+                            CostoUni = item.CostoUni,
+                            PorDescuento = item.PorDescuento,
+                            PorIva = item.PorIva,
+                            DescuentoUni = item.DescuentoUni,
+                            IdUnidadMedida = item.IdUnidadMedida,
+                            CostoUniFinal = item.CostoUniFinal,
+                            IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
+                            Subtotal = item.Subtotal,
+                            ValorIva = item.ValorIva,
+                            Total = item.Total,
+                            IdCtaCbleInv = item.IdCtaCbleInv,
 
-                                IdEmpresa_oc = item.IdEmpresa_oc,
-                                IdSucursal_oc = item.IdSucursal_oc,
-                                IdOrdenCompra = item.IdOrdenCompra,
-                                Secuencia_oc = item.Secuencia_oc,
-                            });
-                        }
-
+                            IdEmpresa_oc = item.IdEmpresa_oc,
+                            IdSucursal_oc = item.IdSucursal_oc,
+                            IdOrdenCompra = item.IdOrdenCompra,
+                            Secuencia_oc = item.Secuencia_oc,
+                        });
+                    }
+                    if (info.MueveInventario ?? false)
+                    {
                         var movi = armar_movi_inven(info, null);
 
                         if (movi != null)
@@ -123,70 +142,65 @@ namespace Core.Erp.Data.CuentasPorPagar
                         }
                     }
 
-                    if (info.lst_det_oc.Count > 0)
+
+                    int secuencia_det_oc = 1;
+                    foreach (var item in info.lst_det_oc)
                     {
-                        int secuencia_det_oc = 1;
-                        foreach (var item in info.lst_det_oc)
+                        Context.cp_orden_giro_det_ing_x_oc.Add(new cp_orden_giro_det_ing_x_oc
                         {
-                            Context.cp_orden_giro_det_ing_x_oc.Add(new cp_orden_giro_det_ing_x_oc
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
-                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
-                                Secuencia = secuencia_det_oc++,
-                                inv_IdSucursal = item.inv_IdSucursal,
-                                inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
-                                inv_IdNumMovi = item.inv_IdNumMovi,
-                                inv_Secuencia = item.inv_Secuencia,
-                                oc_IdSucursal = item.oc_IdSucursal??0,
-                                oc_IdOrdenCompra = item.oc_IdOrdenCompra??0,
-                                oc_Secuencia = item.oc_Secuencia??0,
-                                IdCtaCble = item.IdCtaCble,
-                                dm_cantidad = item.dm_cantidad,
-                                do_porc_des = item.do_porc_des,
-                                do_descuento = item.do_descuento,
-                                do_precioFinal = item.do_precioFinal,
-                                do_subtotal = item.do_subtotal,
-                                IdCod_Impuesto = item.IdCod_Impuesto,
-                                do_iva = item.do_iva,
-                                Por_Iva = item.Por_Iva,
-                                do_total = item.do_total,
-                                IdUnidadMedida = item.IdUnidadMedida,
-                                IdProducto = item.IdProducto,
-                                do_precioCompra = item.do_precioCompra
-                            });
-                        }
+                            IdEmpresa = info.IdEmpresa,
+                            IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                            IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                            Secuencia = secuencia_det_oc++,
+                            inv_IdSucursal = item.inv_IdSucursal,
+                            inv_IdMovi_inven_tipo = item.inv_IdMovi_inven_tipo,
+                            inv_IdNumMovi = item.inv_IdNumMovi,
+                            inv_Secuencia = item.inv_Secuencia,
+                            oc_IdSucursal = item.oc_IdSucursal ?? 0,
+                            oc_IdOrdenCompra = item.oc_IdOrdenCompra ?? 0,
+                            oc_Secuencia = item.oc_Secuencia ?? 0,
+                            IdCtaCble = item.IdCtaCble,
+                            dm_cantidad = item.dm_cantidad,
+                            do_porc_des = item.do_porc_des,
+                            do_descuento = item.do_descuento,
+                            do_precioFinal = item.do_precioFinal,
+                            do_subtotal = item.do_subtotal,
+                            IdCod_Impuesto = item.IdCod_Impuesto,
+                            do_iva = item.do_iva,
+                            Por_Iva = item.Por_Iva,
+                            do_total = item.do_total,
+                            IdUnidadMedida = item.IdUnidadMedida,
+                            IdProducto = item.IdProducto,
+                            do_precioCompra = item.do_precioCompra
+                        });
+                    }
+                    int secuencia_det_os = 1;
+                    foreach (var item in info.lst_det_os)
+                    {
+                        Context.cp_orden_giro_det_ing_x_os.Add(new cp_orden_giro_det_ing_x_os
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                            IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                            Secuencia = secuencia_det_os++,
+                            oc_IdSucursal = item.oc_IdSucursal,
+                            oc_IdOrdenCompra = item.oc_IdOrdenCompra,
+                            oc_Secuencia = item.oc_Secuencia,
+                            dm_cantidad = item.dm_cantidad,
+                            do_porc_des = item.do_porc_des,
+                            do_descuento = item.do_descuento,
+                            do_precioFinal = item.do_precioFinal,
+                            do_subtotal = item.do_subtotal,
+                            IdCod_Impuesto = item.IdCod_Impuesto,
+                            do_iva = item.do_iva,
+                            Por_Iva = item.Por_Iva,
+                            do_total = item.do_total,
+                            IdUnidadMedida = item.IdUnidadMedida,
+                            IdProducto = item.IdProducto,
+                            do_precioCompra = item.do_precioCompra
+                        });
                     }
 
-                    if (info.lst_det_os.Count > 0)
-                    {
-                        int secuencia_det_os = 1;
-                        foreach (var item in info.lst_det_os)
-                        {
-                            Context.cp_orden_giro_det_ing_x_os.Add(new cp_orden_giro_det_ing_x_os
-                            {
-                                IdEmpresa = info.IdEmpresa,
-                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
-                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
-                                Secuencia = secuencia_det_os++,
-                                oc_IdSucursal = item.oc_IdSucursal,
-                                oc_IdOrdenCompra = item.oc_IdOrdenCompra,
-                                oc_Secuencia = item.oc_Secuencia,
-                                dm_cantidad = item.dm_cantidad,
-                                do_porc_des = item.do_porc_des,
-                                do_descuento = item.do_descuento,
-                                do_precioFinal = item.do_precioFinal,
-                                do_subtotal = item.do_subtotal,
-                                IdCod_Impuesto = item.IdCod_Impuesto,
-                                do_iva = item.do_iva,
-                                Por_Iva = item.Por_Iva,
-                                do_total = item.do_total,
-                                IdUnidadMedida = item.IdUnidadMedida,
-                                IdProducto = item.IdProducto,
-                                do_precioCompra = item.do_precioCompra
-                            });
-                        }
-                    }
 
                     Context.cp_orden_giro.Add(Entity);
 
@@ -254,6 +268,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdSucursal_cxp = info.IdSucursal_cxp;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.Fecha_UltMod = DateTime.Now;
+                        Entity.MueveInventario = info.MueveInventario;
                     }
 
                     if (info.lst_det.Count > 0)
@@ -289,29 +304,33 @@ namespace Core.Erp.Data.CuentasPorPagar
                             });
                         }
 
-                        var rel = Context.cp_orden_giro_x_in_Ing_Egr_Inven.Where(q => q.og_IdEmpresa == info.IdEmpresa && q.og_IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.og_IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();
-                        var movi = armar_movi_inven(info, rel);
-                        if (movi != null)
+                        if (info.MueveInventario ?? false)
                         {
-                            if(rel == null)
+                            var rel = Context.cp_orden_giro_x_in_Ing_Egr_Inven.Where(q => q.og_IdEmpresa == info.IdEmpresa && q.og_IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.og_IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();
+                            var movi = armar_movi_inven(info, rel);
+                            if (movi != null)
                             {
-                                if (data_inv.guardarDB(movi, "+"))
+                                if (rel == null)
                                 {
-                                    Context.cp_orden_giro_x_in_Ing_Egr_Inven.Add(new cp_orden_giro_x_in_Ing_Egr_Inven
+                                    if (data_inv.guardarDB(movi, "+"))
                                     {
-                                        og_IdEmpresa = info.IdEmpresa,
-                                        og_IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
-                                        og_IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                        Context.cp_orden_giro_x_in_Ing_Egr_Inven.Add(new cp_orden_giro_x_in_Ing_Egr_Inven
+                                        {
+                                            og_IdEmpresa = info.IdEmpresa,
+                                            og_IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                            og_IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
 
-                                        inv_IdEmpresa = movi.IdEmpresa,
-                                        inv_IdSucursal = movi.IdSucursal,
-                                        inv_IdMovi_inven_tipo = movi.IdMovi_inven_tipo,
-                                        inv_IdNumMovi = movi.IdNumMovi
-                                    });
+                                            inv_IdEmpresa = movi.IdEmpresa,
+                                            inv_IdSucursal = movi.IdSucursal,
+                                            inv_IdMovi_inven_tipo = movi.IdMovi_inven_tipo,
+                                            inv_IdNumMovi = movi.IdNumMovi
+                                        });
+                                    }
                                 }
-                            }else
-                                data_inv.modificarDB(movi);
-                                
+                                else
+                                    data_inv.modificarDB(movi);
+
+                            }
                         }
                     }
 
@@ -497,77 +516,116 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin)
+        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin, bool MostrarDocumentosElectronicos)
         {
             try
             {
-                List<cp_orden_giro_Info> Lista;
+                List<cp_orden_giro_Info> Lista = new List<cp_orden_giro_Info>();
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in Context.vwcp_orden_giro
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdSucursal == IdSucursal
-                             && q.co_FechaFactura >= FechaInicio
-                              && q.co_FechaFactura <= FechaFin
-                             orderby q.IdCbteCble_Ogiro descending
-                             select new cp_orden_giro_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
-                                 IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
-                                 IdOrden_giro_Tipo = q.IdOrden_giro_Tipo,
-                                 IdProveedor = q.IdProveedor,
-                                 co_fechaOg = q.co_fechaOg,
-                                 co_serie = q.co_serie,
-                                 co_factura = q.co_factura,
-                                 co_FechaFactura = q.co_FechaFactura,
-                                 co_FechaContabilizacion = q.co_FechaContabilizacion,
-                                 co_FechaFactura_vct = q.co_FechaFactura_vct,
-                                 co_plazo = q.co_plazo,
-                                 co_observacion = q.co_observacion,
-                                 co_subtotal_iva = q.co_subtotal_iva,
-                                 co_subtotal_siniva = q.co_subtotal_siniva,
-                                 co_baseImponible = q.co_baseImponible,
-                                 co_Por_iva = q.co_Por_iva,
-                                 co_valoriva = q.co_valoriva,
-                                 IdCod_ICE = q.IdCod_ICE,
-                                 co_total = q.co_total,
-                                 co_valorpagar = q.co_valorpagar,
-                                 co_vaCoa = q.co_vaCoa,
-                                 IdIden_credito = q.IdIden_credito,
-                                 IdCod_101 = q.IdCod_101,
-                                 IdTipoServicio = q.IdTipoServicio,
-                                 IdSucursal = q.IdSucursal,
-                                 PagoLocExt = q.PagoLocExt,
-                                 PaisPago = q.PaisPago,
-                                 ConvenioTributacion = q.ConvenioTributacion,
-                                 PagoSujetoRetencion = q.PagoSujetoRetencion,
-                                 BseImpNoObjDeIva = q.BseImpNoObjDeIva,
-                                 fecha_autorizacion = q.fecha_autorizacion,
-                                 Num_Autorizacion = q.Num_Autorizacion,
-                                 Num_Autorizacion_Imprenta = q.Num_Autorizacion_Imprenta,
-                                 cp_es_comprobante_electronico = q.cp_es_comprobante_electronico,
-                                 Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
-                                 estable_a_Modificar = q.estable_a_Modificar,
-                                 ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
-                                 num_docu_Modificar = q.num_docu_Modificar,
-                                 aut_doc_Modificar = q.aut_doc_Modificar,
-                                 IdTipoMovi = q.IdTipoMovi,
-                                 Estado = q.Estado,
-                                 info_proveedor = new cp_proveedor_Info
-                                 {
-                                     info_persona = new Info.General.tb_persona_Info
-                                     {
-                                         pe_apellido = q.pe_apellido,
-                                         pe_nombre = q.pe_nombre,
-                                         pe_nombreCompleto = q.pe_nombreCompleto,
-                                         pe_cedulaRuc = q.pe_cedulaRuc
-                                     }
-                                 },
+                    if (!MostrarDocumentosElectronicos)
+                    {
+                        #region Documentos no electrónicos
+                        var lst = Context.vwcp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q => q.IdCbteCble_Ogiro).ToList();
 
-                                 EstadoBool = q.Estado == "A" ? true : false
+                        foreach (var q in lst)
+                        {
+                            if ((q.FechaInicioTalonario ?? q.co_FechaFactura) >= q.co_FechaFactura)
+                            {
+                                Lista.Add(new cp_orden_giro_Info
+                                {
+                                    IdEmpresa = q.IdEmpresa,
+                                    IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
+                                    IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
+                                    IdOrden_giro_Tipo = q.IdOrden_giro_Tipo,
+                                    IdProveedor = q.IdProveedor,
+                                    co_fechaOg = q.co_fechaOg,
+                                    co_serie = q.co_serie,
+                                    co_factura = q.co_factura,
+                                    co_FechaFactura = q.co_FechaFactura,
+                                    co_FechaContabilizacion = q.co_FechaContabilizacion,
+                                    co_FechaFactura_vct = q.co_FechaFactura_vct,
+                                    co_plazo = q.co_plazo,
+                                    co_observacion = q.co_observacion,
+                                    co_subtotal_iva = q.co_subtotal_iva,
+                                    co_subtotal_siniva = q.co_subtotal_siniva,
+                                    co_baseImponible = q.co_baseImponible,
+                                    co_Por_iva = q.co_Por_iva,
+                                    co_valoriva = q.co_valoriva,
+                                    IdCod_ICE = q.IdCod_ICE,
+                                    co_total = q.co_total,
+                                    co_valorpagar = q.co_valorpagar,
+                                    co_vaCoa = q.co_vaCoa,
+                                    IdIden_credito = q.IdIden_credito,
+                                    IdCod_101 = q.IdCod_101,
+                                    IdTipoServicio = q.IdTipoServicio,
+                                    IdSucursal = q.IdSucursal,
+                                    PagoLocExt = q.PagoLocExt,
+                                    PaisPago = q.PaisPago,
+                                    ConvenioTributacion = q.ConvenioTributacion,
+                                    PagoSujetoRetencion = q.PagoSujetoRetencion,
+                                    BseImpNoObjDeIva = q.BseImpNoObjDeIva,
+                                    fecha_autorizacion = q.fecha_autorizacion,
+                                    Num_Autorizacion = q.Num_Autorizacion,
+                                    Num_Autorizacion_Imprenta = q.Num_Autorizacion_Imprenta,
+                                    cp_es_comprobante_electronico = q.cp_es_comprobante_electronico,
+                                    Tipodoc_a_Modificar = q.Tipodoc_a_Modificar,
+                                    estable_a_Modificar = q.estable_a_Modificar,
+                                    ptoEmi_a_Modificar = q.ptoEmi_a_Modificar,
+                                    num_docu_Modificar = q.num_docu_Modificar,
+                                    aut_doc_Modificar = q.aut_doc_Modificar,
+                                    IdTipoMovi = q.IdTipoMovi,
+                                    Estado = q.Estado,
+                                    info_proveedor = new cp_proveedor_Info
+                                    {
+                                        info_persona = new Info.General.tb_persona_Info
+                                        {
+                                            pe_apellido = q.pe_apellido,
+                                            pe_nombre = q.pe_nombre,
+                                            pe_nombreCompleto = q.pe_nombreCompleto,
+                                            pe_cedulaRuc = q.pe_cedulaRuc
+                                        }
+                                    },
+                                    Descripcion = q.Descripcion,
+                                    EstadoBool = q.Estado == "A" ? true : false
 
-                             }).ToList();
+                                });
+                            }
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        var lst = Context.vwcp_orden_giro_LiquidacionDeCompras.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q => q.IdCbteCble_Ogiro).ToList();
+                        foreach (var q in lst)
+                        {
+                            Lista.Add(new cp_orden_giro_Info
+                            {
+                                IdEmpresa = q.IdEmpresa,
+                                IdCbteCble_Ogiro = q.IdCbteCble_Ogiro,
+                                IdTipoCbte_Ogiro = q.IdTipoCbte_Ogiro,
+                                co_factura = q.co_factura,
+                                co_FechaFactura = q.co_FechaFactura,
+                                co_observacion = q.co_observacion,
+                                co_total = q.co_total,
+                                Num_Autorizacion = q.Num_Autorizacion,
+                                Descripcion = q.Descripcion,
+                                fecha_autorizacion = q.fecha_autorizacion,
+                                Estado = q.Estado,
+                                info_proveedor = new cp_proveedor_Info
+                                {
+                                    info_persona = new Info.General.tb_persona_Info
+                                    {
+                                        pe_nombreCompleto = q.pe_nombreCompleto,
+                                    }
+                                },
+
+                                EstadoBool = q.Estado == "A" ? true : false
+
+                            });
+                        }
+                    }
+
 
                 }
                 return Lista;
@@ -709,6 +767,30 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
+        public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    var Entity = Context.cp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdTipoCbte_Ogiro == IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == IdCbteCble_Ogiro).FirstOrDefault();
+                    if (Entity != null)
+                    {
+                        var TipoDocumento = Context.cp_TipoDocumento.Where(q => q.CodTipoDocumento == Entity.IdOrden_giro_Tipo).FirstOrDefault();
+                        if (TipoDocumento != null && TipoDocumento.ManejaTalonario)
+                        {
+                            Entity.aprobada_enviar_sri = true;
+                            Context.SaveChanges();
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public cp_orden_giro_Info get_info(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
         {
             try
@@ -765,7 +847,9 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdTipoMovi = Entity.IdTipoMovi,
                         Estado = Entity.Estado,
                         IdBodega = Entity.IdBodega,
-                        IdSucursal_cxp = Entity.IdSucursal_cxp
+                        IdSucursal_cxp = Entity.IdSucursal_cxp,
+                        IdPuntoVta = Entity.IdPuntoVta,
+                        MueveInventario = Entity.MueveInventario ?? false
                     };
                 }
                 return info;

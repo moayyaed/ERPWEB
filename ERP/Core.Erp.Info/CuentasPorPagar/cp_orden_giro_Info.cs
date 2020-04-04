@@ -74,7 +74,8 @@ namespace Core.Erp.Info.CuentasPorPagar
         public double Total_Pagado { get; set; }
         public Nullable<double> Saldo_OG { get; set; }
         public int IdBodega { get; set; }
-        
+        public Nullable<int> IdPuntoVta { get; set; }
+
 
         #region Campos que no existen en la tabla
         public bool ConvenioTributacion_bool { get; set; }
@@ -88,9 +89,12 @@ namespace Core.Erp.Info.CuentasPorPagar
         public cp_orden_giro_pagos_sri_Info info_forma_pago { get; set; }
         public cp_retencion_Info info_retencion { get; set; }
         public int TieneRetencion { get; set; }
+        public int EsDocumentoElectronico { get; set; }
         public int Agrupar { get; set; }
         [Required(ErrorMessage = "El campo fecha es obligatorio")]
         public System.DateTime FechaRetencion { get; set; }
+        public bool? MueveInventario { get; set; }
+
         public cp_orden_giro_Info()
 
         {

@@ -40,6 +40,43 @@ namespace Core.Erp.Data.CuentasPorPagar
             }
         }
 
+        public cp_TipoDocumento_Info GetInfo(string CodDocumentoTipo)
+        {
+            try
+            {
+                cp_TipoDocumento_Info info = new cp_TipoDocumento_Info();
+
+                using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
+                {
+                    var Documento = db.cp_TipoDocumento.Where(q => q.CodTipoDocumento == CodDocumentoTipo).FirstOrDefault();
+                    if (Documento == null)
+                        return null;
+
+                    info = new cp_TipoDocumento_Info
+                    {
+                        CodTipoDocumento = Documento.CodTipoDocumento,
+                        Codigo = Documento.Codigo,
+                        Descripcion = Documento.Descripcion,
+                        Orden = Documento.Orden,
+                        DeclaraSRI = Documento.DeclaraSRI,
+                        CodSRI = Documento.CodSRI,
+                        Estado = Documento.Estado,
+                        GeneraRetencion = Documento.GeneraRetencion,
+                        Codigo_Secuenciales_Transaccion = Documento.Codigo_Secuenciales_Transaccion,
+                        Sustento_Tributario = Documento.Sustento_Tributario,
+                        ManejaTalonario = Documento.ManejaTalonario
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<cp_TipoDocumento_Info> get_list(bool mostrar_anulados)
         {
             try
@@ -61,7 +98,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                            GeneraRetencion = q.GeneraRetencion,
                            Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                            Sustento_Tributario = q.Sustento_Tributario,
-
+                           ManejaTalonario = q.ManejaTalonario,
                            EstadoBool = q.Estado == "A" ? true : false
                        }).ToList();
                 else
@@ -80,7 +117,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                GeneraRetencion = q.GeneraRetencion,
                                Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                                Sustento_Tributario = q.Sustento_Tributario,
-
+                               ManejaTalonario = q.ManejaTalonario,
                                EstadoBool = q.Estado == "A" ? true : false
                            }).ToList();
 
@@ -117,6 +154,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Obj.Codigo_Secuenciales_Transaccion = item.Codigo_Secuenciales_Transaccion;
                     Obj.Sustento_Tributario = item.Sustento_Tributario;
                     Obj.GeneraRetencion = item.GeneraRetencion;
+                    Obj.ManejaTalonario = item.ManejaTalonario;
                     Lst.Add(Obj);
 
                 }
@@ -152,6 +190,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         contact.Codigo_Secuenciales_Transaccion = info.Codigo_Secuenciales_Transaccion;
                         contact.Sustento_Tributario = info.Sustento_Tributario;
                         contact.GeneraRetencion = info.GeneraRetencion;
+                        contact.ManejaTalonario = info.ManejaTalonario;
                         context.SaveChanges();
                         res = true;
                     }
