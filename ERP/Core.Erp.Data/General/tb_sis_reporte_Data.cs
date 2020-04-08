@@ -192,8 +192,8 @@ namespace Core.Erp.Data.General
                     Entity.nom_reporte = info.nom_reporte;
                     Entity.rpt_clase_data = info.rpt_clase_data;
                     Entity.rpt_clase_info = info.rpt_clase_info;
-                    Entity.rpt_clase_bus = Entity.rpt_clase_bus;
-                    Entity.rpt_clase_rpt = Entity.rpt_clase_rpt;
+                    Entity.rpt_clase_bus = info.rpt_clase_bus;
+                    Entity.rpt_clase_rpt = info.rpt_clase_rpt;
                     Entity.rpt_store_procedure = info.rpt_store_procedure;
                     Entity.rpt_usa_store_procedure = info.rpt_usa_store_procedure;
                     Entity.rpt_vista = info.rpt_vista;

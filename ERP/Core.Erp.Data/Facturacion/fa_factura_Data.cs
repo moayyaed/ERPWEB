@@ -874,6 +874,10 @@ namespace Core.Erp.Data.Facturacion
                 Entity.Fecha_UltMod = DateTime.Now;
                 Entity.IdContacto = (info.IdContacto == 0 ? null : info.IdContacto);
 
+                info.vt_NumFactura = Entity.vt_NumFactura;
+                info.vt_serie1 = Entity.vt_serie1;
+                info.vt_serie2 = Entity.vt_serie2;
+
                 #endregion
                 var cliente = db_f.fa_cliente.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).FirstOrDefault();
                 var persona = db_g.tb_persona.Where(q => q.IdPersona == cliente.IdPersona).FirstOrDefault();
