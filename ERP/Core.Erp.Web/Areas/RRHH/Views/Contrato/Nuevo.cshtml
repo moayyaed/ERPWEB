@@ -9,6 +9,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+
+
+    $(function () {
+        $("#IdContrato_Tipo").change(function () {
+            SetTipoContrato();
+        });
+    });
+    
+
+    function SetTipoContrato() {
+        if ($("#IdContrato_Tipo").val() == "CTR08")
+        {
+            var date = new Date(moment(FechaInicio.GetValue(), "DD/MM/YYYY").add(100, 'years'));
+            FechaFin.SetValue(date);
+            $("#DivFechaFin").hide();
+        } else
+            if ($("#IdContrato_Tipo").val() == "CTR01")
+        {
+            var date = new Date(moment(FechaInicio.GetValue(), "DD/MM/YYYY").add(3, 'months'));
+            FechaFin.SetValue(date);
+            $("#DivFechaFin").show();
+        }
+            
+    }
+</script>
 @using (Html.BeginForm("Nuevo", "Contrato", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
@@ -39,7 +65,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdContrato_Tipo">Tipo contrato*</label>
-                    @Html.DropDownListFor(q => q.IdContrato_Tipo, new SelectList(ViewBag.lst_tipo_contrato, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdContrato_Tipo, new SelectList(ViewBag.lst_tipo_contrato, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "IdContrato_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdContrato_Tipo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -81,7 +107,7 @@
                     @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="DivFechaFin">
                 <div class="form-group">
                     <label for="FechaFin">Fecha fin*</label>
                     @Html.DevExpress().DateEditFor(q=> q.FechaFin, settings =>

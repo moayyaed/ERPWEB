@@ -289,7 +289,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "Debe ingresar al menos una factura de proveedor";
                 return false;
             }
-
+            /*
             if (i_validar.Lista_det_OP.Sum(q=>q.MontoAplicado) != i_validar.Lista_det_Fact.Sum(q => q.MontoAplicado))
             {
                 var a = i_validar.Lista_det_OP.Sum(q => q.MontoAplicado);
@@ -297,6 +297,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 mensaje = "El monto aplicado entre la orden de pago y la factura por proveedor debe coincidir";
                 return false;
             }
+            */
 
 
             if (i_validar.Lista_det_Cbte.Count == 0)

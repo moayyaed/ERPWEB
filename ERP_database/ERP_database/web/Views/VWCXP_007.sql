@@ -17,7 +17,9 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                                     cp_retencion_det.re_Porcen_retencion = 0 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_0, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 0.1 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_0_1, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 1 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_1, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
+									cp_retencion_det.re_Porcen_retencion = 1.75 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_1_75, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 2 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_2, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
+									cp_retencion_det.re_Porcen_retencion = 2.75 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_2_75, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 8 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_8, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 10 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_10, CASE WHEN cp_retencion_det.re_tipoRet = 'RTF' AND 
                                     cp_retencion_det.re_Porcen_retencion = 100 THEN cp_retencion_det.re_valor_retencion ELSE 0 END AS RTF_100, CASE WHEN cp_retencion_det.re_tipoRet IS NULL 
@@ -43,7 +45,7 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                   SELECT cp_nota_DebCre.IdEmpresa, cp_nota_DebCre.IdTipoCbte_Nota, cp_nota_DebCre.IdCbteCble_Nota, '04', 'N/C', 'N/C Compras' AS Descripcion, cp_proveedor.IdProveedor, tb_persona.pe_nombreCompleto pr_nombre, 
                                     tb_persona.pe_cedulaRuc, cp_nota_DebCre.cn_serie1 + '-' + cp_nota_DebCre.cn_serie2 AS serie_fact, cp_nota_DebCre.cn_Nota AS num_factura, cp_nota_DebCre.cn_fecha, cp_nota_DebCre.cn_subtotal_iva AS subtotal_iva, 
                                     cp_nota_DebCre.cn_subtotal_siniva AS subtotal_sin_iva, cp_nota_DebCre.cn_valoriva AS valor_iva, cp_nota_DebCre.cn_Autorizacion, NULL AS serie_ret, NULL AS NumRetencion, NULL AS re_baseRetencion, NULL 
-                                    AS re_Porcen_retencion, NULL AS re_valor_retencion, NULL AS re_Codigo_impuesto, 0 AS RIVA_0, 0 AS RIVA_10, 0 AS RIVA_20, 0 AS RIVA_30, 0 AS RIVA_70, 0 AS RIVA_100, 0 AS RTF_0, 0 AS RTF_0_1, 0 AS RTF_1, 0 AS RTF_2, 
+                                    AS re_Porcen_retencion, NULL AS re_valor_retencion, NULL AS re_Codigo_impuesto, 0 AS RIVA_0, 0 AS RIVA_10, 0 AS RIVA_20, 0 AS RIVA_30, 0 AS RIVA_70, 0 AS RIVA_100, 0 AS RTF_0, 0 AS RTF_0_1, 0 AS RTF_1, 0 AS RTF_1_75, 0 AS RTF_2, 0 AS RTF_2_75, 
                                     0 AS RTF_8, 0 AS RTF_10, 0 AS RTF_100, 'N/C Compras' AS Documento, 'N/C Compras' AS descripcion_cod_sri, NULL AS re_tipoRet, NULL, cp_nota_DebCre.IdSucursal, tb_sucursal.Su_Descripcion
                   FROM     cp_nota_DebCre INNER JOIN
                                     cp_proveedor ON cp_nota_DebCre.IdEmpresa = cp_proveedor.IdEmpresa AND cp_nota_DebCre.IdProveedor = cp_proveedor.IdProveedor INNER JOIN
@@ -54,7 +56,7 @@ FROM     (SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdTipoCbte_Ogiro
                   SELECT cp_nota_DebCre.IdEmpresa, cp_nota_DebCre.IdTipoCbte_Nota, cp_nota_DebCre.IdCbteCble_Nota, '05', 'N/D', 'N/D Compras' AS Descripcion, cp_proveedor.IdProveedor, tb_persona.pe_nombreCompleto pr_nombre, 
                                     tb_persona.pe_cedulaRuc, cp_nota_DebCre.cn_serie1 + '-' + cp_nota_DebCre.cn_serie2 AS serie_fact, cp_nota_DebCre.cn_Nota AS num_factura, cp_nota_DebCre.cn_fecha, cp_nota_DebCre.cn_subtotal_iva AS subtotal_iva, 
                                     cp_nota_DebCre.cn_subtotal_siniva AS subtotal_sin_iva, cp_nota_DebCre.cn_valoriva AS valor_iva, cp_nota_DebCre.cn_Autorizacion, NULL AS serie_ret, NULL AS NumRetencion, NULL AS re_baseRetencion, NULL 
-                                    AS re_Porcen_retencion, NULL AS re_valor_retencion, NULL AS re_Codigo_impuesto, 0 AS RIVA_0, 0 AS RIVA_10, 0 AS RIVA_20, 0 AS RIVA_30, 0 AS RIVA_70, 0 AS RIVA_100, 0 AS RTF_0, 0 AS RTF_0_1, 0 AS RTF_1, 0 AS RTF_2, 
+                                    AS re_Porcen_retencion, NULL AS re_valor_retencion, NULL AS re_Codigo_impuesto, 0 AS RIVA_0, 0 AS RIVA_10, 0 AS RIVA_20, 0 AS RIVA_30, 0 AS RIVA_70, 0 AS RIVA_100, 0 AS RTF_0, 0 AS RTF_0_1, 0 AS RTF_1, 0 AS RTF_1_75, 0 AS RTF_2, 0 AS RTF_2_75, 
                                     0 AS RTF_8, 0 AS RTF_10, 0 AS RTF_100, 'N/D Compras' AS Documento, 'N/D Compras' AS descripcion_cod_sri, NULL AS re_tipoRet, NULL, cp_nota_DebCre.IdSucursal, tb_sucursal.Su_Descripcion
                   FROM     cp_nota_DebCre INNER JOIN
                                     cp_proveedor ON cp_nota_DebCre.IdEmpresa = cp_proveedor.IdEmpresa AND cp_nota_DebCre.IdProveedor = cp_proveedor.IdProveedor INNER JOIN

@@ -27,7 +27,7 @@ SELECT [IdEmpresa]			,[IdTipoCbte_Ogiro]		,[IdCbteCble_Ogiro]      ,[IdOrden_gir
       ,[subtotal_sin_iva]   ,[valor_iva]			,[NAutorizacion]		,[serie_ret]			 ,[NumRetencion]			,[re_baseRetencion]     ,[re_Porcen_retencion]
       ,[re_valor_retencion] ,[re_Codigo_impuesto]   ,[RIVA_0]				,[RIVA_10]				 ,[RIVA_20]					,[RIVA_30]				,[RIVA_70]      ,[RIVA_100]
       ,[RTF_0]				,[RTF_0_1]				,[RTF_1]				,[RTF_2]				 ,[RTF_8]					,[RTF_10]				,[RTF_100]      ,[Documento]      
-	  ,[descripcion_cod_sri],[re_tipoRet]			,[Num_Autorizacion_OG]  ,[IdSucursal]            ,[Su_Descripcion]
+	  ,[descripcion_cod_sri],[re_tipoRet]			,[Num_Autorizacion_OG]  ,[IdSucursal]            ,[Su_Descripcion]			,[RTF_1_75]				,[RTF_2_75]
   FROM web.VWCXP_007
    where IdEmpresa = @IdEmpresa and co_FechaFactura between @Fecha_ini and @Fecha_fin and @Mostrar_agrupado = 1 and IdSucursal between @IdSucursalIni and @IdSucursalFin
    --and IdTipoCbte_Ogiro = @IdTipoCbte and IdCbteCble_Ogiro = @IdCbteCble
@@ -37,7 +37,7 @@ SELECT [IdEmpresa]			,[IdTipoCbte_Ogiro]		,[IdCbteCble_Ogiro]      ,[IdOrden_gir
       ,[subtotal_sin_iva]   ,[valor_iva]		,[NAutorizacion]		,[serie_ret]			 ,[NumRetencion]			,0 AS [re_baseRetencion]     ,0 AS [re_Porcen_retencion]
       ,0 [re_valor_retencion] ,NULL [re_Codigo_impuesto]   ,SUM([RIVA_0])				,SUM([RIVA_10])				 ,SUM([RIVA_20])					,SUM([RIVA_30])				,SUM([RIVA_70])      ,SUM([RIVA_100])
       ,SUM([RTF_0])				,SUM([RTF_0_1])				,SUM([RTF_1])				,SUM([RTF_2])				 ,SUM([RTF_8])					,SUM([RTF_10])				,SUM([RTF_100])      ,[Documento]      
-	  ,NULL [descripcion_cod_sri], NULL[re_tipoRet]			,[Num_Autorizacion_OG]      ,[IdSucursal]            ,[Su_Descripcion]
+	  ,NULL [descripcion_cod_sri], NULL[re_tipoRet]			,[Num_Autorizacion_OG]      ,[IdSucursal]            ,[Su_Descripcion]					,SUM([RTF_1_75])				,SUM([RTF_2_75])
   FROM web.VWCXP_007
   where IdEmpresa = @IdEmpresa and co_FechaFactura between @Fecha_ini and @Fecha_fin and @Mostrar_agrupado = 0 and IdSucursal between @IdSucursalIni and @IdSucursalFin
   --and IdTipoCbte_Ogiro = @IdTipoCbte and IdCbteCble_Ogiro = @IdCbteCble

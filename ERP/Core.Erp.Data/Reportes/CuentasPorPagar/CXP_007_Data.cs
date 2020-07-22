@@ -60,6 +60,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  RTF_100 = q.RTF_100,
                                  RTF_2 = q.RTF_2,
                                  RTF_8 = q.RTF_8,
+                                 RTF_1_75 = q.RTF_1_75,
+                                 RTF_2_75 = q.RTF_2_75,
                                  Documento = q.Documento,
                                  descripcion_cod_sri = q.descripcion_cod_sri,
                                  re_tipoRet = q.re_tipoRet,

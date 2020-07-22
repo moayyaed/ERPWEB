@@ -283,7 +283,7 @@
             this.xrTableCell21.StylePriority.UseTextAlignment = false;
             this.xrTableCell21.Text = "xrTableCell21";
             this.xrTableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
-            this.xrTableCell21.TextFormatString = "{0:n0}";
+            this.xrTableCell21.TextFormatString = "{0:n2}";
             this.xrTableCell21.Weight = 0.13477089200095113D;
             // 
             // xrTableCell9
@@ -982,7 +982,7 @@
             this.p_IdSucursal,
             this.p_mostrar_anulados,
             this.p_TipoRetencion});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXP_009_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();

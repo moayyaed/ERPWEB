@@ -21,10 +21,7 @@ namespace Core.Erp.Data.Reportes.Base
             : base("name=Entities_reportes")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -58,7 +55,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWCXP_005_cancelaciones> VWCXP_005_cancelaciones { get; set; }
         public virtual DbSet<VWCXP_006> VWCXP_006 { get; set; }
         public virtual DbSet<VWCXP_006_diario> VWCXP_006_diario { get; set; }
-        public virtual DbSet<VWCXP_007> VWCXP_007 { get; set; }
         public virtual DbSet<VWCXP_011> VWCXP_011 { get; set; }
         public virtual DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public virtual DbSet<VWCXP_017> VWCXP_017 { get; set; }
@@ -139,6 +135,7 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWFAC_007> VWFAC_007 { get; set; }
         public virtual DbSet<VWCONTA_013> VWCONTA_013 { get; set; }
         public virtual DbSet<VWCXP_020> VWCXP_020 { get; set; }
+        public virtual DbSet<VWROL_029> VWROL_029 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {
@@ -402,35 +399,6 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("MostrarSaldo0", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_005_Result>("SPCONTA_005", idEmpresaParameter, idPunto_cargo_grupoParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter);
-        }
-    
-        public virtual ObjectResult<SPCXP_007_Result> SPCXP_007(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_ini, Nullable<System.DateTime> fecha_fin, Nullable<bool> mostrar_agrupado, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var fecha_iniParameter = fecha_ini.HasValue ?
-                new ObjectParameter("Fecha_ini", fecha_ini) :
-                new ObjectParameter("Fecha_ini", typeof(System.DateTime));
-    
-            var fecha_finParameter = fecha_fin.HasValue ?
-                new ObjectParameter("Fecha_fin", fecha_fin) :
-                new ObjectParameter("Fecha_fin", typeof(System.DateTime));
-    
-            var mostrar_agrupadoParameter = mostrar_agrupado.HasValue ?
-                new ObjectParameter("Mostrar_agrupado", mostrar_agrupado) :
-                new ObjectParameter("Mostrar_agrupado", typeof(bool));
-    
-            var idSucursalIniParameter = idSucursalIni.HasValue ?
-                new ObjectParameter("IdSucursalIni", idSucursalIni) :
-                new ObjectParameter("IdSucursalIni", typeof(int));
-    
-            var idSucursalFinParameter = idSucursalFin.HasValue ?
-                new ObjectParameter("IdSucursalFin", idSucursalFin) :
-                new ObjectParameter("IdSucursalFin", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_007_Result>("SPCXP_007", idEmpresaParameter, fecha_iniParameter, fecha_finParameter, mostrar_agrupadoParameter, idSucursalIniParameter, idSucursalFinParameter);
         }
     
         public virtual ObjectResult<SPCXP_010_Result> SPCXP_010(Nullable<int> idEmpresa, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAnulados)
@@ -2137,6 +2105,35 @@ namespace Core.Erp.Data.Reportes.Base
                 new ObjectParameter("idProveedorFIn", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_019_Result>("SPCXP_019", idempresaParameter, fechaParameter, idSucursalIniParameter, idSucursalFinParameter, idClaseProveedorIniParameter, idClaseProveedorFinParameter, idProveedorIniParameter, idProveedorFInParameter);
+        }
+    
+        public virtual ObjectResult<SPCXP_007_Result> SPCXP_007(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_ini, Nullable<System.DateTime> fecha_fin, Nullable<bool> mostrar_agrupado, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var fecha_iniParameter = fecha_ini.HasValue ?
+                new ObjectParameter("Fecha_ini", fecha_ini) :
+                new ObjectParameter("Fecha_ini", typeof(System.DateTime));
+    
+            var fecha_finParameter = fecha_fin.HasValue ?
+                new ObjectParameter("Fecha_fin", fecha_fin) :
+                new ObjectParameter("Fecha_fin", typeof(System.DateTime));
+    
+            var mostrar_agrupadoParameter = mostrar_agrupado.HasValue ?
+                new ObjectParameter("Mostrar_agrupado", mostrar_agrupado) :
+                new ObjectParameter("Mostrar_agrupado", typeof(bool));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_007_Result>("SPCXP_007", idEmpresaParameter, fecha_iniParameter, fecha_finParameter, mostrar_agrupadoParameter, idSucursalIniParameter, idSucursalFinParameter);
         }
     }
 }

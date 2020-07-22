@@ -265,6 +265,14 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_area" Width="1.5" PointX="29.375" PointY="13.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_area_x_departamento" Width="1.5" PointX="29.375" PointY="16.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwRo_periodo_x_ro_Nomina_TipoLiqui" Width="1.5" PointX="7.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_AjusteImpuestoRenta" Width="1.5" PointX="31.375" PointY="13.125" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_AjusteImpuestoRentaDet" Width="1.5" PointX="36.625" PointY="36" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_AjusteImpuestoRentaDetOI" Width="1.5" PointX="33.625" PointY="39" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" Width="1.5" PointX="27.375" PointY="31.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
