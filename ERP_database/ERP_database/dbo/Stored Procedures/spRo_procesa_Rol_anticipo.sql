@@ -1,6 +1,4 @@
-﻿
-
-CREATE PROCEDURE [dbo].[spRo_procesa_Rol_anticipo] (
+﻿CREATE PROCEDURE [dbo].[spRo_procesa_Rol_anticipo] (
 @IdEmpresa int,
 @IdNomina numeric,
 @IdNominaTipo numeric,
@@ -93,9 +91,10 @@ FROM            dbo.ro_contrato AS cont INNER JOIN
                 dbo.ro_empleado AS emp ON cont.IdEmpresa = emp.IdEmpresa AND cont.IdEmpleado = emp.IdEmpleado
 where cont.IdEmpresa=@IdEmpresa 
 and cont.IdNomina=@IdNomina
-and cont.EstadoContrato!='ECT_LIQ'
+and cont.EstadoContrato<>'ECT_LIQ'
 and (emp.em_status!='EST_LIQ')
 and (emp.em_status!='EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
+AND CONT.FechaInicio between @Fi and @Ff
 and emp.IdSucursal = @IdSucursalFin
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando sueldo al personal que no se les paga por horas-------------------------------------------------------------------------------------------<
@@ -113,10 +112,10 @@ FROM            dbo.ro_contrato AS cont INNER JOIN
                 dbo.ro_empleado AS emp ON cont.IdEmpresa = emp.IdEmpresa AND cont.IdEmpleado = emp.IdEmpleado
 where cont.IdEmpresa=@IdEmpresa 
 and cont.IdNomina=@IdNomina
-and cont.EstadoContrato!='ECT_LIQ'
-and (emp.em_status!='EST_LIQ')
+and cont.EstadoContrato<>'ECT_LIQ'
+and (emp.em_status<>'EST_LIQ')
 and CAST( cont.FechaInicio as date)<=@Ff
-and (emp.em_status!='EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
+and (emp.em_status<>'EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
 and emp.IdSucursal = @IdSucursalFin
 and emp.Pago_por_horas=0
 
@@ -150,9 +149,9 @@ FROM            dbo.ro_rol AS rol INNER JOIN
 						 and pe_x_nom.IdNomina_TipoLiqui=2
 where cont.IdEmpresa=@IdEmpresa 
 and cont.IdNomina=@IdNomina
-and cont.EstadoContrato!='ECT_LIQ'
+and cont.EstadoContrato<>'ECT_LIQ'
 and CAST( cont.FechaInicio as date)<=@Ff
-and (emp.em_status!='EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
+and (emp.em_status<>'EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
 and emp.IdSucursal = @IdSucursalFin
 and emp.Pago_por_horas=1
 group by emp.IdSucursal, cont.IdEmpleado, emp.em_AnticipoSueldo
@@ -180,7 +179,7 @@ and novc.IdNomina_TipoLiqui=@IdNominaTipo
 and nov.FechaPago between @Fi and @Ff
 and novc.Estado='A'
 and nov.EstadoCobro='PEN'
-and (emp.em_status!='EST_LIQ')
+and (emp.em_status<>'EST_LIQ')
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 and emp.IdSucursal = @IdSucursalFin
 group by novc.IdEmpresa,novc.IdEmpleado,nov.IdRubro,rub.ru_orden,rub.ru_descripcion, emp.IdSucursal
@@ -205,7 +204,7 @@ and pred.IdNominaTipoLiqui=@IdNominaTipo
 and pred.FechaPago between @Fi and @Ff
 and pred.Estado=1
 and pred.EstadoPago='PEN'
-and (emp.em_status!='EST_LIQ')
+and (emp.em_status<>'EST_LIQ')
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 AND (emp.em_fechaSalida IS NULL OR emp.em_fechaSalida BETWEEN @Fi and @Ff)
 and emp.IdSucursal = @IdSucursalFin
@@ -229,7 +228,7 @@ and rub_fij.IdNomina_tipo=@IdNomina
 and rub_fij.IdNomina_TipoLiqui=@IdNominaTipo
 and (rub_fij.es_indifinido=1 or ( @Fi between rub_fij.FechaFin and rub_fij.FechaFin and @Ff between rub_fij.FechaFin and rub_fij.FechaFin))
 --and rub_fij.Estado='A'
-and (emp.em_status!='EST_LIQ')
+and (emp.em_status<>'EST_LIQ')
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 AND (emp.em_fechaSalida IS NULL OR emp.em_fechaSalida BETWEEN @Fi and @Ff)
 and emp.IdSucursal= @IdSucursalFin

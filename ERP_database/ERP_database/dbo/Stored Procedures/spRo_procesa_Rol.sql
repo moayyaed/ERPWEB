@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[spRo_procesa_Rol] (
+﻿
+CREATE PROCEDURE [dbo].[spRo_procesa_Rol] (
 @IdEmpresa int,
 @IdNomina numeric,
 @IdNominaTipo numeric,
@@ -228,6 +229,7 @@ and rub_fij.IdNomina_TipoLiqui=@IdNominaTipo
 and (emp.em_status<>'EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 and emp.IdSucursal = @IdSucursalFin
+and rub_fij.FechaInicio <= @Fi and rub_fij.FechaFin >=@Ff
 and cont.IdNomina=@IdNomina
 and cont.EstadoContrato<>'ECT_LIQ'
 /*
@@ -280,7 +282,7 @@ and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
 and rub.ru_tipo='I' 
 and rub.rub_aplica_IESS=1
-and cont.IdNomina=1
+and cont.IdNomina=@IdNomina
 and cont.EstadoContrato<>'ECT_LIQ'
 and rol_det.IdRol=@IdRol
 and emp.IdSucursal = @IdSucursalFin
@@ -393,7 +395,8 @@ FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
                          dbo.ro_empleado AS emp ON rol_det.IdEmpresa = emp.IdEmpresa AND rol_det.IdEmpleado = emp.IdEmpleado INNER JOIN
                          dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado
 where rol_det.IdEmpresa=@IdEmpresa
-and ro_rol.IdNominaTipo=@IdNomina
+and cont.IdNomina=@IdNomina
+and @IdNomina = 1
 and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
 and rub.ru_tipo='I' and rub.rub_aplica_IESS=1
@@ -430,7 +433,8 @@ where emp.IdEmpresa=cont.IdEmpresa
 and emp.IdEmpleado=cont.IdEmpleado
 and cont.EstadoContrato<>'ECT_LIQ'
 and (emp.em_status<>'EST_LIQ')
-AND cont.IdNomina=@IdNomina
+and cont.IdNomina=@IdNomina
+and @IdNomina = 1
 and emp.IdEmpleado not in(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
 where acum.IdEmpresa= emp.IdEmpresa
 and acum.IdEmpresa=emp.IdEmpresa
@@ -674,7 +678,8 @@ FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
                          dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado INNER JOIN
                          dbo.ro_empleado_x_rubro_acumulado AS emp_x_rub_acum ON emp.IdEmpresa = emp_x_rub_acum.IdEmpresa AND emp.IdEmpleado = emp_x_rub_acum.IdEmpleado
 where rol_det.IdEmpresa=@IdEmpresa
-and ro_rol.IdNominaTipo=@IdNomina
+and cont.IdNomina=@IdNomina
+and @IdNomina = 1
 and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
 and rub.ru_tipo='I' and rub.rub_aplica_IESS=1
@@ -714,6 +719,7 @@ and emp.IdSucursal = @IdSucursalFin
 and cont.EstadoContrato <> 'ECT_LIQ'
 and emp.IdSucursal = @IdSucursalFin
 and cont.IdNomina=@IdNomina
+and @IdNomina = 1
 and emp_x_rub_acum.IdRubro=@IdRubro_Provision
 and emp.IdEmpresa=@IdEmpresa
 group by emp.IdEmpresa,emp.IdEmpleado, emp.em_fechaSalida, cont.FechaInicio, cont.FechaFin, emp.em_status, emp.IdSucursal, emp.Pago_por_horas
@@ -776,7 +782,7 @@ and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
 and rub.ru_tipo='I' 
 and rub.rub_aplica_IESS=1
-and cont.IdNomina=1
+and cont.IdNomina=@IdNomina
 and rol_det.IdRol=@IdRol
 and emp.IdSucursal = @IdSucursalFin
 and cont.IdNomina=@IdNomina
