@@ -59,5 +59,43 @@ namespace Core.Erp.Bus.SeguridadAcceso
                 throw;
             }
         }
+
+        public seg_Menu_x_Empresa_x_Usuario_Info getInfo(int IdEmpresa, string IdUsuario, int IdMenu)
+        {
+            try
+            {
+                return odata.getInfo(IdEmpresa, IdUsuario, IdMenu);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool guardarDB(seg_Menu_x_Empresa_x_Usuario_Info info)
+        {
+            try
+            {
+                return odata.guardarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool modificarDB(seg_Menu_x_Empresa_x_Usuario_Info info)
+        {
+            try
+            {
+                return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

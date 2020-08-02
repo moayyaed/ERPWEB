@@ -29,17 +29,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             #endregion
             ro_periodo_x_ro_Nomina_TipoLiqui_Info model = new ro_periodo_x_ro_Nomina_TipoLiqui_Info
             {
+                IdNomina_Tipo = 1,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdEmpresa=Convert.ToInt32(SessionFixed.IdEmpresa)
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
             };
-            cargar_combos(0,0);
+            cargar_combos(model.IdNomina_Tipo, 0);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(ro_periodo_x_ro_Nomina_TipoLiqui_Info model)
         {
             cargar_combos(model.IdNomina_Tipo, model.IdNomina_TipoLiqui);
-            List_det.set_list(periodos_x_nominas.get_list(model.IdEmpresa, model.IdNomina_Tipo, model.IdNomina_TipoLiqui), model.IdTransaccionSession);
+            var lst = periodos_x_nominas.get_list(model.IdEmpresa, model.IdNomina_Tipo, model.IdNomina_TipoLiqui);
+            List_det.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
@@ -52,8 +54,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         }
         #endregion
-
         #region grillas
+
+
         public ActionResult GridViewPartial_periodos()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
@@ -66,7 +69,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             var model = List_det.get_list(Convert.ToInt32(SessionFixed.IdTransaccionSessionActual)).Where(q => q.seleccionado == true).ToList();
             return PartialView("_GridViewPartial_periodos_por_nominas", model);
         }
-        public void EditingUpdate(int IdPeriodo =0)
+        public void EditingUpdate(int IdPeriodo = 0)
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             List_det.UpdateRow(IdPeriodo, Convert.ToInt32(SessionFixed.IdTransaccionSessionActual));
@@ -74,22 +77,28 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
 
         #region Json
-        public JsonResult guardar(int IdEmpresa = 0,int IdNomina_Tipo=0,int IdNomina_TipoLiqui=0)
+        public JsonResult guardar(int IdEmpresa = 0, int IdNomina_Tipo = 0, int IdNomina_TipoLiqui = 0)
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
             var lista_grabar = List_det.get_list(Convert.ToInt32(SessionFixed.IdTransaccionSessionActual)).Where(q => q.seleccionado == true).ToList();
-                var resultado = periodos_x_nominas.guardarDB(lista_grabar, IdEmpresa,IdNomina_Tipo,IdNomina_TipoLiqui);
+            var resultado = periodos_x_nominas.guardarDB(lista_grabar, IdEmpresa, IdNomina_Tipo, IdNomina_TipoLiqui);
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        
 
+        public JsonResult SetDatos(int IdNomina_Tipo = 0, int IdNomina_TipoLiqui = 0)
+        {
+            SessionFixed.IdNomina_Tipo = IdNomina_Tipo.ToString();
+            SessionFixed.IdNomina_TipoLiqui = IdNomina_TipoLiqui.ToString();
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
-    
+
     public class ro_periodo_x_ro_Nomina_TipoLiqui_Info_list
     {
         string variable = "ro_periodo_x_ro_Nomina_TipoLiqui_Info";
+        ro_periodo_x_ro_Nomina_TipoLiqui_Bus bus_nomina = new ro_periodo_x_ro_Nomina_TipoLiqui_Bus();
         public List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] == null)
@@ -108,13 +117,19 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public void UpdateRow(int IdPeriodo, decimal IdTransaccionSession)
         {
-            ro_periodo_x_ro_Nomina_TipoLiqui_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdPeriodo == IdPeriodo).FirstOrDefault();
+            var lst = get_list(IdTransaccionSession);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ro_periodo_x_ro_Nomina_TipoLiqui_Info edited_info = lst.Where(m => m.IdPeriodo == IdPeriodo).FirstOrDefault();
+            edited_info.IdNomina_Tipo = Convert.ToInt32(SessionFixed.IdNomina_Tipo);
+            edited_info.IdNomina_TipoLiqui = Convert.ToInt32(SessionFixed.IdNomina_TipoLiqui);
+
             if (edited_info != null)
             {
                 edited_info.seleccionado = !edited_info.seleccionado;
-                //edited_info.Procesado = "N";
             }
-                
+
+            var lst_guardar = lst.Where(q=>q.seleccionado==true).ToList();
+            bus_nomina.guardarDB(lst_guardar, IdEmpresa, Convert.ToInt32(SessionFixed.IdNomina_Tipo), Convert.ToInt32(SessionFixed.IdNomina_TipoLiqui));
         }
     }
 }
