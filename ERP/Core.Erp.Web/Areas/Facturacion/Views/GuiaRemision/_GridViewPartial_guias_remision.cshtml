@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_guias_remision";
-        settings.CallbackRouteValues = new { Controller = "GuiaRemision", Action = "GridViewPartial_guias_remision", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin };
+        settings.CallbackRouteValues = new { Controller = "GuiaRemision", Action = "GridViewPartial_guias_remision", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdGuiaRemision";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -66,24 +66,31 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if ( (Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "IdCbteVta")) ==0 || DataBinder.Eval(tc.DataItem, "IdCbteVta") == null) && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && string.IsNullOrEmpty(Convert.ToString(DataBinder.Eval(tc.DataItem, "NUAutorizacion"))))
-                {
-                    ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }) + "&nbsp;");
-                }
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }));
+
+                //if ( (Convert.ToDecimal(DataBinder.Eval(tc.DataItem, "IdCbteVta")) ==0 || DataBinder.Eval(tc.DataItem, "IdCbteVta") == null) && Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true && string.IsNullOrEmpty(Convert.ToString(DataBinder.Eval(tc.DataItem, "NUAutorizacion"))))
+                //{
+                //    ViewContext.Writer.Write(
+                //    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") }) + "&nbsp;");
+                //}
+                //if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
+                //{
+                //    ViewContext.Writer.Write(
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdGuiaRemision = DataBinder.Eval(tc.DataItem, "IdGuiaRemision") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
+
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

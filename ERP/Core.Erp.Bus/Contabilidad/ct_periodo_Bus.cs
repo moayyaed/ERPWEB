@@ -52,6 +52,19 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
+        public bool guardarMasivoDB(ct_periodo_Info info)
+        {
+            try
+            {
+                return odata.guardarMasivoDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool modificarDB(ct_periodo_Info info)
         {
             try

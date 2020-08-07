@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Facturacion;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     public class ProbabilidadCobroController : Controller
     {
         #region Variables
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_ProbabilidadCobro_Bus bus_probabilidad = new fa_ProbabilidadCobro_Bus();
         fa_ProbabilidadCobroDet_Bus bus_probabilidad_det = new fa_ProbabilidadCobroDet_Bus();
         fa_ProbabilidadCobro_List Lista_ProbabilidadCobro = new fa_ProbabilidadCobro_List();
@@ -31,6 +34,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ProbabilidadCobro", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
 
             fa_ProbabilidadCobro_Info model = new fa_ProbabilidadCobro_Info
             {
@@ -44,12 +53,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ProbabilidadCobro()
+        public ActionResult GridViewPartial_ProbabilidadCobro(bool Nuevo= false)
         {
             try
             {
                 SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-
+                ViewBag.Nuevo = Nuevo;
                 List<fa_ProbabilidadCobro_Info> model = Lista_ProbabilidadCobro.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return PartialView("_GridViewPartial_ProbabilidadCobro", model);
             }
@@ -72,7 +81,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
-
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ProbabilidadCobro", "Index");
+                if (!info.Nuevo)
+                    return RedirectToAction("Index");
+                #endregion
                 fa_ProbabilidadCobro_Info model = new fa_ProbabilidadCobro_Info
                 {
                     IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -98,8 +111,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info.IdUsuarioCreacion = SessionFixed.IdUsuario;
                 info.lst_detalle = Lista_ProbabilidadCobroDet.get_list(info.IdTransaccionSession);
                 var lst = bus_probabilidad.get_list(info.IdEmpresa, false);
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     if (info.MostrarNoAsignadas == false)
                     {
                         if (lst.Where(q => q.MostrarNoAsignadas == true).Count() > 0)
@@ -111,7 +124,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 return View(info);
                             }
                             else
-                                return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
+                                return RedirectToAction("Consultar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
                         }
                         else
                         {
@@ -128,11 +141,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                                 return View(info);
                             }
                             else
-                                return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
+                                return RedirectToAction("Consultar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
                     }
-                }
-                else
-                    return View(info);
+                //}
+                //else
+                //    return View(info);
 
             }
             catch (Exception)
@@ -141,7 +154,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdEmpresa=0, int IdProbabilidad=0, bool Exito = false)
+        public ActionResult Consultar(int IdEmpresa=0, int IdProbabilidad=0, bool Exito = false)
         {
             try
             {
@@ -150,6 +163,49 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     return RedirectToAction("Login", new { Area = "", Controller = "Account" });
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+                var model = bus_probabilidad.get_info(IdEmpresa, IdProbabilidad);
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                model.lst_detalle = bus_probabilidad_det.get_list(IdEmpresa, IdProbabilidad);
+
+                Lista_ProbabilidadCobroDet.set_list(model.lst_detalle, model.IdTransaccionSession);
+
+                if (Exito)
+                    ViewBag.MensajeSuccess = MensajeSuccess;
+
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ProbabilidadCobro", "Index");
+                if (model.Estado == false)
+                {
+                    info.Modificar = false;
+                    info.Anular = false;
+                }
+                ViewBag.Nuevo = info.Nuevo;
+                ViewBag.Modificar = info.Modificar;
+                ViewBag.Anular = info.Anular;
+                #endregion
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public ActionResult Modificar(int IdEmpresa = 0, int IdProbabilidad = 0, bool Exito = false)
+        {
+            try
+            {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ProbabilidadCobro", "Index");
+                if (!info.Nuevo)
+                    return RedirectToAction("Index");
                 #endregion
                 var model = bus_probabilidad.get_info(IdEmpresa, IdProbabilidad);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
@@ -175,8 +231,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info.IdUsuarioModificacion = SessionFixed.IdUsuario;
                 info.lst_detalle = Lista_ProbabilidadCobroDet.get_list(info.IdTransaccionSession);
 
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     if (!bus_probabilidad.ModificarDB(info))
                     {
                         ViewBag.mensaje = "No se ha podido guardar el registro";
@@ -184,10 +240,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                         return View(info);
                     }
                     else
-                        return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
-                }
-                else
-                    return View(info);
+                        return RedirectToAction("Consultar", new { IdEmpresa = info.IdEmpresa, IdProbabilidad = info.IdProbabilidad, Exito = true });
+                //}
+                //else
+                //    return View(info);
 
             }
             catch (Exception)
@@ -207,6 +263,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ProbabilidadCobro", "Index");
+                if (!info.Nuevo)
+                    return RedirectToAction("Index");
+                #endregion
+
                 var model = bus_probabilidad.get_info(IdEmpresa, IdProbabilidad);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 model.lst_detalle = bus_probabilidad_det.get_list(IdEmpresa, IdProbabilidad);

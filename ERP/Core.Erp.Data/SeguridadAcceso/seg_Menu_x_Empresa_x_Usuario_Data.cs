@@ -31,9 +31,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                                  IdEmpresa = meu.IdEmpresa,
                                  IdUsuario = meu.IdUsuario,
                                  IdMenu = meu.IdMenu,
-                                 Lectura = meu.Lectura,
-                                 Escritura = meu.Escritura,
-                                 Eliminacion = meu.Eliminacion,
+                                 Nuevo = meu.Nuevo,
+                                 Modificar = meu.Modificar,
+                                 Anular = meu.Anular,
                                  IdMenuPadre = m.IdMenuPadre,
                                  DescripcionMenu = m.DescripcionMenu,
                                  info_menu = new seg_Menu_Info
@@ -62,9 +62,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                                         IdMenu = q.IdMenu,
                                         IdMenuPadre = q.IdMenuPadre,
                                         DescripcionMenu = q.DescripcionMenu,
-                                        Lectura = true,
-                                        Escritura = true,
-                                        Eliminacion = true,
+                                        Nuevo = true,
+                                        Modificar = true,
+                                        Anular = true,
                                         info_menu = new seg_Menu_Info
                                         {
                                             IdMenu = q.IdMenu,
@@ -108,9 +108,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                                  IdEmpresa = meu.IdEmpresa,
                                  IdUsuario = meu.IdUsuario,
                                  IdMenu = meu.IdMenu,
-                                 Lectura = meu.Lectura,
-                                 Escritura = meu.Escritura,
-                                 Eliminacion = meu.Eliminacion,
+                                 Nuevo = meu.Nuevo,
+                                 Modificar = meu.Modificar,
+                                 Anular = meu.Anular,
                                  info_menu = new seg_Menu_Info
                                  {
                                      IdMenu = m.IdMenu,
@@ -149,9 +149,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdEmpresa = Entity.IdEmpresa,
                         IdMenu = Entity.IdMenu,
                         IdUsuario = Entity.IdUsuario,
-                        Lectura = Entity.Lectura,
-                        Escritura = Entity.Escritura,
-                        Eliminacion = Entity.Eliminacion,
+                        Nuevo = Entity.Nuevo,
+                        Modificar = Entity.Modificar,
+                        Anular = Entity.Anular,
                     };
                 }
 
@@ -194,9 +194,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                             IdEmpresa = item.IdEmpresa,
                             IdUsuario = item.IdUsuario,
                             IdMenu = item.IdMenu,
-                            Lectura = item.Lectura,
-                            Escritura = item.Escritura,
-                            Eliminacion = item.Eliminacion
+                            Nuevo = item.Nuevo,
+                            Modificar = item.Modificar,
+                            Anular = item.Anular
                         };
                         Context.seg_Menu_x_Empresa_x_Usuario.Add(Entity);
                     }
@@ -227,9 +227,9 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdEmpresa = info.IdEmpresa,
                         IdMenu = info.IdMenu,
                         IdUsuario = info.IdUsuario,
-                        Lectura = info.Lectura,
-                        Escritura = info.Escritura,
-                        Eliminacion = info.Eliminacion,
+                        Nuevo = info.Nuevo,
+                        Modificar = info.Modificar,
+                        Anular = info.Anular,
                     };
                     Context.seg_Menu_x_Empresa_x_Usuario.Add(Entity);
 
@@ -257,14 +257,46 @@ namespace Core.Erp.Data.SeguridadAcceso
                     if (Entity == null)
                         return false;
 
-                    Entity.Lectura = info.Lectura;
-                    Entity.Escritura = info.Escritura;
-                    Entity.Eliminacion = info.Eliminacion;
+                    Entity.Nuevo = info.Nuevo;
+                    Entity.Modificar = info.Modificar;
+                    Entity.Anular = info.Anular;
 
                     Context.SaveChanges();
                 }
 
                 return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public seg_Menu_x_Empresa_x_Usuario_Info get_list_menu_accion(int IdEmpresa, string IdUsuario, string Area, string NomControlador, string Accion)
+        {
+            try
+            {
+                seg_Menu_x_Empresa_x_Usuario_Info info = new seg_Menu_x_Empresa_x_Usuario_Info();
+
+                using (Entities_seguridad_acceso odata = new Entities_seguridad_acceso())
+                {
+                    var Entity = odata.seg_Menu_x_Empresa_x_Usuario.Include("seg_Menu").Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario && (q.seg_Menu == null ? "" : q.seg_Menu.web_nom_Controller) == NomControlador && (q.seg_Menu == null ? "" : q.seg_Menu.web_nom_Area) == Area && (q.seg_Menu == null ? "" : q.seg_Menu.web_nom_Action) == Accion).FirstOrDefault();
+                    if (Entity == null)
+                        return new seg_Menu_x_Empresa_x_Usuario_Info();
+
+                    info = new seg_Menu_x_Empresa_x_Usuario_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdUsuario = Entity.IdUsuario,
+                        IdMenu = Entity.IdMenu,
+                        Nuevo = Entity.Nuevo,
+                        Modificar = Entity.Modificar,
+                        Anular = Entity.Anular,
+                    };
+                }
+
+                return info;
             }
             catch (Exception)
             {

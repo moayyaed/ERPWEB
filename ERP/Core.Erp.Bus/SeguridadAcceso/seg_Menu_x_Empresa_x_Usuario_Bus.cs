@@ -97,5 +97,18 @@ namespace Core.Erp.Bus.SeguridadAcceso
                 throw;
             }
         }
+
+        public seg_Menu_x_Empresa_x_Usuario_Info get_list_menu_accion(int IdEmpresa, string IdUsuario, string Area, string NomControlador, string Accion)
+        {
+            try
+            {
+                return odata.get_list_menu_accion(IdEmpresa, IdUsuario, Area, NomControlador, Accion);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

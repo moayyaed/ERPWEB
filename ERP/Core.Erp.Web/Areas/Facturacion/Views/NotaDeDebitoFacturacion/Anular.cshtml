@@ -484,7 +484,7 @@ function cargar_lista_contactos() {
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group has-error">
                     <label for="MotiAnula">Motivo anulación*</label>
                     @Html.TextAreaFor(q => q.MotiAnula, new { @class = "form-control", @rows = 3 })
                     @Html.ValidationMessageFor(q => q.MotiAnula, "", new { @class = "text-danger" })

@@ -38,6 +38,19 @@ namespace Core.Erp.Bus.Facturacion
             }
         }
 
+        public fa_proforma_Info get_info_vw(int IdEmpresa, int IdSucursal, decimal IdProforma)
+        {
+            try
+            {
+                return odata.get_info_vw(IdEmpresa, IdSucursal, IdProforma);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool guardarDB(fa_proforma_Info info)
         {
             try

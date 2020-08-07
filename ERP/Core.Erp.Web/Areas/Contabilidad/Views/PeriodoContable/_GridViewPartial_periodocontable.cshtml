@@ -75,9 +75,11 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString() + "&nbsp; / &nbsp;" +
+                    Html.ActionLink("Nuevo Masivo", "NuevoMasivo").ToHtmlString()
                 );
             });
+
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);

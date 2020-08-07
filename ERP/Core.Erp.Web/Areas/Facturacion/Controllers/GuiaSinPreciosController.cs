@@ -15,6 +15,8 @@ using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -22,6 +24,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     public class GuiaSinPreciosController : Controller
     {
         #region variables
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         fa_guia_remision_Bus bus_guia = new fa_guia_remision_Bus();
         fa_guia_remision_det_Bus bus_detalle = new fa_guia_remision_det_Bus();
@@ -105,17 +108,30 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public ActionResult Index()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info();
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
             return View(model);
         }
 
 
-        public ActionResult GridViewPartial_guias_remision(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_guias_remision(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
@@ -123,6 +139,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             if (IdSucursal == 0)
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             ViewBag.IdSucursal = IdSucursal;
+            ViewBag.Nuevo = Nuevo;
 
             List<fa_guia_remision_Info> model = new List<fa_guia_remision_Info>();
             model = bus_guia.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
@@ -215,6 +232,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_guia_remision_Info model = new fa_guia_remision_Info
             {
 
@@ -270,7 +293,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     return View(model);
                 }
 
-                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
             }
             catch (Exception ex)
             {
@@ -281,6 +304,62 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             }
         }
+
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdGuiaRemision = 0, bool Exito = false)
+        {
+            bus_guia = new fa_guia_remision_Bus();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            fa_guia_remision_Info model = bus_guia.get_info(IdEmpresa, IdGuiaRemision);
+            model.GenerarFactura = false;
+
+            if (model == null)
+                return RedirectToAction("Index");
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdGuiaRemision);
+            detalle_info.set_list(model.lst_detalle, model.IdTransaccionSession);
+            List_rel.set_list(bus_detalle_x_factura.get_list(IdEmpresa, IdGuiaRemision), model.IdTransaccionSession);
+            cargar_combos(model);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+
+            ViewBag.MostrarBoton = true;
+            /*if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.gi_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }*/
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            else
+            {
+                if ((model.IdCbteVta != null || model.IdCbteVta != 0) && !string.IsNullOrEmpty(model.NUAutorizacion))
+                {
+                    info.Modificar = false;
+                }
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            return View(model);
+        }
+
         public ActionResult Modificar(int IdEmpresa = 0, decimal IdGuiaRemision = 0, bool Exito = false)
         {
             bus_guia = new fa_guia_remision_Bus();
@@ -313,6 +392,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.MostrarBoton = false;
             }*/
             #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             return View(model);
         }
         [HttpPost]
@@ -348,7 +434,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 }
 
                 MensajeSuccess = "Registro actualizado exitósamente";
-                return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdGuiaRemision = model.IdGuiaRemision, Exito = true });
             }
             catch (Exception ex)
             {
@@ -383,6 +469,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = false;
             }*/
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaSinPrecios", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
             return View(model);
         }

@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_ProbabilidadCobro";
-        settings.CallbackRouteValues = new { Controller = "ProbabilidadCobro", Action = "GridViewPartial_ProbabilidadCobro" };
+        settings.CallbackRouteValues = new { Controller = "ProbabilidadCobro", Action = "GridViewPartial_ProbabilidadCobro", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdProbabilidad";
         //Configuración para que la grilla no muestre texto completo
@@ -60,21 +60,26 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProbabilidad = DataBinder.Eval(tc.DataItem, "IdProbabilidad") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new{ IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa") , IdProbabilidad = DataBinder.Eval(tc.DataItem, "IdProbabilidad") },
-                        new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                ViewContext.Writer.Write(
+                        Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProbabilidad = DataBinder.Eval(tc.DataItem, "IdProbabilidad") })
                     );
-                }
-
+                //if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
+                //{
+                //    ViewContext.Writer.Write(
+                //        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProbabilidad = DataBinder.Eval(tc.DataItem, "IdProbabilidad") }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new{ IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa") , IdProbabilidad = DataBinder.Eval(tc.DataItem, "IdProbabilidad") },
+                //        new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa  = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

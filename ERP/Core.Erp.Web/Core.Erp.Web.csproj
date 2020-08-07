@@ -10482,6 +10482,15 @@
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_CmbEmpleado.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Factura\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PeriodoContable\NuevoMasivo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeDebitoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeCreditoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaRemision\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Proforma\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CambioProducto\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -2,11 +2,13 @@
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Inventario.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -23,6 +25,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     public class ProformaController : Controller
     {
         #region Variables
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
         fa_proforma_det_Bus bus_proforma_det = new fa_proforma_det_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
@@ -52,6 +55,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -63,18 +73,27 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             CargarCombosConsulta(model.IdEmpresa);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_proforma(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal =0)
+        public ActionResult GridViewPartial_proforma(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal =0, bool Nuevo=false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             List<fa_proforma_Info> model = new List<fa_proforma_Info>();
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
             ViewBag.IdSucursal = IdSucursal;
+            ViewBag.Nuevo = Nuevo;
+
             model = bus_proforma.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
             return PartialView("_GridViewPartial_proforma", model);
         }
@@ -198,6 +217,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_proforma_Info model = new fa_proforma_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -232,9 +257,57 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-           return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
+           return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
         }
 
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            fa_proforma_Info model = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
+            var info_vista = bus_proforma.get_info_vw(IdEmpresa, IdSucursal, IdProforma);
+            model.EstadoCierre = (info_vista == null ? "" : info_vista.EstadoCierre);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            if (model.estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdEntidad = model.IdCliente;
+            model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdProforma);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+            cargar_combos(model);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.pf_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
+        }
         public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, bool Exito = false)
         {
             #region Validar Session
@@ -243,6 +316,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_proforma_Info model = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
             if (model == null)
                 return RedirectToAction("Index");
@@ -285,7 +364,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdProforma = model.IdProforma, Exito = true });
         }
 
         public ActionResult ModificarProFact(int IdEmpresa = 0, int IdSucursal = 0, decimal IdProforma = 0, bool Exito = false)
@@ -296,6 +375,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_proforma_Info model = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
             if (model == null)
                 return RedirectToAction("Index");
@@ -315,7 +400,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-
+            
             return View(model);
         }
 
@@ -348,6 +433,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_proforma_Info model = bus_proforma.get_info(IdEmpresa, IdSucursal, IdProforma);
             if (model == null)
                 return RedirectToAction("Index");
@@ -364,6 +455,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
+
             return View(model);
         }
 

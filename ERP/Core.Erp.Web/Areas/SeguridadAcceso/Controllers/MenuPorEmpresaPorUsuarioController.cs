@@ -269,9 +269,9 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public void UpdateRow(seg_Menu_x_Empresa_x_Usuario_Info info)
         {
             seg_Menu_x_Empresa_x_Usuario_Info edited_info = get_list().Where(q => q.IdMenu == info.IdMenu).FirstOrDefault();
-            edited_info.Lectura = info.Lectura;
-            edited_info.Escritura = info.Escritura;
-            edited_info.Eliminacion = info.Eliminacion;
+            edited_info.Nuevo = info.Nuevo;
+            edited_info.Modificar = info.Modificar;
+            edited_info.Anular = info.Anular;
 
             var existe = bus_permisos.getInfo(edited_info.IdEmpresa, edited_info.IdUsuario, edited_info.IdMenu);
             if (existe == null && edited_info.seleccionado == true)
