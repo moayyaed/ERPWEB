@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Banco.ba_Cbte_Ban_Info
 @{
-    ViewBag.Title = ("Anular cheque" + " con ID #" + @Model.IdCbteCble);
+    ViewBag.Title = ("Consultar cheque" + " con ID #" + @Model.IdCbteCble);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,8 +8,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
-    $(function () {
+
+    function ImprimirCBTE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_003?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+        win.focus();
+    }
+
+    $(function() {
+        $("#Error").hide();
+
         $("#IdSucursal").change(function () {
             GetListBancoPorSucursal();
         });
@@ -18,10 +29,11 @@
             actualizarGridDetFlujo();
         });
 
+        GetNumCheque();
         actualizarGridDetFlujo();
     })
 
-function GetListBancoPorSucursal() {
+    function GetListBancoPorSucursal() {
         $("#IdBanco").empty();
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
@@ -47,8 +59,6 @@ function GetListBancoPorSucursal() {
     }
     var selectedIDs;
     function OnBeginCallback(s, e) {
-        e.customArgs["IdTipo_Persona"] = $("#IdTipo_Persona").val();
-        e.customArgs["Entidad"] = IdEntidad.GetValue();
         e.customArgs["selectedIDs"] = selectedIDs;
     }
     function OnSelectionChanged(s, e) {
@@ -58,16 +68,69 @@ function GetListBancoPorSucursal() {
         //Capture all selected keys
         selectedIDs = values.join(',');
     }
+
+    function ImportarSolicitud() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSolicitudPago: $("#IdSolicitudPago").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ImportarSolicitud", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.GiradoA.length > 0) {
+                    var ob = $("#cb_Cheque").val();
+                    $("#cb_giradoA").val(data.GiradoA);
+                    var nombre = $("#cb_giradoA").val();
+                    $("#cb_Observacion").val("CH# " + ob + " - " + nombre + " " + data.Observacion);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
     function MostrarModal() {
         selectedIDs = "";
-        GridView_cheque_op_x_cruzar.PerformCallback();
-        GridView_cheque_op_x_cruzar.UnselectRows();
-        $("#OpModal").modal("show");
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdTipoPersona: $("#IdTipo_Persona").val(),
+            IdEntidad: IdEntidad.GetValue(),
+            IdSolicitudPago: $("#IdSolicitudPago").val(),
+            IdSucursal: $("#IdSucursal").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPorCruzar", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_cheque_op_x_cruzar.PerformCallback();
+                GridView_cheque_op_x_cruzar.UnselectRows();
+                $("#OpModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddOP() {
         var datos = {
-            IDs: selectedIDs
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
         }
         $.ajax({
             type: 'POST',
@@ -79,6 +142,10 @@ function GetListBancoPorSucursal() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                var ob = $("#cb_Cheque").val();
+                $("#cb_giradoA").val(data.GiradoA);
+                var nombre = $("#cb_giradoA").val();
+                $("#cb_Observacion").val("CH# " + ob + " - " + nombre + " " + data.Observacion);
             },
             error: function (error) {
             }
@@ -151,7 +218,8 @@ function GetListBancoPorSucursal() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#cb_Cheque").val(data);
+                //$("#cb_Cheque").val(data.NumCheque);
+                $("#msg").text(data.Error);
             },
             error: function (error) {
             }
@@ -232,9 +300,37 @@ function GetListBancoPorSucursal() {
 
         GridView_flujo_det.GetEditor('Valor').SetValue(ValorSet);
     }
+
+    function Imprimir() {
+        var datos = {
+            IdBanco: $("#IdBanco").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetBancoImpresion", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var location = GetPathServer();
+                if(data == "S")
+                    var win = window.open(location +"/Reportes/BancoReportes/BAN_005?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
+                else
+                    var win = window.open(location +"/Reportes/BancoReportes/BAN_006?IdEmpresa="+@Model.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble+"&IdBanco="+@Model.IdBanco, '_blank');
+                win.focus();
+            },
+            error: function (error) {
+            }
+        });
+
+    }
+
 </script>
 
-@using (Html.BeginForm("Anular", "ChequeBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "ChequeBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
@@ -253,6 +349,15 @@ function GetListBancoPorSucursal() {
 
     }
 
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
     <div class="modal fade" id="OpModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -293,13 +398,61 @@ function GetListBancoPorSucursal() {
 
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-offset-7 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "ChequeBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "ChequeBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdTipocbte = Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "ChequeBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdTipocbte = Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir pre-impreso">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirCBTE();" title="Imprimir cbte">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal:*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>          
             @*<div class="col-md-3">
                 <div class="form-group">
                     <label for="IdBanco_acreditacion">Tipo flujo</label>
@@ -307,7 +460,7 @@ function GetListBancoPorSucursal() {
                     @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
                 </div>
             </div>*@
-            <div class="col-md-offset-7 col-md-2">
+            <div class="col-md-offset-4 col-md-2">
                 <div class="form-group">
                     <label for="cb_Fecha">Fecha:*</label>
                     <div class="input-group date">
@@ -330,7 +483,6 @@ function GetListBancoPorSucursal() {
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -342,20 +494,7 @@ function GetListBancoPorSucursal() {
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group has-error">
-                    <label for="MotivoAnulacion">Motivo anulación*</label>
-                    @Html.TextAreaFor(q => q.MotivoAnulacion, new { @id = "MotivoAnulacion", @class = "form-control", @rows = 2 })
-                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
@@ -373,6 +512,11 @@ function GetListBancoPorSucursal() {
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_cheque">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="text-danger" id="msg"></label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -452,9 +596,20 @@ function GetListBancoPorSucursal() {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" id="btn_buscar_op" onclick="MostrarModal();">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar órdenes">
                             <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <div class="col-md-offset-9 col-md-1">
+                        <div class="form-group">
+                            @Html.TextBoxFor(q => q.IdSolicitudPago, new { @Id = "IdSolicitudPago", @class = "form-control", @placeholder = "# Solicitud" })
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-primary form-control" id="btn_importar_solicitud" onclick="ImportarSolicitud();" title="Importar solicitud">
+                            <i class="fa fa-download"></i>
                         </button>
                     </div>
                 </div>
@@ -481,11 +636,7 @@ function GetListBancoPorSucursal() {
         </div>
     </div>
 
-    <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-danger">Anular</button>
-        }        
+    <div class="box-footer">       
         <a class="btn btn-default" href="@Url.Action("Index", "ChequeBanco", new { Area = "Banco" }, null)">Cancelar</a>
     </div>
     @section Scripts {

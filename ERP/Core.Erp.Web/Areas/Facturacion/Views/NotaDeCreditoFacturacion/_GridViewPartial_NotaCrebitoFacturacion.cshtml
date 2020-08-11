@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_notaCredito";
-        settings.CallbackRouteValues = new { Controller = "NotaDeCreditoFacturacion", Action = "GridViewPartial_NotaCreditoFacturacion", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdSucursal = ViewBag.IdSucursal, Nuevo = ViewBag.Nuevo };
+        settings.CallbackRouteValues = new { Controller = "NotaDeCreditoFacturacion", Action = "GridViewPartial_NotaCreditoFacturacion", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdNota";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -163,6 +163,8 @@
             });
             column.Width = Unit.Percentage(5);
         });
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_subtotal").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "sc_iva").DisplayFormat = "{0:n2}";

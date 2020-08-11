@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
@@ -18,6 +19,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_CierrePorModuloPorSucursal_Bus bus_CierreModulo = new ct_CierrePorModuloPorSucursal_Bus();
         tb_sucursal_Bus bus_Sucursal = new tb_sucursal_Bus();
         tb_modulo_Bus bus_modulo = new tb_modulo_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         #region Index

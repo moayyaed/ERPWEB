@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_Facturacion";
-        settings.CallbackRouteValues = new { Controller = "RevisionContable", Action = "GridViewPartial_Facturacion", Area = "Contabilidad", IdTransaccionSession = ViewBag.IdTransaccionSession};
+        settings.CallbackRouteValues = new { Controller = "RevisionContable", Action = "GridViewPartial_Facturacion", Area = "Contabilidad", Nuevo = ViewBag.Nuevo};
         settings.KeyFieldName = "IdSecuencia";
 
         settings.Width = Unit.Percentage(100);

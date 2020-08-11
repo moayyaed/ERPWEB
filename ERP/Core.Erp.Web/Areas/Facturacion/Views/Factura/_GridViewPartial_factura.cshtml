@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_factura";
-        settings.CallbackRouteValues = new { Controller = "Factura", Action = "GridViewPartial_factura",  Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdSucursal = ViewBag.IdSucursal, Nuevo = ViewBag.Nuevo };
+        settings.CallbackRouteValues = new { Controller = "Factura", Action = "GridViewPartial_factura", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdCbteVta";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -187,6 +187,7 @@
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_SubtotalIVA").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
 */
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
     });

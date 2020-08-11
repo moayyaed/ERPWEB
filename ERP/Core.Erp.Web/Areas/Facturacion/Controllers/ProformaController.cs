@@ -50,11 +50,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
+        fa_proforma_List Lista_Proforma = new fa_proforma_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Proforma", "Index");
             ViewBag.Nuevo = info.Nuevo;
@@ -64,10 +71,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-               IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_proforma.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_Proforma.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
@@ -81,20 +94,26 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             #endregion
 
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_proforma.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_Proforma.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_proforma(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal =0, bool Nuevo=false)
+        public ActionResult GridViewPartial_proforma(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<fa_proforma_Info> model = new List<fa_proforma_Info>();
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.Nuevo = Nuevo;
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //List<fa_proforma_Info> model = new List<fa_proforma_Info>();
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal;
+            //model = bus_proforma.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
 
-            model = bus_proforma.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Proforma.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_proforma", model);
         }
 
@@ -731,7 +750,25 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #endregion
 
     }
+    public class fa_proforma_List
+    {
+        string Variable = "fa_proforma_Info";
+        public List<fa_proforma_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_proforma_Info> list = new List<fa_proforma_Info>();
 
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_proforma_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_proforma_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
     public class fa_proforma_det_List
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();

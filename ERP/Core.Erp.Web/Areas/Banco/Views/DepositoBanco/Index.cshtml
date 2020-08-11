@@ -11,6 +11,8 @@
 
 @using (Html.BeginForm("Index", "DepositoBanco", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -100,7 +102,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_DepositoBanco", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_DepositoBanco", new { Nuevo = ViewBag.Nuevo })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

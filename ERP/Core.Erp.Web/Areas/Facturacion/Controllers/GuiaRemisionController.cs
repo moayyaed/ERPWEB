@@ -50,6 +50,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
         fa_cliente_x_fa_Vendedor_x_sucursal_Bus bus_cliente_vendedor = new fa_cliente_x_fa_Vendedor_x_sucursal_Bus();
         fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
+        fa_guia_remision_List Lista_GuiaRemision = new fa_guia_remision_List();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -110,6 +111,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "GuiaRemision", "Index");
             ViewBag.Nuevo = info.Nuevo;
@@ -117,7 +124,17 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.Anular = info.Anular;
             #endregion
 
-            cl_filtros_Info model = new cl_filtros_Info();
+            cl_filtros_Info model = new cl_filtros_Info()
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
+            };
+            var lst = bus_guia.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_GuiaRemision.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
@@ -130,22 +147,28 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.Anular = info.Anular;
             #endregion
 
+            var lst = bus_guia.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_GuiaRemision.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
 
 
-        public ActionResult GridViewPartial_guias_remision(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo=false)
+        public ActionResult GridViewPartial_guias_remision(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            if (IdSucursal == 0)
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.Nuevo = Nuevo;
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //if (IdSucursal == 0)
+            //    IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            //ViewBag.IdSucursal = IdSucursal;
+            //List<fa_guia_remision_Info> model = new List<fa_guia_remision_Info>();
+            //model = bus_guia.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
 
-            List<fa_guia_remision_Info> model = new List<fa_guia_remision_Info>();
-            model = bus_guia.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_GuiaRemision.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_guias_remision", model);
         }
         public ActionResult GridViewPartial_guias_remision_det()
@@ -896,6 +919,26 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             Session["fa_guia_remision_det_Info"] = list;
         }
         #endregion
+    }
+
+    public class fa_guia_remision_List
+    {
+        string Variable = "fa_guia_remision_Info";
+        public List<fa_guia_remision_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_guia_remision_Info> list = new List<fa_guia_remision_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_guia_remision_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_guia_remision_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
     public class fa_guia_remision_det_Info_lst
     {

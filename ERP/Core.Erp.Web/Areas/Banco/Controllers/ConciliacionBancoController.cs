@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -23,29 +25,67 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Conciliacion_det_IngEgr_List List_det = new ba_Conciliacion_det_IngEgr_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         int IdBanco = 0;
-
+        ba_Conciliacion_List Lista_Conciliacion = new ba_Conciliacion_List();
         ba_Conciliacion_det_Bus bus_detalle_con = new ba_Conciliacion_det_Bus();
         ba_Conciliacion_det_List Lista_detalle = new ba_Conciliacion_det_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            cl_filtros_Info model = new cl_filtros_Info()
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
+            };
+            var lst = bus_conciliacion.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_Conciliacion.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            var lst = bus_conciliacion.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            Lista_Conciliacion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
-        public ActionResult GridViewPartial_ConciliacionBanco(DateTime? Fecha_ini, DateTime? Fecha_fin)
+        public ActionResult GridViewPartial_ConciliacionBanco(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini).Date;
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin).Date;
-            var model = bus_conciliacion.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini).Date;
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin).Date;
+            //var model = bus_conciliacion.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Conciliacion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_ConciliacionBanco", model);
         }
         #endregion
@@ -105,6 +145,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
 
             ba_Conciliacion_Info model = new ba_Conciliacion_Info
             {
@@ -147,7 +192,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConciliacion = model.IdConciliacion, Exito = true });
         }
         #endregion
 
@@ -195,13 +240,58 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             return PartialView("_GridViewPartial_ConciliacionBanco_det", model);
         }
         #region Modificar
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdConciliacion = 0)
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdConciliacion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ba_Conciliacion_Info model = bus_conciliacion.get_info(IdEmpresa, IdConciliacion);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            if (model.Estado == "I" || model.IdEstado_Concil_Cat == "CONCILIADO")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_det = bus_det.get_list(IdEmpresa, IdConciliacion);
+            model.List_detalle = bus_detalle_con.GetList(model.IdEmpresa, model.IdConciliacion);
+            Lista_detalle.set_list(model.List_detalle, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), ref IdBanco);
+            var bco = bus_banco_cuenta.get_info(IdEmpresa, model.IdBanco);
+            var periodo = bus_periodo.get_info(IdEmpresa, model.IdPeriodo);
+            model.lst_det.AddRange(bus_det.get_list_x_conciliar(IdEmpresa, model.IdBanco, bco.IdCtaCble, periodo.pe_FechaFin.Date));
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
+        }
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdConciliacion = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
 
             ba_Conciliacion_Info model = bus_conciliacion.get_info(IdEmpresa,IdConciliacion);
@@ -216,7 +306,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             var periodo = bus_periodo.get_info(IdEmpresa, model.IdPeriodo);
             model.lst_det.AddRange(bus_det.get_list_x_conciliar(IdEmpresa, model.IdBanco, bco.IdCtaCble, periodo.pe_FechaFin.Date));
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-            
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
         [HttpPost]
@@ -239,7 +332,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConciliacion = model.IdConciliacion, Exito = true });
         }
         #endregion
 
@@ -294,6 +387,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdConciliacion = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Conciliacion_Info model = bus_conciliacion.get_info(IdEmpresa, IdConciliacion);
             if (model == null)
                 return RedirectToAction("Index");
@@ -382,6 +481,26 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
 
         #endregion
+    }
+
+    public class ba_Conciliacion_List
+    {
+        string Variable = "ba_Conciliacion_Info";
+        public List<ba_Conciliacion_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Conciliacion_Info> list = new List<ba_Conciliacion_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Conciliacion_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Conciliacion_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class ba_Conciliacion_valores_Info

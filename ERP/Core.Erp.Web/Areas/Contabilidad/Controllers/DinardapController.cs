@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
@@ -22,6 +23,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         Dinardap_Bus bus_dinardap = new Dinardap_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         string rutafile = System.IO.Path.GetTempPath();
         #endregion
 

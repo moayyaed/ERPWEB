@@ -15,6 +15,8 @@ using Core.Erp.Info.General;
 using DevExpress.Web;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -28,7 +30,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Archivo_Transferencia_Det_Bus bus_archivo_det = new ba_Archivo_Transferencia_Det_Bus();
         ba_Archivo_Transferencia_Det_List List_det = new ba_Archivo_Transferencia_Det_List();
         ba_Archivo_Transferencia_Det_List_op Lst_det_op = new ba_Archivo_Transferencia_Det_List_op();
-
+        ba_Archivo_Transferencia_List Lista_Archivo = new ba_Archivo_Transferencia_List();
         ba_Archivo_Flujo_List List_flujo = new ba_Archivo_Flujo_List();
         ba_archivo_transferencia_x_ba_tipo_flujo_Bus bus_archivo_flujo = new ba_archivo_transferencia_x_ba_tipo_flujo_Bus();
         ba_TipoFlujo_PlantillaDet_Bus bus_TipoFlujo_PlantillaDet = new ba_TipoFlujo_PlantillaDet_Bus();
@@ -39,7 +41,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         ba_TipoFlujo_Plantilla_Bus bus_TipoFlujo_Plantilla = new ba_TipoFlujo_Plantilla_Bus();
-
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         ba_Banco_Cuenta_Bus bus_banco_cuenta = new ba_Banco_Cuenta_Bus();
         ba_parametros_Bus bus_param = new ba_parametros_Bus();
         ba_TipoFlujo_Bus bus_flujo = new ba_TipoFlujo_Bus();
@@ -49,20 +51,48 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
-
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos_consulta();
+            var lst = bus_archivo.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_Archivo.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cargar_combos_consulta();
+            var lst = bus_archivo.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_Archivo.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         private void cargar_combos_consulta()
@@ -79,13 +109,18 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_archivo_bancario(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_archivo_bancario(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
-            ViewBag.IdSucursal = IdSucursal;
-            var model = bus_archivo.GetList(IdEmpresa,IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal;
+            //var model = bus_archivo.GetList(IdEmpresa,IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
+
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Archivo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_archivo_bancario", model);
         }
         #endregion
@@ -190,6 +225,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Archivo_Transferencia_Info model = new ba_Archivo_Transferencia_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -222,7 +263,44 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdArchivo = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            if (model.Estado == false || model.Contabilizado==true)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
+            List_det.set_list(model.Lst_det, model.IdTransaccionSession);
+
+            model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
+            List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
+            cargar_combos();
+            model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0, decimal IdArchivo = 0, bool Exito = false)
         {
@@ -235,6 +313,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
@@ -268,7 +353,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdArchivo = 0)
@@ -276,6 +361,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Archivo_Transferencia_Info model = bus_archivo.GetInfo(IdEmpresa, IdArchivo);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ArchivoBancario", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
 
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.Lst_det = bus_archivo_det.GetList(model.IdEmpresa, model.IdArchivo);
@@ -800,6 +891,27 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         #endregion
     }
+
+    public class ba_Archivo_Transferencia_List
+    {
+        string Variable = "ba_Archivo_Transferencia_Info";
+        public List<ba_Archivo_Transferencia_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Archivo_Transferencia_Info> list = new List<ba_Archivo_Transferencia_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Archivo_Transferencia_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Archivo_Transferencia_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
     public class ba_Archivo_Transferencia_Det_List
     {
         string Variable = "ba_Archivo_Transferencia_Det_Info";

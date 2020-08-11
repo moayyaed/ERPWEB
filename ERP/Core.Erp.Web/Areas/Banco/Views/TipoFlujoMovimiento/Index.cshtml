@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Core.Erp.Info.Banco.ba_TipoFlujo_Movimiento_Info
+@{
     ViewBag.Title = "Consulta de movimientos de tipo flujo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
@@ -9,6 +10,9 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_TipoFlujoMovimiento");
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    @Html.Action("GridViewPartial_TipoFlujoMovimiento", new { Nuevo = ViewBag.Nuevo });
 
 }

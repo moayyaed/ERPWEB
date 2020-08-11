@@ -10491,6 +10491,14 @@
     <Content Include="Areas\Facturacion\Views\Proforma\Consultar.cshtml" />
     <Content Include="Areas\Facturacion\Views\CambioProducto\Consultar.cshtml" />
     <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ChequeBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\DepositoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\NotaDeCreditoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\NotaDeDebitoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoMovimiento\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ConciliacionBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ComprobanteContable\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

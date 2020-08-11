@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Facturacion;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_RevisionContable_Bus bus_revision = new ct_RevisionContable_Bus();
         ct_RevisionContableFacturas_List List_facturas = new ct_RevisionContableFacturas_List();
         fa_factura_Bus bus_factura = new fa_factura_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        ct_RevisionContableFacturas_Index_List Lista_RevisionContable = new ct_RevisionContableFacturas_Index_List();
         #endregion
 
         #region Index
@@ -29,24 +33,47 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "RevisionContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            cl_filtros_Info model = new cl_filtros_Info { IdEmpresa = IdEmpresa, IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)};
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            var lst = bus_revision.get_list_facturas(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            List_facturas.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            List_facturas.set_list(bus_revision.get_list_facturas(model.IdEmpresa, model.fecha_ini, model.fecha_fin), model.IdTransaccionSession);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "RevisionContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            var lst = bus_revision.get_list_facturas(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
+            List_facturas.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         #endregion
 
         #region Facturacion
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_Facturacion(decimal IdTransaccionSession = 0)
+        public ActionResult GridViewPartial_Facturacion(bool Nuevo= false)
         {
-            ViewBag.IdTransaccionSession = IdTransaccionSession;
-            var model = List_facturas.get_list(IdTransaccionSession);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_facturas.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_Facturacion", model);
         }
         #endregion
@@ -81,6 +108,26 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         
         #endregion
+    }
+
+    public class ct_RevisionContableFacturas_Index_List
+    {
+        string Variable = "ct_RevisionContableFacturas_Info";
+        public List<ct_RevisionContableFacturas_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ct_RevisionContableFacturas_Info> list = new List<ct_RevisionContableFacturas_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ct_RevisionContableFacturas_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ct_RevisionContableFacturas_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class ct_RevisionContableFacturas_List

@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
 using Core.Erp.Web.Helps;
@@ -26,6 +27,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ct_parametro_Bus bus_parametro = new ct_parametro_Bus();
         ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda

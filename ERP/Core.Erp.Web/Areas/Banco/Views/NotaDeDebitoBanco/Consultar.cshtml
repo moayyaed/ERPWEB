@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Banco.ba_Cbte_Ban_Info
 @{
-    ViewBag.Title = ("Anular nota de débito bancaria" + " con ID #" + @Model.IdCbteCble);
+    ViewBag.Title = ("Consultar nota de débito bancaria" + " con ID #" + @Model.IdCbteCble);
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
@@ -8,19 +8,25 @@
     }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 
 <script type="text/javascript">
     $(function () {
         $("#IdBanco").change(function () {
             armar_diario();
         });
-        $("#cb_Valor").change(function () {
-            armar_diario();
-            actualizarGridDetFlujo();
+
+        $("#IdTipo_Persona").change(function () {
+            vaciar_detalles();
+            IdEntidad.SetValue(null);
         });
         $("#IdSucursal").change(function () {
             GetListBancoPorSucursal();
             armar_diario();
+        });
+        $("#cb_Valor").change(function () {
+            armar_diario();
+            actualizarGridDetFlujo();
         });
 
         actualizarGridDetFlujo();
@@ -118,7 +124,7 @@ function GetListBancoPorSucursal() {
     }
     var selectedIDs;
     function OnBeginCallback(s, e) {
-        e.customArgs["TipoPersona"] = $("#IdTipo_Persona").val();
+        e.customArgs["IdTipo_Persona"] = $("#IdTipo_Persona").val();
         e.customArgs["Entidad"] = IdEntidad.GetValue();
         e.customArgs["selectedIDs"] = selectedIDs;
     }
@@ -131,14 +137,39 @@ function GetListBancoPorSucursal() {
     }
     function MostrarModal() {
         selectedIDs = "";
-        GridView_DebitoBanco_op_x_cruzar.PerformCallback();
-        GridView_DebitoBanco_op_x_cruzar.UnselectRows();
-        $("#OpModal").modal("show");
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdTipoPersona: $("#IdTipo_Persona").val(),
+            IdEntidad: IdEntidad.GetValue(),
+            IdSolicitudPago: $("#IdSolicitudPago").val(),
+            IdSucursal: $("#IdSucursal").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPorCruzar", "ChequeBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_DebitoBanco_op_x_cruzar.PerformCallback();
+                GridView_DebitoBanco_op_x_cruzar.UnselectRows();
+                $("#OpModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function AddOP() {
         var datos = {
-            IDs: selectedIDs
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
         }
         $.ajax({
             type: 'POST',
@@ -172,7 +203,7 @@ function GetListBancoPorSucursal() {
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("armar_diario", "ChequeBanco",new { Area = "Banco"})',
+            url: '@Url.Action("armar_diario", "NotaDeDebitoBanco",new { Area = "Banco"})',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -206,7 +237,7 @@ function GetListBancoPorSucursal() {
             }
         });
         GridView_comprobante_detalle.PerformCallback();
-        GridView_cheque_op.PerformCallback();
+        GridView_DebitoBanco_op.PerformCallback();
     }
 
     function OnSelectedCtaCbleChanged() {
@@ -216,9 +247,15 @@ function GetListBancoPorSucursal() {
         e.customArgs["pre_IdCtaCble"] = GridView_comprobante_detalle.GetEditor("IdCtaCble").GetValue();
         e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
     }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipocbte="+@Model.IdTipocbte+"&IdCbteCble="+@Model.IdCbteCble, '_blank');
+        win.focus();
+    }
 </script>
 
-@using (Html.BeginForm("Anular", "NotaDeDebitoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "NotaDeDebitoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
@@ -232,9 +269,17 @@ function GetListBancoPorSucursal() {
                 <i class="icon fa fa-warning"></i> @ViewBag.mensaje
             </h4>
         </div>
-
     }
 
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
     <div class="modal fade" id="PlantillaModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -275,10 +320,51 @@ function GetListBancoPorSucursal() {
 
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-offset-8 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "NotaDeDebitoBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "NotaDeDebitoBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdTipocbte = Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "NotaDeDebitoBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdTipocbte = Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal:*</label>
-                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -289,7 +375,7 @@ function GetListBancoPorSucursal() {
                     @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-2">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="cb_Fecha">Fecha:*</label>
                     <div class="input-group date">
@@ -325,7 +411,7 @@ function GetListBancoPorSucursal() {
             <div class="col-md-2 col-md-offset-4">
                 <div class="form-group">
                     <label for="cb_Valor">Valor</label>
-                    @Html.TextBoxFor(q => q.cb_Valor, new { @id = "cb_Valor", @class = "form-control", @readonly = "readonly" })
+                    @Html.TextBoxFor(q => q.cb_Valor, new { @id = "cb_Valor", @class = "form-control" })
                 </div>
             </div>
         </div>
@@ -341,19 +427,6 @@ function GetListBancoPorSucursal() {
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group has-error">
-                    <label for="MotivoAnulacion">Motivo anulación*</label>
-                    @Html.TextAreaFor(q => q.MotivoAnulacion, new { @id = "MotivoAnulacion", @class = "form-control", @rows = 2 })
-                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
@@ -398,6 +471,7 @@ function GetListBancoPorSucursal() {
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_diario">
                 @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
             </div>
+
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_flujo">
                 <div class="row">
                     <div class="col-md-12">
@@ -410,14 +484,10 @@ function GetListBancoPorSucursal() {
                 @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
             </div>
 
-          </div>
+        </div>
     </div>
 
     <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-danger">Anular</button>
-        }        
         <a class="btn btn-default" href="@Url.Action("Index", "NotaDeDebitoBanco", new { Area = "Banco" }, null)">Cancelar</a>
     </div>
     @section Scripts {

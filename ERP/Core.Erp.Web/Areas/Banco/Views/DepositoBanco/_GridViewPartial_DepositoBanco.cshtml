@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_DepositoBanco";
-        settings.CallbackRouteValues = new { Controller = "DepositoBanco", Action = "GridViewPartial_DepositoBanco", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "DepositoBanco", Action = "GridViewPartial_DepositoBanco", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdCbteCble";
 
@@ -60,20 +60,26 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipocbte = DataBinder.Eval(tc.DataItem, "IdTipocbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipocbte = DataBinder.Eval(tc.DataItem, "IdTipocbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipocbte = DataBinder.Eval(tc.DataItem, "IdTipocbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") })
+                );
+                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                //{
+                //    ViewContext.Writer.Write(
+                //Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipocbte = DataBinder.Eval(tc.DataItem, "IdTipocbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipocbte = DataBinder.Eval(tc.DataItem, "IdTipocbte"), IdCbteCble = DataBinder.Eval(tc.DataItem, "IdCbteCble") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -90,7 +96,7 @@
         });
         settings.Columns.Add("ba_descripcion", "Cuenta").Width = Unit.Percentage(20);
         settings.Columns.Add("cb_Observacion", "Observación").Width = Unit.Percentage(20);
-        
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "cb_Valor";
@@ -122,6 +128,7 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.Settings.ShowFooter = true;
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "cb_Valor").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorBanco").DisplayFormat = "{0:n2}";
