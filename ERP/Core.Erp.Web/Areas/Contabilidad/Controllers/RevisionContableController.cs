@@ -40,11 +40,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.Anular = info.Anular;
             #endregion
 
-            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = IdEmpresa,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
 
             var lst = bus_revision.get_list_facturas(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
