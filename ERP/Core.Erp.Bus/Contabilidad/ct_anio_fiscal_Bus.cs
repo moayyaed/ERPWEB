@@ -20,11 +20,11 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public List<ct_anio_fiscal_Info> get_list_masivo(bool mostrar_anulados)
+        public List<ct_anio_fiscal_Info> get_list_masivo(int IdEmpresa)
         {
             try
             {
-                return odata.get_list_masivo(true);
+                return odata.get_list_masivo(IdEmpresa);
             }
             catch (Exception)
             {

@@ -48,13 +48,25 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
-        public List<ct_anio_fiscal_Info> get_list_masivo(bool mostrar_anulados)
+        public List<ct_anio_fiscal_Info> get_list_masivo(int IdEmpresa)
         {
             try
             {
                 List<ct_anio_fiscal_Info> Lista = new List<ct_anio_fiscal_Info>(); ;
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
+                    Lista = (from q in Context.ct_anio_fiscal
+                               where q.af_estado == "A" && !Context.ct_periodo.Any(p => p.IdEmpresa == IdEmpresa && p.IdanioFiscal == q.IdanioFiscal)
+                               select new ct_anio_fiscal_Info
+                               {
+                                   IdanioFiscal = q.IdanioFiscal,
+                                   af_fechaIni = q.af_fechaIni,
+                                   af_fechaFin = q.af_fechaFin,
+                                   af_estado = q.af_estado,
+                                   EstadoBool = q.af_estado == "A" ? true : false
+                               }).ToList();
+                    
+                        /*
                     var lst = Context.vwct_anio_fiscal_masivo.Where(q=>q.af_estado == (mostrar_anulados==true ? q.af_estado : "A")).ToList();
                     lst.ForEach(q =>
                     {
@@ -67,6 +79,7 @@ namespace Core.Erp.Data.Contabilidad
                             EstadoBool = q.af_estado == "A" ? true : false
                         });
                     });
+                    */
                 }
                 return Lista;
             }

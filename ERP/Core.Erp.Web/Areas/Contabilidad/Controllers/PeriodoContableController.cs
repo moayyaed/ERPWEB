@@ -53,7 +53,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         private void cargar_combos_masivo()
         {
-            var lst_anio = bus_anio.get_list_masivo(false);
+            var lst_anio = bus_anio.get_list_masivo(Convert.ToInt32(SessionFixed.IdEmpresa));
             ViewBag.lst_anio = lst_anio;
         }
 
