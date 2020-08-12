@@ -59,6 +59,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         public ActionResult Index(cl_filtros_Info model)
         {
             cargar_filtros(model.IdEmpresa);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             var lst = bus_CierreModulo.GetList(model.IdEmpresa, model.IdSucursal, true);
             Lista_CierreModulo.set_list(lst, model.IdTransaccionSession);
             return View(model);

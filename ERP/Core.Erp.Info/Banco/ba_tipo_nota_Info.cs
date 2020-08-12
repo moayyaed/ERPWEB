@@ -4,6 +4,7 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_tipo_nota_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdTipoNota { get; set; }
         [Required(ErrorMessage = ("el campo Tipo es obligatorio"))]

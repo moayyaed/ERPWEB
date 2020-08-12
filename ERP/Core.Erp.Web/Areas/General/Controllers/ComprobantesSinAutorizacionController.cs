@@ -61,6 +61,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         public ActionResult Index(cl_filtros_Info model)
         {
             CargarCombos(model.IdEmpresa);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             var lst = bus_comprobantes.get_list(model.IdEmpresa, "", model.fecha_ini, model.fecha_fin, model.IdSucursal);
             Lis_tb_comprobantes_sin_autorizacion_List.set_list(lst, model.IdTransaccionSession);
 

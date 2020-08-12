@@ -498,7 +498,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             cargar_combos_consulta();
             var lst = bus_cbteban.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal, cl_enumeradores.eTipoCbteBancario.NCBA.ToString(), true);
             Lista_NotaCredito.set_list(lst, model.IdTransaccionSession);

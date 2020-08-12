@@ -2,7 +2,9 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Banco;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -24,14 +26,30 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         tb_ciudad_Bus bus_ciudad = new tb_ciudad_Bus();
         ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus bus_cbteban_x_cbtecble = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus();
         ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_List Lista_CbteBan_CbteCble = new ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ParametroBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ba_parametros_Info model = bus_parametro.get_info(IdEmpresa);
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            //SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             if (model == null)
             {
@@ -53,6 +71,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             model.IdUsuario = SessionFixed.IdUsuario;
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             model.Lista_CbteBan_x_CbteCble = Lista_CbteBan_CbteCble.get_list(model.IdTransaccionSession);
             if (!bus_parametro.guardarDB(model))
                 ViewBag.mensaje = "No se pudieron actualizar los registros";

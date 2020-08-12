@@ -10502,6 +10502,11 @@
     <Content Include="Areas\Contabilidad\Views\ComprobanteContable\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoNotaBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoPlantilla\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TalonarioChequeBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\BancoCuenta\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10620,7 +10625,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

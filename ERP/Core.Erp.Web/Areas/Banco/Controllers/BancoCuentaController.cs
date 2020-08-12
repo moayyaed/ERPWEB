@@ -16,6 +16,8 @@ using System.Linq;
 using Core.Erp.Web.Reportes.Banco;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -30,19 +32,49 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Banco_Cbte_List ListaCbte = new ba_Banco_Cbte_List();
         ba_Banco_Cuenta_x_tb_sucursal_Bus bus_cta_det = new ba_Banco_Cuenta_x_tb_sucursal_Bus();
         ba_Banco_Det_List List_Det = new ba_Banco_Det_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        ba_Banco_Cuenta_Index_List Lista_BancoCuenta = new ba_Banco_Cuenta_Index_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "BancoCuenta", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ba_Banco_Cuenta_Info model = new ba_Banco_Cuenta_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+
+            var lst = bus_cuenta.get_list(model.IdEmpresa, 0, true);
+            Lista_BancoCuenta.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_cuentas()
+        public ActionResult GridViewPartial_cuentas(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_cuenta.get_list(IdEmpresa, 0, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_cuenta.get_list(IdEmpresa, 0, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_BancoCuenta.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_cuentas", model);
         }
         #endregion
@@ -79,6 +111,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "BancoCuenta", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Banco_Cuenta_Info model = new ba_Banco_Cuenta_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -101,10 +140,45 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdBanco = model.IdBanco, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdBanco = 0)
 
+        public ActionResult Consultar(int IdEmpresa = 0, int IdBanco = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            ba_Banco_Cuenta_Info model = bus_cuenta.get_info(IdEmpresa, IdBanco);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "BancoCuenta", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lstDet = bus_cta_det.GetList(IdEmpresa, IdBanco);
+            List_Det.set_list(model.lstDet, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, int IdBanco = 0, bool Exito=false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -115,10 +189,21 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Banco_Cuenta_Info model = bus_cuenta.get_info(IdEmpresa,IdBanco);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "BancoCuenta", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lstDet = bus_cta_det.GetList(IdEmpresa, IdBanco);
             List_Det.set_list(model.lstDet, model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             return View(model);
         }
         [HttpPost]
@@ -131,10 +216,16 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdBanco = model.IdBanco, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdBanco = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "BancoCuenta", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Banco_Cuenta_Info model = bus_cuenta.get_info(IdEmpresa, IdBanco);
             if (model == null)
                 return RedirectToAction("Index");
@@ -451,6 +542,26 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 #endregion
 
             }
+        }
+    }
+
+    public class ba_Banco_Cuenta_Index_List
+    {
+        string Variable = "ba_Banco_Cuenta_Index_Info";
+        public List<ba_Banco_Cuenta_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Banco_Cuenta_Info> list = new List<ba_Banco_Cuenta_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Banco_Cuenta_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Banco_Cuenta_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
     }
 

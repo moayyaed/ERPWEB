@@ -146,7 +146,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             var lst = bus_guia.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
             Lista_GuiaRemision.set_list(lst, model.IdTransaccionSession);
 

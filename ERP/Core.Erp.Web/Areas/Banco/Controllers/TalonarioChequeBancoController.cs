@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Core.Erp.Bus.Banco;
 using Core.Erp.Info.Banco;
 using Core.Erp.Web.Helps;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -17,19 +19,49 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Talonario_cheques_x_banco_Bus bus_talonario = new ba_Talonario_cheques_x_banco_Bus();
         ba_Banco_Cuenta_Bus bus_bco_cuenta = new ba_Banco_Cuenta_Bus();
         ba_Banco_Cuenta_Bus bus_banco = new ba_Banco_Cuenta_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        ba_Talonario_cheques_x_banco_List Lista_TalonarioCheque = new ba_Talonario_cheques_x_banco_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TalonarioChequeBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ba_Talonario_cheques_x_banco_Info model = new ba_Talonario_cheques_x_banco_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+
+            var lst = bus_talonario.get_list(model.IdEmpresa, model.IdSucursal, true);
+            Lista_TalonarioCheque.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_talonario_cheque()
+        public ActionResult GridViewPartial_talonario_cheque(bool Nuevo = false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_talonario.get_list(IdEmpresa,Convert.ToInt32(SessionFixed.IdSucursal), true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_talonario.get_list(IdEmpresa,Convert.ToInt32(SessionFixed.IdSucursal), true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_TalonarioCheque.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_talonario_cheque", model);
         }
 
@@ -47,6 +79,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TalonarioChequeBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Talonario_cheques_x_banco_Info model = new ba_Talonario_cheques_x_banco_Info
             {
                IdEmpresa = IdEmpresa,               
@@ -87,14 +125,49 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 }
                 secuencia++;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdBanco = model.IdBanco, Num_cheque = model.Num_cheque, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdBanco = 0, string Num_cheque = "")
+        public ActionResult Consultar(int IdEmpresa = 0, int IdBanco = 0, string Num_cheque = "", bool Exito = false)
         {
             ba_Talonario_cheques_x_banco_Info model = bus_talonario.get_info(IdEmpresa, IdBanco, Num_cheque);
-                if (model == null) 
-            return RedirectToAction("Index");
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TalonarioChequeBanco", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal));
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, int IdBanco = 0, string Num_cheque = "", bool Exito = false)
+        {
+            ba_Talonario_cheques_x_banco_Info model = bus_talonario.get_info(IdEmpresa, IdBanco, Num_cheque);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TalonarioChequeBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             cargar_combos(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal));
             return View(model);
         }
@@ -107,7 +180,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combos(model.IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal));
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdBanco = model.IdBanco, Num_cheque = model.Num_cheque, Exito = true });
         }
 
         #endregion
@@ -136,5 +209,25 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         }
         #endregion
+    }
+
+    public class ba_Talonario_cheques_x_banco_List
+    {
+        string Variable = "ba_Talonario_cheques_x_banco_Info";
+        public List<ba_Talonario_cheques_x_banco_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Talonario_cheques_x_banco_Info> list = new List<ba_Talonario_cheques_x_banco_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Talonario_cheques_x_banco_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Talonario_cheques_x_banco_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

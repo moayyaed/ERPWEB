@@ -61,7 +61,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             var lst = bus_revision.get_list_facturas(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
             List_facturas.set_list(lst, model.IdTransaccionSession);
             return View(model);

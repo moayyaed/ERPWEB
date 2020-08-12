@@ -71,7 +71,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             var lst = bus_conciliacion.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin);
             Lista_Conciliacion.set_list(lst, model.IdTransaccionSession);
             return View(model);

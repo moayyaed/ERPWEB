@@ -2558,9 +2558,6 @@
     <Compile Include="vwcp_SolicitudPago.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwct_anio_fiscal_masivo.cs">
-      <DependentUpon>Model_contabilidad.tt</DependentUpon>
-    </Compile>
     <Compile Include="vwct_anio_fiscal_x_cuenta_utilidad.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>

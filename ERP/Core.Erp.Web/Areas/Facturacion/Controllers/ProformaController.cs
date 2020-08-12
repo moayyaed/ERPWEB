@@ -92,7 +92,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombosConsulta(model.IdEmpresa);
             var lst = bus_proforma.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
             Lista_Proforma.set_list(lst, model.IdTransaccionSession);

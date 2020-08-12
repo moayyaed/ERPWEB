@@ -131,7 +131,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombosConsulta(model.IdEmpresa);
             var lst = bus_comprobante.get_list(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
             Lista_Comprobante.set_list(lst, model.IdTransaccionSession);

@@ -9,6 +9,8 @@ using Core.Erp.Info.Banco;
 using Core.Erp.Web.Helps;
 using Core.Erp.Info.Helps;
 using DevExpress.Web;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -20,6 +22,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Banco_Flujo_Det_List List_Det = new ba_Banco_Flujo_Det_List();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo_det = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
         ba_Archivo_Flujo_List List_flujo = new ba_Archivo_Flujo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        ba_TipoFlujo_List Lista_TipoFlujo = new ba_TipoFlujo_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda flujo
@@ -43,14 +48,40 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TipoFlujoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ba_TipoFlujo_Info model = new ba_TipoFlujo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_flujo.get_list(model.IdEmpresa, true);
+            Lista_TipoFlujo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_tipo_flujo()
+        public ActionResult GridViewPartial_tipo_flujo(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_flujo.get_list(IdEmpresa, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_flujo.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_TipoFlujo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_tipo_flujo", model);
         }
 
@@ -66,6 +97,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TipoFlujoBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_TipoFlujo_Info model = new ba_TipoFlujo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
@@ -82,15 +119,48 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combo(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipoFlujo = model.IdTipoFlujo, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdTipoFlujo = 0)
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdTipoFlujo = 0, bool Exito = false)
         {
             ba_TipoFlujo_Info model = bus_flujo.get_info(IdEmpresa, IdTipoFlujo);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TipoFlujoBanco", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cargar_combo(IdEmpresa);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdTipoFlujo = 0, bool Exito=false)
+        {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TipoFlujoBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            ba_TipoFlujo_Info model = bus_flujo.get_info(IdEmpresa, IdTipoFlujo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            cargar_combo(IdEmpresa);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
             return View(model);
         }
         [HttpPost]
@@ -102,10 +172,15 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 cargar_combo(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipoFlujo = model.IdTipoFlujo, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, decimal IdTipoFlujo = 0)
         {
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "TipoFlujoBanco", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_TipoFlujo_Info model = bus_flujo.get_info(IdEmpresa, IdTipoFlujo);
             if (model == null)
                 return RedirectToAction("Index");
@@ -123,7 +198,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
             return RedirectToAction("Index");
         }
-        #endregion
 
         #region Detalle
         private void cargar_combos_Detalle()
@@ -224,6 +298,26 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         
         #endregion
 
+    }
+
+    public class ba_TipoFlujo_List
+    {
+        string Variable = "ba_TipoFlujo_Info";
+        public List<ba_TipoFlujo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_TipoFlujo_Info> list = new List<ba_TipoFlujo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_TipoFlujo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_TipoFlujo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
     public class ba_Banco_Flujo_Det_List
     {

@@ -88,7 +88,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             cargar_combos_consulta();
             var lst = bus_archivo.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
             Lista_Archivo.set_list(lst, model.IdTransaccionSession);

@@ -88,7 +88,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.Modificar = info.Modificar;
             ViewBag.Anular = info.Anular;
             #endregion
-
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombosConsulta(model.IdEmpresa);
             var lst = bus_cierreanual.get_list(model.IdEmpresa, model.IdSucursal);
             Lista_CierreAnual.set_list(lst, model.IdTransaccionSession);

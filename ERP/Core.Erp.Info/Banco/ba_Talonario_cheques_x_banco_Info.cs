@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_Talonario_cheques_x_banco_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = ("el campo banco es obligatorio"))]
         public int IdBanco { get; set; }
@@ -33,5 +34,6 @@ namespace Core.Erp.Info.Banco
         public string Documentofinal { get; set; }
         public int Cantidad { get; set; }
         public string ba_descripcion { get; set; }
+        public int IdSucursal { get; set; }
     }
 }
