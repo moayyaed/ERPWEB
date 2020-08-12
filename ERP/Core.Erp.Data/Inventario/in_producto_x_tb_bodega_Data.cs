@@ -79,6 +79,8 @@ namespace Core.Erp.Data.Inventario
                                  bo_Descripcion = q.bo_Descripcion,
                                  IdCtaCble_Costo = q.IdCtaCble_Costo,
                                  IdCtaCble_Inven = q.IdCtaCble_Inven,
+                                 IdCtaCble_Vta = q.IdCtaCble_Vta,
+                                 pc_Cuenta_Vta = q.pc_Cuenta_Vta,
                                  Stock_minimo = q.Stock_minimo,
                                  pc_Cuenta = q.pc_Cuenta,
                                  pc_Cuenta_inven = q.pc_Cuenta_Inv,
@@ -109,7 +111,7 @@ namespace Core.Erp.Data.Inventario
 
                     Entity.IdCtaCble_Costo = info.IdCtaCble_Costo;
                     Entity.IdCtaCble_Inven = info.IdCtaCble_Inven;
-
+                    Entity.IdCtaCble_Vta = info.IdCtaCble_Vta;
                     Context.SaveChanges();
                 }
                 return true;

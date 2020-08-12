@@ -297,16 +297,18 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 {
                     if (!reader.IsDBNull(0) && cont > 0)
                     {
+                        int Anio = Convert.ToInt32(reader.GetValue(0));
+                        string IdCtaCble = reader.GetValue(1).ToString();
                         ct_anio_fiscal_Info info = new ct_anio_fiscal_Info
                         {                            
-                            IdanioFiscal = Convert.ToInt32(reader.GetValue(0)),
-                            af_fechaIni = new DateTime(Convert.ToInt32(reader.GetValue(0)), 1, 1),
-                            af_fechaFin = new DateTime(Convert.ToInt32(reader.GetValue(0)), 12, 31),
+                            IdanioFiscal = Anio,
+                            af_fechaIni = new DateTime(Anio, 1, 1),
+                            af_fechaFin = new DateTime(Anio, 12, 31),
                             info_anio_ctautil = new ct_anio_fiscal_x_cuenta_utilidad_Info
                             {
                                 IdEmpresa = IdEmpresa,
-                                IdCtaCble = reader.GetString(1),
-                                IdanioFiscal = Convert.ToInt32(reader.GetValue(0)),                                
+                                IdCtaCble = IdCtaCble,
+                                IdanioFiscal = Anio,                                
                             },                            
                         };
                         ListaAnio.Add(info);

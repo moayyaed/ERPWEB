@@ -367,6 +367,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 model.Fechacontabilizacion = DateTime.Now;
                 cargar_combos(IdNomina_Tipo, IdNomina_TipoLiqui);
                 cargar_combo_detalle();
+
+
+                model.Fechacontabilizacion = new DateTime(Convert.ToInt32(IdPeriodo.ToString().Substring(0, 4)), Convert.ToInt32(IdPeriodo.ToString().Substring(4, 2)), 1);
+                model.Fechacontabilizacion = model.Fechacontabilizacion.Date.AddMonths(1).AddDays(-1);
+
                 return View(model);
 
             }

@@ -121,7 +121,6 @@
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorBodega" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_Stock" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Producto_PorSucursal" Width="1.5" PointX="5.375" PointY="5.75" />
-        <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="5.375" PointY="15.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorOrdenCompra" Width="1.5" PointX="27.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_inventario.in_parametro" Width="1.5" PointX="14.25" PointY="27.875" />
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_Catalogo2" />
@@ -144,6 +143,7 @@
         <AssociationConnector Association="Model_inventario.FK_in_parametro_in_movi_inven_tipo7" />
         <EntityTypeShape EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorContabilizar" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model_inventario.vwin_AjusteDet" Width="1.5" PointX="16.375" PointY="27.75" />
+        <EntityTypeShape EntityType="Model_inventario.vwin_producto_x_tb_bodega" Width="1.5" PointX="5.375" PointY="15.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

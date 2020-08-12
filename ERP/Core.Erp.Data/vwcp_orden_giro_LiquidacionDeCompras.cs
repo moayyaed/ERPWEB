@@ -28,5 +28,6 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> fecha_autorizacion { get; set; }
+        public Nullable<System.DateTime> co_FechaContabilizacion { get; set; }
     }
 }

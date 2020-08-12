@@ -847,7 +847,7 @@
             this.xrTableCell55.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell55.Name = "xrTableCell55";
             this.xrTableCell55.StylePriority.UseFont = false;
-            this.xrTableCell55.Text = "FACTURAS";
+            this.xrTableCell55.Text = "RESUMEN";
             this.xrTableCell55.Weight = 1.6074949589362175D;
             // 
             // xrTableRow9
@@ -895,7 +895,7 @@
             // xrTableCell59
             // 
             this.xrTableCell59.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sum(Iif([Estado]= \'A\',1,0))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sum(Iif([Estado]= \'A\' And [Total] > 0,1,0))")});
             this.xrTableCell59.Name = "xrTableCell59";
             xrSummary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell59.Summary = xrSummary1;
@@ -905,7 +905,7 @@
             // xrTableCell60
             // 
             this.xrTableCell60.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sum(Iif([Estado]= \'I\',1,0))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sum(Iif([Estado]= \'I\' And [Total] > 0,1,0))")});
             this.xrTableCell60.Name = "xrTableCell60";
             this.xrTableCell60.Text = "xrTableCell40";
             this.xrTableCell60.Weight = 0.6066020703009023D;
@@ -913,7 +913,7 @@
             // xrTableCell61
             // 
             this.xrTableCell61.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumCount([pe_nombreCompleto])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sum(Iif([Total] > 0,1,0))")});
             this.xrTableCell61.Name = "xrTableCell61";
             xrSummary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
             this.xrTableCell61.Summary = xrSummary2;
@@ -1265,7 +1265,7 @@
             this.p_fecha_fin,
             this.p_CreDeb,
             this.p_Naturaleza});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_018_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();

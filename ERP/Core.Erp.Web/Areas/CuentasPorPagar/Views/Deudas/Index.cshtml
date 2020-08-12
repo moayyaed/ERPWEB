@@ -30,7 +30,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="IdSucursal">Sucursal*</label>
                             <div class="form-group">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>      </label>
                             @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados,
@@ -90,6 +90,20 @@
                              settings.Name = "mostrarAnulados";
                              settings.Checked = false;
                              settings.Text = "Mostrar documentos electrónicos";
+                         }
+                     ).GetHtml()
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>      </label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_observacion_completa,
+                         settings =>
+                         {
+                             settings.Name = "mostrar_observacion_completa";
+                             settings.Checked = false;
+                             settings.Text = "Filtrar por fecha contable";
                          }
                      ).GetHtml()
                         </div>
@@ -114,7 +128,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_deudas", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal, MostrarDocumentosElectronicos = Model.mostrarAnulados })
+            @Html.Action("GridViewPartial_deudas", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal, MostrarDocumentosElectronicos = Model.mostrarAnulados, FiltrarPorFechaContabilizacion = Model.mostrar_observacion_completa })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

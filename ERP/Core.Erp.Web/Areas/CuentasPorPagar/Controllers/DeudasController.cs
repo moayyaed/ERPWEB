@@ -167,16 +167,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool MostrarDocumentosElectronicos = false)
+        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool MostrarDocumentosElectronicos = false, bool FiltrarPorFechaContabilizacion = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            ViewBag.FiltrarPorFechaContabilizacion = FiltrarPorFechaContabilizacion;
             if (IdSucursal == 0)
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.MostrarDocumentosElectronicos = MostrarDocumentosElectronicos;
-            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, MostrarDocumentosElectronicos);
+            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, MostrarDocumentosElectronicos, FiltrarPorFechaContabilizacion);
             return PartialView("_GridViewPartial_deudas", model);
         }
 

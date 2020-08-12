@@ -600,6 +600,9 @@ namespace Core.Erp.Data.Facturacion
                     else
                         DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalSinDscto, 2, MidpointRounding.AwayFromZero);
 
+                    if (diario.lst_ct_cbtecble_det.Count == 0)
+                        return null;
+
                     if (DiferenciaSubtotal > 0)
                         diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
                     else

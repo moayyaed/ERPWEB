@@ -102,14 +102,14 @@
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(20);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "pc_Cuenta";
             column.Caption = "Cuenta Costo";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
@@ -140,9 +140,29 @@
         {
             column.FieldName = "pc_Cuenta_inven";
             column.Caption = "Cuenta Inventario";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCtaCble_Vta";
+            column.Caption = "Cuenta Venta";
+            column.Width = Unit.Percentage(15);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCuenta_Vta", DataBinder.Eval(c.DataItem, "IdCtaCble_Vta"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pc_Cuenta_Vta";
+            column.Caption = "Cuenta Vta";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
     if (ViewData["EditError"] != null)

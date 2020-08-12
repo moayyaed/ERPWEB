@@ -81,7 +81,7 @@ namespace Core.Erp.Data.Inventario
 
                 using (Entities_inventario contex = new Entities_inventario())
                 {
-                    contex.SetCommandTimeOut(5000);
+                    contex.Database.CommandTimeout =5000;
 
                     contex.spSys_Inv_Recosteo_Inventario(IdEmpresa, IdSucursal, IdBodega, fecha_ini,5);
 

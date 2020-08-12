@@ -28,11 +28,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
         cp_retencion_Data bus_retencion = new cp_retencion_Data();
 
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
-        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime fi, DateTime ff, bool MostrarDocumentosElectronicos)
+        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime fi, DateTime ff, bool MostrarDocumentosElectronicos, bool FiltrarPorFechaContabilizacion)
         {
             try
             {
-                return data.get_lst(IdEmpresa, IdSucursal, fi, ff, MostrarDocumentosElectronicos);
+                return data.get_lst(IdEmpresa, IdSucursal, fi, ff, MostrarDocumentosElectronicos, FiltrarPorFechaContabilizacion);
             }
             catch (Exception)
             {

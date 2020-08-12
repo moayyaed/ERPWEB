@@ -349,7 +349,7 @@ namespace Core.Erp.Data.Inventario
             {
                 using (Entities_inventario contex = new Entities_inventario())
                 {
-                    contex.SetCommandTimeOut(5000);
+                    contex.Database.CommandTimeout =5000;
                     var mensaje = "";
 
                     if (Lista_CorregirTransferencia.Count == 0)

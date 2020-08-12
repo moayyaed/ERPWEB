@@ -738,7 +738,7 @@
           <Property Name="interpretacion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ajuste' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ajuste' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ajuste">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -769,7 +769,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ajuste' no tiene definida nin
           <Property Name="bo_Descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_AjusteDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_AjusteDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_AjusteDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -805,7 +805,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_AjusteDet' no tiene definida 
           <Property Name="nom_linea" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Consignacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Consignacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Consignacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -832,7 +832,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Consignacion' no tiene defini
           <Property Name="NombreProveedor" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_ConsignacionDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_ConsignacionDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_ConsignacionDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -854,7 +854,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_ConsignacionDet' no tiene def
           <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_devolucion_inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_devolucion_inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_devolucion_inven_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -892,7 +892,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_devolucion_inven_det' no tien
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -929,7 +929,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven' no tiene defin
           <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_det_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_conversion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -961,7 +961,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_det_conversion'
           <Property Name="mv_costo" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorAprobar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_PorAprobar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorAprobar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -998,7 +998,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorAprobar' no 
           <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_PorContabilizar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorContabilizar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1036,7 +1036,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorContabilizar
           <Property Name="bo_Descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorDespachar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_PorDespachar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorDespachar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1073,7 +1073,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorDespachar' n
           <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorOrdenCompra' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_PorOrdenCompra' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorOrdenCompra">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1108,7 +1108,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorOrdenCompra'
           <Property Name="co_factura" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorReversar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Ing_Egr_Inven_PorReversar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_PorReversar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1145,7 +1145,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Ing_Egr_Inven_PorReversar' no
           <Property Name="EstadoAprobacion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_movi_inve_x_estado_contabilizacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_movi_inve_x_estado_contabilizacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_movi_inve_x_estado_contabilizacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1177,7 +1177,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_movi_inve_x_estado_contabiliz
           <Property Name="Diferencia" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_para_composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Producto_para_composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Producto_para_composicion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1200,7 +1200,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_para_composicion' no
           <Property Name="tp_descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorBodega' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Producto_PorBodega' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Producto_PorBodega">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1221,7 +1221,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorBodega' no tiene 
           <Property Name="nom_categoria" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Producto_PorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Producto_PorSucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1239,7 +1239,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_PorSucursal' no tien
           <Property Name="pr_codigo" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_Stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Producto_Stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Producto_Stock">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1254,7 +1254,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Producto_Stock' no tiene defi
           <Property Name="Stock" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_producto_x_tb_bodega' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_producto_x_tb_bodega">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1282,9 +1282,11 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega' no tien
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" />
           <Property Name="IdCtaCble_Inven" Type="varchar" MaxLength="20" />
           <Property Name="pc_Cuenta_Inv" Type="varchar" MaxLength="523" />
+          <Property Name="IdCtaCble_Vta" Type="varchar" MaxLength="20" />
+          <Property Name="pc_Cuenta_Vta" Type="varchar" MaxLength="523" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_Costo_Historico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_producto_x_tb_bodega_Costo_Historico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_producto_x_tb_bodega_Costo_Historico">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1321,7 +1323,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_Costo_Hi
           <Property Name="fecha_trans" Type="datetime" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_stock_x_lote' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_producto_x_tb_bodega_stock_x_lote' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1344,7 +1346,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_producto_x_tb_bodega_stock_x_
           <Property Name="stock" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1364,7 +1366,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_transferencia_x_in_movi_inve_
           <Property Name="tr_fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Transferencias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_Transferencias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Transferencias">
           <Key>
             <PropertyRef Name="SucuOrigen" />
@@ -1412,7 +1414,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_Transferencias' no tiene defi
           <Property Name="IdEstadoAproba_egr" Type="varchar" MaxLength="15" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwin_UnidadMedida_Equiv_conversion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_UnidadMedida_Equiv_conversion">
           <Key>
             <PropertyRef Name="IdUnidadMedida" />
@@ -1428,7 +1430,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwin_UnidadMedida_Equiv_conversion
           <Property Name="interpretacion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_Ing_Egr_Inven_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1481,7 +1483,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det' no tiene d
           <Property Name="Desc_mov_inv" Type="varchar" MaxLength="250" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_Ing_Egr_Inven_det_x_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_det_x_devolver">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1515,7 +1517,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_det_x_devolver'
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_por_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_Ing_Egr_Inven_por_devolver' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Ing_Egr_Inven_por_devolver">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1536,7 +1538,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Ing_Egr_Inven_por_devolver' n
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_Producto_Composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_Producto_Composicion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_Producto_Composicion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1563,7 +1565,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_Producto_Composicion' no tien
           <Property Name="se_distribuye" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_hijo_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_producto_hijo_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_producto_hijo_combo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1585,7 +1587,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_hijo_combo' no tiene
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwin_producto_padre_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwin_producto_padre_combo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3116,7 +3118,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
     [vwin_producto_x_tb_bodega].[IdCtaCble_Costo] AS [IdCtaCble_Costo], 
     [vwin_producto_x_tb_bodega].[pc_Cuenta] AS [pc_Cuenta], 
     [vwin_producto_x_tb_bodega].[IdCtaCble_Inven] AS [IdCtaCble_Inven], 
-    [vwin_producto_x_tb_bodega].[pc_Cuenta_Inv] AS [pc_Cuenta_Inv]
+    [vwin_producto_x_tb_bodega].[pc_Cuenta_Inv] AS [pc_Cuenta_Inv], 
+    [vwin_producto_x_tb_bodega].[IdCtaCble_Vta] AS [IdCtaCble_Vta], 
+    [vwin_producto_x_tb_bodega].[pc_Cuenta_Vta] AS [pc_Cuenta_Vta]
     FROM [dbo].[vwin_producto_x_tb_bodega] AS [vwin_producto_x_tb_bodega]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwin_producto_x_tb_bodega_Costo_Historico" EntityType="Self.vwin_producto_x_tb_bodega_Costo_Historico" store:Type="Views" store:Schema="dbo">
@@ -4451,7 +4455,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <EntitySet Name="vwin_Producto_PorBodega" EntityType="Model_inventario.vwin_Producto_PorBodega" />
           <EntitySet Name="vwin_Producto_Stock" EntityType="Model_inventario.vwin_Producto_Stock" />
           <EntitySet Name="vwin_Producto_PorSucursal" EntityType="Model_inventario.vwin_Producto_PorSucursal" />
-          <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
           <EntitySet Name="vwin_Ing_Egr_Inven_PorOrdenCompra" EntityType="Model_inventario.vwin_Ing_Egr_Inven_PorOrdenCompra" />
           <EntitySet Name="in_parametro" EntityType="Model_inventario.in_parametro" />
           <AssociationSet Name="FK_in_parametro_in_Catalogo2" Association="Model_inventario.FK_in_parametro_in_Catalogo2">
@@ -4534,6 +4537,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="vwin_AjusteDet" EntityType="Model_inventario.vwin_AjusteDet" />
+          <EntitySet Name="vwin_producto_x_tb_bodega" EntityType="Model_inventario.vwin_producto_x_tb_bodega" />
           </EntityContainer>
         <EntityType Name="vwin_producto_x_tb_bodega_stock_x_lote">
           <Key>
@@ -6396,34 +6400,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="pr_codigo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="vwin_producto_x_tb_bodega">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="Stock_minimo" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="bo_Descripcion" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="ca_Categoria" />
-            <PropertyRef Name="pr_codigo" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Stock_minimo" Type="Double" Nullable="false" />
-          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="IdCtaCble_Costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble_Inven" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta_Inv" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwin_Ing_Egr_Inven_PorOrdenCompra">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -6842,6 +6818,36 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
           <Property Name="IdLinea" Type="Int32" Nullable="false" />
           <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="nom_linea" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwin_producto_x_tb_bodega">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Stock_minimo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="bo_Descripcion" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="ca_Categoria" />
+            <PropertyRef Name="pr_codigo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Stock_minimo" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ca_Categoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="IdCtaCble_Costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Inven" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta_Inv" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Vta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta_Vta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -8019,26 +8025,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwin_producto_x_tb_bodega">
-            <EntityTypeMapping TypeName="Model_inventario.vwin_producto_x_tb_bodega">
-              <MappingFragment StoreEntitySet="vwin_producto_x_tb_bodega">
-                <ScalarProperty Name="pc_Cuenta_Inv" ColumnName="pc_Cuenta_Inv" />
-                <ScalarProperty Name="IdCtaCble_Inven" ColumnName="IdCtaCble_Inven" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="IdCtaCble_Costo" ColumnName="IdCtaCble_Costo" />
-                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="Stock_minimo" ColumnName="Stock_minimo" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwin_Ing_Egr_Inven_PorOrdenCompra">
             <EntityTypeMapping TypeName="Model_inventario.vwin_Ing_Egr_Inven_PorOrdenCompra">
               <MappingFragment StoreEntitySet="vwin_Ing_Egr_Inven_PorOrdenCompra">
@@ -8165,6 +8151,28 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwin_producto_padre_combo' no tien
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdAjuste" ColumnName="IdAjuste" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwin_producto_x_tb_bodega">
+            <EntityTypeMapping TypeName="Model_inventario.vwin_producto_x_tb_bodega">
+              <MappingFragment StoreEntitySet="vwin_producto_x_tb_bodega">
+                <ScalarProperty Name="pc_Cuenta_Vta" ColumnName="pc_Cuenta_Vta" />
+                <ScalarProperty Name="IdCtaCble_Vta" ColumnName="IdCtaCble_Vta" />
+                <ScalarProperty Name="pc_Cuenta_Inv" ColumnName="pc_Cuenta_Inv" />
+                <ScalarProperty Name="IdCtaCble_Inven" ColumnName="IdCtaCble_Inven" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCble_Costo" ColumnName="IdCtaCble_Costo" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="ca_Categoria" ColumnName="ca_Categoria" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="bo_Descripcion" ColumnName="bo_Descripcion" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="Stock_minimo" ColumnName="Stock_minimo" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

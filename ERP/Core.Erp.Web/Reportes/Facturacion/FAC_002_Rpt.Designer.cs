@@ -311,7 +311,7 @@
             this.xrTableCell43.StylePriority.UseTextAlignment = false;
             this.xrTableCell43.Text = "Precio Unit";
             this.xrTableCell43.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell43.TextFormatString = "{0:n2}";
+            this.xrTableCell43.TextFormatString = "{0:n6}";
             this.xrTableCell43.Weight = 0.59923432091977391D;
             // 
             // xrTableCell44
@@ -1607,7 +1607,7 @@
             this.p_IdNota,
             this.p_IdSucursal,
             this.p_IdBodega});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.FAC_002_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();

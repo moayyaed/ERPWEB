@@ -57,6 +57,7 @@ namespace Core.Erp.Web.Reportes.Facturacion
             #region Grupo
 
             Lista = (from q in lst_rpt
+                     where q.Total > 0
                      group q by new
                      {
                          q.IdEmpresa,

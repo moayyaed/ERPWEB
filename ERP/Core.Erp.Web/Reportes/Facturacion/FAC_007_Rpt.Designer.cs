@@ -270,8 +270,8 @@
             this.xrTableCell30.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell30.Name = "xrTableCell30";
             this.xrTableCell30.StylePriority.UseFont = false;
-            this.xrTableCell30.TextFormatString = "{0:n2}";
-            this.xrTableCell30.Weight = 0.39946740929634583D;
+            this.xrTableCell30.TextFormatString = "{0:n6}";
+            this.xrTableCell30.Weight = 0.55259620926370712D;
             // 
             // xrTableCell31
             // 
@@ -281,7 +281,7 @@
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.StylePriority.UseFont = false;
             this.xrTableCell31.TextFormatString = "{0:n2}";
-            this.xrTableCell31.Weight = 0.59920111394451869D;
+            this.xrTableCell31.Weight = 0.44607231397715746D;
             // 
             // xrTableCell32
             // 
@@ -290,7 +290,7 @@
             this.xrTableCell32.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell32.Name = "xrTableCell32";
             this.xrTableCell32.StylePriority.UseFont = false;
-            this.xrTableCell32.TextFormatString = "{0:n2}";
+            this.xrTableCell32.TextFormatString = "{0:n6}";
             this.xrTableCell32.Weight = 0.80692367914750385D;
             // 
             // TopMargin
@@ -699,13 +699,13 @@
             // 
             this.xrTableCell24.Name = "xrTableCell24";
             this.xrTableCell24.Text = "Precio unitario";
-            this.xrTableCell24.Weight = 0.39946740929634583D;
+            this.xrTableCell24.Weight = 0.55259620926370712D;
             // 
             // xrTableCell25
             // 
             this.xrTableCell25.Name = "xrTableCell25";
-            this.xrTableCell25.Text = "Descuento";
-            this.xrTableCell25.Weight = 0.59920111394451869D;
+            this.xrTableCell25.Text = "Dscto.";
+            this.xrTableCell25.Weight = 0.44607231397715746D;
             // 
             // xrTableCell26
             // 

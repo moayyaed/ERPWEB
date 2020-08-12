@@ -516,7 +516,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
-        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin, bool MostrarDocumentosElectronicos)
+        public List<cp_orden_giro_Info> get_lst(int IdEmpresa, int IdSucursal, DateTime FechaInicio, DateTime FechaFin, bool MostrarDocumentosElectronicos, bool FiltrarPorFechaContabilizacion)
         {
             try
             {
@@ -525,8 +525,14 @@ namespace Core.Erp.Data.CuentasPorPagar
                 {
                     if (!MostrarDocumentosElectronicos)
                     {
+                        List<vwcp_orden_giro> lst = new List<vwcp_orden_giro>();
                         #region Documentos no electrónicos
-                        var lst = Context.vwcp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q => q.IdCbteCble_Ogiro).ToList();
+                        if (FiltrarPorFechaContabilizacion)
+                        {
+                            lst = Context.vwcp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaContabilizacion >= FechaInicio && q.co_FechaContabilizacion <= FechaFin).OrderByDescending(q=> q.co_FechaContabilizacion).ThenByDescending(q => q.IdCbteCble_Ogiro).ToList();
+                        }
+                        else
+                            lst = Context.vwcp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q=> q.co_FechaFactura).ThenByDescending(q => q.IdCbteCble_Ogiro).ToList();
 
                         foreach (var q in lst)
                         {
@@ -542,7 +548,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                     co_fechaOg = q.co_fechaOg,
                                     co_serie = q.co_serie,
                                     co_factura = q.co_factura,
-                                    co_FechaFactura = q.co_FechaFactura,
+                                    co_FechaFactura =  q.co_FechaFactura,
                                     co_FechaContabilizacion = q.co_FechaContabilizacion,
                                     co_FechaFactura_vct = q.co_FechaFactura_vct,
                                     co_plazo = q.co_plazo,
@@ -596,7 +602,13 @@ namespace Core.Erp.Data.CuentasPorPagar
                     }
                     else
                     {
-                        var lst = Context.vwcp_orden_giro_LiquidacionDeCompras.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q => q.IdCbteCble_Ogiro).ToList();
+                        List<vwcp_orden_giro_LiquidacionDeCompras> lst = new List<vwcp_orden_giro_LiquidacionDeCompras>();
+                        if (FiltrarPorFechaContabilizacion)
+                        {
+                            lst = Context.vwcp_orden_giro_LiquidacionDeCompras.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaContabilizacion >= FechaInicio && q.co_FechaContabilizacion <= FechaFin).OrderByDescending(q => q.co_FechaContabilizacion).ThenByDescending(q=> q.IdCbteCble_Ogiro).ToList();
+                        }
+                        else
+                            lst = Context.vwcp_orden_giro_LiquidacionDeCompras.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.co_FechaFactura >= FechaInicio && q.co_FechaFactura <= FechaFin).OrderByDescending(q => q.co_FechaFactura).ThenByDescending(q => q.IdCbteCble_Ogiro).ToList();
                         foreach (var q in lst)
                         {
                             Lista.Add(new cp_orden_giro_Info
@@ -612,6 +624,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 Descripcion = q.Descripcion,
                                 fecha_autorizacion = q.fecha_autorizacion,
                                 Estado = q.Estado,
+                                co_FechaContabilizacion = q.co_FechaContabilizacion,
                                 info_proveedor = new cp_proveedor_Info
                                 {
                                     info_persona = new Info.General.tb_persona_Info

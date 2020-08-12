@@ -70,8 +70,7 @@ namespace Core.Erp.Data.RRHH
                 {
                     Lista = (from ROL in Context.vwro_rol
                              where ROL.IdEmpresa == IdEmpresa
-                             && ROL.IdNominaTipoLiqui <= 2
-                             && ROL.IdNominaTipoLiqui >= 1
+                             && ROL.IdNominaTipoLiqui == 2
                              && ROL.IdSucursal>= IdSucursalIni
                              && ROL.IdSucursal <= IdSucursalFin
                              && ROL.EstadoRol== "CERRADO"

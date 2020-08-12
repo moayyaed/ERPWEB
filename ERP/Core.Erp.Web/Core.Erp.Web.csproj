@@ -10482,6 +10482,7 @@
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_CmbEmpleado.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
+    <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta_Vta.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

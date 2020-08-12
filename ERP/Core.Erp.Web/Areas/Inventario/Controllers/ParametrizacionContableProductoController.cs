@@ -59,6 +59,22 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         #endregion
 
+        #region Metodos ComboBox bajo demanda CtaInven
+        public ActionResult CmbCuenta_Vta()
+        {
+            in_producto_x_tb_bodega_Info model = new in_producto_x_tb_bodega_Info();
+            return PartialView("_CmbCuenta_Vta", model);
+        }
+        public List<ct_plancta_Info> get_list_bajo_demanda_cta_vta(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
+        }
+        public ct_plancta_Info get_info_bajo_demanda_cta_vta(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_plancta.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa));
+        }
+        #endregion
+
         #region Vistas
         public ActionResult Index()
         {
@@ -131,6 +147,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 var bod = bus_bodega.get_info(IdEmpresa, edited_info.IdSucursal, edited_info.IdBodega);
                 var cta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Costo);
                 var cta_inven = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Inven);
+                var cta_vta = bus_plancta.get_info(IdEmpresa, info_det.IdCtaCble_Vta);
 
                 if (suc != null && bod != null)
                 {
@@ -139,17 +156,43 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     info_det.IdBodega = edited_info.IdBodega;
                     info_det.bo_Descripcion = bod.bo_Descripcion;
                 }
+                if (cta != null)
+                {
+                    edited_info.IdCtaCble_Costo = info_det.IdCtaCble_Costo;
+                    edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+                    info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+                }else
+                {
+                    edited_info.IdCtaCble_Costo = null;
+                    edited_info.pc_Cuenta = null;
+                    info_det.pc_Cuenta = null;
+                }
 
-                edited_info.IdCtaCble_Costo = info_det.IdCtaCble_Costo;
-                edited_info.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
-                info_det.pc_Cuenta = cta.IdCtaCble + " - " + cta.pc_Cuenta;
+                if (cta_inven != null)
+                {
+                    edited_info.IdCtaCble_Inven = info_det.IdCtaCble_Inven;
+                    edited_info.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
+                    info_det.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
+                }else
+                {
+                    edited_info.IdCtaCble_Inven = null;
+                    edited_info.pc_Cuenta_inven = null;
+                    info_det.pc_Cuenta_inven = null;
+                }
 
-                edited_info.IdCtaCble_Inven = info_det.IdCtaCble_Inven;
-                edited_info.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
-                info_det.pc_Cuenta_inven = cta_inven.IdCtaCble + " - " + cta_inven.pc_Cuenta;
+                if (cta_vta != null)
+                {
+                    edited_info.IdCtaCble_Vta = info_det.IdCtaCble_Vta;
+                    edited_info.pc_Cuenta_Vta = cta_vta.IdCtaCble + " - " + cta_vta.pc_Cuenta;
+                    info_det.pc_Cuenta_Vta = cta_vta.IdCtaCble + " - " + cta_vta.pc_Cuenta;
+                }else
+                {
+                    edited_info.IdCtaCble_Vta = null;
+                    edited_info.pc_Cuenta_Vta = null;
+                    info_det.pc_Cuenta_Vta = null;
+                }
 
                 bus_producto_x_tbbodega.modificarDB(edited_info);
-
             }
 
             List<in_producto_x_tb_bodega_Info> model = Lis_in_producto_x_tb_bodega_Info_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));

@@ -81,7 +81,6 @@
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_nota_DebCre_cp_codigo_SRI1" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_retencion_det_cp_codigo_SRI" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_parametros" Width="1.5" PointX="14.375" PointY="17.75" />
-        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras" Width="1.5" PointX="17.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_giro" Width="1.5" PointX="10.5" PointY="32.875" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro" Width="1.5" PointX="24.375" PointY="10.75" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI" />
@@ -95,6 +94,7 @@
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_giro_pagos_sri_cp_orden_giro" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_giro_x_in_Ing_Egr_Inven_cp_orden_giro" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_retencion_cp_orden_giro" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras" Width="1.5" PointX="17.375" PointY="10.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -53,7 +53,7 @@ namespace Core.Erp.Data.Inventario
 
                 using (Entities_inventario contex = new Entities_inventario())
                 {
-                    contex.SetCommandTimeOut(5000);
+                    contex.Database.CommandTimeout = 5000;
                     int secuencia = 1;
                     Lista = (contex.SPINV_GetStock(IdEmpresa, IdSucursal, IdBodega, Fecha)).Select(q => new in_AjusteDet_Info
                     {

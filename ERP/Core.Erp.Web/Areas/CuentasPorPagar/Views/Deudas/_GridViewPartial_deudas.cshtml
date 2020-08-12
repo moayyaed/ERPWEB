@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_deudas";
-        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_deudas", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal, MostrarDocumentosElectronicos = ViewBag.MostrarDocumentosElectronicos };
+        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_deudas", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal, MostrarDocumentosElectronicos = ViewBag.MostrarDocumentosElectronicos, FiltrarPorFechaContabilizacion = ViewBag.FiltrarPorFechaContabilizacion };
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -92,8 +92,8 @@
             c.Width = Unit.Pixel(150);
         });
         settings.Columns.Add("IdCbteCble_Ogiro", "ID").Width = Unit.Percentage(7);
-        settings.Columns.Add("Descripcion", "Tipo").Width = Unit.Percentage(15);
-        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
+        settings.Columns.Add("Descripcion", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_FechaFactura";
@@ -106,8 +106,20 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "co_FechaContabilizacion";
+            column.Caption = "Fecha Cont.";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
         settings.Columns.Add("info_proveedor.info_persona.pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(20);
-        settings.Columns.Add("co_observacion", "Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("co_observacion", "Observación").Width = Unit.Percentage(15);
         settings.Columns.Add("co_total", "Total").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {

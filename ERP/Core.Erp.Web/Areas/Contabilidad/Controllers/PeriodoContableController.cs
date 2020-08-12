@@ -133,7 +133,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             {
                 IdEmpresa = IdEmpresa,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdPeriodo = IdPeriodo
+                IdPeriodo = IdPeriodo,
+                IdanioFiscal = DateTime.Now.Date.Year
             };
             Lista_periodo_x_modulo.set_list(new List<ct_periodo_x_tb_modulo_Info>(), model.IdTransaccionSession);
 
