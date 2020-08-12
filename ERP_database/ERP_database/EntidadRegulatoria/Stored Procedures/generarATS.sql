@@ -1,4 +1,5 @@
-﻿--exec [EntidadRegulatoria].[generarATS] 1,201909,1,1
+﻿
+--exec [EntidadRegulatoria].[generarATS] 1,201909,1,1
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -71,11 +72,11 @@ CASe when perso.pe_Naturaleza='NATU' THEN '01' else '02' end AS tipoProv,					pe
  0 co_Ice_valor,																			fac.co_valoriva,																					
  ISNULL(fac.PagoLocExt,'LOC'),																			f_pago.formas_pago_sri,  
  f_pago.codigo_pago_sri,																	f_pago.codigo_pago_sri, fac.IdSucursal,
- NULL docModificado,
-NULL estabModificado,
-NULL ptoEmiModificado,
-NULL secModificado,
-NULL autModificado
+ fac.Tipodoc_a_Modificar docModificado,
+fac.estable_a_Modificar estabModificado,
+fac.ptoEmi_a_Modificar ptoEmiModificado,
+fac.num_docu_Modificar secModificado,
+fac.aut_doc_Modificar autModificado
 FROM            dbo.cp_orden_giro AS fac INNER JOIN
                          dbo.cp_proveedor AS prov ON fac.IdEmpresa = prov.IdEmpresa AND fac.IdProveedor = prov.IdProveedor INNER JOIN
                          dbo.tb_persona AS perso ON prov.IdPersona = perso.IdPersona LEFT OUTER JOIN
