@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_archivo_bancario";
-        settings.CallbackRouteValues = new { Controller = "TipoFlujoBanco", Action = "GridViewPartial_archivo_bancario", Nuevo = ViewBag.Nuevo };
+        settings.CallbackRouteValues = new { Controller = "ArchivoBancario", Action = "GridViewPartial_archivo_bancario", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdArchivo";
         settings.Width = Unit.Percentage(100);
 

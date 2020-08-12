@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_CierrePorModuloPorSucursal";
-        settings.CallbackRouteValues = new { Controller = "CierrePorModuloPorSucursal", Action = "GridViewPartial_CierrePorModuloPorSucursal", IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "CierrePorModuloPorSucursal", Action = "GridViewPartial_CierrePorModuloPorSucursal", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdCierre";
         settings.Width = Unit.Percentage(100);
 
@@ -55,17 +55,23 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") })
+                );
+                //    ViewContext.Writer.Write(
+                //Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCierre = DataBinder.Eval(tc.DataItem, "IdCierre") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -100,6 +106,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

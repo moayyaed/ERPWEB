@@ -10,7 +10,8 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Index", "CierreAnual", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -58,7 +59,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_CierreAnual", new { IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_CierreAnual", new { Nuevo = ViewBag.Nuevo })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

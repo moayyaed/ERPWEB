@@ -3,6 +3,7 @@ using Core.Erp.Bus.General;
 using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -28,6 +29,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_parametro_Bus bus_parametro = new ct_parametro_Bus();
         ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        ct_anio_fiscal_x_tb_sucursal_List Lista_CierreAnual = new ct_anio_fiscal_x_tb_sucursal_List();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -50,27 +53,58 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_cierreanual.get_list(model.IdEmpresa, model.IdSucursal);
+            Lista_CierreAnual.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_cierreanual.get_list(model.IdEmpresa, model.IdSucursal);
+            Lista_CierreAnual.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_CierreAnual(int IdSucursal = 0)
+        public ActionResult GridViewPartial_CierreAnual(bool Nuevo=false)
         {
-            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdSucursal = IdSucursal;
-            List<ct_anio_fiscal_x_tb_sucursal_Info> model = bus_cierreanual.get_list(IdEmpresa, IdSucursal);
+            //var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdSucursal = IdSucursal;
+            //List<ct_anio_fiscal_x_tb_sucursal_Info> model = bus_cierreanual.get_list(IdEmpresa, IdSucursal);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_CierreAnual.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_CierreAnual", model);
         }
 
@@ -133,6 +167,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
 
             var info_parametro = bus_parametro.get_info(IdEmpresa);
 
@@ -170,10 +209,10 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdanioFiscal = model.IdanioFiscal, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdanioFiscal = 0)
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, int IdanioFiscal = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -186,10 +225,50 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.info_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte, model.IdCbteCble);
             list_ct_cbtecble_det.set_list(model.info_cbtecble_det, model.IdTransaccionSession);
             cargar_combos(model);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdanioFiscal = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ct_anio_fiscal_x_tb_sucursal_Info model = bus_cierreanual.get_info(IdEmpresa, IdSucursal, IdanioFiscal);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.info_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte, model.IdCbteCble);
+            list_ct_cbtecble_det.set_list(model.info_cbtecble_det, model.IdTransaccionSession);
+            cargar_combos(model);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -211,7 +290,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdanioFiscal = model.IdanioFiscal, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, int IdanioFiscal = 0)
@@ -221,6 +300,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierreAnual", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
 
             ct_anio_fiscal_x_tb_sucursal_Info model = bus_cierreanual.get_info(IdEmpresa, IdSucursal, IdanioFiscal);
@@ -258,5 +342,25 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
+    }
+
+    public class ct_anio_fiscal_x_tb_sucursal_List
+    {
+        string Variable = "ct_anio_fiscal_x_tb_sucursal_Info";
+        public List<ct_anio_fiscal_x_tb_sucursal_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ct_anio_fiscal_x_tb_sucursal_Info> list = new List<ct_anio_fiscal_x_tb_sucursal_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ct_anio_fiscal_x_tb_sucursal_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ct_anio_fiscal_x_tb_sucursal_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

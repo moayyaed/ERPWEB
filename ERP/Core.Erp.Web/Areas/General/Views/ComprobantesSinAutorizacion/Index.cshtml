@@ -26,9 +26,10 @@
    
 
 </script>
-@using (Html.BeginForm("Index", "ComprobantesSinAutorizacion",FormMethod.Post,new { @role = "form", @id = "myform" }))
+@using (Html.BeginForm("Index", "ComprobantesSinAutorizacion", FormMethod.Post, new { @role = "form", @id = "myform" }))
 {
-    @Html.HiddenFor(q=> q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="box">
         <div class="box-header with-border">
             <div class="row">
@@ -115,7 +116,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_documentos_pendientes_enviar_sri", new {Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_documentos_pendientes_enviar_sri")
         </div>
        
         <!-- /.box-body -->
@@ -129,13 +130,10 @@
 }
 
 <script type="text/javascript">
-
-   
-
-
     function guardar_aprobacion() {
         var datos = {
-            Ids: selectedIDs
+            Ids: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $("#btn_guardar").disabled = true;
         $.ajax({

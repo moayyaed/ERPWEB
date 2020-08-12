@@ -10500,6 +10500,8 @@
     <Content Include="Areas\Banco\Views\ConciliacionBanco\Consultar.cshtml" />
     <Content Include="Areas\Banco\Views\ArchivoBancario\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\ComprobanteContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
