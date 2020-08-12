@@ -1,0 +1,210 @@
+﻿@model Core.Erp.Info.Facturacion.fa_ProbabilidadCobro_Info
+@{
+    ViewBag.Title = "Consultar probabilidad de cobro";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdString", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+    function MostrarModalFacturas() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetFacturas", "ProbabilidadCobro", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridViewPartial_Facturas.PerformCallback();
+        $("#FacturasModal").modal("show");
+    }
+
+    function AddFacturas() {
+        var datos = {
+            IDs: selectedIDs,
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProbabilidad: $("#IdProbabilidad").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AddFacturas", "ProbabilidadCobro", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+
+        GridViewPartial_Facturas.PerformCallback();
+        GridViewPartial_Facturas.UnselectRows();
+        GridViewPartial_ProbabilidadCobroDet.PerformCallback();
+        $("#FacturasModal").modal("hide");
+    }
+</script>
+@using (Html.BeginForm("Consultar", "ProbabilidadCobro", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdProbabilidad, new { @id = "IdProbabilidad" })
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="modal fade" id="FacturasModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_Facturas")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddFacturas();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ProbabilidadCobro",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "ProbabilidadCobro", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdProbabilidad=Model.IdProbabilidad }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "ProbabilidadCobro", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdProbabilidad=Model.IdProbabilidad }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="codigo">Descripción</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger"})
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="bo_EsBodega"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.MostrarNoAsignadas, settings =>
+                            {
+                                settings.Name = "MostrarNoAsignadas";
+                                settings.Text = "Mostrar no asignadas";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.MostrarNoAsignadas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" onclick="MostrarModalFacturas()" title="Buscar facturas">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_ProbabilidadCobroDet")
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","ProbabilidadCobro",new { Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

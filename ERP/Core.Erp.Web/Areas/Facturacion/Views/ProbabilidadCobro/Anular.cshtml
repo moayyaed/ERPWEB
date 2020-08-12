@@ -127,6 +127,17 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <label for="Observacion">Motivo anulación*</label>
+                    @Html.TextAreaFor(q => q.MotivoAnulacion, new { @class = "form-control", @rows = 1 })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <br />
     <div class="row">
         <div class="col-md-12">

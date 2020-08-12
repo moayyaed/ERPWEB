@@ -1,10 +1,12 @@
 ﻿using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Banco;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -20,6 +22,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
     public class DepositoBancoController : Controller
     {
         #region Variables
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         ba_Cbte_Ban_Bus bus_cbteban = new ba_Cbte_Ban_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ba_tipo_nota_Bus bus_tipo_nota = new ba_tipo_nota_Bus();
@@ -31,7 +34,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List List_ing = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List();
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal();
         ba_Conciliacion_det_IngEgr_Bus bus_ConciliacionDet = new ba_Conciliacion_det_IngEgr_Bus();
-        
+        ba_Cbte_Ban_Dep_List Lista_Deposito = new ba_Cbte_Ban_Dep_List();
         ba_Banco_Flujo_Det_List_Deposito List_Flujo = new ba_Banco_Flujo_Det_List_Deposito();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
 
@@ -43,17 +46,47 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos_consulta();
+            var lst = bus_cbteban.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal, cl_enumeradores.eTipoCbteBancario.DEPO.ToString(), true);
+            Lista_Deposito.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cargar_combos_consulta();
+            var lst = bus_cbteban.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal, cl_enumeradores.eTipoCbteBancario.DEPO.ToString(), true);
+            Lista_Deposito.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         private void cargar_combos_consulta()
@@ -68,13 +101,17 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             });
             ViewBag.lst_sucursal = lst_sucursal;
         }
-        public ActionResult GridViewPartial_DepositoBanco(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_DepositoBanco(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            ViewBag.IdSucursal = IdSucursal;
-            var model = bus_cbteban.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal, cl_enumeradores.eTipoCbteBancario.DEPO.ToString(), true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal;
+            //var model = bus_cbteban.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal, cl_enumeradores.eTipoCbteBancario.DEPO.ToString(), true);
+
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Deposito.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_DepositoBanco", model);
         }
         #endregion
@@ -190,6 +227,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Cbte_Ban_Info model = new ba_Cbte_Ban_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -225,7 +268,65 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
             
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.list_det = bus_flujo.GetList(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
+            List_Flujo.set_list(model.list_det, model.IdTransaccionSession);
+            model.lst_det_ct = bus_det_ct.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
+            model.lst_det_ing = bus_det.get_list(model.IdEmpresa, model.IdTipocbte, model.IdCbteCble);
+            List_ct.set_list(model.lst_det_ct, model.IdTransaccionSession);
+            List_ing.set_list(model.lst_det_ing, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa, model.IdSucursal);
+            SessionFixed.TipoPersona = model.IdTipo_Persona;
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cb_Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            #region Validacion de conciliación bancaria
+            if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipocbte, IdCbteCble, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0, int IdTipocbte = 0, decimal IdCbteCble = 0, bool Exito = false)
@@ -236,6 +337,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");
@@ -289,7 +396,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipocbte = model.IdTipocbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
 
@@ -300,6 +407,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
             ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
@@ -439,6 +551,25 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #endregion
     }
 
+    public class ba_Cbte_Ban_Dep_List
+    {
+        string Variable = "ba_Cbte_Ban_Dep_Info";
+        public List<ba_Cbte_Ban_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Cbte_Ban_Info> list = new List<ba_Cbte_Ban_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Cbte_Ban_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Cbte_Ban_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
     public class ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List
     {
         string Variable = "ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Info";

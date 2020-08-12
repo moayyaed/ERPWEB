@@ -126,6 +126,62 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return PartialView("_TreeListPartial_menu_x_usuario", model);
         }
 
+        public JsonResult guardar(int IdEmpresa = 0, int IdSede = 0, string IdUsuario = "", int Modificado = 0, string Ids = "")
+        {
+            string[] array = Ids.Split(',');
+
+            List<seg_Menu_x_Empresa_x_Usuario_Info> lista = new List<seg_Menu_x_Empresa_x_Usuario_Info>();
+            if (Modificado == 0)
+            {
+                var lst_menu_usuario = Lista_menu_usuario.get_list();
+                foreach (var item in lst_menu_usuario)
+                {
+
+                    if (item != null)
+                        lista.Add(item);
+                }
+            }
+            else
+            {
+                var lst_menu = Lista_menu_usuario.get_list();
+
+                if (Ids != "")
+                {
+                    var output = array.GroupBy(q => q).ToList();
+                    foreach (var item in lst_menu)
+                    {
+                        foreach (var item2 in output)
+                        {
+                            if (item.IdMenu == Convert.ToInt32(item2.Key))
+                            {
+                                lista.Add(item);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    var lst_menu_nuevo = lst_menu.Where(q => q.seleccionado == true).ToList();
+                    foreach (var item in lst_menu)
+                    {
+                        foreach (var item2 in lst_menu_nuevo)
+                        {
+                            if (item.IdMenu == Convert.ToInt32(item2.IdMenu))
+                            {
+                                lista.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+
+            bus_menu_x_empresa_x_usuario.eliminarDB(IdEmpresa, IdUsuario);
+            var resultado = bus_menu_x_empresa_x_usuario.guardarDB(lista, IdEmpresa, IdUsuario);
+
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        /*
         public JsonResult guardar(int IdEmpresa = 0, string IdUsuario = "", int Modificado = 0, string Ids = "")
         {
             string[] array = Ids.Split(',');
@@ -167,7 +223,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
 
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
-        }
+        }*/
     }
 
     public static class seg_Menu_x_Empresa_x_Usuario_Lista
@@ -193,6 +249,7 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
     public class seg_Menu_x_Empresa_x_Usuario_Lista_Memoria
     {
         static string Variable = "fx_MenuXEmpresaXUsuarioFixed_Lista";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
         {
             if (HttpContext.Current.Session[Variable] == null)
@@ -212,9 +269,19 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         public void UpdateRow(seg_Menu_x_Empresa_x_Usuario_Info info)
         {
             seg_Menu_x_Empresa_x_Usuario_Info edited_info = get_list().Where(q => q.IdMenu == info.IdMenu).FirstOrDefault();
-            edited_info.Lectura = info.Lectura;
-            edited_info.Escritura = info.Escritura;
-            edited_info.Eliminacion = info.Eliminacion;
+            edited_info.Nuevo = info.Nuevo;
+            edited_info.Modificar = info.Modificar;
+            edited_info.Anular = info.Anular;
+
+            var existe = bus_permisos.getInfo(edited_info.IdEmpresa, edited_info.IdUsuario, edited_info.IdMenu);
+            if (existe == null && edited_info.seleccionado == true)
+            {
+                bus_permisos.guardarDB(edited_info);
+            }
+            else
+            {
+                bus_permisos.modificarDB(edited_info);
+            }
         }
     }
 

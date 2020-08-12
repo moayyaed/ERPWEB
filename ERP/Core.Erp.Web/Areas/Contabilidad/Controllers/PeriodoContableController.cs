@@ -51,6 +51,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ViewBag.lst_Mes = lst_mes;
         }
 
+        private void cargar_combos_masivo()
+        {
+            var lst_anio = bus_anio.get_list_masivo(false);
+            ViewBag.lst_anio = lst_anio;
+        }
+
         #endregion
 
         #region Metodos del detalle
@@ -149,6 +155,65 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.lst_periodo_x_modulo = Lista_periodo_x_modulo.get_list(model.IdTransaccionSession);
 
             if (!bus_periodo.guardarDB(model))
+            {
+                cargar_combos();
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult NuevoMasivo(int IdPeriodo = 0)
+        {
+            cargar_combos_masivo();
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            ct_periodo_Info model = new ct_periodo_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdPeriodo = IdPeriodo
+            };
+            Lista_periodo_x_modulo.set_list(new List<ct_periodo_x_tb_modulo_Info>(), model.IdTransaccionSession);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult NuevoMasivo(ct_periodo_Info model)
+        {
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.IdUsuario = SessionFixed.IdUsuario;
+            model.lst_periodo_x_modulo = Lista_periodo_x_modulo.get_list(model.IdTransaccionSession);
+            model.lst_periodo = new List<ct_periodo_Info>();
+            var Ini = Convert.ToDateTime("01" + "/" + "01" + "/" + model.IdanioFiscal);
+            var Fin = Convert.ToDateTime("31" + "/" + "12" + "/" + model.IdanioFiscal);
+
+            var mes_ini = Ini.Month;
+            var mes_fin = Fin.Month;
+            var meses = mes_fin - mes_ini;
+            for (int i = mes_ini; i <= mes_fin; i++)
+            {
+                var mes = i.ToString().PadLeft(2, '0');
+                var IdPeriodo = model.IdanioFiscal + mes;
+                var anio = model.IdanioFiscal;
+                var ini = new DateTime(anio, Convert.ToInt32(i), 1);
+                var fin = new DateTime(anio, Convert.ToInt32(i), 1).AddMonths(1).AddDays(-1);
+
+                var info_periodo = new ct_periodo_Info
+                {
+                    IdEmpresa = model.IdEmpresa,
+                    IdanioFiscal = model.IdanioFiscal,
+                    IdPeriodo = Convert.ToInt32(IdPeriodo),
+                    pe_mes = i,
+                    pe_FechaIni = ini,
+                    pe_FechaFin = fin,
+                    pe_estado = "A",
+                    pe_cerrado = "N"
+                };
+
+                model.lst_periodo.Add(info_periodo);
+            }
+            if (!bus_periodo.guardarMasivoDB(model))
             {
                 cargar_combos();
                 return View(model);

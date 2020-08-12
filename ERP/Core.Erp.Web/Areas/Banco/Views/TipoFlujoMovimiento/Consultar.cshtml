@@ -1,0 +1,162 @@
+﻿@model Core.Erp.Info.Banco.ba_TipoFlujo_Movimiento_Info
+@{
+    ViewBag.Title = "Consultar movimiento de tipo flujo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Consultar", "TipoFlujoMovimiento", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdMovimiento);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdMovimiento = Model.IdMovimiento }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdMovimiento = Model.IdMovimiento }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Descripcion">Tipo de flujo*</label>
+                    @Html.Partial("_CmbTipoFlujo", Model.IdTipoFlujo)
+                    @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Descripcion">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Descripcion">Cuenta bancaria*</label>
+                    @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco_cuenta, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
+                    @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Descripcion">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                   {
+                       settings.Name = "Fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.AllowMouseWheel = false;
+                   }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <div class="form-group">
+                    <label for="Descripcion">Valor*</label>
+                    @Html.TextBoxFor(q => q.Valor, new { @id = "Valor", @class = "form-control"})
+                    @Html.ValidationMessageFor(q => q.Valor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index", "TipoFlujoMovimiento", new { Area ="Banco" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#IdSucursal").change(function () {
+            GetListBancoPorSucursal();
+        });
+    });
+
+    function GetListBancoPorSucursal() {
+        $("#IdBanco").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListBancoPorSucursal", "BancoCuenta",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBanco").append("<option value=" + row.IdBanco + ">" + row.ba_descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+
+

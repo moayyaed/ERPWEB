@@ -539,7 +539,21 @@
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_cuenta_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_anio_fiscal_masivo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwct_anio_fiscal_masivo">
+          <Key>
+            <PropertyRef Name="IdanioFiscal" />
+            <PropertyRef Name="af_fechaIni" />
+            <PropertyRef Name="af_fechaFin" />
+            <PropertyRef Name="af_estado" />
+          </Key>
+          <Property Name="IdanioFiscal" Type="int" Nullable="false" />
+          <Property Name="af_fechaIni" Type="date" Nullable="false" />
+          <Property Name="af_fechaFin" Type="date" Nullable="false" />
+          <Property Name="af_estado" Type="nvarchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_anio_fiscal_x_cuenta_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_anio_fiscal_x_cuenta_utilidad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -559,7 +573,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_cuen
           <Property Name="gc_GrupoCble" Type="char" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_anio_fiscal_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_anio_fiscal_x_tb_sucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -578,7 +592,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_tb_s
           <Property Name="cb_Observacion" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_tb_sucursal_SinCierre' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_anio_fiscal_x_tb_sucursal_SinCierre' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_anio_fiscal_x_tb_sucursal_SinCierre">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -590,7 +604,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_anio_fiscal_x_tb_s
           <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_cbtecble' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -618,7 +632,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble' no tiene
           <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_con_ctacble_acreedora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_cbtecble_con_ctacble_acreedora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble_con_ctacble_acreedora">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -631,7 +645,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_con_ctacb
           <Property Name="IdCtaCble_Acreedora" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_cbtecble_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -659,7 +673,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_det' no t
           <Property Name="cc_Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_Plantilla_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_cbtecble_Plantilla_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_cbtecble_Plantilla_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -684,7 +698,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_cbtecble_Plantilla
           <Property Name="nom_punto_cargo" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_CentroCosto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_CentroCosto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_CentroCosto">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -706,7 +720,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_CentroCosto' no ti
           <Property Name="cc_Descripcion_Padre" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_CierrePorModuloPorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_CierrePorModuloPorSucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_CierrePorModuloPorSucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -730,7 +744,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_CierrePorModuloPor
           <Property Name="Cerrado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_periodo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.dbo.vwct_periodo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_periodo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -759,7 +773,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwct_periodo' no tiene 
           <Property Name="AnioMes" Type="varchar" MaxLength="51" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFacturas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERPWEB.web.vwct_RevisionContableFacturas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwct_RevisionContableFacturas">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1297,6 +1311,14 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
           <EntitySet Name="ATS_retenciones" EntityType="Self.ATS_retenciones" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_ventas" EntityType="Self.ATS_ventas" Schema="EntidadRegulatoria" store:Type="Tables" />
           <EntitySet Name="ATS_ventas_eventos" EntityType="Self.ATS_ventas_eventos" Schema="EntidadRegulatoria" store:Type="Tables" />
+          <EntitySet Name="vwct_anio_fiscal_masivo" EntityType="Self.vwct_anio_fiscal_masivo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwct_anio_fiscal_masivo].[IdanioFiscal] AS [IdanioFiscal], 
+    [vwct_anio_fiscal_masivo].[af_fechaIni] AS [af_fechaIni], 
+    [vwct_anio_fiscal_masivo].[af_fechaFin] AS [af_fechaFin], 
+    [vwct_anio_fiscal_masivo].[af_estado] AS [af_estado]
+    FROM [dbo].[vwct_anio_fiscal_masivo] AS [vwct_anio_fiscal_masivo]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwct_anio_fiscal_x_cuenta_utilidad" EntityType="Self.vwct_anio_fiscal_x_cuenta_utilidad" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwct_anio_fiscal_x_cuenta_utilidad].[IdEmpresa] AS [IdEmpresa], 
@@ -1901,6 +1923,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             <End Role="ct_cbtecble_tipo" EntitySet="ct_cbtecble_tipo" />
             <End Role="ct_parametro" EntitySet="ct_parametro" />
           </AssociationSet>
+          <EntitySet Name="vwct_anio_fiscal_masivo" EntityType="Model_contabilidad.vwct_anio_fiscal_masivo" />
           </EntityContainer>
         <EntityType Name="ct_cbtecble">
           <Key>
@@ -3126,6 +3149,18 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwct_anio_fiscal_masivo">
+          <Key>
+            <PropertyRef Name="IdanioFiscal" />
+            <PropertyRef Name="af_fechaIni" />
+            <PropertyRef Name="af_fechaFin" />
+            <PropertyRef Name="af_estado" />
+          </Key>
+          <Property Name="IdanioFiscal" Type="Int32" Nullable="false" />
+          <Property Name="af_fechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="af_fechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="af_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3892,6 +3927,16 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwct_RevisionContableFa
                 <ScalarProperty Name="IdTipoCbte_AsientoCierre_Anual" ColumnName="IdTipoCbte_AsientoCierre_Anual" />
                 <ScalarProperty Name="IdTipoCbte_SaldoInicial" ColumnName="IdTipoCbte_SaldoInicial" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwct_anio_fiscal_masivo">
+            <EntityTypeMapping TypeName="Model_contabilidad.vwct_anio_fiscal_masivo">
+              <MappingFragment StoreEntitySet="vwct_anio_fiscal_masivo">
+                <ScalarProperty Name="af_estado" ColumnName="af_estado" />
+                <ScalarProperty Name="af_fechaFin" ColumnName="af_fechaFin" />
+                <ScalarProperty Name="af_fechaIni" ColumnName="af_fechaIni" />
+                <ScalarProperty Name="IdanioFiscal" ColumnName="IdanioFiscal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

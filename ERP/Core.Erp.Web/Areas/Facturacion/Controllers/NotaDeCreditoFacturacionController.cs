@@ -2,11 +2,13 @@
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Inventario.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -23,6 +25,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     public class NotaDeCreditoFacturacionController : Controller
     {
         #region Variables
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_notaCreDeb_Bus bus_nota = new fa_notaCreDeb_Bus();
         in_Producto_Bus bus_producto = new in_Producto_Bus();
         fa_cliente_contactos_Bus bus_contacto = new fa_cliente_contactos_Bus();
@@ -48,23 +51,54 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
         fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
+        fa_notaCreDeb_NC_List Lista_NC = new fa_notaCreDeb_NC_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos(model.IdEmpresa);
+            var lst = bus_nota.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, "C");
+            Lista_NC.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cargar_combos(model.IdEmpresa);
+            var lst = bus_nota.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, "C");
+            Lista_NC.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         private void cargar_combos(int IdEmpresa)
@@ -74,13 +108,18 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_NotaCreditoFacturacion(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_NotaCreditoFacturacion(bool Nuevo = false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            ViewBag.IdSucursal = IdSucursal;
-            var model = bus_nota.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, "C");
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal;
+            //var model = bus_nota.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, "C");
+
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_NC.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_NotaCrebitoFacturacion", model);
         }
         #endregion
@@ -543,6 +582,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_notaCreDeb_Info model = new fa_notaCreDeb_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -588,7 +633,59 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             };
-           return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega=model.IdBodega, IdNota=model.IdNota, Exito = true });
+           return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega=model.IdBodega, IdNota=model.IdNota, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            fa_notaCreDeb_Info model = bus_nota.get_info(IdEmpresa, IdSucursal, IdBodega, IdNota);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(model.NumAutorizacion))
+                {
+                    info.Modificar = false;
+                }
+            }
+
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+            model.lst_cruce = bus_cruce.get_list(IdEmpresa, IdSucursal, IdBodega, IdNota);
+            List_cruce.set_list(model.lst_cruce, model.IdTransaccionSession);
+            cargar_combos(model);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.no_fecha, cl_enumeradores.eModulo.FAC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0, bool Exito = false)
         {
@@ -598,6 +695,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_notaCreDeb_Info model = bus_nota.get_info(IdEmpresa, IdSucursal, IdBodega, IdNota);
             if (model == null)
                 return RedirectToAction("Index");
@@ -649,7 +752,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return View(model);
             };
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdNota = model.IdNota, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, decimal IdNota = 0)
         {
@@ -659,6 +762,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "NotaDeCreditoFacturacion", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_notaCreDeb_Info model = bus_nota.get_info(IdEmpresa, IdSucursal, IdBodega, IdNota);
             if (model == null)
                 return RedirectToAction("Index");
@@ -693,6 +802,27 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
     }
+
+    public class fa_notaCreDeb_NC_List
+    {
+        string Variable = "fa_notaCreDeb_NC_Info";
+        public List<fa_notaCreDeb_consulta_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_notaCreDeb_consulta_Info> list = new List<fa_notaCreDeb_consulta_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_notaCreDeb_consulta_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_notaCreDeb_consulta_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
     public class fa_notaCreDeb_det_List
     {
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();

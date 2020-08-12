@@ -2,8 +2,10 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Presupuesto;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -34,6 +36,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
         ba_Conciliacion_det_IngEgr_Bus bus_ConciliacionDet = new ba_Conciliacion_det_IngEgr_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        ct_cbtecble_List Lista_Comprobante = new ct_cbtecble_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -91,29 +95,61 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_comprobante.get_list(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
+            Lista_Comprobante.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_comprobante.get_list(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
+            Lista_Comprobante.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_comprobante_contable(DateTime? fecha_ini, DateTime? fecha_fin, int IdEmpresa = 0, int IdSucursal = 0)
+        public ActionResult GridViewPartial_comprobante_contable(bool Nuevo=false)
         {
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-            List<ct_cbtecble_Info> model = bus_comprobante.get_list(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ////ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            ////ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            ////ViewBag.IdEmpresa = IdEmpresa;
+            ////ViewBag.IdSucursal = IdSucursal;
+            ////List<ct_cbtecble_Info> model = bus_comprobante.get_list(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Comprobante.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
             return PartialView("_GridViewPartial_comprobante_contable", model);
         }
 
@@ -179,6 +215,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_cbtecble_Info model = new ct_cbtecble_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -213,9 +255,61 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
+        public ActionResult Consultar(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ct_cbtecble_Info model = bus_comprobante.get_info(IdEmpresa, IdTipoCbte, IdCbteCble);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            if (model.cb_Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, IdTipoCbte, IdCbteCble);
+            list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det, model.IdTransaccionSession);
+            cargar_combos(model.IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cb_Fecha, cl_enumeradores.eModulo.CONTA, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            #region Validacion de conciliación bancaria
+            if (!bus_ConciliacionDet.ValidarComprobanteEnConciliacion(IdEmpresa, IdTipoCbte, IdCbteCble, ref mensaje))
+            {
+                ViewBag.mensaje = "El comprobante se encuentra en una conciliación bancaria y solo se modificará la observación";
+                ViewBag.MostrarBoton = true;
+            }
+            #endregion
+
+            return View(model);
+        }
         public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0, bool Exito = false)
         {
             #region Validar Session
@@ -228,6 +322,13 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             ct_cbtecble_Info model = bus_comprobante.get_info(IdEmpresa, IdTipoCbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, IdTipoCbte, IdCbteCble);
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
@@ -275,7 +376,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdTipoCbte = model.IdTipoCbte, IdCbteCble = model.IdCbteCble, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte = 0, decimal IdCbteCble = 0)
@@ -285,6 +386,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "ComprobanteContable", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
 
             ct_cbtecble_Info model = bus_comprobante.get_info(IdEmpresa, IdTipoCbte, IdCbteCble);
@@ -515,6 +621,27 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             }
         }
     }
+
+    public class ct_cbtecble_List
+    {
+        string Variable = "ct_cbtecble_Info";
+        public List<ct_cbtecble_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ct_cbtecble_Info> list = new List<ct_cbtecble_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ct_cbtecble_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ct_cbtecble_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
     public class ct_cbtecble_det_List
     {
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();

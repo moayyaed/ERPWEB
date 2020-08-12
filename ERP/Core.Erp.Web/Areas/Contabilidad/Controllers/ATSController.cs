@@ -18,6 +18,7 @@ using DevExpress.Utils;
 using Core.Erp.Bus.Helps;
 using Core.Erp.Bus.General;
 using Core.Erp.Info.General;
+using Core.Erp.Bus.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 {
@@ -26,6 +27,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
     {
         #region Acciones
         ats_Bus bus_ats = new ats_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+
         FilesHelper_Bus FilesHelper_B = new FilesHelper_Bus();
         public ActionResult Index()
         {

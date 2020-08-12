@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_TipoFlujo_Movimiento_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdMovimiento { get; set; }
         [Required(ErrorMessage = ("El campo tipo de flujo es obligatorio"))]

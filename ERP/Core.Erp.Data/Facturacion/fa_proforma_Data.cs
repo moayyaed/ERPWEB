@@ -93,6 +93,38 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public fa_proforma_Info get_info_vw(int IdEmpresa, int IdSucursal, decimal IdProforma)
+        {
+            try
+            {
+                fa_proforma_Info info = new fa_proforma_Info();
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    vwfa_proforma Entity = Context.vwfa_proforma.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdProforma == IdProforma);
+                    if (Entity == null) return null;
+                    info = new fa_proforma_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdSucursal = Entity.IdSucursal,
+                        IdProforma = Entity.IdProforma,
+                        IdCliente = Entity.IdCliente,
+                        IdTerminoPago = Entity.IdTerminoPago,
+                        EstadoCierre = Entity.EstadoCierre,
+                        estado = Entity.estado,
+                        IdBodega = Entity.IdBodega,
+                        IdVendedor = Entity.IdVendedor
+                    };
+
+                }
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public decimal get_id(int IdEmpresa, int IdSucursal)
         {
 

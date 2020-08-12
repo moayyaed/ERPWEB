@@ -61,7 +61,7 @@
 @using (Html.BeginForm("Index", "PeriodosPorNominas", FormMethod.Post, new { role = "form", @class = "form", @id = "myform" }))
 {
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdEmpresa)
 
     <div class="row">
         <div class="col-md-12">
@@ -89,7 +89,7 @@
 
     <div class="box-footer">
         <button type="submit" class="btn btn-default" id="btn_buscar">Buscar</button>
-        <button type="button" class="btn btn-primary" id="btn_guardar" onclick="guardar();">Guardar</button>
+        @*<button type="button" class="btn btn-primary" id="btn_guardar" onclick="guardar();">Guardar</button>*@
     </div>
 
     <div class="row">
@@ -110,16 +110,16 @@
     <script>
         $(function ()
         {
-            $("#IdNomina_TipoLiqui").empty();
-            cargar_tipo_liquidacion_nomina();
+            SetDatos();
+            //$("#IdNomina_TipoLiqui").empty();
+            //cargar_tipo_liquidacion_nomina();
         });
+
         $("#IdNomina_Tipo").change(function () {
         $("#IdNomina_TipoLiqui").empty();
              cargar_tipo_liquidacion_nomina();
 
         });
-
-
 
         function cargar_tipo_liquidacion_nomina() {
             var datos = {
@@ -136,13 +136,36 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-
+                    console.log(data);
                 $.each(data, function (i, row) {
-                $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                    $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
                 });
+            },
+            error: function (error)
+            {
+            }
+        });
+        };
+
+        function SetDatos() {
+            var datos = {
+                IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+                IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("SetDatos", "PeriodosPorNominas", new { Area = "RRHH" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
                 },
                 error: function (error) {
                 }
-                });
-                };
+            });
+        }
     </script>

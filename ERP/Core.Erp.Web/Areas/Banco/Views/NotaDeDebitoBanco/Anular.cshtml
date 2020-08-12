@@ -345,7 +345,7 @@ function GetListBancoPorSucursal() {
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group has-error">
                     <label for="MotivoAnulacion">Motivo anulación*</label>
                     @Html.TextAreaFor(q => q.MotivoAnulacion, new { @id = "MotivoAnulacion", @class = "form-control", @rows = 2 })
                     @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })

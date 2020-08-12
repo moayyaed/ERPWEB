@@ -203,6 +203,77 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
+        public bool guardarMasivoDB(ct_periodo_Info info_general)
+        {
+            try
+            {
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                {
+                    foreach (var info in info_general.lst_periodo)
+                    {
+                        ct_periodo Entity = new ct_periodo
+                        {
+                            IdPeriodo = info.IdPeriodo,
+                            IdEmpresa = info.IdEmpresa,
+                            IdanioFiscal = info.IdanioFiscal,
+                            pe_FechaIni = info.pe_FechaIni.Date,
+                            pe_FechaFin = info.pe_FechaFin.Date,
+                            pe_mes = info.pe_mes,
+                            pe_cerrado = info.pe_cerrado_bool == true ? "S" : "N",
+                            pe_estado = info.pe_estado = "A"
+                        };
+
+                        if (info.pe_cerrado_bool == true)
+                        {
+                            List<tb_modulo_Info> lst_modulo = data_modulo.get_list();
+
+                            if (lst_modulo.Count() > 0)
+                            {
+                                foreach (var item in lst_modulo)
+                                {
+                                    Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                    {
+                                        IdEmpresa = info.IdEmpresa,
+                                        IdPeriodo = info.IdPeriodo,
+                                        IdModulo = item.CodModulo,
+                                        IdUsuario = info.IdUsuario,
+                                        FechaTransac = DateTime.Now
+                                    });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (info_general.lst_periodo_x_modulo.Count() > 0)
+                            {
+                                foreach (var item in info_general.lst_periodo_x_modulo)
+                                {
+                                    Context.ct_periodo_x_tb_modulo.Add(new ct_periodo_x_tb_modulo
+                                    {
+                                        IdEmpresa = info.IdEmpresa,
+                                        IdPeriodo = info.IdPeriodo,
+                                        IdModulo = item.IdModulo,
+                                        IdUsuario = info.IdUsuario,
+                                        FechaTransac = DateTime.Now
+                                    });
+
+                                }
+                            }
+                        }
+
+                        Context.ct_periodo.Add(Entity);
+                    }
+                    
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public bool modificarDB(ct_periodo_Info info)
         {
             try
