@@ -5,6 +5,7 @@ using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Reportes.CuentasPorCobrar;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #region Acciones
         public ActionResult Nuevo()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "Dinardap", "Nuevo");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info();
             cargar_combos();
             return View(model);

@@ -62,7 +62,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group has-error">
                     <label for="co_observacion">Motivo de anulación*</label>
                     @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control", @id = "observacion" })
                     @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
@@ -79,7 +79,7 @@
     </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index", "ComprobanteContable", new { IdTipoCbte = Model.IdTipoCbte, Area = "Contabilidad" }, null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index", "CierreAnual", new { Area = "Contabilidad" },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
