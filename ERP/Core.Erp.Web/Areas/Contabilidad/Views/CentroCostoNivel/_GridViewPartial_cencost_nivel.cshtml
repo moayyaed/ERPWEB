@@ -1,7 +1,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_cencost_nivel";
-        settings.CallbackRouteValues = new { Controller = "CentroCostoNivel", Action = "GridViewPartial_cencost_nivel" };
+        settings.CallbackRouteValues = new { Controller = "CentroCostoNivel", Action = "GridViewPartial_cencost_nivel",Nuevo=ViewBag.Nuevo };
         settings.KeyFieldName = "IdNivel";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -59,20 +59,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdNivel = DataBinder.Eval(tc.DataItem, "IdNivel") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdNivel = DataBinder.Eval(tc.DataItem, "IdNivel") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdNivel = DataBinder.Eval(tc.DataItem, "IdNivel") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -92,7 +90,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

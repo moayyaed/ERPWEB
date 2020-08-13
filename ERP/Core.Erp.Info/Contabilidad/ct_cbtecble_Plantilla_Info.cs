@@ -23,6 +23,7 @@ namespace Core.Erp.Info.Contabilidad
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string IdUsuarioAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        [Required(ErrorMessage = "El campo motivo de anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
 
         #region Campos que no estan en la tabla

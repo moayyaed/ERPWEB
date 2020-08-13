@@ -9,7 +9,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_anio_fiscal_Info
     {
-        
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("El campo año es obligatorio"))]
         public int IdanioFiscal { get; set; }
         public System.DateTime af_fechaIni { get; set; }

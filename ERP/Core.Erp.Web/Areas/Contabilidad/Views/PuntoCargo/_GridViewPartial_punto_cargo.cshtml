@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_punto_cargo";
-        settings.CallbackRouteValues = new { Controller = "PuntoCargo", Action = "GridViewPartial_punto_cargo", IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo };
+        settings.CallbackRouteValues = new { Controller = "PuntoCargo", Action = "GridViewPartial_punto_cargo", Nuevo = ViewBag.Nuevo, IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo };
         settings.KeyFieldName = "IdPunto_cargo";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -61,20 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdPunto_cargo_grupo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo_grupo"), IdPunto_cargo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdPunto_cargo_grupo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo_grupo"), IdPunto_cargo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdPunto_cargo_grupo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo_grupo"), IdPunto_cargo = DataBinder.Eval(tc.DataItem, "IdPunto_cargo") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -94,6 +92,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -10507,6 +10507,12 @@
     <Content Include="Areas\Banco\Views\TipoFlujoPlantilla\Consultar.cshtml" />
     <Content Include="Areas\Banco\Views\TalonarioChequeBanco\Consultar.cshtml" />
     <Content Include="Areas\Banco\Views\BancoCuenta\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\AnioFiscal\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

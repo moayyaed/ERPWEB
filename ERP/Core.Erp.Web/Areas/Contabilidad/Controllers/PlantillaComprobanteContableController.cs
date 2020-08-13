@@ -1,6 +1,8 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -23,6 +25,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
         ct_punto_cargo_Bus bus_pc = new ct_punto_cargo_Bus();
         ct_punto_cargo_grupo_Bus bus_pcg = new ct_punto_cargo_grupo_Bus();
+        ct_cbtecble_Plantilla_List Lista_PlantillaComprobante = new ct_cbtecble_Plantilla_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
 
@@ -79,15 +84,39 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlantillaComprobanteContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ct_cbtecble_Plantilla_Info model = new ct_cbtecble_Plantilla_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_CbteCble_Plantilla.GetList(model.IdEmpresa, true);
+            Lista_PlantillaComprobante.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ComprobanteContablePlantilla()
+        public ActionResult GridViewPartial_ComprobanteContablePlantilla(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<ct_cbtecble_Plantilla_Info> model = bus_CbteCble_Plantilla.GetList(IdEmpresa, true);
-
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //List<ct_cbtecble_Plantilla_Info> model = bus_CbteCble_Plantilla.GetList(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_PlantillaComprobante.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_ComprobanteContablePlantilla", model);
         }
         #endregion
@@ -111,7 +140,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlantillaComprobanteContable", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             ct_cbtecble_Plantilla_Info model = new ct_cbtecble_Plantilla_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -146,7 +179,44 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdPlantilla = model.IdPlantilla, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdPlantilla = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            ct_cbtecble_Plantilla_Info model = bus_CbteCble_Plantilla.GetInfo(IdEmpresa, IdPlantilla);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlantillaComprobanteContable", "Index");
+            if (model.cb_Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_cbtecble_plantilla_det = bus_CbteCblePlantillaDet.GetList(model.IdEmpresa, model.IdPlantilla);
+            CbteCble_PlantillaDet_Lista.set_list(model.lst_cbtecble_plantilla_det, model.IdTransaccionSession);
+            cargar_combos(model.IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0, decimal IdPlantilla = 0)
@@ -162,6 +232,12 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlantillaComprobanteContable", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
 
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_cbtecble_plantilla_det = bus_CbteCblePlantillaDet.GetList(model.IdEmpresa, model.IdPlantilla);
@@ -189,7 +265,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdPlantilla = model.IdPlantilla, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdPlantilla = 0)
@@ -199,6 +275,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlantillaComprobanteContable", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
 
             ct_cbtecble_Plantilla_Info model = bus_CbteCble_Plantilla.GetInfo(IdEmpresa, IdPlantilla);
@@ -357,6 +438,26 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return Json(info_plantilla, JsonRequestBehavior.AllowGet);
         }
         #endregion
+    }
+
+    public class ct_cbtecble_Plantilla_List
+    {
+        string Variable = "ct_cbtecble_Plantilla_Info";
+        public List<ct_cbtecble_Plantilla_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<ct_cbtecble_Plantilla_Info> list = new List<ct_cbtecble_Plantilla_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<ct_cbtecble_Plantilla_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<ct_cbtecble_Plantilla_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
     }
 
     public class ct_cbtecble_Plantilla_det_List

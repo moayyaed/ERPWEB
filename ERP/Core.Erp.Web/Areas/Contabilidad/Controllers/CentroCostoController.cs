@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using System;
@@ -16,18 +18,46 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_CentroCosto_Info Lista = new ct_CentroCosto_Info();
         ct_CentroCosto_Bus bus_centrocosto = new ct_CentroCosto_Bus();
         ct_CentroCostoNivel_Bus bus_centrocosto_nivel = new ct_CentroCostoNivel_Bus();
+        ct_CentroCosto_List Lista_CentroCosto = new ct_CentroCosto_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index        
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CentroCosto", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ct_CentroCosto_Info model = new ct_CentroCosto_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_centrocosto.get_list(model.IdEmpresa, true,true);
+            Lista_CentroCosto.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_centrocosto()
+        public ActionResult GridViewPartial_centrocosto(bool Nuevo=false)
         {
-            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<ct_CentroCosto_Info> model = bus_centrocosto.get_list(IdEmpresa, true, false);
+            //int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            //List<ct_CentroCosto_Info> model = bus_centrocosto.get_list(IdEmpresa, true, false);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_CentroCosto.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_centrocosto", model);
         }
         private void cargar_combos(int IdEmpresa)
@@ -54,10 +84,15 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         #endregion
 
-
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CentroCosto", "Index");
+            if(!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_CentroCosto_Info model = new ct_CentroCosto_Info
             {
                 IdEmpresa = IdEmpresa
@@ -81,13 +116,49 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCentroCosto = model.IdCentroCosto, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, string IdCentroCosto = "")
+
+        public ActionResult Consultar(int IdEmpresa = 0, string IdCentroCosto = "", bool Exito = false)
         {
             ct_CentroCosto_Info model = bus_centrocosto.get_info(IdEmpresa, IdCentroCosto);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CentroCosto", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(model.IdEmpresa);
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, string IdCentroCosto = "", bool Exito=false)
+        {
+            ct_CentroCosto_Info model = bus_centrocosto.get_info(IdEmpresa, IdCentroCosto);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CentroCosto", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -100,10 +171,15 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCentroCosto = model.IdCentroCosto, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, string IdCentroCosto = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CentroCosto", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             ct_CentroCosto_Info model = bus_centrocosto.get_info(IdEmpresa, IdCentroCosto);
             if (model == null)
                 return RedirectToAction("Index");

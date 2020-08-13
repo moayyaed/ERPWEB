@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using System;
@@ -17,16 +19,43 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
         ct_anio_fiscal_x_cuenta_utilidad_Bus bus_aniocta = new ct_anio_fiscal_x_cuenta_utilidad_Bus();
         string mensaje = string.Empty;
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        ct_anio_fiscal_List Lista_Anio = new ct_anio_fiscal_List();
 
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "AnioFiscal", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ct_anio_fiscal_Info model = new ct_anio_fiscal_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+            };
+
+            var lst = bus_anio_fiscal.get_list(true);
+            Lista_Anio.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_anio_fiscal()
+        public ActionResult GridViewPartial_anio_fiscal(bool Nuevo=false)
         {
-            var model = bus_anio_fiscal.get_list(true);
+            /*ar model = bus_anio_fiscal.get_list(true);*/
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Anio.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_anio_fiscal", model);
         }
         private void cargar_combos(int IdEmpresa)
@@ -80,9 +109,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             }
             return true;
         }
+
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa =0 , int IdanioFiscal = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "AnioFiscal", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_anio_fiscal_Info model = new ct_anio_fiscal_Info
             {
                 af_fechaIni = DateTime.Now,
@@ -145,14 +181,27 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdanioFiscal = model.IdanioFiscal, Exito = true });
         }
 
-        public ActionResult Modificar( int IdanioFiscal = 0)
+        public ActionResult Consultar(int IdanioFiscal = 0, bool Exito=false)
         {
             ct_anio_fiscal_Info model = bus_anio_fiscal.get_info(IdanioFiscal);
-            if(model == null)
+            if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "AnioFiscal", "Index");
+            if (model.af_estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             model.info_anio_ctautil = bus_aniocta.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdanioFiscal);
             if (model.info_anio_ctautil == null)
                 model.info_anio_ctautil = new ct_anio_fiscal_x_cuenta_utilidad_Info
@@ -160,6 +209,37 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                     IdanioFiscal = model.IdanioFiscal
                 };
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdanioFiscal = 0, bool Exito = false)
+        {
+            ct_anio_fiscal_Info model = bus_anio_fiscal.get_info(IdanioFiscal);
+            if(model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "AnioFiscal", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            model.info_anio_ctautil = bus_aniocta.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdanioFiscal);
+            if (model.info_anio_ctautil == null)
+                model.info_anio_ctautil = new ct_anio_fiscal_x_cuenta_utilidad_Info
+                {
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                    IdanioFiscal = model.IdanioFiscal
+                };
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
             return View(model);
         }
@@ -181,19 +261,27 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdanioFiscal = model.IdanioFiscal, Exito = true });
         }
         public ActionResult Anular( int IdanioFiscal = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "AnioFiscal", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_anio_fiscal_Info model = bus_anio_fiscal.get_info(IdanioFiscal);
             if(model == null)
-                            return RedirectToAction("Index");
-                model.info_anio_ctautil = bus_aniocta.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdanioFiscal);
+                return RedirectToAction("Index");
+
+            model.info_anio_ctautil = bus_aniocta.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdanioFiscal);
             if(model.info_anio_ctautil == null)
                 model.info_anio_ctautil = new ct_anio_fiscal_x_cuenta_utilidad_Info();
+
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
             return View(model);
-            }
+        }
 
         [HttpPost]
         public ActionResult Anular(ct_anio_fiscal_Info model)

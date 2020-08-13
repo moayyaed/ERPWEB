@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Contabilidad.ct_anio_fiscal_Info
 @{
     ViewBag.Title = "Consulta años fiscales";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,8 +10,9 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_anio_fiscal")
+    @Html.Action("GridViewPartial_anio_fiscal", new { Nuevo = ViewBag.Nuevo })
 
 }
 
