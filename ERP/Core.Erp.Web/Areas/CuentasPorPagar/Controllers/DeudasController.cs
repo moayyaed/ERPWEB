@@ -550,16 +550,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-
-            #region Validación de anticipos
-            ViewBag.MostrarBotonIrAnticipos = false;
-            var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-            if (lstAnticipos.Count > 0)
-            {
-                ViewBag.MostrarBotonIrAnticipos = true;
-            }
-            #endregion
-
+            
             return View(model);
         }
 
@@ -574,16 +565,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.mensaje = "Falta parametros del modulo cuenta por pagar";
                 cargar_combos(model);
                 ViewBag.MostrarBoton = true;
-
-                #region Validación de anticipos
-                ViewBag.MostrarBotonIrAnticipos = false;
-                var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                if (lstAnticipos.Count > 0)
-                {
-                    ViewBag.MostrarBotonIrAnticipos = true;
-                }
-                #endregion
-
                 return View(model);
             }
 
@@ -616,15 +597,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 ViewBag.MostrarBoton = true;
 
-                #region Validación de anticipos
-                ViewBag.MostrarBotonIrAnticipos = false;
-                var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                if (lstAnticipos.Count > 0)
-                {
-                    ViewBag.MostrarBotonIrAnticipos = true;
-                }
-                #endregion
-
                 return View(model);
 
             }
@@ -640,16 +612,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = true;
-
-                #region Validación de anticipos
-                ViewBag.MostrarBotonIrAnticipos = false;
-                var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                if (lstAnticipos.Count > 0)
-                {
-                    ViewBag.MostrarBotonIrAnticipos = true;
-                }
-                #endregion
-
+                
                 return View(model);
             }
 
@@ -661,16 +624,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 ViewBag.MostrarBoton = true;
-
-                #region Validación de anticipos
-                ViewBag.MostrarBotonIrAnticipos = false;
-                var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                if (lstAnticipos.Count > 0)
-                {
-                    ViewBag.MostrarBotonIrAnticipos = true;
-                }
-                #endregion
-
                 return View(model);
             }
             
@@ -680,16 +633,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 {
                     cargar_combos(model);
                     ViewBag.MostrarBoton = true;
-
-                    #region Validación de anticipos
-                    ViewBag.MostrarBotonIrAnticipos = false;
-                    var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                    if (lstAnticipos.Count > 0)
-                    {
-                        ViewBag.MostrarBotonIrAnticipos = true;
-                    }
-                    #endregion
-
                     return View(model);
                 }               
             }
@@ -698,16 +641,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 ViewBag.MostrarBoton = true;
                 cargar_combos(model);
-
-                #region Validación de anticipos
-                ViewBag.MostrarBotonIrAnticipos = false;
-                var lstAnticipos = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(model.IdEmpresa, model.IdSucursal, model.IdProveedor);
-                if (lstAnticipos.Count > 0)
-                {
-                    ViewBag.MostrarBotonIrAnticipos = true;
-                }
-                #endregion
-
                 return View(model);
             }
 

@@ -243,7 +243,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Conciliación de Anticipos</h4>
+                    <h4 class="modal-title">Anticipos y notas de crédito con saldo</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -1052,7 +1052,7 @@
                 success: function (data) {
                     console.log(data);
                     if(data.length>0){
-                        alert("Existen anticipos pendientes de conciliar");
+                        alert("Existen anticipos o NC con saldo pendiente de aplicar");
                         Gridview_ConciliacionAnticipoDeudas.PerformCallback();
                         $("#ConciliacionAnticipoModal").modal("show");
                     }

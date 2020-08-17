@@ -2492,6 +2492,9 @@
     <Compile Include="vwcaj_Caja_Movimiento_x_Conciliar.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwcp_AnticiposyNCxCruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwcp_codigo_SRI.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>

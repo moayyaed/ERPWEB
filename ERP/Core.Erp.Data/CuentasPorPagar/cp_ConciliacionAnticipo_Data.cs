@@ -456,23 +456,23 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                 using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in db.vwcp_ConciliacionAnticipoDetAnt_x_cruzar
+                    Lista = (from q in db.vwcp_AnticiposyNCxCruzar
                              where q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == IdSucursal
                              && q.IdProveedor == IdProveedor
                              select new cp_conciliacionAnticipo_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
-                                 IdOrdenPago = q.IdOrdenPago,
+                                 IdOrdenPago = q.IdCbteCble_Nota,
                                  IdSucursal = q.IdSucursal,
                                  IdProveedor = q.IdProveedor,
                                  pe_nombreCompleto = q.pe_nombreCompleto,
-                                 Fecha = q.Fecha,
-                                 Observacion = q.Observacion,
-                                 ValorOP = q.ValorOP,
+                                 Fecha = q.cn_fecha,
+                                 Observacion = q.cn_observacion,
+                                 ValorOP = q.cn_total,
                                  MontoAplicado = q.MontoAplicado,
-                                 Saldo = q.Saldo
-
+                                 Saldo = q.Saldo ?? 0,
+                                 Tipo = q.Tipo
                              }).ToList();
                 }
 

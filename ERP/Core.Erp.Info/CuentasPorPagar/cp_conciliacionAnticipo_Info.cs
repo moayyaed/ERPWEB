@@ -45,6 +45,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public double ValorOP { get; set; }
         public double MontoAplicado { get; set; }
         public double Saldo { get; set; }
+        public string Tipo { get; set; }
         #endregion
     }
 }
