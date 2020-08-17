@@ -47,7 +47,9 @@ namespace Core.Erp.Web.Reportes.CuentasPorPagar
 
         private void SubReporte_cancelaciones_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
-            ((XRSubreport)sender).ReportSource.DataSource = Lista;
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdEmpresa_conciliacion"].Value = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdConciliacion"].Value = p_IdConciliacion.Value == null ? 0 : Convert.ToInt32(p_IdConciliacion.Value);
+
 
         }
     }

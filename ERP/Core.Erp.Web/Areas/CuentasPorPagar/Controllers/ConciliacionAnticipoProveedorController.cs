@@ -100,7 +100,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #endregion
 
         #region Acciones
-        public ActionResult Nuevo(int IdEmpresa = 0)
+        public ActionResult Nuevo(int IdEmpresa = 0, decimal IdProveedor = 0)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -116,8 +116,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdUsuarioCreacion = SessionFixed.IdUsuario,
                 Fecha = DateTime.Now.Date,
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdTipoCbte = info_parametro.pa_TipoCbte_para_conci_x_antcipo
+                IdTipoCbte = info_parametro.pa_TipoCbte_para_conci_x_antcipo,
+                IdProveedor = IdProveedor
             };
+            
 
             cargar_combos(IdEmpresa);
             Lista_det_OP.set_list(new List<cp_ConciliacionAnticipoDetAnt_Info>(), model.IdTransaccionSession);

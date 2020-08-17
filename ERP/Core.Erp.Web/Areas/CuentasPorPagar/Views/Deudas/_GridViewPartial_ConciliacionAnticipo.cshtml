@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridView_deudas";
+        settings.Name = "Gridview_ConciliacionAnticipoDeudas";
         settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_ConciliacionAnticipo" };
 
         //Configuración para que la grilla no muestre texto completo
@@ -41,6 +41,7 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };
+        settings.Columns.Add("IdOrdenPago", "ID").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
@@ -54,7 +55,7 @@
             });
         });
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(40);
-        settings.Columns.Add("Valor", "Valor").Width = Unit.Percentage(10);
+        settings.Columns.Add("ValorOP", "Valor").Width = Unit.Percentage(10);
         settings.Columns.Add("MontoAplicado", "Monto Aplicado").Width = Unit.Percentage(10);
         settings.Columns.Add("Saldo", "Saldo").Width = Unit.Percentage(10);
 
