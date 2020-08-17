@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_ClasificacionEBIT";
-        settings.CallbackRouteValues = new { Controller = "ClasificacionEBIT", Action = "_GridViewPartial_ClasificacionEBIT" };
+        settings.CallbackRouteValues = new { Controller = "ClasificacionEBIT", Action = "GridViewPartial_ClasificacionEBIT", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdClasificacionEBIT";
 
@@ -63,20 +63,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "pe_estado")) == "A")
-                //{
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdClasificacionEBIT = DataBinder.Eval(tc.DataItem, "IdClasificacionEBIT") }) + "&nbsp;" +
-                    Html.ActionLink("Anular", "Anular", new { IdClasificacionEBIT = DataBinder.Eval(tc.DataItem, "IdClasificacionEBIT") },
-                        new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    Html.ActionLink("Consultar", "Consultar", new { IdClasificacionEBIT = DataBinder.Eval(tc.DataItem, "IdClasificacionEBIT") })
                 );
-                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -106,6 +104,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Facturacion
 {
     public class fa_cliente_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int Idtipo_cliente { get; set; }
         [StringLength(10, MinimumLength = 0, ErrorMessage = "el campo código debe tener máximo 10")]

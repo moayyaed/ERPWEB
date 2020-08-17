@@ -238,6 +238,43 @@
     @Html.HiddenFor(q => q.co_fechaOg)
     @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
 
+    <div class="modal fade" id="ConciliacionAnticipoModal" role="dialog" hidden>
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                    <h4 class="modal-title">Conciliación de Anticipos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary form-control " onclick="ConciliacionAnticipo();"> Ir a conciliación de anticipos </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Action("GridViewPartial_ConciliacionAnticipo")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddOC();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+
     <div class="modal fade" id="OcModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -1009,6 +1046,47 @@
             });
         }
     };
+
+    function ConciliacionAnticipo() {
+        var location = GetPathServer();
+        var win = window.open(location + "/CuentasPorPagar/ConciliacionAnticipoProveedor/Nuevo?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+        win.focus();
+    }
+
+    function get_list_ConciliacionAnticipo() {
+        if (IdProveedor.GetValue() > 0) {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdSucursal: $("#IdSucursal").val(),
+                IdProveedor:  IdProveedor.GetValue(),
+                IdTransaccionSession : $("#IdTransaccionSession").val()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_list_ConciliacionAnticipo", "Deudas", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    if(data.length>0){
+                        alert("Existen anticipos pendientes de conciliar");
+                        $("#ConciliacionAnticipoModal").modal("show");
+                    }
+                    else{
+                        $("#ConciliacionAnticipoModal").modal("hide");
+                    }
+
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+
     // armar diario contable
     function armar_diario() {
         if (IdProveedor.GetValue() > 0) {

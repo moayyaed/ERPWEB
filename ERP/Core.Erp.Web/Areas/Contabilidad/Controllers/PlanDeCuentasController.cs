@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -20,19 +22,46 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         ct_plancta_List ListaPlancta = new ct_plancta_List();
         ct_anio_fiscal_List ListaAnioFiscal = new ct_anio_fiscal_List();
         ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlanDeCuentas", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ct_plancta_Info model = new ct_plancta_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_plancta.get_list(model.IdEmpresa, true, false);
+            ListaPlancta.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_plancta()
+        public ActionResult GridViewPartial_plancta(bool Nuevo = false)
         {
-            int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            List<ct_plancta_Info> model = bus_plancta.get_list(IdEmpresa, true, false);
+            //int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            //List<ct_plancta_Info> model = bus_plancta.get_list(IdEmpresa, true, false);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaPlancta.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_plancta", model);
         }
         private void cargar_combos(int IdEmpresa)
@@ -88,8 +117,14 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #endregion
 
         #region Acciones
-        public ActionResult Nuevo(int IdEmpresa = 0)
+        public ActionResult Nuevo(int IdEmpresa=0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlanDeCuentas", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_plancta_Info model = new ct_plancta_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -113,7 +148,33 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCtaCble = model.IdCtaCble, Exito = true });
+        }
+        public ActionResult Consultar(int IdEmpresa = 0, string IdCtaCble = "", bool Exito=false)
+        {
+            ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
+            model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
+            model.IdTipo_Gasto = (model.IdTipo_Gasto == null ? 0 : model.IdTipo_Gasto);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlanDeCuentas", "Index");
+            if (model.pc_Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(model.IdEmpresa);
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0, string IdCtaCble = "")
         {   
@@ -122,6 +183,13 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             model.IdTipo_Gasto = (model.IdTipo_Gasto == null ? 0 : model.IdTipo_Gasto);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlanDeCuentas", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -133,10 +201,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCtaCble = model.IdCtaCble, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, string IdCtaCble = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PlanDeCuentas", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_plancta_Info model = bus_plancta.get_info(IdEmpresa, IdCtaCble);
             model.IdClasificacionEBIT = (model.IdClasificacionEBIT == null ? 0 : model.IdClasificacionEBIT);
             model.IdTipo_Gasto = (model.IdTipo_Gasto == null ? 0 : model.IdTipo_Gasto);

@@ -174,6 +174,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.Estado = info.Estado="I";
 
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    Entity.MotivoAnula = info.MotivoAnula;
                     Entity.Fecha_UltAnu = DateTime.Now;
                     Context.SaveChanges();
                 }

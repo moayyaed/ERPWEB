@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_grupocble_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
         [StringLength(5, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 5")]
         public string IdGrupoCble { get; set; }

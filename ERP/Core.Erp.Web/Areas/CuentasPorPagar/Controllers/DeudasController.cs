@@ -64,6 +64,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_codigo_SRI_Bus bus_sri = new cp_codigo_SRI_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
+        cp_ConciliacionAnticipo_Bus bus_conciliacion_anticipo = new cp_ConciliacionAnticipo_Bus();
+        cp_conciliacionAnticipo_List Lista_ConciliacionAnticipo = new cp_conciliacionAnticipo_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
@@ -244,6 +246,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
               
                  
             return PartialView("_GridViewPartial_facturas_con_saldos", lst_ordenada);
+        }
+        #endregion
+
+        #region AnticipoConciliacion
+        public ActionResult GridViewPartial_ConciliacionAnticipo()
+        {
+            List<cp_conciliacionAnticipo_Info> model = new List<cp_conciliacionAnticipo_Info>();
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            model = Lista_ConciliacionAnticipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            return PartialView("_GridViewPartial_ConciliacionAnticipo", model);
         }
         #endregion
 
@@ -1114,6 +1127,15 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return Json(Total.ToString("n2"), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult get_list_ConciliacionAnticipo(int IdEmpresa = 0, int IdSucursal=0, decimal IdProveedor = 0, decimal IdTransaccionSession=0)
+        {
+            var lst_ConciliacionAnticipo = bus_conciliacion_anticipo.getlist_ConciliacionAnticipo(IdEmpresa, IdSucursal, IdProveedor);
+            if (lst_ConciliacionAnticipo == null)
+                lst_ConciliacionAnticipo = new List<cp_conciliacionAnticipo_Info>();
+
+            Lista_ConciliacionAnticipo.set_list(lst_ConciliacionAnticipo, IdTransaccionSession);
+            return Json(lst_ConciliacionAnticipo, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Detalle de inventario

@@ -8,6 +8,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_ClasificacionEBIT_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdClasificacionEBIT { get; set; }
         public string ebit_Codigo { get; set; }
         public string ebit_Descripcion { get; set; }

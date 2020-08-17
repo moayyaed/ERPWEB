@@ -447,5 +447,43 @@ namespace Core.Erp.Data.CuentasPorPagar
                 return false;
             }
         }
+
+        public List<cp_conciliacionAnticipo_Info> getlist_ConciliacionAnticipo(int IdEmpresa, int IdSucursal, decimal IdProveedor)
+        {
+            try
+            {
+                List<cp_conciliacionAnticipo_Info> Lista = new List<cp_conciliacionAnticipo_Info>();
+
+                using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
+                {
+                    Lista = (from q in db.vwcp_ConciliacionAnticipoDetAnt_x_cruzar
+                             where q.IdEmpresa == IdEmpresa
+                             && q.IdSucursal == IdSucursal
+                             && q.IdProveedor == IdProveedor
+                             select new cp_conciliacionAnticipo_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdOrdenPago = q.IdOrdenPago,
+                                 IdSucursal = q.IdSucursal,
+                                 IdProveedor = q.IdProveedor,
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 Fecha = q.Fecha,
+                                 Observacion = q.Observacion,
+                                 ValorOP = q.ValorOP,
+                                 MontoAplicado = q.MontoAplicado,
+                                 Saldo = q.Saldo
+
+                             }).ToList();
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

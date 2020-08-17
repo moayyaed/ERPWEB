@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Facturacion.fa_cliente_tipo_Info
 @{
-    ViewBag.Title = "Anular tipo de cliente";
+    ViewBag.Title = "Consultar tipo de cliente";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,10 +8,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Anular", "ClienteTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "ClienteTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.Idtipo_cliente)
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "ClienteTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "ClienteTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, Idtipo_cliente = Model.Idtipo_cliente }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "ClienteTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, Idtipo_cliente = Model.Idtipo_cliente }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -68,19 +111,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group has-error">
-                    <label for="MotivoAnulacion">Motivo Anulacion</label>
-                    @Html.TextAreaFor(q => q.MotivoAnula, new { @class = "form-control", @id = "MotivoAnulacion", @rows = 1 })
-                    @Html.ValidationMessageFor(q => q.MotivoAnula, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="box-footer">
-        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index", "ClienteTipo", new {  Area ="Facturacion" }, null)">Cancelar</a>
     </div>
 

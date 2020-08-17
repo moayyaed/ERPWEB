@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_periodo_contable";
-        settings.CallbackRouteValues = new { Controller = "PeriodoContable", Action = "GridViewPartial_periodocontable" };
+        settings.CallbackRouteValues = new { Controller = "PeriodoContable", Action = "GridViewPartial_periodocontable", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdPeriodo";
 
@@ -63,21 +63,19 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "pe_estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdPeriodo = DataBinder.Eval(tc.DataItem, "IdPeriodo") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString() + "&nbsp; / &nbsp;" +
-                    Html.ActionLink("Nuevo Masivo", "NuevoMasivo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString() + "&nbsp; / &nbsp;" +
+                        Html.ActionLink("Nuevo Masivo", "NuevoMasivo").ToHtmlString()
+                    );
+                }
             });
 
             c.Settings.AllowDragDrop = DefaultBoolean.False;

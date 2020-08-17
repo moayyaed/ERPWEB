@@ -1,6 +1,8 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -21,7 +23,10 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         tb_modulo_Bus bus_modulo = new tb_modulo_Bus();
         ct_periodo_x_tb_modulo_Bus bus_periodo_x_modulo = new ct_periodo_x_tb_modulo_Bus();
         ct_periodo_x_tb_modulo_List Lista_periodo_x_modulo = new ct_periodo_x_tb_modulo_List();
+        ct_periodo_List Lista_Periodo = new ct_periodo_List();
         string mensaje = string.Empty;
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Index
@@ -29,16 +34,40 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             ViewBag.IdanioFiscal = IdanioFiscal;
 
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            ct_periodo_Info model = new ct_periodo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            var lst = bus_periodo.get_list(model.IdEmpresa, true);
+            Lista_Periodo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_periodocontable()
+        public ActionResult GridViewPartial_periodocontable(bool Nuevo=false)
         {
-            List<ct_periodo_Info> model = new List<ct_periodo_Info>();
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            model = bus_periodo.get_list(IdEmpresa, true);
-            
+            //List<ct_periodo_Info> model = new List<ct_periodo_Info>();
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //model = bus_periodo.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Periodo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_periodocontable", model);
         }
 
@@ -130,16 +159,20 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         #region Acciones
 
-        public ActionResult Nuevo(int IdPeriodo = 0)
+        public ActionResult Nuevo()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos();
-            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             ct_periodo_Info model = new ct_periodo_Info
             {
-                IdEmpresa = IdEmpresa,
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdPeriodo = IdPeriodo,
                 IdanioFiscal = DateTime.Now.Date.Year
             };
             Lista_periodo_x_modulo.set_list(new List<ct_periodo_x_tb_modulo_Info>(), model.IdTransaccionSession);
@@ -159,19 +192,24 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdPeriodo = model.IdPeriodo, Exito = true });
         }
 
-        public ActionResult NuevoMasivo(int IdPeriodo = 0)
+        public ActionResult NuevoMasivo()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos_masivo();
             var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             ct_periodo_Info model = new ct_periodo_Info
             {
                 IdEmpresa = IdEmpresa,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdPeriodo = IdPeriodo
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
             };
             Lista_periodo_x_modulo.set_list(new List<ct_periodo_x_tb_modulo_Info>(), model.IdTransaccionSession);
 
@@ -220,7 +258,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult Modificar(int IdPeriodo = 0)
+
+        public ActionResult Consultar(int IdPeriodo = 0, bool Exito=false)
         {
             ct_periodo_Info model = bus_periodo.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdPeriodo);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
@@ -229,6 +268,41 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            if (model.pe_estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            cargar_combos();
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdPeriodo = 0)
+        {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            ct_periodo_Info model = bus_periodo.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdPeriodo);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_periodo_x_modulo = bus_periodo_x_modulo.GetList(model.IdEmpresa, Convert.ToInt32(model.IdPeriodo));
+            Lista_periodo_x_modulo.set_list(model.lst_periodo_x_modulo, model.IdTransaccionSession);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
             cargar_combos();
             return View(model);
         }
@@ -244,11 +318,17 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdPeriodo = model.IdPeriodo, Exito = true });
         }
 
         public ActionResult Anular(int IdPeriodo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "PeriodoContable", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ct_periodo_Info model = bus_periodo.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdPeriodo);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_periodo_x_modulo = bus_periodo_x_modulo.GetList(model.IdEmpresa, Convert.ToInt32(model.IdPeriodo));
@@ -275,6 +355,26 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return RedirectToAction("Index");
         }
         #endregion
+    }
+
+    public class ct_periodo_List
+    {
+        string Variable = "ct_periodo_Info";
+        public List<ct_periodo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<ct_periodo_Info> list = new List<ct_periodo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<ct_periodo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<ct_periodo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
     }
 
     public class ct_periodo_x_tb_modulo_List

@@ -98,5 +98,18 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 throw;
             }
         }
+
+        public List<cp_conciliacionAnticipo_Info> getlist_ConciliacionAnticipo(int IdEmpresa, int IdSucursal, decimal IdProveedor)
+        {
+            try
+            {
+                return oData.getlist_ConciliacionAnticipo(IdEmpresa, IdSucursal, IdProveedor);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_plancta";
-        settings.CallbackRouteValues = new { Controller = "PlanDeCuentas", Action = "GridViewPartial_plancta" };
+        settings.CallbackRouteValues = new { Controller = "PlanDeCuentas", Action = "GridViewPartial_plancta", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdCtaCble";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -62,14 +62,9 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "pc_Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCtaCble = DataBinder.Eval(tc.DataItem, "IdCtaCble") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCtaCble = DataBinder.Eval(tc.DataItem, "IdCtaCble") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCtaCble = DataBinder.Eval(tc.DataItem, "IdCtaCble") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
@@ -100,7 +95,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

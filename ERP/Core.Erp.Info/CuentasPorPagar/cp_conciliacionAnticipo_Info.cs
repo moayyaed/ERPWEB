@@ -41,6 +41,10 @@ namespace Core.Erp.Info.CuentasPorPagar
         public List<cp_ConciliacionAnticipoDetCXP_Info> Lista_det_Fact { get; set; }
         public ct_cbtecble_Info InfoCbte { get; set; }
         public List<ct_cbtecble_det_Info> Lista_det_Cbte { get; set; }
+        public decimal IdOrdenPago { get; set; }
+        public double ValorOP { get; set; }
+        public double MontoAplicado { get; set; }
+        public double Saldo { get; set; }
         #endregion
     }
 }

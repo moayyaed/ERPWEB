@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Facturacion;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Facturacion;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -17,18 +19,45 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_TerminoPago_Bus bus_terminopago = new fa_TerminoPago_Bus();
         fa_TerminoPago_Distribucion_Bus bus_termino_dist = new fa_TerminoPago_Distribucion_Bus();
         fa_TerminoPago_Distribucion_list List_fa_TerminoPago_Distribucion = new fa_TerminoPago_Distribucion_list();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        fa_TerminoPago_List Lista_TerminoPago = new fa_TerminoPago_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ClienteTipo", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            fa_TerminoPago_Info model = new fa_TerminoPago_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            var lst = bus_terminopago.get_list(true);
+            Lista_TerminoPago.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_terminopago()
+        public ActionResult GridViewPartial_terminopago(bool Nuevo=false)
         {
-            List<fa_TerminoPago_Info> model = bus_terminopago.get_list(true);
+            //List<fa_TerminoPago_Info> model = bus_terminopago.get_list(true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_TerminoPago.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_terminopago", model);
         }
 
@@ -42,6 +71,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ClienteTipo", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
             #endregion
 
             fa_TerminoPago_Info model = new fa_TerminoPago_Info
@@ -66,7 +100,41 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdTerminoPago = model.IdTerminoPago, Exito = true });
+        }
+
+        public ActionResult Consultar(string IdTerminoPago = "", bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            fa_TerminoPago_Info model = bus_terminopago.get_info(IdTerminoPago);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ClienteTipo", "Index");
+            if (model.estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            model.Lst_fa_TerminoPago_Distribucion = bus_termino_dist.get_list(IdTerminoPago);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            List_fa_TerminoPago_Distribucion.set_list(model.Lst_fa_TerminoPago_Distribucion, model.IdTransaccionSession);
+            return View(model);
         }
 
         public ActionResult Modificar(string IdTerminoPago = "")
@@ -76,6 +144,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ClienteTipo", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
 
             fa_TerminoPago_Info model = bus_terminopago.get_info(IdTerminoPago);
@@ -96,7 +169,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdTerminoPago = model.IdTerminoPago, Exito = true });
         }
 
         public ActionResult Anular(string IdTerminoPago = "")
@@ -107,7 +180,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "ClienteTipo", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             fa_TerminoPago_Info model = bus_terminopago.get_info(IdTerminoPago);
             if (model == null)
             {
@@ -189,7 +266,27 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #endregion
 
     }
-       public class fa_TerminoPago_Distribucion_list
+    public class fa_TerminoPago_List
+    {
+        string Variable = "fa_TerminoPago_Info";
+        public List<fa_TerminoPago_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_TerminoPago_Info> list = new List<fa_TerminoPago_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_TerminoPago_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_TerminoPago_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
+
+    public class fa_TerminoPago_Distribucion_list
     {
         string variable = "fa_TerminoPago_Distribucion_Info";
         public List<fa_TerminoPago_Distribucion_Info> get_list(decimal IdTransaccionSession)

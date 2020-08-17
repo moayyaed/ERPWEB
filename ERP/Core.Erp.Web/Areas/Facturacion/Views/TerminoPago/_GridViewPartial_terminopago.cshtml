@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_terminopago";
-        settings.CallbackRouteValues = new { Controller = "TerminoPago", Action = "GridViewPartial_terminopago" };
+        settings.CallbackRouteValues = new { Controller = "TerminoPago", Action = "GridViewPartial_terminopago", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTerminoPago";
         //Configuración para que la grilla no muestre texto completo
@@ -61,22 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
-                {
-
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new {  IdTerminoPago = DataBinder.Eval(tc.DataItem, "IdTerminoPago") }) + "&nbsp;" +
-                            Html.ActionLink("Anular", "Anular", new { IdTerminoPago = DataBinder.Eval(tc.DataItem, "IdTerminoPago") },
-                                new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                        );
-                }
-
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdTerminoPago = DataBinder.Eval(tc.DataItem, "IdTerminoPago") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -96,7 +92,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
     });
 }

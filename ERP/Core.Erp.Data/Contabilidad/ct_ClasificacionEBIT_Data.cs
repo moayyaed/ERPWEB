@@ -94,7 +94,7 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     db.ct_ClasificacionEBIT.Add(new ct_ClasificacionEBIT
                     {
-                        IdClasificacionEBIT = get_id(),
+                        IdClasificacionEBIT = info.IdClasificacionEBIT= get_id(),
                         ebit_Codigo = info.ebit_Codigo,
                         ebit_Descripcion = info.ebit_Descripcion,
                         AplicaEBIT = info.AplicaEBIT,

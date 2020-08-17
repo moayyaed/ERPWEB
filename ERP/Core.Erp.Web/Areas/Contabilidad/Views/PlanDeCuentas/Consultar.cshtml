@@ -1,0 +1,161 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_plancta_Info
+@{
+    ViewBag.Title = "Consultar cuenta contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "PlanDeCuentas", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdCtaCble)
+    @Html.HiddenFor(q => q.IdNivelCta)
+    @Html.HiddenFor(q => q.IdCtaCblePadre)
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                @if (@ViewBag.Nuevo == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "PlanDeCuentas", new { Area = "Contabilidad" }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Modificar == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "PlanDeCuentas", new { Area = "Contabilidad", IdEmpresa = Model.IdEmpresa, IdCtaCble = Model.IdCtaCble }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-1">
+                @if (@ViewBag.Anular == true)
+                {
+                    <div class="form-group">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "PlanDeCuentas", new { Area = "Contabilidad", IdEmpresa = Model.IdEmpresa, IdCtaCble = Model.IdCtaCble }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta padre</label>
+                    @Html.Partial("_CmbCuenta_PlanCta", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCblePadre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCtaCble">Código cuenta*</label>
+                    @Html.TextBoxFor(q => q.IdCtaCble, new { @class = "form-control", @id = "IdCtaCble", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pc_clave_corta">Clave corta</label>
+                    @Html.TextBoxFor(q => q.pc_clave_corta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pc_clave_corta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdNivelCta">Nivel</label>
+                    @Html.TextBoxFor(q => q.IdNivelCta, new { @class = "form-control", @id = "IdNivelCta" })
+                    @Html.ValidationMessageFor(q => q.IdNivelCta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label for="pc_EsMovimiento_bool">@Html.CheckBoxFor(q => q.pc_EsMovimiento_bool) Es cuenta de movimiento</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdGrupoCble">Grupo contable</label>
+                    @Html.DropDownListFor(q => q.IdGrupoCble, new SelectList(ViewBag.lst_grupo_contabe, "IdGrupoCble", "gc_GrupoCble"), new { @class = "form-control", @id = "IdGrupoCble", @disabled="disabled" })
+                    @Html.ValidationMessageFor(q => q.IdGrupoCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pc_Naturaleza">Naturaleza</label>
+                    @Html.DropDownListFor(q => q.pc_Naturaleza, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "pc_Naturaleza" })
+                    @Html.ValidationMessageFor(q => q.pc_Naturaleza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="pc_Naturaleza">Clasificacion EBIT</label>
+                    @Html.DropDownListFor(q => q.IdClasificacionEBIT, new SelectList(ViewBag.lst_clasificacion_EBIT, "IdClasificacionEBIT", "ebit_Descripcion"), new { @class = "form-control", @id = "IdClasificacionEBIT" })
+                    @Html.ValidationMessageFor(q => q.IdClasificacionEBIT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pc_Cuenta">Tipo gasto*</label>
+                    @Html.DropDownListFor(q => q.IdTipo_Gasto, new SelectList(ViewBag.lst_tipo_gasto, "IdTipo_Gasto", "nom_tipo_Gasto"), new { @class = "form-control", @id = "IdTipo_Gasto" })
+                    @Html.ValidationMessageFor(q => q.IdTipo_Gasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pc_Cuenta">Cuenta contable*</label>
+                    @Html.TextBoxFor(q => q.pc_Cuenta, new { @class = "form-control", @id = "pc_Cuenta" })
+                    @Html.ValidationMessageFor(q => q.pc_Cuenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PlanDeCuentas", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

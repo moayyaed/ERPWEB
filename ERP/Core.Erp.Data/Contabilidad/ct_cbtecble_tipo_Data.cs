@@ -148,6 +148,7 @@ namespace Core.Erp.Data.Contabilidad
                     if (Entity == null)
                         return false;
                     Entity.tc_Estado = info.tc_Estado = "I";
+                    Entity.MotiAnula = info.MotiAnula;
 
                     Context.SaveChanges();
                 }

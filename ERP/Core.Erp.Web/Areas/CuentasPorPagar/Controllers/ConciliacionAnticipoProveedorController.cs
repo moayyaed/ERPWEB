@@ -687,4 +687,25 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
+
+    public class cp_conciliacionAnticipo_List
+    {
+        string Variable = "cp_conciliacionAnticipo_Info";
+        public List<cp_conciliacionAnticipo_Info> get_list(decimal IdTransaccionSession)
+        {
+
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_conciliacionAnticipo_Info> list = new List<cp_conciliacionAnticipo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_conciliacionAnticipo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_conciliacionAnticipo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
 }

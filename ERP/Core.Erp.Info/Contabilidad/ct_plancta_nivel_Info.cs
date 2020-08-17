@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Contabilidad
 {
     public class ct_plancta_nivel_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo nivel es obligatorio")]
         public int IdNivelCta { get; set; }
@@ -27,6 +28,7 @@ namespace Core.Erp.Info.Contabilidad
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
+        [Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
         #endregion
     }

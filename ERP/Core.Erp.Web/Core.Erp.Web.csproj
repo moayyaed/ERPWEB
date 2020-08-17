@@ -10513,6 +10513,15 @@
     <Content Include="Areas\Contabilidad\Views\AnioFiscal\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargo\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlanDeCuentas\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlanDeCuentasNivel\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TipoComprobante\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PeriodoContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteTipo\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\TerminoPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ConciliacionAnticipo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

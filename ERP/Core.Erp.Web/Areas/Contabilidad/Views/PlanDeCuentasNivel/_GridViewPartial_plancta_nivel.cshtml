@@ -1,7 +1,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_plancta_nivel";
-        settings.CallbackRouteValues = new { Controller = "PlanDeCuentasNivel", Action = "GridViewPartial_plancta_nivel" };
+        settings.CallbackRouteValues = new { Controller = "PlanDeCuentasNivel", Action = "GridViewPartial_plancta_nivel", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdNivelCta";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -59,20 +59,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdNivelCta = DataBinder.Eval(tc.DataItem, "IdNivelCta") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdNivelCta = DataBinder.Eval(tc.DataItem, "IdNivelCta") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdNivelCta = DataBinder.Eval(tc.DataItem, "IdNivelCta") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -92,7 +90,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()
