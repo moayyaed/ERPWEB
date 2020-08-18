@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Facturacion.fa_catalogo_Info
 @{
     ViewBag.Title = "Consulta de catálogos de facturación";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,9 +10,11 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_catalogo_fa", new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    @Html.Action("GridViewPartial_catalogo_fa", new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo, Nuevo=ViewBag.Nuevo })
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","CatalogoTipoImportacion",new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo, Area = "Importacion" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoFacturacion",new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo, Area = "Importacion" },null)">Volver</a>
     </div>
 }

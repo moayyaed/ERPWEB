@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Facturacion
 {
    public class fa_catalogo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
         [StringLength(15, MinimumLength = 0, ErrorMessage = "el campo código debe tener máximo 15")]
         public string IdCatalogo { get; set; }
@@ -29,6 +30,8 @@ namespace Core.Erp.Info.Facturacion
         public string ip { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
+        [Required(ErrorMessage = "El campo motivo de anulación es obligatorio")]
+        [StringLength(200, MinimumLength = 0, ErrorMessage = "el campo motivo de anulación debe tener máximo 200 caracteres")]
         public string MotiAnula { get; set; }
     }
 }

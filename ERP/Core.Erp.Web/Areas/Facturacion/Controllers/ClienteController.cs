@@ -17,6 +17,8 @@ using System.IO;
 using Core.Erp.Web.Areas.General.Controllers;
 using Core.Erp.Info.Contabilidad;
 using DevExpress.Web;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Facturacion.Controllers
 {
@@ -37,22 +39,50 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_cliente_tipo_List ListaTipoCliente = new fa_cliente_tipo_List();
         fa_cliente_List ListaCliente = new fa_cliente_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        fa_cliente_Index_List Lista_ClienteConsulta = new fa_cliente_Index_List();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Cliente", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            fa_cliente_Info model = new fa_cliente_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_cliente.get_list(model.IdEmpresa, true);
+            Lista_ClienteConsulta.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
         private bool validar(fa_cliente_Info i_validar, ref string msg)
         {
             return true;
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_cliente()
+        public ActionResult GridViewPartial_cliente(bool Nuevo = false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_cliente.get_list(IdEmpresa, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_cliente.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_ClienteConsulta.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_cliente", model);
         }
         #endregion
@@ -117,6 +147,12 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Cliente", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             fa_cliente_Info model = new fa_cliente_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -167,8 +203,45 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             }
-            
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCliente = model.IdCliente, Exito = true });
+        }
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdCliente = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            fa_cliente_Info model = bus_cliente.get_info(IdEmpresa, IdCliente);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Cliente", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.Lst_fa_cliente_x_fa_Vendedor_x_sucursal = bus_fa_vendedor.get_list(IdEmpresa, IdCliente);
+            List_fa_cliente_x_fa_Vendedor_x_sucursal.set_list(model.Lst_fa_cliente_x_fa_Vendedor_x_sucursal, model.IdTransaccionSession);
+
+            //List_fa_cliente_contactos.set_list(model.lst_fa_cliente_contactos, model.IdTransaccionSession);
+
+            cargar_combos(model);
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0, decimal IdCliente = 0)
         {
@@ -177,6 +250,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Cliente", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
 
             fa_cliente_Info model = bus_cliente.get_info(IdEmpresa, IdCliente);
@@ -230,8 +308,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 cargar_combos(model);
                 return View(model);
             }
-           
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCliente = model.IdCliente, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0 , decimal IdCliente = 0)
         {
@@ -240,6 +318,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Cliente", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
 
             fa_cliente_Info model = bus_cliente.get_info(IdEmpresa, IdCliente);
@@ -464,6 +547,26 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         }
         #endregion
 
+    }
+
+    public class fa_cliente_Index_List
+    {
+        string Variable = "fa_cliente_Index_Info";
+        public List<fa_cliente_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_cliente_Info> list = new List<fa_cliente_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_cliente_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_cliente_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class UploadControlSettings
