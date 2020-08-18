@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPCXC_005] 1,1,9999,1,9999,1,9999,'2019/08/05',0
+﻿--exec [web].[SPCXC_005] 1,1,9999,1,9999,1,9999,'2019/08/05',0
 CREATE PROCEDURE [web].[SPCXC_005]
 (
 @IdEmpresa int,
@@ -45,7 +44,7 @@ GROUP BY cxc_cobro_det.IdEmpresa, cxc_cobro_det.IdSucursal, cxc_cobro_det.IdBode
 WHERE c.Estado = 'A' and c.IdEmpresa = @IdEmpresa AND C.IdSucursal BETWEEN @IdSucursalIni AND @IdSucursalFin
 and c.IdCliente between @IdClienteIni and @IdClienteFin and c.vt_fecha <= @FechaCorte
 AND fa_cliente.Idtipo_cliente BETWEEN @IdClienteTipoIni AND @IdClienteTipoFin
-and ROUND(D.Total - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -9999999999, 0)
+and ROUND(D.Total - ISNULL(NC.ValorPago,0) - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -9999999999, 0)
 
 UNION ALL
 
@@ -86,4 +85,4 @@ GROUP BY cxc_cobro_det.IdEmpresa, cxc_cobro_det.IdSucursal, cxc_cobro_det.IdBode
 WHERE c.Estado = 'A' and c.CreDeb = 'D' and c.IdEmpresa = @IdEmpresa AND C.IdSucursal BETWEEN @IdSucursalIni AND @IdSucursalFin
 and c.IdCliente between @IdClienteIni and @IdClienteFin and c.no_fecha <= @FechaCorte
 AND fa_cliente.Idtipo_cliente BETWEEN @IdClienteTipoIni AND @IdClienteTipoFin
-and ROUND(D.Total - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -9999999999, 0)
+and ROUND(D.Total - ISNULL(NC.ValorPago,0) - ISNULL(cobro.ValorPago,0),2) != IIF(@MostrarSaldo0 = 1, -9999999999, 0)
