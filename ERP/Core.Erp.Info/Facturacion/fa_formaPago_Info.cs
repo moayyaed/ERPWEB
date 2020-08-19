@@ -10,6 +10,7 @@ namespace Core.Erp.Info.Facturacion
     public class fa_formaPago_Info
     {
 
+        public decimal IdTransaccionSession { get; set; }
         [StringLength(2, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter máximo 2")]
         [Required(ErrorMessage = "El campo código es obligatorio")]
         public string IdFormaPago { get; set; }

@@ -16,12 +16,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
     [SessionTimeout]
     public class ClienteTipoController : Controller
     {
-        #region Index
+        #region Variables
         fa_cliente_tipo_Bus bus_clientetipo = new fa_cliente_tipo_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_cliente_tipo_List Lista_ClienteTipo = new fa_cliente_tipo_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        #endregion
+
+        #region Index
         public ActionResult Index()
         {
             #region Validar Session

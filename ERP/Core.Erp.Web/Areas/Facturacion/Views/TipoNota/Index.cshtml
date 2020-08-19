@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Facturacion.fa_TipoNota_Info
 @{
     ViewBag.Title = "Consultar tipos de nota";
 
@@ -10,6 +10,9 @@
 }
 @using (Html.BeginForm())
 {
-   @Html.Action("GridViewPartial_tiponota")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+   @Html.Action("GridViewPartial_tiponota", new { Nuevo = ViewBag.Nuevo })
 
 }

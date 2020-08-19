@@ -10522,6 +10522,15 @@
     <Content Include="Areas\Facturacion\Views\ClienteTipo\Consultar.cshtml" />
     <Content Include="Areas\Facturacion\Views\TerminoPago\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ConciliacionAnticipo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FormaPago\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CatalogoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NivelDescuento\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\PuntoVenta\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Cliente\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\TipoNota\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Vendedor\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10640,7 +10649,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

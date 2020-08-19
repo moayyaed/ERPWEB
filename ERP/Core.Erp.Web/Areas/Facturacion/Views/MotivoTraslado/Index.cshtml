@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Facturacion.fa_MotivoTraslado_Info
 @{
     ViewBag.Title = "Consulta de motivos de traslado";
 
@@ -10,6 +10,9 @@
 }
 @using (Html.BeginForm())
 {
-   @Html.Action("GridViewPartial_Motivo_traslado")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+   @Html.Action("GridViewPartial_Motivo_traslado", new { Nuevo = ViewBag.Nuevo })
 
 }

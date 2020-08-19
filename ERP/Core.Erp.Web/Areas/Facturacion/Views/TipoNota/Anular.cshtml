@@ -73,7 +73,17 @@
             </div>
         </div>
     </div>
-    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <label for="MotiAnula">Motivo anulación*</label>
+                    @Html.TextAreaFor(q => q.MotiAnula, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.MotiAnula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index","TipoNota",new { Area = "Facturacion" },null)">Cancelar</a>

@@ -222,6 +222,7 @@ namespace Core.Erp.Data.Facturacion
                     Entity.Estado = info.Estado="I";
 
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    Entity.MotiAnula = info.MotiAnula;
                     Entity.Fecha_UltAnu = DateTime.Now;
                     Context.SaveChanges();
                 }

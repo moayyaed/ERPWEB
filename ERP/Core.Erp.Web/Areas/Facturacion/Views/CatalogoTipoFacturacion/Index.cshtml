@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Facturacion.fa_catalogo_tipo_Info
 @{
     ViewBag.Title = "Consulta de tipos de catálogo de facturación";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -9,8 +9,9 @@
 }
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_catalogotipo_fa")
+    @Html.Action("GridViewPartial_catalogotipo_fa", new { Nuevo = ViewBag.Nuevo })
 
 
 }

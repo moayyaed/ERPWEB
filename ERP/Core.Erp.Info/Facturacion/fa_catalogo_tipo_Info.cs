@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Facturacion
 {
    public class fa_catalogo_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdCatalogo_tipo { get; set; }
         [Required(ErrorMessage = "El campo descripción es obligatorio")]
         [StringLength(50, MinimumLength = 0, ErrorMessage = "el campo descripción debe tener máximo 50")]
