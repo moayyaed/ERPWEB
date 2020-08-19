@@ -51,7 +51,7 @@ namespace Core.Erp.Data.Contabilidad
                         }).ToList();
                     }
                 }
-                return Lista;
+                return Lista.OrderByDescending(q => q.IdCierre).ToList();
             }
             catch (Exception)
             {
