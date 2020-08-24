@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.RRHH.ro_marcaciones_x_empleado_Info
 @{
-    ViewBag.Title = "Nueva carga de novedades";
+    ViewBag.Title = "Carga de marcaciones";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -75,7 +75,7 @@
     <div class="col-md-12">
         <div class="col-md-12">
             <div class="form-group">
-                <label for="detalle">Detalle de la novedad</label>
+                <label for="detalle">Marcaciones a subir</label>
                 @Html.Action("GridViewPartial_importacion_marcaciones_det")
                 @Html.ValidationMessageFor(q => q.detalle, "", new { @class = "text-danger" })
             </div>
