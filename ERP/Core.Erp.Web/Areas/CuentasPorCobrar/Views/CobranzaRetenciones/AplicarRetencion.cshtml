@@ -84,7 +84,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="cr_NumDocumento"># NumRetención</label>
                     @Html.TextBoxFor(q => q.cr_NumDocumento, new { @class = "form-control", @id = "cr_NumDocumento" })
@@ -97,7 +97,7 @@
                     @Html.DevExpress().CheckBoxFor(q => q.cr_EsElectronico, settings =>
                             {
                                 settings.Name = "cr_EsElectronico";
-                                settings.Text = "Es Electronico";                                
+                                settings.Text = "Es Electrónico";                                
                             }).GetHtml()
                     @Html.ValidationMessageFor(q => q.cr_EsElectronico, "", new { @class = "text-danger" })
                 </div>
@@ -113,7 +113,7 @@
                     @Html.ValidationMessageFor(q => q.cr_EsProvision, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-1 col-md-2">
+            <div class="col-md-offset-2 col-md-2">
                 <div class="form-group">
                     <label for="cr_fecha">Fecha*</label>
                     @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
@@ -152,6 +152,13 @@
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
+                    <label for="cr_NumDocumento">Número autorización</label>
+                    @Html.TextBoxFor(q => q.NumeroAutorizacion, new { @class = "form-control", @id = "NumeroAutorizacion" })
+                    @Html.ValidationMessageFor(q => q.NumeroAutorizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
                     <label for="vt_NumFactura"># Documento</label>
                     @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura", @readonly = "readonly" })
                 </div>
@@ -162,19 +169,19 @@
                     @Html.TextBoxFor(q => q.pe_nombreCompleto, new { @class = "form-control", @id = "pe_nombreCompleto", @readonly = "readonly" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="vt_Subtotal">Subtotal</label>
                     @Html.TextBoxFor(q => q.vt_Subtotal, new { @class = "form-control", @id = "vt_Subtotal", @readonly = "readonly" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="vt_Iva">I.V.A.</label>
                     @Html.TextBoxFor(q => q.vt_Iva, new { @class = "form-control", @id = "vt_Iva", @readonly = "readonly" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="vt_Total">Total</label>
                     @Html.TextBoxFor(q => q.vt_Total, new { @class = "form-control", @id = "vt_Total", @readonly = "readonly" })

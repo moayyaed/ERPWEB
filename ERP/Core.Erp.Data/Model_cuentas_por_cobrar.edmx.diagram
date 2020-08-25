@@ -32,20 +32,20 @@
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta" Width="1.5" PointX="0.75" PointY="17.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_det" Width="1.5" PointX="3.375" PointY="13.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar" Width="1.5" PointX="10.375" PointY="10.75" />
-        <EntityTypeShape EntityType="Model_cuentas_por_cobrar.cxc_cobro" Width="1.5" PointX="5.625" PointY="1.375" />
-        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo" />
-        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro" />
-        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" />
-        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion" Width="1.5" PointX="14.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.cxc_Parametro" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProv" Width="1.5" PointX="7.5" PointY="23.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProvDet" Width="1.5" PointX="9.75" PointY="0.75" />
-        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro" />
         <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro_det" />
         <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_LiquidacionRetProv" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet" Width="1.5" PointX="16.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionRetProvDet_PorCruzar" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_cuentas_por_cobrar.cxc_cobro" Width="1.5" PointX="5.25" PointY="1.25" />
+        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo" />
+        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro" />
+        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" />
+        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionRetProvDet_cxc_cobro" />
+        <AssociationConnector Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

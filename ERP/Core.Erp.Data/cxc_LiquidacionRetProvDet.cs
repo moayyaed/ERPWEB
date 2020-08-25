@@ -23,8 +23,8 @@ namespace Core.Erp.Data
         public string IdCobro_tipo { get; set; }
         public double Valor { get; set; }
     
-        public virtual cxc_cobro cxc_cobro { get; set; }
         public virtual cxc_cobro_det cxc_cobro_det { get; set; }
         public virtual cxc_LiquidacionRetProv cxc_LiquidacionRetProv { get; set; }
+        public virtual cxc_cobro cxc_cobro { get; set; }
     }
 }

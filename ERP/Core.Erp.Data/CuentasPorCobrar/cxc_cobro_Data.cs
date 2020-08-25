@@ -278,6 +278,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     cr_Excedente = info.cr_Excedente,
                     IdBanco = info.IdBanco,
                     IdCaja = info.IdCaja,
+                    NumeroAutorizacion = info.NumeroAutorizacion,
 
                     Fecha_Transac = DateTime.Now,
                     IdUsuario = info.IdUsuario
@@ -506,6 +507,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 Entity.cr_Excedente = info.cr_Excedente;
                 Entity.cr_EsProvision = info.cr_EsProvision;
                 Entity.cr_EsProvision = info.cr_EsProvision;
+                Entity.NumeroAutorizacion = info.NumeroAutorizacion;
                 Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                 Entity.Fecha_UltMod = DateTime.Now;
                 #endregion

@@ -73,6 +73,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string nom_Motivo_tipo_cobro { get; set; }
         public string cr_NumDocumento_Dep { get; set; }
         public double? Saldo { get; set; }
+        public string NumeroAutorizacion { get; set; }
         #endregion
     }
 }
