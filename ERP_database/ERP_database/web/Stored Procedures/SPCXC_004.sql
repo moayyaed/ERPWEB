@@ -27,7 +27,7 @@ FROM     fa_factura INNER JOIN
 				  where d.dc_TipoDocumento = 'FACT' AND C.cr_estado = 'A'
 				  group by D.IdEmpresa, D.IdSucursal, D.IdBodega_Cbte, D.IdCbte_vta_nota
 				  ) AS Cobro on Cobro.IdEmpresa = fa_factura.IdEmpresa and Cobro.IdSucursal = fa_factura.IdSucursal and Cobro.IdBodega_Cbte = fa_factura.IdBodega and Cobro.IdCbte_vta_nota = fa_factura.IdCbteVta
-WHERE fa_factura.Estado = 'A' and fa_factura.IdSucursal between @IdSucursalIni and @IdSucursalFin
+WHERE fa_factura.Estado = 'A' and fa_factura.IdEmpresa = @IdEmpresa and fa_factura.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and fa_factura.IdCliente between @IdClienteIni and @IdClienteFin and fa_factura.vt_fecha between @FechaIni and @FechaFin AND ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) > CASE WHEN @MostrarSaldo0 = 1 THEN -1 ELSE 0 END
 UNION ALL
 SELECT fa_factura.IdEmpresa, fa_factura.IdSucursal, fa_factura.IdBodega, fa_factura.IdCbteVta, fa_factura.vt_serie1 + '-' + fa_factura.vt_serie2 + '-' + fa_factura.vt_NumFactura AS vt_NumFactura, fa_factura.vt_tipoDoc, fa_factura.IdCliente, 
@@ -50,7 +50,7 @@ FROM     fa_factura INNER JOIN
 				  where d.dc_TipoDocumento = 'FACT' AND C.cr_estado = 'A'
 				  group by D.IdEmpresa, D.IdSucursal, D.IdBodega_Cbte, D.IdCbte_vta_nota
 				  ) AS Cobro on Cobro.IdEmpresa = fa_factura.IdEmpresa and Cobro.IdSucursal = fa_factura.IdSucursal and Cobro.IdBodega_Cbte = fa_factura.IdBodega and Cobro.IdCbte_vta_nota = fa_factura.IdCbteVta
-WHERE fa_factura.Estado = 'A' AND cxc_cobro.cr_estado = 'A' and fa_factura.IdSucursal between @IdSucursalIni and @IdSucursalFin
+WHERE fa_factura.Estado = 'A' and fa_factura.IdEmpresa = @IdEmpresa AND cxc_cobro.cr_estado = 'A' and fa_factura.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and fa_factura.IdCliente between @IdClienteIni and @IdClienteFin and fa_factura.vt_fecha between @FechaIni and @FechaFin AND ROUND(fa_factura_resumen.Total - isnull(cobro.dc_ValorPago,0),2) > CASE WHEN @MostrarSaldo0 = 1 THEN -1 ELSE 0 END
 UNION ALL
 SELECT fa_notaCreDeb.IdEmpresa, fa_notaCreDeb.IdSucursal, fa_notaCreDeb.IdBodega, fa_notaCreDeb.IdNota, CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1+'-'+fa_notaCreDeb.Serie2+'-'+fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota  END vt_NumFactura, fa_notaCreDeb.CodDocumentoTipo, fa_notaCreDeb.IdCliente, fa_notaCreDeb.no_fecha, fa_notaCreDeb.no_fecha_venc, 
@@ -70,7 +70,8 @@ FROM     fa_notaCreDeb INNER JOIN
 				  where d.dc_TipoDocumento = 'NTDB' AND C.cr_estado = 'A'
 				  group by D.IdEmpresa, D.IdSucursal, D.IdBodega_Cbte, D.IdCbte_vta_nota
 				  ) AS Cobro on Cobro.IdEmpresa = fa_notaCreDeb.IdEmpresa and Cobro.IdSucursal = fa_notaCreDeb.IdSucursal and Cobro.IdBodega_Cbte = fa_notaCreDeb.IdBodega and Cobro.IdCbte_vta_nota = fa_notaCreDeb.IdNota
-WHERE fa_notaCreDeb.CreDeb = 'D' AND fa_notaCreDeb.Estado = 'A' AND 
+WHERE fa_notaCreDeb.IdEmpresa = @IdEmpresa and
+fa_notaCreDeb.CreDeb = 'D' AND fa_notaCreDeb.Estado = 'A' AND 
 fa_notaCreDeb.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin and fa_notaCreDeb.no_fecha between @FechaIni and @FechaFin AND ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) > CASE WHEN @MostrarSaldo0 = 1 THEN -1 ELSE 0 END
 UNION ALL
@@ -95,6 +96,6 @@ FROM     fa_notaCreDeb INNER JOIN
 				  where d.dc_TipoDocumento = 'NTDB' AND C.cr_estado = 'A'
 				  group by D.IdEmpresa, D.IdSucursal, D.IdBodega_Cbte, D.IdCbte_vta_nota
 				  ) AS Cobro on Cobro.IdEmpresa = fa_notaCreDeb.IdEmpresa and Cobro.IdSucursal = fa_notaCreDeb.IdSucursal and Cobro.IdBodega_Cbte = fa_notaCreDeb.IdBodega and Cobro.IdCbte_vta_nota = fa_notaCreDeb.IdNota
-WHERE cxc_cobro.cr_estado = 'A' AND fa_notaCreDeb.CreDeb = 'D' AND fa_notaCreDeb.Estado = 'A' AND 
+WHERE cxc_cobro.IdEmpresa = @IdEmpresa and cxc_cobro.cr_estado = 'A' AND fa_notaCreDeb.CreDeb = 'D' AND fa_notaCreDeb.Estado = 'A' AND 
 fa_notaCreDeb.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and fa_notaCreDeb.IdCliente between @IdClienteIni and @IdClienteFin and fa_notaCreDeb.no_fecha between @FechaIni and @FechaFin AND ROUND(d.Total - isnull(cobro.dc_ValorPago,0),2) > CASE WHEN @MostrarSaldo0 = 1 THEN -1 ELSE 0 END
