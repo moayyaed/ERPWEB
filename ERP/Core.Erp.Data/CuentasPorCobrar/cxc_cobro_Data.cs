@@ -1096,7 +1096,8 @@ namespace Core.Erp.Data.CuentasPorCobrar
                         IdEntidad = Entity.IdCliente,
                         vt_tipoDoc = Entity.vt_tipoDoc,
                         cr_EsElectronico = Entity.cr_EsElectronico,
-                        cr_EsProvision = Entity.cr_EsProvision
+                        cr_EsProvision = Entity.cr_EsProvision,
+                        NumeroAutorizacion = Entity.NumeroAutorizacion
                     };
                 }
                 return info;

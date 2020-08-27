@@ -626,6 +626,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="cr_EsElectronico" Type="bit" Nullable="false" />
           <Property Name="cr_EsProvision" Type="bit" Nullable="false" />
           <Property Name="Saldo" Type="float" />
+          <Property Name="NumeroAutorizacion" Type="varchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_cxc_Catalogo_cxc_CatalogoTipo">
           <End Role="cxc_CatalogoTipo" Type="Self.cxc_CatalogoTipo" Multiplicity="1" />
@@ -1058,7 +1059,8 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
     [vwcxc_cobro_para_retencion].[TieneRetencion] AS [TieneRetencion], 
     [vwcxc_cobro_para_retencion].[cr_EsElectronico] AS [cr_EsElectronico], 
     [vwcxc_cobro_para_retencion].[cr_EsProvision] AS [cr_EsProvision], 
-    [vwcxc_cobro_para_retencion].[Saldo] AS [Saldo]
+    [vwcxc_cobro_para_retencion].[Saldo] AS [Saldo], 
+    [vwcxc_cobro_para_retencion].[NumeroAutorizacion] AS [NumeroAutorizacion]
     FROM [web].[vwcxc_cobro_para_retencion] AS [vwcxc_cobro_para_retencion]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_cxc_Catalogo_cxc_CatalogoTipo" Association="Self.FK_cxc_Catalogo_cxc_CatalogoTipo">
@@ -1337,7 +1339,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <EntitySet Name="vwcxc_LiquidacionTarjeta" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta" />
           <EntitySet Name="vwcxc_cobro_det" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_det" />
           <EntitySet Name="vwcxc_cartera_x_cobrar" EntityType="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar" />
-          <EntitySet Name="vwcxc_cobro_para_retencion" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion" />
           <EntitySet Name="cxc_Parametro" EntityType="Model_cuentas_por_cobrar.cxc_Parametro" />
           <EntitySet Name="cxc_LiquidacionRetProv" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProv" />
           <EntitySet Name="cxc_LiquidacionRetProvDet" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionRetProvDet" />
@@ -1372,6 +1373,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
             <End Role="cxc_cobro" EntitySet="cxc_cobro" />
             <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
           </AssociationSet>
+          <EntitySet Name="vwcxc_cobro_para_retencion" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion" />
           </EntityContainer>
         <EntityType Name="cxc_cobro_tipo">
           <Key>
@@ -1733,44 +1735,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
-        <EntityType Name="vwcxc_cobro_para_retencion">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdBodega" />
-            <PropertyRef Name="IdCbteVta" />
-            <PropertyRef Name="vt_tipoDoc" />
-            <PropertyRef Name="vt_Subtotal" />
-            <PropertyRef Name="vt_iva" />
-            <PropertyRef Name="vt_total" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="vt_fecha" />
-            <PropertyRef Name="vt_fech_venc" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="IdCliente" />
-            <PropertyRef Name="cr_EsElectronico" />
-            <PropertyRef Name="cr_EsProvision" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="vt_Subtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="vt_iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="vt_total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="TieneRetencion" Type="Boolean" />
-          <Property Name="cr_EsElectronico" Type="Boolean" Nullable="false" />
-          <Property Name="cr_EsProvision" Type="Boolean" Nullable="false" />
-          <Property Name="Saldo" Type="Double" />
-        </EntityType>
         <EntityType Name="cxc_Parametro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2062,6 +2026,45 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwcxc_cobro_para_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="cr_EsElectronico" />
+            <PropertyRef Name="cr_EsProvision" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Subtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="vt_iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="vt_total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TieneRetencion" Type="Boolean" />
+          <Property Name="cr_EsElectronico" Type="Boolean" Nullable="false" />
+          <Property Name="cr_EsProvision" Type="Boolean" Nullable="false" />
+          <Property Name="Saldo" Type="Double" />
+          <Property Name="NumeroAutorizacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2396,31 +2399,6 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwcxc_cobro_para_retencion">
-            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion">
-              <MappingFragment StoreEntitySet="vwcxc_cobro_para_retencion">
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="cr_EsProvision" ColumnName="cr_EsProvision" />
-                <ScalarProperty Name="cr_EsElectronico" ColumnName="cr_EsElectronico" />
-                <ScalarProperty Name="TieneRetencion" ColumnName="TieneRetencion" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
-                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
-                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
-                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
-                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
-                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
-                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
-                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="cxc_Parametro">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_Parametro">
               <MappingFragment StoreEntitySet="cxc_Parametro">
@@ -2563,6 +2541,32 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
                 <ScalarProperty Name="cr_Codigo" ColumnName="cr_Codigo" />
                 <ScalarProperty Name="IdCobro_a_aplicar" ColumnName="IdCobro_a_aplicar" />
                 <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cobro_para_retencion">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion">
+              <MappingFragment StoreEntitySet="vwcxc_cobro_para_retencion">
+                <ScalarProperty Name="NumeroAutorizacion" ColumnName="NumeroAutorizacion" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="cr_EsProvision" ColumnName="cr_EsProvision" />
+                <ScalarProperty Name="cr_EsElectronico" ColumnName="cr_EsElectronico" />
+                <ScalarProperty Name="TieneRetencion" ColumnName="TieneRetencion" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

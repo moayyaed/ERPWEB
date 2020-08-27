@@ -33,5 +33,6 @@ namespace Core.Erp.Data
         public bool cr_EsElectronico { get; set; }
         public bool cr_EsProvision { get; set; }
         public Nullable<double> Saldo { get; set; }
+        public string NumeroAutorizacion { get; set; }
     }
 }
