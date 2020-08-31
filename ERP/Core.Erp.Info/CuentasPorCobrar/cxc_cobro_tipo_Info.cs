@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
 {
     public class cxc_cobro_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(20, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 20")]
         public string IdCobro_tipo { get; set; }
@@ -45,7 +46,9 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public bool ESRetenFTE_bool { get; set; }
         public int IdEmpresa { get; set; }
         public bool Seleccionado { get; set; }
-
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

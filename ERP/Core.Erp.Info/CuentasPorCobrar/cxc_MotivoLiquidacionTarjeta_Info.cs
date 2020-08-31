@@ -25,8 +25,15 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string IdUsuarioAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        [Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
 
         public List<cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Info> Lst_det { get; set; }
+
+        #region Campos que no existen en la tabla
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+        #endregion
     }
 }

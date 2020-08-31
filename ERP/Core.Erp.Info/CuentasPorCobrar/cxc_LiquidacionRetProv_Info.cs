@@ -32,6 +32,9 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public int IdSucursal { get; set; }
         public List<cxc_LiquidacionRetProvDet_Info> lst_detalle { get; set; }
         public List<ct_cbtecble_det_Info> lst_detalle_cbte { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

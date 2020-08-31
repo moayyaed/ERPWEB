@@ -39,6 +39,7 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public Nullable<int> IdBanco { get; set; }
         [Required(ErrorMessage ="El campo caja es obligatorio")]
         public int IdCaja { get; set; }
+        [Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
         public string MotiAnula { get; set; }
         public Nullable<int> IdTipoNotaCredito { get; set; }
         public Nullable<bool> cr_EsProvision { get; set; }
@@ -74,6 +75,9 @@ namespace Core.Erp.Info.CuentasPorCobrar
         public string cr_NumDocumento_Dep { get; set; }
         public double? Saldo { get; set; }
         public string NumeroAutorizacion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_catalogocxc";
-        settings.CallbackRouteValues = new { Controller = "CatalogoCXC", Action = "GridViewPartial_catalogocxc", IdCatalogo_tipo = ViewBag.IdCatalogo_tipo };
+        settings.CallbackRouteValues = new { Controller = "CatalogoCXC", Action = "GridViewPartial_catalogocxc", Nuevo=ViewBag.Nuevo };
         settings.KeyFieldName = "IdCatalogo";
         settings.Width = Unit.Percentage(100);
 
@@ -61,20 +61,26 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdCatalogo = DataBinder.Eval(tc.DataItem, "IdCatalogo"), IdCatalogo_tipo = ViewBag.IdCatalogo_tipo }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdCatalogo = DataBinder.Eval(tc.DataItem, "IdCatalogo"), IdCatalogo_tipo = ViewBag.IdCatalogo_tipo },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdCatalogo = DataBinder.Eval(tc.DataItem, "IdCatalogo"), IdCatalogo_tipo = DataBinder.Eval(tc.DataItem, "IdCatalogo_tipo") })
+                );
+                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                //{
+                //    ViewContext.Writer.Write(
+                //Html.ActionLink("Modificar", "Modificar", new { IdCatalogo = DataBinder.Eval(tc.DataItem, "IdCatalogo"), IdCatalogo_tipo = ViewBag.IdCatalogo_tipo }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new { IdCatalogo = DataBinder.Eval(tc.DataItem, "IdCatalogo"), IdCatalogo_tipo = ViewBag.IdCatalogo_tipo },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -94,6 +100,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

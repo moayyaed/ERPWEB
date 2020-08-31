@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_pago_tipo_Info
+@{
     ViewBag.Title = "Consultar tipos de orden de pago";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
@@ -8,8 +9,9 @@
 }
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_tipo_orden_pago")
+    @Html.Action("GridViewPartial_tipo_orden_pago", new { Nuevo = ViewBag.Nuevo })
 
 }
 

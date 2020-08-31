@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_catalogotipocxc";
-        settings.CallbackRouteValues = new { Controller = "CatalogoTipoCXC", Action = "GridViewPartial_catalogotipocxc" };
+        settings.CallbackRouteValues = new { Controller = "CatalogoTipoCXC", Action = "GridViewPartial_catalogotipocxc", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdCatalogo_tipo";
 
@@ -56,20 +56,23 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-            Html.ActionLink("Modificar", "Modificar", new { IdCatalogo_tipo = DataBinder.Eval(tc.DataItem, "IdCatalogo_tipo") })
+                    Html.ActionLink("Consultar", "Consultar", new { IdCatalogo_tipo = DataBinder.Eval(tc.DataItem, "IdCatalogo_tipo") })
                 );
             });
-            c.SetHeaderTemplateContent(tc =>
+            if (ViewBag.Nuevo==true)
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
-            });
+                c.SetHeaderTemplateContent(tc =>
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                });
+            }
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(100);
         });
-        
+
         settings.Columns.Add("IdCatalogo_tipo", "Código").Width = Unit.Percentage(20);
         settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(70);
 
@@ -87,7 +90,7 @@
                 }).Render();
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

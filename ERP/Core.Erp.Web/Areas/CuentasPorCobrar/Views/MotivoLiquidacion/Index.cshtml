@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_MotivoLiquidacionTarjeta_Info
 @{
     ViewBag.Title = "Consulta de motivos de liquidación";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,8 +10,10 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
 
-    @Html.Action("GridViewPartial_Motivo_Liquidacion")
+    @Html.Action("GridViewPartial_Motivo_Liquidacion", new { Nuevo = ViewBag.Nuevo })
 
 
 }

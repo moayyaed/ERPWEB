@@ -1014,6 +1014,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     }             
 
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                    Entity.MotiAnula = info.MotiAnula;
                     Entity.Fecha_UltAnu = DateTime.Now;
                     Context.SaveChanges();
                 }

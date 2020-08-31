@@ -1,9 +1,11 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using System;
@@ -29,36 +31,63 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         ct_cbtecble_det_Bus bus_cbte_det = new ct_cbtecble_det_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        cxc_LiquidacionRetProv_List Lista_LiquidacionRet = new cxc_LiquidacionRetProv_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos();
+            var lst = bus_liquidacion.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_LiquidacionRet.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+
+            var lst = bus_liquidacion.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_LiquidacionRet.set_list(lst, model.IdTransaccionSession);
             cargar_combos();
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_LiquidacionRetencionCliente(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal=0)
+        public ActionResult GridViewPartial_LiquidacionRetencionCliente(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdSucursal = IdSucursal == 0 ? Convert.ToInt32(SessionFixed.IdSucursal) : IdSucursal;
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-
-            var model = bus_liquidacion.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
-
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdSucursal = IdSucursal == 0 ? Convert.ToInt32(SessionFixed.IdSucursal) : IdSucursal;
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //var model = bus_liquidacion.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_LiquidacionRet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_LiquidacionRetencionCliente", model);
         }
         #endregion
@@ -121,6 +150,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             cxc_LiquidacionRetProv_Info model = new cxc_LiquidacionRetProv_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -168,7 +202,55 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             };
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal=model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal=model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            cxc_LiquidacionRetProv_Info model = bus_liquidacion.get_info(IdEmpresa, IdSucursal, IdLiquidacion);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.lst_detalle = bus_liquidacion_det.GetList(IdEmpresa, IdSucursal, IdLiquidacion);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_detalle_cbte = bus_cbte_det.get_list(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToInt32(model.IdCbteCble));
+            ListaDetalle.set_list(model.lst_detalle, model.IdTransaccionSession);
+            list_ct_cbtecble_det.set_list(model.lst_detalle_cbte, model.IdTransaccionSession);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.li_Fecha, cl_enumeradores.eModulo.FAC, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                cargar_combos();
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos();
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, bool Exito = false)
@@ -179,6 +261,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             cxc_LiquidacionRetProv_Info model = bus_liquidacion.get_info(IdEmpresa, IdSucursal, IdLiquidacion);
             if (model == null)
                 return RedirectToAction("Index");
@@ -229,7 +317,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             };
 
             cargar_combos();
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal=0, decimal IdLiquidacion = 0)
@@ -240,6 +328,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionRetencionCliente", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cxc_LiquidacionRetProv_Info model = bus_liquidacion.get_info(IdEmpresa, IdSucursal, IdLiquidacion);
             if (model == null)
                 return RedirectToAction("Index");
@@ -387,6 +481,26 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             return PartialView("_GridViewPartial_LiquidacionRetencionClienteDet", model);
         }
         #endregion
+    }
+
+    public class cxc_LiquidacionRetProv_List
+    {
+        string Variable = "cxc_LiquidacionRetProv_Info";
+        public List<cxc_LiquidacionRetProv_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<cxc_LiquidacionRetProv_Info> list = new List<cxc_LiquidacionRetProv_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<cxc_LiquidacionRetProv_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<cxc_LiquidacionRetProv_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
     }
 
     public class cxc_LiquidacionRetProvDet_List

@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorPagar;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using System;
@@ -17,8 +19,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Variable
         cp_proveedor_clase_Bus bus_clase_proveedor = new cp_proveedor_clase_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
-
+        string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        cp_proveedor_clase_List Lista_ProveedorTipo = new cp_proveedor_clase_List();
         #endregion
+
         #region Metodos ComboBox bajo demanda CtaCbleCXP
         public ActionResult CmbCtaCbleCXP_Proveedor()
         {
@@ -76,14 +82,37 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ClaseProveedor", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            cp_proveedor_clase_Info model = new cp_proveedor_clase_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_clase_proveedor.get_list(model.IdEmpresa, true);
+            Lista_ProveedorTipo.set_list(lst, model.IdTransaccionSession);
+
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_clase_proveedor()
+        public ActionResult GridViewPartial_clase_proveedor(bool Nuevo=true)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_clase_proveedor.get_list(IdEmpresa, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_clase_proveedor.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_ProveedorTipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_clase_proveedor", model);
         }
         private void cargar_combos()
@@ -97,6 +126,18 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0, int IdClaseProveedor = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ClaseProveedor", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cp_proveedor_clase_Info model = new cp_proveedor_clase_Info
             {
                 IdEmpresa = IdEmpresa
@@ -113,12 +154,58 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdClaseProveedor = model.IdClaseProveedor, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdClaseProveedor = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            cp_proveedor_clase_Info model = bus_clase_proveedor.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdClaseProveedor);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ClaseProveedor", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos();
+            return View(model);
         }
 
         public ActionResult Modificar(int IdClaseProveedor = 0)
         {
-            cp_proveedor_clase_Info model = bus_clase_proveedor.get_info(Convert.ToInt32(Session["IdEmpresa"]), IdClaseProveedor);
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ClaseProveedor", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            cp_proveedor_clase_Info model = bus_clase_proveedor.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdClaseProveedor);
             if (model == null)
             {
                 return RedirectToAction("Index");
@@ -130,17 +217,29 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [HttpPost]
         public ActionResult Modificar(cp_proveedor_clase_Info model)
         {
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_clase_proveedor.modificarDB(model))
             {
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdClaseProveedor = model.IdClaseProveedor, Exito = true });
         }
 
         public ActionResult Anular(int IdClaseProveedor = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ClaseProveedor", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cp_proveedor_clase_Info model = bus_clase_proveedor.get_info(Convert.ToInt32(Session["IdEmpresa"]), IdClaseProveedor);
             if (model == null)
             {
@@ -153,7 +252,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [HttpPost]
         public ActionResult Anular(cp_proveedor_clase_Info model)
         {
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_clase_proveedor.anularDB(model))
             {
                 cargar_combos();

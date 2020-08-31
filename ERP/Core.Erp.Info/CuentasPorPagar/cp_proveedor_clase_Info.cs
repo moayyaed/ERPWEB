@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
    public class cp_proveedor_clase_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdClaseProveedor { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
@@ -34,5 +35,10 @@ namespace Core.Erp.Info.CuentasPorPagar
         public Nullable<System.DateTime> FechaTransac { get; set; }
         public Nullable<System.DateTime> FechaUltModi { get; set; }
 
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

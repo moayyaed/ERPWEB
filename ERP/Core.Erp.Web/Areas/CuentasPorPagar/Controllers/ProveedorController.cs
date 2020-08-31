@@ -16,6 +16,8 @@ using System.IO;
 using ExcelDataReader;
 using Core.Erp.Web.Areas.General.Controllers;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -36,6 +38,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_persona_List ListaPersona = new tb_persona_List();
         cp_parametros_Bus bus_param = new cp_parametros_Bus();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda banco
@@ -127,14 +131,37 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "Proveedor", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            cp_proveedor_Info model = new cp_proveedor_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
+            };
+
+            var lst = bus_proveedor.get_list(model.IdEmpresa, true);
+            ListaProveedor.set_list(lst, model.IdTransaccionSession);
+
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_proveedor()
+        public ActionResult GridViewPartial_proveedor(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_proveedor.get_list(IdEmpresa, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //var model = bus_proveedor.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaProveedor.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_proveedor", model);
         }
 
@@ -192,6 +219,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "Proveedor", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cp_proveedor_Info model = new cp_proveedor_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -235,7 +268,32 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdProveedor = model.IdProveedor, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdProveedor = 0, bool Exito=false)
+        {
+            cp_proveedor_Info model = bus_proveedor.get_info(IdEmpresa, IdProveedor);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "Proveedor", "Index");
+            if (model.pr_estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(IdEmpresa);
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0 , decimal IdProveedor = 0)
@@ -243,6 +301,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_proveedor_Info model = bus_proveedor.get_info(IdEmpresa, IdProveedor);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "Proveedor", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(IdEmpresa);
             return View(model);
         }
@@ -273,13 +338,20 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdProveedor = model.IdProveedor, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0 , decimal IdProveedor = 0)
         {
             cp_proveedor_Info model = bus_proveedor.get_info(IdEmpresa, IdProveedor);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "Proveedor", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(IdEmpresa);
             return View(model);
         }

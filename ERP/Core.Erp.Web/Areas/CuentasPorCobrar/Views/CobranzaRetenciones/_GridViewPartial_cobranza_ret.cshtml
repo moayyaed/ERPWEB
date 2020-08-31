@@ -3,7 +3,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_cobranza_ret";
-        settings.CallbackRouteValues = new { Controller = "CobranzaRetenciones", Action = "GridViewPartial_cobranza_ret", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdSucursal = ViewBag.IdSucursal  };
+        settings.CallbackRouteValues = new { Controller = "CobranzaRetenciones", Action = "GridViewPartial_cobranza_ret", Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdCobro";
         //Configuración para que la grilla no muestre texto completo
@@ -57,20 +57,20 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "cr_estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
+                ViewContext.Writer.Write(
                         Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCobro = DataBinder.Eval(tc.DataItem, "IdCobro") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCobro = DataBinder.Eval(tc.DataItem, "IdCobro") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
-                }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "CobrosSinRetencion", "CobranzaRetenciones").ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "CobrosSinRetencion", "CobranzaRetenciones").ToHtmlString()
+                    );
+                }
             });
             c.SetDataItemTemplateContent(tc =>
             {
@@ -78,8 +78,7 @@
                     Html.ActionLink("Modificar", "AplicarRetencion", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") }) + "&nbsp;" +
                         Html.ActionLink("Anular", "Anular", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-
-                    );
+                );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -136,6 +135,7 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

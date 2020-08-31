@@ -2,9 +2,11 @@
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -30,6 +32,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        cxc_LiquidacionTarjeta_List Lista_LiquidacionTarjeta = new cxc_LiquidacionTarjeta_List();
         #endregion
 
         #region Metodos
@@ -90,18 +94,42 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos_consulta();
+            var lst = bus_LiquidacionTarjeta.GetList(model.IdEmpresa, model.IdSucursal,true);
+            Lista_LiquidacionTarjeta.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+
             cargar_combos_consulta();
+            var lst = bus_LiquidacionTarjeta.GetList(model.IdEmpresa, model.IdSucursal, true);
+            Lista_LiquidacionTarjeta.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         private void cargar_combos_consulta()
@@ -116,12 +144,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             });
             ViewBag.lst_sucursal = lst_sucursal;
         }
-        public ActionResult GridViewPartial_LiquidacionTarjetaCredito(int IdSucursal = 0)
+        public ActionResult GridViewPartial_LiquidacionTarjetaCredito(bool Nuevo = false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-            var model = bus_LiquidacionTarjeta.GetList(IdEmpresa, IdSucursal,true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdEmpresa = IdEmpresa;
+            //ViewBag.IdSucursal = IdSucursal;
+            //var model = bus_LiquidacionTarjeta.GetList(IdEmpresa, IdSucursal,true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_LiquidacionTarjeta.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_LiquidacionTarjetaCredito", model);
         }
         #endregion
@@ -213,6 +244,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
 
             cxc_LiquidacionTarjeta_Info model = new cxc_LiquidacionTarjeta_Info
             {
@@ -242,7 +278,59 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+        }
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, bool Exito = false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            cxc_LiquidacionTarjeta_Info model = bus_LiquidacionTarjeta.GetInfo(IdEmpresa, IdSucursal, IdLiquidacion);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            Lista_LiquidacionTarjetaDet.set_list(bus_LiquidacionTarjetaDet.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
+            Lista_LiquidacionTarjeta_x_cxc_cobro.set_list(bus_LiquidacionTarjeta_cxc_cobro.GetList(IdEmpresa, IdSucursal, IdLiquidacion), model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo BAN
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+            #region Validacion Periodo CXC
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXC, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            cargar_combos(IdEmpresa, model.IdSucursal);
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0, bool Exito = false)
         {
@@ -251,6 +339,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
 
             cxc_LiquidacionTarjeta_Info model = bus_LiquidacionTarjeta.GetInfo(IdEmpresa, IdSucursal, IdLiquidacion);
@@ -301,7 +394,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdLiquidacion = model.IdLiquidacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, decimal IdLiquidacion = 0)
@@ -311,6 +404,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "LiquidacionTarjetaCredito", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
 
             cxc_LiquidacionTarjeta_Info model = bus_LiquidacionTarjeta.GetInfo(IdEmpresa, IdSucursal, IdLiquidacion);
@@ -365,6 +463,25 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
     }
 
+    public class cxc_LiquidacionTarjeta_List
+    {
+        string Variable = "cxc_LiquidacionTarjeta_Info";
+        public List<cxc_LiquidacionTarjeta_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<cxc_LiquidacionTarjeta_Info> list = new List<cxc_LiquidacionTarjeta_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<cxc_LiquidacionTarjeta_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<cxc_LiquidacionTarjeta_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
+    }
     public class cxc_LiquidacionTarjeta_x_cxc_cobro_List
     {
         string Variable = "cxc_LiquidacionTarjeta_x_cxc_cobro_Info";

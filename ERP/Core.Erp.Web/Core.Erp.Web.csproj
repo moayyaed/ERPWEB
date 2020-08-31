@@ -10101,7 +10101,7 @@
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Index.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_GridViewPartial_Motivo_Liquidacion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Nuevo.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Anular.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_CmbCuenta_Motivo_det.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_GridViewPartial_motivo_x_sucursal.cshtml" />
@@ -10531,6 +10531,17 @@
     <Content Include="Areas\Facturacion\Views\Cliente\Consultar.cshtml" />
     <Content Include="Areas\Facturacion\Views\TipoNota\Consultar.cshtml" />
     <Content Include="Areas\Facturacion\Views\Vendedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CatalogoTipoCXC\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CatalogoCXC\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\TipoCobro\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionTarjetaCredito\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10649,7 +10660,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

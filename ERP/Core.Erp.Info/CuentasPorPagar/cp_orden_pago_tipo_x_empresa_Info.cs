@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
    public class cp_orden_pago_tipo_x_empresa_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "el campo código debe tener mínimo 3 caracter y máximo 20")]
@@ -34,6 +35,10 @@ namespace Core.Erp.Info.CuentasPorPagar
 
 
         public string DescripcionAprobacion { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 }

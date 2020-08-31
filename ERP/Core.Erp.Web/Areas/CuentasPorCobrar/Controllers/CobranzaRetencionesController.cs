@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -24,23 +26,50 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         string mensaje = string.Empty;
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        cxc_cobro_Retencion_List Lista_CobroRetencion = new cxc_cobro_Retencion_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)                
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos();
+            var lst = bus_cobro.get_list_para_retencion(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_CobroRetencion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             cargar_combos();
+            var lst = bus_cobro.get_list_para_retencion(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_CobroRetencion.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
 
@@ -105,6 +134,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
 
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
@@ -135,13 +169,16 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_cobranza_ret( DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_cobranza_ret( bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            ViewBag.IdSucursal = IdSucursal;
-            var model =  bus_cobro.get_list_para_retencion(IdEmpresa, IdSucursal, Convert.ToDateTime(fecha_ini), Convert.ToDateTime(fecha_fin), true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            //ViewBag.IdSucursal = IdSucursal;
+            //var model =  bus_cobro.get_list_para_retencion(IdEmpresa, IdSucursal, Convert.ToDateTime(fecha_ini), Convert.ToDateTime(fecha_fin), true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_CobroRetencion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_cobranza_ret", model);
         }
 
@@ -161,7 +198,42 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
 
         #region Aplicar retención
-        public ActionResult AplicarRetencion(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "", bool Exito = false)
+        public ActionResult Consultar(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "", bool Exito = false)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            cxc_cobro_Info model = bus_cobro.get_info_para_retencion(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
+            model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
+            if (model.lst_det.Count == 0)
+            {
+                model.cr_fechaCobro = DateTime.Now.Date;
+                model.cr_NumDocumento = string.Empty;
+            }
+            else
+            {
+                model.IdCobro = model.lst_det[0].IdCobro;
+                model.cr_fecha = model.lst_det[0].cr_fecha;
+                model.cr_NumDocumento = model.lst_det[0].cr_NumDocumento;
+                model.cr_TotalCobro = Math.Round(model.lst_det.Sum(q => q.dc_ValorPago), 2, MidpointRounding.AwayFromZero);
+            }
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
+        }
+        public ActionResult AplicarRetencion(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "")
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
@@ -184,9 +256,6 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             }
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             List_det.set_list(model.lst_det, model.IdTransaccionSession);
-
-            if (Exito)
-                ViewBag.MensajeSuccess = MensajeSuccess;
 
             return View(model);
         }
@@ -221,9 +290,15 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         }
         #endregion
 
-        #region Aplicar retención
+        #region Anular
         public ActionResult Anular(int IdSucursal = 0, int IdBodega = 0, decimal IdCbteVta = 0, string CodTipoDocumento = "", bool Exito = false)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
             cxc_cobro_Info model = bus_cobro.get_info_para_retencion(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
@@ -323,6 +398,26 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         }
 
         #endregion
+    }
+
+    public class cxc_cobro_Retencion_List
+    {
+        string Variable = "cxc_cobro_Retencion_Info";
+        public List<cxc_cobro_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<cxc_cobro_Info> list = new List<cxc_cobro_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<cxc_cobro_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<cxc_cobro_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
     }
 
     public class cxc_cobro_det_ret_List

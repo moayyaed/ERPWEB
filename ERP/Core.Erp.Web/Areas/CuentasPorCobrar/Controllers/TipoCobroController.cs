@@ -1,7 +1,9 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.CuentasPorCobrar;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -22,21 +24,44 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         tipo_param_det_List List_tipo_param_det = new tipo_param_det_List();
         cxc_cobro_tipo_motivo_Bus bus_motivocobro = new cxc_cobro_tipo_motivo_Bus();
         cxc_CatalogoTipo_Bus bus_catalogotipo = new cxc_CatalogoTipo_Bus();
-
+        cxc_cobro_tipo_List Lista_Cobrotipo = new cxc_cobro_tipo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "TipoCobro", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            cxc_cobro_tipo_Info model = new cxc_cobro_tipo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            var lst = bus_tipocobro.get_list(true);
+            Lista_Cobrotipo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_tipocobro()
+        public ActionResult GridViewPartial_tipocobro(bool Nuevo)
         {
-            List<cxc_cobro_tipo_Info> model = new List<cxc_cobro_tipo_Info>();
-            model = bus_tipocobro.get_list(true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Cobrotipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_tipocobro", model);
         }
 
@@ -62,6 +87,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "TipoCobro", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cxc_cobro_tipo_Info model = new cxc_cobro_tipo_Info
             {
                 IdEmpresa = IdEmpresa
@@ -89,10 +120,43 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCobro_tipo = model.IdCobro_tipo, Exito = true });
+        }
+        public ActionResult Consultar(int IdEmpresa = 0, string IdCobro_tipo = "", bool Exito=false)
+        {
+            cxc_cobro_tipo_Info model = bus_tipocobro.get_info(IdCobro_tipo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "TipoCobro", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            model.IdEmpresa = IdEmpresa;
+            model.Lst_tipo_param_det = bus_tipo_param.get_list(IdEmpresa, IdCobro_tipo);
+            List_tipo_param_det.set_list(model.Lst_tipo_param_det);
+            cargar_combos();
+            return View(model);
         }
         public ActionResult Modificar(int IdEmpresa = 0 , string IdCobro_tipo = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "TipoCobro", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             cxc_cobro_tipo_Info model = bus_tipocobro.get_info(IdCobro_tipo);
             if (model == null)
                 return RedirectToAction("Index");
@@ -112,10 +176,16 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdCobro_tipo = model.IdCobro_tipo, Exito = true });
         }
         public ActionResult Anular(string IdCobro_tipo = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "TipoCobro", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cxc_cobro_tipo_Info model = bus_tipocobro.get_info(IdCobro_tipo);
             if (model == null)
                 return RedirectToAction("Index");
@@ -194,6 +264,25 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         #endregion
     }
 
+    public class cxc_cobro_tipo_List
+    {
+        string Variable = "cxc_cobro_tipo_Info";
+        public List<cxc_cobro_tipo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<cxc_cobro_tipo_Info> list = new List<cxc_cobro_tipo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<cxc_cobro_tipo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<cxc_cobro_tipo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
+    }
     public class tipo_param_det_List
     {
         public List<cxc_cobro_tipo_Param_conta_x_sucursal_Info> get_list()

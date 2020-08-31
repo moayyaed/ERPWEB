@@ -8,6 +8,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
    public class cp_orden_pago_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public string IdTipo_op { get; set; }
         public string Descripcion { get; set; }
         public string Estado { get; set; }

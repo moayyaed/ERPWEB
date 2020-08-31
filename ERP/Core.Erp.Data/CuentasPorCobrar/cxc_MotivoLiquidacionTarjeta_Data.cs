@@ -209,6 +209,7 @@ namespace Core.Erp.Data.CuentasPorCobrar
                     if (Entity == null) return false;
                     Entity.Estado = false;
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
+                    Entity.MotivoAnulacion = info.MotivoAnulacion;
                     Entity.FechaAnulacion = DateTime.Now;
                     Context.SaveChanges();
                  }
