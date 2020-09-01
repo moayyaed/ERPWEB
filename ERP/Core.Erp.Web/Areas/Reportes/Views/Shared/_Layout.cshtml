@@ -63,6 +63,15 @@
     <script src="~/bower_DevExpress/ace-builds/src/ace.js"></script>
     <script src="~/bower_DevExpress/ace-builds/src/ext-language_tools.js"></script>
     @*RenderSection("scripts", required: false)*@
+
+    <script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            delete e['returnValue'];
+            lp.Show();
+        });
+    </script>
+
+
     @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },

@@ -8,7 +8,7 @@
         Response.Redirect("~/Account/Login");
     }
 }
-
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("CONTA_013", "ContabilidadReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q=>q.IdEmpresa, new { @id = "IdEmpresa"})

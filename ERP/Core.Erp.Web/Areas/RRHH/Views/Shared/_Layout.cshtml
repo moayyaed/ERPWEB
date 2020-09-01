@@ -41,15 +41,11 @@
     <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Bootstrap DatePicker -->
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script>
-        $(function () {
-
-            //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true
-            })
-        })
-
+    <script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            delete e['returnValue'];
+            lp.Show();
+        });
     </script>
     <script src="~/Scripts/moment.min.js"></script>
     @RenderSection("scripts", required: false)
@@ -264,6 +260,13 @@
                         </div>
                     </div>
                     <div class="box-body">
+
+                        @Html.DevExpress().LoadingPanel(settings =>
+                   {
+                       settings.Name = "lp";
+                       settings.Modal = true;
+                       //settings.ClientSideEvents.Init = "OnLoadingPanelInit";
+                   }).GetHtml()
                         @RenderBody()
                     </div>
                     <!-- /.box-body -->

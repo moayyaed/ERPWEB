@@ -63,6 +63,15 @@
     <script src="~/bower_DevExpress/knockout/dist/knockout.js"></script>
     <script src="~/bower_DevExpress/ace-builds/src/ace.js"></script>
     <script src="~/bower_DevExpress/ace-builds/src/ext-language_tools.js"></script>
+
+    <script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            delete e['returnValue'];
+            lp.Show();
+        });
+    </script>
+
+
     @*RenderSection("scripts", required: false)*@
     @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -127,6 +136,13 @@
 
                     </div>
                 </div>
+
+                @Html.DevExpress().LoadingPanel(settings =>
+                   {
+                       settings.Name = "lp";
+                       settings.Modal = true;
+                       //settings.ClientSideEvents.Init = "OnLoadingPanelInit";
+                   }).GetHtml()
                 @RenderBody()
             </section>
             <!-- /.content -->

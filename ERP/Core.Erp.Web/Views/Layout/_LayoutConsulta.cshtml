@@ -57,6 +57,13 @@
             new Script { ExtensionSuite = ExtensionSuite.GridView },
             new Script { ExtensionSuite = ExtensionSuite.TreeList }
         )
+
+    <script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            delete e['returnValue'];
+            lp.Show();
+        });
+    </script>
 </head>
 <body class="fixed skin-blue layout-top-nav">
     <div class="wrapper">
@@ -105,6 +112,13 @@
 
                     </div>
                 </div>
+                @Html.DevExpress().LoadingPanel(settings =>
+              {
+                  settings.Name = "lp";
+                  settings.Modal = true;
+                  //settings.ClientSideEvents.Init = "OnLoadingPanelInit";
+              }).GetHtml()
+
 
                 @RenderBody()
             </section>

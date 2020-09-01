@@ -1,4 +1,5 @@
 ﻿$(document).on('submit', 'form', function () {
+ 
     var buttons = $(this).find('[type="submit"]');
     if ($(this).valid()) {
         buttons.each(function (btn) {
