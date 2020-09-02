@@ -1,8 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
 @{
-    /**/
-
-    ViewBag.Title = "Nueva factura por proveedor";
+    ViewBag.Title = ("Consultar factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -16,23 +14,20 @@
             </h4>
         </div>
     }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script src="~/Scripts/ScriptsGenerales.js"></script>
 <script type="text/javascript">
-    var selectedIDs;
-    function OnBeginCallback(s, e) {
-        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
-        e.customArgs["selectedIDs"] = selectedIDs;
-    }
-    function OnSelectionChanged(s, e) {
-        s.GetSelectedFieldValues("IdGenerado", GetSelectedFieldValuesCallback);
-    }
-    function GetSelectedFieldValuesCallback(values) {
-        //Capture all selected keys
-        selectedIDs = values.join(',');
-    }
-
     var selectedIDs_OS;
     function OnBeginCallback_OS(s, e) {
         e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
@@ -46,63 +41,61 @@
         selectedIDs_OS = values.join(',');
     }
 
-    function MostrarModal() {
-        selectedIDs = "";
+    function ImprimirRIDE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.info_retencion.IdRetencion, '_blank');
+        win.focus();
+    }
+
+    function ImprimirRIDEElectronico() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_020?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
+        win.focus();
+    }
+    function AutorizarSRI() {
         var datos = {
-            IdTransaccionSession:$("#IdTransaccionSession").val(),
             IdEmpresa: $("#IdEmpresa").val(),
-            IdSucursal: $("#IdSucursal").val(),
-            IdProveedor: IdProveedor.GetValue()
+            IdTipoCbte_Ogiro: $("#IdTipoCbte_Ogiro").val(),
+            IdCbteCble_Ogiro: $("#IdCbteCble_Ogiro").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GetListIng_Inv_OC_PorIngresar", "Deudas", new { Area = "CuentasPorPagar" })',
+            url: '@Url.Action("AutorizarSRI", "Deudas",new { Area = "CuentasPorPagar"})',
             async: false,
-            bDeferRender: true,
-            bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
-                GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
-                $("#OcModal").modal("show");
-
+                if (data.length > 0) {
+                    alert("Solicitud de autorización enviada exitósamente, por favor espere a que sea procesada por el SRI para imprimir el RIDE");
+                }
             },
             error: function (error) {
             }
         });
     }
 
-    function AddOC() {
+    function limpiar_grids(s, e) {
         var datos = {
-            IDs: selectedIDs,
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-            IdEmpresa: $("#IdEmpresa").val()
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("EditingAddNew_IOC", "Deudas", new { Area = "CuentasPorPagar" })',
+            url: '@Url.Action("limpiar_grids", "Deudas",new { Area = "CuentasPorPagar" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#co_plazo").val(data.info_oc.oc_plazo); 
-                var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(data.info_oc.oc_plazo, 'days'));
-                co_FechaFactura_vct.SetValue(date);
+                GridViewPartial_ing_inv_oc_det.PerformCallback();
+                GridViewPartial_ing_inv_os_det.PerformCallback();
             },
             error: function (error) {
             }
         });
-        selectedIDs = "";
-        GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
-        GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
-        GridViewPartial_ing_inv_oc_det.PerformCallback();
-        $("#OcModal").modal("hide");
-    }
+    };
 
     function MostrarModalOS() {
         selectedIDs_OS = "";
@@ -148,7 +141,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#co_plazo").val(data.info_os.oc_plazo); 
+                $("#co_plazo").val(data.info_os.oc_plazo);
                 var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(data.info_os.oc_plazo, 'days'));
                 co_FechaFactura_vct.SetValue(date);
             },
@@ -161,125 +154,31 @@
         GridViewPartial_ing_inv_os_det.PerformCallback();
         $("#OsModal").modal("hide");
     }
-
-    function SetValorRetencion(s, e) {
-        var datos = {
-            IdCodigoSRI: s.GetValue()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("SetValorRetencion", "Retencion",new { Area = "CuentasPorPagar"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                var valor = 0;
-                if (data.IdTipoSRI == "COD_RET_IVA")
-                {
-                    valor = $("#co_valoriva").val();
-                }
-                else
-                {
-                    valor = parseFloat($("#co_subtotal_iva").val()) + parseFloat($("#co_subtotal_siniva").val());
-                }
-                GridViewPartial_retencion_det.GetEditor('re_baseRetencion').SetValue(valor);
-            },
-            error: function (error) {
-            }
-        });
-    };
-
-    function CrearModificarProveedor() {
-        var location = GetPathServer();
-        if(IdProveedor.GetValue() > 0)
-        {
-            var win = window.open(location + "/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
-            win.focus();
-        }else
-        {
-            var win = window.open(location + "/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
-            win.focus();
-        }
-    }
-
-    function limpiar_grids(s, e) {
-        var datos = {
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("limpiar_grids", "Deudas",new { Area = "CuentasPorPagar" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                GridViewPartial_ing_inv_oc_det.PerformCallback();
-                GridViewPartial_ing_inv_os_det.PerformCallback();
-            },
-            error: function (error) {
-            }
-        });
-    };
-
 </script>
 
-@using (Html.BeginForm("Nuevo", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
-    @Html.HiddenFor(q => q.co_fechaOg)
     @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
+    @Html.HiddenFor(q => q.EsDocumentoElectronico, new { @id = "EsDocumentoElectronico" })
+    
+    @Html.HiddenFor(q => q.co_fechaOg)
 
-    <div class="modal fade" id="ConciliacionAnticipoModal" role="dialog" hidden>
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Anticipos y notas de crédito con saldo</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.Action("GridViewPartial_ConciliacionAnticipo")
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    @Html.HiddenFor(q => q.info_retencion.IdRetencion);
+    @Html.HiddenFor(q => q.info_retencion.IdEmpresa);
 
-        </div>
-    </div>
 
-    <div class="modal fade" id="OcModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ordenes de compra</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Action("GridViewPartial_ing_inv_oc_x_ingresar")
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="AddOC();">Aceptar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdTipoCbte);
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdCbteCble);
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdEmpresa);
 
-        </div>
-    </div>
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
 
     <div class="modal fade" id="OsModal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -298,6 +197,60 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-5 col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="rideFact" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
+                    <i class="fa fa-print"></i>  RIDE Doc.
+                </button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención">
+                    <i class="fa fa-print"></i>  RIDE Ret.
+                </button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
+                    <i class="fa fa-send"></i>  SRI
+                </button>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Deudas",new { Area = "CuentasPorPagar", IdEmpresa=Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Deudas", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdTipoCbte_Ogiro = Model.IdTipoCbte_Ogiro, IdCbteCble_Ogiro=Model.IdCbteCble_Ogiro }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Deudas", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdTipoCbte_Ogiro=Model.IdTipoCbte_Ogiro, IdCbteCble_Ogiro=Model.IdCbteCble_Ogiro }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -325,9 +278,9 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="form-group">
-                    <label for="IdCliente"></label>
-                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                <label for="IdCliente"></label>
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary form-control" onclick="CrearModificarProveedor();">
                         <i class="fa fa-external-link-square"></i>
                     </button>
                 </div>
@@ -338,7 +291,7 @@
                     @Html.DropDownListFor(q => q.IdIden_credito, new SelectList(ViewBag.lst_codigos_sri, "IdCodigo_SRI", "co_descripcion"), new { @class = "form-control", @id = "IdIden_credito" })
                     @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
                 </div>
-            </div>            
+            </div>
         </div>
 
         <div class="col-md-6">
@@ -371,7 +324,8 @@
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                            settings.Properties.AllowMouseWheel = false;
-                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CambiarVcto(); FechaRetencion.SetValue(s.GetValue());}";
+                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){CambiarVcto();FechaRetencion.SetValue(s.GetValue());}";
+                           //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaFactura, "", new { @class = "text-danger" })
                     </div>
@@ -393,6 +347,7 @@
                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                            settings.Properties.AllowMouseWheel = false;
+                           //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){FechaRetencion.SetValue(s.GetValue());}";
                        }).GetHtml()
                         @Html.ValidationMessageFor(q => q.co_FechaContabilizacion, "", new { @class = "text-danger" })
                     </div>
@@ -433,23 +388,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
                 </div>
-            </div>  
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="IdOrden_giro_Tipo">Punto de venta</label>
-                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_puntoVtaLiq, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVtaTipoDocumento" })
-                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
-                </div>
-            </div>              
+            </div>
         </div>
     </div>
-    <div class="row" id="DivNumeroDocumento">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="form-group">
@@ -474,18 +433,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="co_observacion">Observación*</label>
-                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
-                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
@@ -496,16 +443,16 @@
             </li>
             <li>
                 <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle de ingreso</a>
-            </li> 
+            </li>
             <li>
                 <a href="#tab_orden_compra" aria-controls="contabilidad" role="tab" data-toggle="tab">Orden de compra</a>
             </li> 
             <li>
                 <a href="#tab_orden_servicio" aria-controls="compra" role="tab" data-toggle="tab">Orden de servicio</a>
-            </li>    
+            </li>
             <li>
                 <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información adicional</a>
-            </li>                       
+            </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
@@ -628,6 +575,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -651,7 +599,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Diario contable*</label>
-                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })                                            
+                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })
                                         </div>
                                     </div>
                                 </div>
@@ -690,19 +638,8 @@
                         </div>
                     </div>
                 </div>
-            </div>          
+            </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_compra">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal();" title="Buscar ingreso por orden de compra">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -713,7 +650,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_servicio">
                 <div class="row">
                     <div class="col-md-12">
@@ -736,7 +673,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>   
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
                 <div class="row">
                     <div class="col-md-12">
@@ -843,11 +780,10 @@
                     </div>
                 </div>
 
-            </div>                       
+            </div>
         </div>
     </div>
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","Deudas",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {
@@ -855,22 +791,20 @@
     }
 }
 <script>
-    ValidarCompraSucursales();
-    CargarPuntosDeVenta();
-    GetUltimoDocumento();
+    $(function () {
+        MostrarBotonesAccion();
+
+        ValidarCompraSucursales();
+        GetUltimoDocumento();
+        MostrarBotonesSRI();
+    });
 
     $("#IdSucursal").change(function () {
         cargar_bodega();
-        CargarPuntosDeVenta();
-        GetUltimoDocumento();
     });
 
     $("#IdPuntoVta").change(function () {
         GetUltimoDocumento();
-    });
-
-    $("#IdOrden_giro_Tipo").change(function () {
-        CargarPuntoVtaTipoDocumento();
     });
 
     $("#co_subtotal_iva").change(function () {
@@ -878,7 +812,6 @@
         armar_diario();
     });
     $("#co_subtotal_siniva").change(function () {
-
         actualizar_valores();
         armar_diario();
     });
@@ -889,6 +822,11 @@
     $("#co_factura").change(function () {
         rellenar_ceros_izquierda();
     });
+
+    $("#co_plazo").change(function () {
+        CambiarVcto();
+    });
+
     $("#IdIden_credito").change(function () {
         $("#IdOrden_giro_Tipo").empty();
         $("#cmbTipoDocu_modif").empty();
@@ -897,65 +835,37 @@
         } else {
             get_list_tipo_doc();
         }
-        CargarPuntoVtaTipoDocumento();
-    });
-    $("#co_plazo").change(function () {
-        CambiarVcto();
     });
 
-    function CargarPuntoVtaTipoDocumento() {
-        $("#IdPuntoVtaTipoDocumento").empty();
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            CodDocumentoTipo: $("#IdOrden_giro_Tipo").val(),
-            IdSucursal: $("#IdSucursal").val()
+    $("#IdIden_credito").change(function () {
+
+        var tipo_doc = $("#IdIden_credito").val();
+
+        if (tipo_doc == "04")
+        {
+            $("#tab_documento_modificado").show();
         }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetListPuntoVenta", "Deudas",new { Area = "CuentasPorPagar"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.Mostrar == 1) {
-                    $.each(data.Lista, function (i, row) {
-                        $("#IdPuntoVtaTipoDocumento").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
-                    });
-                    $("#DivNumeroDocumento").hide();
-                    $("#co_serie").val("000-000");
-                    $("#co_factura").val("000000000");
-                    $("#Num_Autorizacion").val("0123456789");
-                }else {
-                    $("#DivNumeroDocumento").show();
-                    if ($("#co_serie").val() == "000-000") {
-                        $("#co_serie").val("");
-                        $("#co_factura").val("");
-                        $("#Num_Autorizacion").val("");
-                    }
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
+        else
+        {
+            $("#tab_documento_modificado").hide();
 
-    function CambiarVcto() {
-        var plazo = Number($("#co_plazo").val());
-        if (plazo != 0) {
-
-            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(plazo, 'days'));
-            co_FechaFactura_vct.SetValue(date);
         }
-        else {
-            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(0, 'days'));
-            co_FechaFactura_vct.SetValue(date);
+    });
 
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
         }
     }
-
 
     function actualizar_valores() {
         var base_iva = $("#co_subtotal_iva").val();
@@ -980,8 +890,8 @@
             $('#co_Por_iva').val(12);
         else
             $('#co_Por_iva').val(0.00);
-
     }
+
 
     function rellenar_ceros_izquierda() {
         var str = "" + Number($("#co_factura").val());
@@ -999,7 +909,7 @@
         $("#num_docu_Modificar").val(doc);
     }
 
-  // obtener tipo de documento
+    // obtener tipo de documento
     function get_list_tipo_doc() {
 
 
@@ -1031,55 +941,20 @@
             });
         }
     };
-
-    function get_list_ConciliacionAnticipo() {
-        if (IdProveedor.GetValue() > 0) {
-            var datos = {
-                IdEmpresa: $("#IdEmpresa").val(),
-                IdSucursal: $("#IdSucursal").val(),
-                IdProveedor:  IdProveedor.GetValue(),
-                IdTransaccionSession : $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("get_list_ConciliacionAnticipo", "Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    console.log(data);
-                    if(data.length>0){
-                        alert("Existen anticipos o NC con saldo pendiente de aplicar");
-                        Gridview_ConciliacionAnticipoDeudas.PerformCallback();
-                        $("#ConciliacionAnticipoModal").modal("show");
-                    }
-                    else{
-                        $("#ConciliacionAnticipoModal").modal("hide");
-                    }
-
-                },
-                error: function (error) {
-                }
-            });
-        }
-    };
-
     // armar diario contable
+
     function armar_diario() {
         if (IdProveedor.GetValue() > 0) {
             var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdProveedor :  IdProveedor.GetValue(),
-            co_subtotal_iva : $("#co_subtotal_iva").val(),
-            co_subtotal_siniva : $("#co_subtotal_siniva").val(),
-            co_valoriva : $("#co_valoriva").val(),
-            co_total : $("#co_total").val(),
-            observacion: $("#observacion").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-            IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor :  IdProveedor.GetValue(),
+                co_subtotal_iva : $("#co_subtotal_iva").val(),
+                co_subtotal_siniva : $("#co_subtotal_siniva").val(),
+                co_valoriva : $("#co_valoriva").val(),
+                co_total : $("#co_total").val(),
+                observacion: $("#observacion").val(),
+                IdTransaccionSession: $("#IdTransaccionSession").val(),
+                IdSucursal_cxp: $("#IdSucursal_cxp").val(),
             }
             $.ajax({
                 type: 'POST',
@@ -1096,6 +971,7 @@
                     $("#co_valoriva").val(data.IVA);
                     $("#co_Por_iva").val(12);
                     $("#co_total").val(data.Total);
+                    //GridViewPartial_deudas_dc.PerformCallback();
                     GridView_comprobante_detalle.PerformCallback();
                 },
                 error: function (error) {
@@ -1103,9 +979,6 @@
             });
         }
     };
-
-
-
     function get_info_proveedor() {
 
         if (IdProveedor.GetValue() > 0)  {
@@ -1123,9 +996,10 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    $("#co_plazo").val(data.pr_plazo);
 
-                    CambiarVcto();
+                    $("#co_plazo").val(data.pr_plazo);
+                    var date = moment(co_FechaFactura.GetValue(), "DD-MM-YYYY").add(data.pr_plazo, 'days');
+                    co_FechaFactura_vct.SetValue(new Date(date));
                 },
                 error: function (error) {
                 }
@@ -1140,23 +1014,23 @@
             IdProveedor: IdProveedor.GetValue()
         }
         $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ValidarCompraSucursales", "Deudas", new { Area = "CuentasPorPagar" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ValidarCompraSucursales", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (data == "S") {
                     $("#DivSucursalCxp").show();
                 } else
                     $("#DivSucursalCxp").hide();
-                },
-                error: function (error) {
-                }
-            });
+            },
+            error: function (error) {
+            }
+        });
     }
 
     function cargar_bodega() {
@@ -1164,8 +1038,8 @@
 
         var sucursal = $("#IdSucursal").val();
 
-            var datos = {
-                IdEmpresa: $("#IdEmpresa").val(),
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
             IdSucursal: sucursal
         }
 
@@ -1187,7 +1061,8 @@
             }
         });
     };
-            function GetInfo_Producto(s, e) {
+
+    function GetInfo_Producto(s, e) {
         var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdProducto: s.GetValue()
@@ -1210,33 +1085,79 @@
         });
     };
 
+    function armar_diario_retencion() {
 
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProveedor: IdProveedor.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_retencio_dc.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
 
-     function armar_diario_retencion() {
-
-         var datos = {
-                    IdEmpresa: $("#IdEmpresa").val(),
-                    IdProveedor: IdProveedor.GetValue(),
-                    IdTransaccionSession: $("#IdTransaccionSession").val(),
-                    IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+    };
+    function SetValorRetencion(s, e) {
+        var datos = {
+            IdCodigoSRI: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetValorRetencion", "Retencion",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var valor = 0;
+                if (data.IdTipoSRI == "COD_RET_IVA")
+                {
+                    valor = $("#co_valoriva").val();
                 }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        GridViewPartial_retencio_dc.PerformCallback();
-                    },
-                    error: function (error) {
-                    }
-                });
+                else
+                {
+                    valor = parseFloat($("#co_subtotal_iva").val()) + parseFloat($("#co_subtotal_siniva").val());
+                }
+                GridViewPartial_retencion_det.GetEditor('re_baseRetencion').SetValue(valor);
+            },
+            error: function (error) {
+            }
+        });
+    };
 
-     };
+
+    function CrearModificarProveedor() {
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(window.location.origin +"/FixedERP/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
+        win.focus();
+    }
 
     function CargarPuntosDeVenta() {
         $("#IdPuntoVta").empty();
@@ -1246,7 +1167,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("CargarPuntosDeVenta", "Deudas",new { Area = "CuentasPorPagar" })',
+            url: '@Url.Action("CargarPuntosDeVenta", "Retencion",new { Area = "CuentasPorPagar" })',
             async: false,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -1279,10 +1200,11 @@
             success: function (data) {
                 if($("#TieneRetencion").val() == 0)
                 {
+                    $("#IdPuntoVta").attr('readonly', false);
                     $("#serie1").attr('readonly', false);
                     $("#serie2").attr('readonly', false);;
                     $("#NumRetencion").attr('readonly', false);
-                    $("#FechaRetencion").attr('readonly', false);
+
                     if (data.data_puntovta != null)
                     {
                         if (data.data_puntovta.EsElectronico == true)
@@ -1310,10 +1232,10 @@
                 }
                 else
                 {
+                    $("#IdPuntoVta").attr('readonly', true);
                     $("#serie1").attr('readonly', true);
                     $("#serie2").attr('readonly', true);;
                     $("#NumRetencion").attr('readonly', true);
-                    $("#FechaRetencion").attr('readonly', true);
 
                     $("#datos_punto_venta1").show();
                     $("#datos_punto_venta2").show();
@@ -1325,5 +1247,44 @@
             }
         });
     }
-</script>
 
+    function MostrarBotonesSRI() {
+        if($("#TieneRetencion").val() == 0){
+            $("#ride").hide();
+        }
+        else{
+            $("#ride").show();
+        }
+        if($("#EsDocumentoElectronico").val() == 1){
+            $("#rideFact").show();
+        }else
+        {
+            $("#rideFact").hide();
+        }
+
+
+        if ($("#TieneRetencion").val() == 0 && $("#EsDocumentoElectronico").val() == 0) {
+            $("#sri").hide();
+        }else
+        {
+            $("#sri").show();
+        }
+
+    }
+
+    function CambiarVcto() {
+        var plazo = Number($("#co_plazo").val());
+        if (plazo != 0) {
+
+            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(plazo, 'days'));
+            co_FechaFactura_vct.SetValue(date);
+        }
+        else {
+            var date = new Date(moment(co_FechaFactura.GetValue(), "DD/MM/YYYY").add(0, 'days'));
+            co_FechaFactura_vct.SetValue(date);
+
+        }
+    }
+
+
+</script>

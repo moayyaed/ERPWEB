@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_codigo_sri";
-        settings.CallbackRouteValues = new { Controller = "CodigoSRI", Action = "GridViewPartial_codigo_sri", IdTipoSRI = ViewBag.IdTipoSRI };
+        settings.CallbackRouteValues = new { Controller = "CodigoSRI", Action = "GridViewPartial_codigo_sri", IdTipoSRI = ViewBag.IdTipoSRI, Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdCodigo_SRI";
         //Configuración para que la grilla no muestre texto completo
@@ -61,20 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "co_estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdCodigo_SRI = DataBinder.Eval(tc.DataItem, "IdCodigo_SRI"), IdTipoSRI = ViewBag.IdTipoSRI }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdCodigo_SRI = DataBinder.Eval(tc.DataItem, "IdCodigo_SRI"), IdTipoSRI = ViewBag.IdTipoSRI },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                ViewContext.Writer.Write(
+                Html.ActionLink("Consultar", "Consultar", new { IdCodigo_SRI = DataBinder.Eval(tc.DataItem, "IdCodigo_SRI"), IdTipoSRI = ViewBag.IdTipoSRI })
                     );
-                }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -97,6 +95,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -9,8 +9,8 @@
 }
 @using (Html.BeginForm())
 {
-
-@Html.Action("GridViewPartial_tipo_codigo_sri")
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_tipo_codigo_sri", new { Nuevo = ViewBag.Nuevo })
 }
 
 

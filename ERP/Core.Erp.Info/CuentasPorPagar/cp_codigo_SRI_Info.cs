@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
     public class cp_codigo_SRI_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdCodigo_SRI { get; set; }
         
         [Required(ErrorMessage = "El campo código es obligatorio")]
@@ -43,5 +44,8 @@ namespace Core.Erp.Info.CuentasPorPagar
 
         // no existe
         public cp_codigo_SRI_x_CtaCble_Info info_codigo_ctacble { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

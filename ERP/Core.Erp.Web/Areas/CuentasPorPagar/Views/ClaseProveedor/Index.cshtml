@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
 
     @Html.Action("GridViewPartial_clase_proveedor", new { Nuevo = ViewBag.Nuevo })
 

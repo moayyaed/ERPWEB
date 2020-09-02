@@ -1,0 +1,113 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_codigo_SRI_tipo_Info
+@{
+    ViewBag.Title = "Consultar tipo de código SRI";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Consultar", "TipoCodigoSRI", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTipoSRI)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","TipoCodigoSRI",new { Area = "CuentasPorPagar" },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "TipoCodigoSRI", new { Area = "CuentasPorPagar", IdTipoSRI = Model.IdTipoSRI }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "TipoCodigoSRI", new { Area = "CuentasPorPagar", IdTipoSRI=Model.IdTipoSRI }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdTipoSRI">Código*</label>
+                    @Html.TextBoxFor(q => q.IdTipoSRI, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdTipoSRI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "TipoCodigoSRI", new { Area = "CuentasPorPagar" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    })
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1) {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1) {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1) {
+            $("#btnAnular").show();
+        }
+    }
+</script>

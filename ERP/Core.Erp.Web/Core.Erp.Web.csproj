@@ -10542,6 +10542,9 @@
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoCodigoSRI\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\CodigoSRI\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

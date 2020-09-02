@@ -9,6 +9,7 @@ namespace Core.Erp.Info.CuentasPorPagar
 {
     public class cp_codigo_SRI_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
         [StringLength(50, MinimumLength = 0, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 20")]
         public string IdTipoSRI { get; set; }        
@@ -24,5 +25,10 @@ namespace Core.Erp.Info.CuentasPorPagar
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string nom_pc { get; set; }
         public string ip { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

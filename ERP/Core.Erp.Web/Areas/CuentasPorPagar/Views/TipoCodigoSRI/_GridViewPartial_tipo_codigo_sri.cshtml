@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>{
         settings.Name = "GridView_tipo_codigo_sri";
-        settings.CallbackRouteValues = new { Controller = "TipoCodigoSRI", Action = "GridViewPartial_tipo_codigo_sri" };
+        settings.CallbackRouteValues = new { Controller = "TipoCodigoSRI", Action = "GridViewPartial_tipo_codigo_sri", Nuevo=ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTipoSRI";
         //Configuración para que la grilla no muestre texto completo
@@ -60,20 +60,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdTipoSRI = DataBinder.Eval(tc.DataItem, "IdTipoSRI") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdTipoSRI = DataBinder.Eval(tc.DataItem, "IdTipoSRI") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdTipoSRI = DataBinder.Eval(tc.DataItem, "IdTipoSRI") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo==true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -109,7 +107,7 @@
                 }
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

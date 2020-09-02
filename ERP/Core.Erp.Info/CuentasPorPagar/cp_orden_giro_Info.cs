@@ -85,6 +85,11 @@ namespace Core.Erp.Info.CuentasPorPagar
         public List<cp_orden_giro_det_ing_x_os_Info> lst_det_os { get; set; }
         public string SecuencialID { get; set; }
         public string nom_tipo_Documento { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
         #endregion
         public cp_orden_giro_pagos_sri_Info info_forma_pago { get; set; }
         public cp_retencion_Info info_retencion { get; set; }
