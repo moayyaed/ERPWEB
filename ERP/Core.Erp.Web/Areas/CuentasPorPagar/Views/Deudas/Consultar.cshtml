@@ -156,7 +156,7 @@
     }
 </script>
 
-@using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
@@ -203,19 +203,25 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-5 col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="rideFact" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
-                    <i class="fa fa-print"></i>  RIDE Doc.
-                </button>
+                <div id="rideFact" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
+                        <i class="fa fa-print"></i>  RIDE Doc.
+                    </button>
+                </div>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención">
-                    <i class="fa fa-print"></i>  RIDE Ret.
-                </button>
+                <div id="ride" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención" hidden>
+                        <i class="fa fa-print"></i>  RIDE Ret.
+                    </button>
+                </div>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
-                    <i class="fa fa-send"></i>  SRI
-                </button>
+                <div id="sri" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="AutorizarSRI();" title="Autorizar SRI">
+                        <i class="fa fa-send"></i>  SRI
+                    </button>
+                </div>
             </div>
             <div class="col-md-1">
                 <div class="form-group">
