@@ -10548,6 +10548,9 @@
     <Content Include="Areas\CuentasPorPagar\Views\Retencion\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\SolicitudPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

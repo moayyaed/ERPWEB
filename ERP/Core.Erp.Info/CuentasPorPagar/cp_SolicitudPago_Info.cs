@@ -44,5 +44,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public List<cp_SolicitudPagoDet_Info> lst_det { get; set; }
         public string pe_nombreCompleto { get; set; }
 
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

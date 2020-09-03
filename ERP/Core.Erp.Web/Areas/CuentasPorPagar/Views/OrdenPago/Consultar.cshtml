@@ -2,7 +2,7 @@
 
 @model Core.Erp.Info.CuentasPorPagar.cp_orden_pago_Info
 @{
-    ViewBag.Title = ("Anular orden de pago" + " con ID #" + @Model.IdOrdenPago);
+    ViewBag.Title = ("Consultar orden de pago" + " con ID #" + @Model.IdOrdenPago);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -16,8 +16,19 @@
             </h4>
         </div>
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $("#IdTipo_Persona").change(function () {
@@ -58,19 +69,69 @@
             }
         });
     };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_004?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdOrdenPago="+@Model.IdOrdenPago, '_blank');
+        win.focus();
+    }
 </script>
-@using (Html.BeginForm("Anular", "OrdenPago", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "OrdenPago", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa"})
     @Html.HiddenFor(q => q.IdOrdenPago)
-    @Html.HiddenFor(q => q.IdEntidad)
     @Html.HiddenFor(q => q.IdPersona)
+    @Html.HiddenFor(q => q.IdEstadoAprobacion)
     @Html.HiddenFor(q => q.info_comprobante.IdTipoCbte)
     @Html.HiddenFor(q => q.info_comprobante.IdCbteCble)
-    @Html.HiddenFor(q => q.IdTipo_op)
     @Html.HiddenFor(q => q.IdEmpresa_cxp)
     @Html.HiddenFor(q => q.IdTipoCbte_cxp)
     @Html.HiddenFor(q => q.IdCbteCble_cxp)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-8 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","OrdenPago",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "OrdenPago", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdOrdenPago=Model.IdOrdenPago }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "OrdenPago", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdOrdenPago=Model.IdOrdenPago }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -85,22 +146,22 @@
                 <div class="form-group">
                     <label for="IdTipo_op">Tipo orden pago*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdTipo_op, settings =>
-                       {
-                           settings.Name = "IdTipo_op";
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           settings.ReadOnly = true;
-                           settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                           settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-                           settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                           //Campo ID
-                           settings.Properties.ValueField = "IdTipo_op";
-                           settings.Properties.ValueType = typeof(string);
-                           settings.Properties.TextField = "Descricpion";
-                           //Boton para seleccionar ningun registro
-                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
-                       }).BindList(ViewBag.lst_tipo_orden_pago).GetHtml()
+                   {
+                       settings.Name = "IdTipo_op";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                       settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipo_op";
+                       settings.Properties.ValueType = typeof(string);
+                       settings.Properties.TextField = "Descricpion";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.lst_tipo_orden_pago).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdTipo_op, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -138,7 +199,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="IdTipo_Persona">Tipo persona:*</label>
-                    @Html.DropDownListFor(q => q.IdTipo_Persona, new SelectList(ViewBag.lst_tipo_personas, "Key", "Value"), new { @class = "form-control", @id = "IdTipo_Persona" })
+                    @Html.DropDownListFor(q => q.IdTipo_Persona, new SelectList(ViewBag.lst_tipo_personas, "Key", "Value"), new { @class = "form-control", @id = "IdTipo_Persona" })                    
                     @Html.ValidationMessageFor(q => q.IdTipo_Persona, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -166,8 +227,8 @@
                     @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control", @id = "observacion" })
                     @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
                 </div>
-            </div>  
-        </div>
+            </div>            
+        </div>   
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -188,7 +249,7 @@
                         //Boton para seleccionar ningun registro
                         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
                         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                        settings.ReadOnly = true;
+
                     }).BindList(ViewBag.lst_forma_pago).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdFormaPago, "", new { @class = "text-danger" })
                 </div>
@@ -202,22 +263,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group has-error">
-                    <label for="MotiAnu">Motivo Anulacion*</label>
-                    @Html.TextBoxFor(q => q.MotivoAnu, new { @class = "form-control", @id = "MotiAnu" })
-                    @Html.ValidationMessageFor(q => q.MotivoAnu, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
                 <a href="#tab_asiento_contable" aria-controls="contabilidad" role="tab" data-toggle="tab">Asiento contable</a>
             </li>
+
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_asiento_contable">
@@ -235,53 +286,67 @@
         </div>
     </div>
     <div class="box-footer">
-    @if (ViewBag.MostrarBoton ?? false)
-    {
-        <button type="submit" class="btn btn-danger">Anular</button>
-    }
         <a class="btn btn-default" href="@Url.Action("Index","OrdenPago",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
 
 
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
 }
 <script>
-            $("#Valor_a_pagar").keyup(function () {
-                armar_diario();
-            });
+    $(function () {
+        MostrarBotonesAccion();
+    });
 
-            function armar_diario() {
+    $("#Valor_a_pagar").change(function () {
+        armar_diario();
+    });
 
-                var datos = {
-                    IdTipo_op: IdTipo_op.GetValue(),
-                    IdEntidad: IdEntidad.GetValue(),
-                    Valor_a_pagar: $("#Valor_a_pagar").val(),
-                    observacion: $("#observacion").val()
+    function armar_diario() {
 
+        var datos = {
+            IdTipo_op: IdTipo_op.GetValue(),
+            IdEntidad: IdEntidad.GetValue(),
+            Valor_a_pagar: $("#Valor_a_pagar").val(),
+            observacion: $("#observacion").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdTipo_Persona: $("#IdTipo_Persona").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario", "OrdenPago", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                /*GridViewPartial_detalle_op.PerformCallback();*/
+                GridView_comprobante_detalle.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
 
-                }
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(datos),
-                    url: '@Url.Action("armar_diario", "OrdenPago", new { Area = "CuentasPorPagar" })',
-                    async: false,
-                    bDeferRender: true,
-                    bProcessing: true,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        /*GridViewPartial_detalle_op.PerformCallback();*/
-                        GridView_comprobante_detalle.PerformCallback();
-                    },
-                    error: function (error) {
-                    }
-                });
+    };
 
-            };
-
-
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
 </script>

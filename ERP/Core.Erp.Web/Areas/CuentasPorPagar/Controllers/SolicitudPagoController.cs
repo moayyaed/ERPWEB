@@ -28,23 +28,50 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        cp_SolicitudPago_List Lista_SolicitudPago = new cp_SolicitudPago_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
         #region Index
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             cargar_combos_consulta();
+            var lst = bus_solicitud.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_SolicitudPago.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+
             cargar_combos_consulta();
+            var lst = bus_solicitud.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_SolicitudPago.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         private void cargar_combos_consulta()
@@ -65,16 +92,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ViewBag.lst_sucursal = lst_sucursal;
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_solicitud_pago(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_solicitud_pago(bool Nuevo = false)
         {
-
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            var model = bus_solicitud.GetList(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, true);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdSucursal = IdSucursal;
+            //ViewBag.IdEmpresa = IdEmpresa;
+            //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
+            //ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
+            //var model = bus_solicitud.GetList(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_SolicitudPago.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_solicitud_pago", model);
         }
         #endregion
@@ -103,6 +131,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cp_SolicitudPago_Info model = new cp_SolicitudPago_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -125,20 +159,60 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
 
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0, bool Exito = false)
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdSolicitud = 0, bool Exito = false)
         {
             int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
             cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
             cargar_combos(IdEmpresa);
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.CXP, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0 , decimal IdSolicitud = 0)
+        {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            cargar_combos(IdEmpresa);
 
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
@@ -162,11 +236,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSolicitud = model.IdSolicitud, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdSolicitud = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "SolicitudPago", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cp_SolicitudPago_Info model = bus_solicitud.GetInfo(IdEmpresa, IdSolicitud);
             if (model == null)
                 return RedirectToAction("Index");
@@ -198,5 +278,25 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         #endregion
+    }
+
+    public class cp_SolicitudPago_List
+    {
+        string Variable = "cp_SolicitudPago_Info";
+        public List<cp_SolicitudPago_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<cp_SolicitudPago_Info> list = new List<cp_SolicitudPago_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<cp_SolicitudPago_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<cp_SolicitudPago_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }
