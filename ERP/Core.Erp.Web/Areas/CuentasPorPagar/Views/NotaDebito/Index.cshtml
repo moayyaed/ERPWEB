@@ -12,6 +12,8 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Index", "NotaDebito", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -105,7 +107,7 @@
                 </div>
             </div>
 
-            @Html.Action("GridViewPartial_nota_debito", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_nota_debito", new { Nuevo = ViewBag.Nuevo })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

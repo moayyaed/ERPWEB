@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_retenciones";
-        settings.CallbackRouteValues = new { Controller = "Retencion", Action = "GridViewPartial_retenciones", IdSucursal = ViewBag.IdSucursal, fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.CallbackRouteValues = new { Controller = "Retencion", Action = "GridViewPartial_retenciones", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdRetencion";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -67,20 +67,26 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdRetencion = DataBinder.Eval(tc.DataItem, "IdRetencion") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"),  IdRetencion = DataBinder.Eval(tc.DataItem, "IdRetencion") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdRetencion = DataBinder.Eval(tc.DataItem, "IdRetencion") })
+                );
+                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                //{
+                //    ViewContext.Writer.Write(
+                //Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdRetencion = DataBinder.Eval(tc.DataItem, "IdRetencion") }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"),  IdRetencion = DataBinder.Eval(tc.DataItem, "IdRetencion") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo","ComprasSinRetencion", "Retencion").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "ComprasSinRetencion", "Retencion").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -122,6 +128,7 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

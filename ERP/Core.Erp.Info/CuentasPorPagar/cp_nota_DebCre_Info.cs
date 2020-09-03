@@ -83,5 +83,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public bool PagoSujetoRetencion_bool { get; set; }
         public List<ct_cbtecble_det_Info> lst_detalle_ct { get; set; }
 
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

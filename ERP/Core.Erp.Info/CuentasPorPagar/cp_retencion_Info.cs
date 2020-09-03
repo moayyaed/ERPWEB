@@ -66,6 +66,12 @@ namespace Core.Erp.Info.CuentasPorPagar
         public int IdSucursal { get; set; }
         public int? IdPuntoVta { get; set; }
 
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
+
         public cp_retencion_Info()
         {
             detalle = new List<cp_retencion_det_Info>();
