@@ -41,5 +41,9 @@ namespace Core.Erp.Info.Contabilidad
         public int IdCtaCble_int { get; set; }
         public int Secuencia { get; set; }
 
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

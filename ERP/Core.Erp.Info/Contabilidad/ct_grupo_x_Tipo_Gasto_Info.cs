@@ -20,5 +20,8 @@ namespace Core.Erp.Info.Contabilidad
         public Nullable<int> orden { get; set; }
 
         public string nom_tipo_Gasto_Padre { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

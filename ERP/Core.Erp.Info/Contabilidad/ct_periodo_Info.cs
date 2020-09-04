@@ -34,5 +34,9 @@ namespace Core.Erp.Info.Contabilidad
         public bool Seleccionado { get; set; }
         public List<ct_periodo_Info> lst_periodo { get; set; }
 
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

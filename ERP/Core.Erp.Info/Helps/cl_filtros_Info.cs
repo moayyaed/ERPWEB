@@ -87,6 +87,8 @@ namespace Core.Erp.Info.Helps
 
     public class cl_filtros_caja_Info
     {
+        public decimal IdTransaccionSession { get; set; }
+        public int IdSucursal { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
         [DataType(DataType.Date, ErrorMessage = "El campo fecha inicio debe ser una fecha en formato dd/MM/yyyy")]

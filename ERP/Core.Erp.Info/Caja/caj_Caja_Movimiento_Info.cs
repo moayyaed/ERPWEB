@@ -52,6 +52,10 @@ namespace Core.Erp.Info.Caja
         public string ca_Descripcion { get; set; }
         public string tm_descripcion { get; set; }
         public string pe_nombreCompleto { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
         public caj_Caja_Movimiento_det_Info info_caj_Caja_Movimiento_det { get; set; }

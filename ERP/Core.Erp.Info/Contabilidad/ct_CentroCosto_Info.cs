@@ -31,6 +31,9 @@ namespace Core.Erp.Info.Contabilidad
         #region Campos que no estan en la tabla
         public string cc_Descripcion_Padre { get; set; }
         public string nv_Descripcion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
     }

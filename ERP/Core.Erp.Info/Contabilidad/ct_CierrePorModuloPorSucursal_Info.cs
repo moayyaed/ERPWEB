@@ -24,6 +24,10 @@ namespace Core.Erp.Info.Contabilidad
         #region Campos que no existen en la tabla
         public string Descripcion { get; set; }
         public string Su_Descripcion { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

@@ -19,5 +19,10 @@ namespace Core.Erp.Info.Contabilidad
         //no existe en la tabla
         public ct_anio_fiscal_x_cuenta_utilidad_Info info_anio_ctautil { get; set; }
         public List<ct_periodo_Info> lst_periodo { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

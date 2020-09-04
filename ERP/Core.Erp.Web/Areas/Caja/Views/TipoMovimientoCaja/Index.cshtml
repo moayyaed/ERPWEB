@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Caja.caj_Caja_Movimiento_Tipo_Info
 @{
     ViewBag.Title = "Consulta de  tipos de movimiento de caja";
 
@@ -11,8 +11,10 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_tipomovimientocaja")
+    @Html.Action("GridViewPartial_tipomovimientocaja", new { Nuevo = ViewBag.Nuevo })
 
 
 }

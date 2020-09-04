@@ -33,5 +33,10 @@ namespace Core.Erp.Info.Caja
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnu { get; set; }
 
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

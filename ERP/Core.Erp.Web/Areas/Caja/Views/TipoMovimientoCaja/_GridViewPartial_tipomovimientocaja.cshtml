@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_tipomovimientocaja";
-        settings.CallbackRouteValues = new { Controller = "TipoMovimientoCaja", Action = "GridViewPartial_tipomovimientocaja" };
+        settings.CallbackRouteValues = new { Controller = "TipoMovimientoCaja", Action = "GridViewPartial_tipomovimientocaja", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdTipoMovi";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -61,24 +61,22 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoMovi = DataBinder.Eval(tc.DataItem, "IdTipoMovi") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoMovi = DataBinder.Eval(tc.DataItem, "IdTipoMovi") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                ViewContext.Writer.Write(
+                Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoMovi = DataBinder.Eval(tc.DataItem, "IdTipoMovi") })
                     );
-                }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(100);
         });
 
         settings.Columns.Add("IdTipoMovi", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(8);
@@ -105,6 +103,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

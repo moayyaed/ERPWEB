@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using System;
@@ -15,6 +17,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         #region Variables
         ct_grupo_x_Tipo_Gasto_List Lista_GrupoPorTipoGasto = new ct_grupo_x_Tipo_Gasto_List();
         ct_grupo_x_Tipo_Gasto_Bus bus_GrupoPorTipoGasto = new ct_grupo_x_Tipo_Gasto_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -43,6 +47,10 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "GrupoPorTipoGasto", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
             var model = new ct_grupo_x_Tipo_Gasto_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -56,10 +64,11 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_GrupoPorTipoGasto()
+        public ActionResult GridViewPartial_GrupoPorTipoGasto(bool Nuevo=false)
         {
             try
             {
+                ViewBag.Nuevo = Nuevo;
                 SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
                 List<ct_grupo_x_Tipo_Gasto_Info> model = Lista_GrupoPorTipoGasto.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -98,16 +107,22 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "GrupoPorTipoGasto", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             try
             {
-                ct_grupo_x_Tipo_Gasto_Info info = new ct_grupo_x_Tipo_Gasto_Info
+                ct_grupo_x_Tipo_Gasto_Info model = new ct_grupo_x_Tipo_Gasto_Info
                 {
                     IdEmpresa = IdEmpresa,
                     nivel = 1,
                     orden = 1
                 };
 
-                return View(info);
+                return View(model);
 
             }
             catch (Exception)
@@ -142,7 +157,43 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         {
             try
             {
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "GrupoPorTipoGasto", "Index");
+                if (!info.Modificar)
+                    return RedirectToAction("Index");
+                #endregion
+
                 return View(bus_GrupoPorTipoGasto.get_info(IdEmpresa, IdTipo_Gasto));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdTipo_Gasto = 0, bool Exito=false)
+        {
+            try
+            {
+                var model = bus_GrupoPorTipoGasto.get_info(IdEmpresa, IdTipo_Gasto);
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "GrupoPorTipoGasto", "Index");
+                if (model.estado == false)
+                {
+                    info.Modificar = false;
+                    info.Anular = false;
+                }
+                model.Nuevo = (info.Nuevo == true ? 1 : 0);
+                model.Modificar = (info.Modificar == true ? 1 : 0);
+                model.Anular = (info.Anular == true ? 1 : 0);
+                #endregion
+
+                if (Exito)
+                    ViewBag.MensajeSuccess = MensajeSuccess;
+
+                return View(model);
 
             }
             catch (Exception)
@@ -153,11 +204,17 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         [HttpPost]
 
-        public ActionResult Anular(ct_grupo_x_Tipo_Gasto_Info info)
+        public ActionResult Anular(ct_grupo_x_Tipo_Gasto_Info model)
         {
             try
             {
-                if (!bus_GrupoPorTipoGasto.anularDB(info))
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "GrupoPorTipoGasto", "Index");
+                if (!info.Anular)
+                    return RedirectToAction("Index");
+                #endregion
+
+                if (!bus_GrupoPorTipoGasto.anularDB(model))
                     return View(info);
                 else
                     return RedirectToAction("Index");

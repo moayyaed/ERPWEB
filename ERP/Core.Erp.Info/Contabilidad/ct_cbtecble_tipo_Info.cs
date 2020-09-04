@@ -38,5 +38,8 @@ namespace Core.Erp.Info.Contabilidad
         //campos que existen
 
         public bool tc_Interno_bool { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

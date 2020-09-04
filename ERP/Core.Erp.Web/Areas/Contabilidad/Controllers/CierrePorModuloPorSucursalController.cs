@@ -139,16 +139,16 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
         public ActionResult Consultar(int IdEmpresa = 0, int IdCierre = 0, bool Exito = false)
         {
-            #region Permisos
-            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierrePorModuloPorSucursal", "Index");
-            ViewBag.Nuevo = info.Nuevo;
-            ViewBag.Modificar = info.Modificar;
-            ViewBag.Anular = info.Anular;
-            #endregion
-
             ct_CierrePorModuloPorSucursal_Info model = bus_CierreModulo.GetInfo(IdEmpresa, IdCierre);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "CierrePorModuloPorSucursal", "Index");
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;

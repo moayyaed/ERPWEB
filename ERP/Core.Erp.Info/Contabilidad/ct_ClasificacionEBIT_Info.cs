@@ -14,5 +14,9 @@ namespace Core.Erp.Info.Contabilidad
         public string ebit_Descripcion { get; set; }
         public bool AplicaEBIT { get; set; }
         public bool AplicaEBITDA { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

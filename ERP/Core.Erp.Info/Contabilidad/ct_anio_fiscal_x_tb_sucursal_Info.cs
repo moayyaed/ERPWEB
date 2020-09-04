@@ -24,6 +24,10 @@ namespace Core.Erp.Info.Contabilidad
         public string Observacion { get; set; }
         public ct_cbtecble_det_Info info_cbtecble { get; set; }
         public List<ct_cbtecble_det_Info> info_cbtecble_det { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

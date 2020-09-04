@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Caja.caj_Caja_Movimiento_Info
 @{
-    ViewBag.Title = ("Modificar egreso de caja" + " con ID #" + @Model.IdCbteCble);
+    ViewBag.Title = ("Consultar egreso de caja" + " con ID #" + @Model.IdCbteCble);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -114,12 +114,16 @@
         });
     }
 </script>
-@using (Html.BeginForm("Modificar", "CajaMovimientoEgreso", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "CajaMovimientoEgreso", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdCbteCble)
     @Html.HiddenFor(q => q.IdTipocbte)
+
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -161,6 +165,44 @@
 
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-offset-8 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","CajaMovimientoEgreso",new { Area = "Caja", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "CajaMovimientoEgreso", new { Area = "Caja", IdEmpresa = Model.IdEmpresa, IdTipocbte = Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "CajaMovimientoEgreso", new { Area = "Caja", IdEmpresa = Model.IdEmpresa, IdTipocbte=Model.IdTipocbte, IdCbteCble=Model.IdCbteCble }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="CodMoviCaja">Código</label>
@@ -187,14 +229,6 @@
                     }).GetHtml()
                         @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="IdImprimir"></label>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -301,10 +335,6 @@
 
     
         <div class="box-footer">
-                @if (ViewBag.MostrarBoton ?? false)
-                {
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                } 
             <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
         </div>
     
@@ -314,6 +344,10 @@
     }
 }
 <script>
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
     $("#IdTipoPersona").change(function () {
         IdEntidad.SetValue(null);
     });
@@ -329,6 +363,21 @@
     $("#cr_Valor").change(function () {
         armar_diario();
     });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
 
     function armar_diario() {
                         var caja = $("#IdCaja").val();

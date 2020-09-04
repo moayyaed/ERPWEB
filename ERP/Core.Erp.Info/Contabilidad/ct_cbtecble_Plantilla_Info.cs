@@ -29,6 +29,10 @@ namespace Core.Erp.Info.Contabilidad
         #region Campos que no estan en la tabla
         public bool EstadoBool { get; set; }
         public List<ct_cbtecble_Plantilla_det_Info> lst_cbtecble_plantilla_det { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

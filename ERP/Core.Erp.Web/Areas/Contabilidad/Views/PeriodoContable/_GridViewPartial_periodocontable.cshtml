@@ -80,7 +80,7 @@
 
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(150);
+            c.Width = Unit.Pixel(100);
         });
 
         settings.Columns.Add("IdPeriodo", "Código").Width = Unit.Percentage(10);
@@ -110,7 +110,7 @@
 
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

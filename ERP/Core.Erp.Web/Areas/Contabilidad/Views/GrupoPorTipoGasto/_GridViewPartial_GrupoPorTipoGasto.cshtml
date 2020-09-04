@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_GrupoPorTipoGasto";
-        settings.CallbackRouteValues = new { Controller = "GrupoPorTipoGasto", Action = "GridViewPartial_GrupoPorTipoGasto" };
+        settings.CallbackRouteValues = new { Controller = "GrupoPorTipoGasto", Action = "GridViewPartial_GrupoPorTipoGasto", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdTipo_Gasto";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -62,24 +62,22 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipo_Gasto = DataBinder.Eval(tc.DataItem, "IdTipo_Gasto") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipo_Gasto = DataBinder.Eval(tc.DataItem, "IdTipo_Gasto") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                ViewContext.Writer.Write(
+                Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipo_Gasto = DataBinder.Eval(tc.DataItem, "IdTipo_Gasto") })
                     );
-                }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(100);
         });
 
         settings.Columns.Add("IdTipo_Gasto", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);

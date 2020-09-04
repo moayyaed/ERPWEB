@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Caja
 {
     public class caj_Caja_Movimiento_Tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdTipoMovi { get; set; }
         [Required(ErrorMessage = "El campo descripción es obligatorio")]
@@ -27,5 +28,11 @@ namespace Core.Erp.Info.Caja
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
+
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }
