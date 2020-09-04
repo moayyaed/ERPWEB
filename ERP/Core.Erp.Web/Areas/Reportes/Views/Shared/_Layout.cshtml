@@ -150,6 +150,13 @@
 
                             </div>
                         </div>
+
+                        @Html.DevExpress().LoadingPanel(settings =>
+                   {
+                       settings.Name = "lp";
+                       settings.Modal = true;
+                       //settings.ClientSideEvents.Init = "OnLoadingPanelInit";
+                   }).GetHtml()
                         @RenderBody()
                     </div>
                     <!-- /.box-body -->

@@ -117,6 +117,12 @@
             error: function (error) {
             }
         });
+         }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/BancoReportes/BAN_004?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdConciliacion="+@Model.IdConciliacion, '_blank');
+        win.focus();
     }
 </script>
 
@@ -146,7 +152,24 @@
     }
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-9 col-md-1">
+            <div class="col-md-offset-7 col-md-1">
+                @if (Model.IdEstado_Concil_Cat == "CONCILIADO" && ViewBag.Modificar == true)
+                {
+                        <div class="form-group">
+                            <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Abrir", "ConciliacionBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdConciliacion = Model.IdConciliacion }, null)">
+                                <i class="fa fa-unlock"></i>
+                            </a>
+                        </div>
+                }
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
                 @if (@ViewBag.Nuevo == true)
                 {
                     <div class="form-group">
@@ -157,7 +180,7 @@
                 }
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Modificar == true)
+                @if (Model.IdEstado_Concil_Cat != "CONCILIADO" && @ViewBag.Modificar == true)
                 {
                     <div class="form-group">
                         <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "ConciliacionBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdConciliacion = Model.IdConciliacion }, null)">
@@ -167,7 +190,7 @@
                 }
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Anular == true)
+                @if (Model.IdEstado_Concil_Cat != "CONCILIADO" && @ViewBag.Anular == true)
                 {
                     <div class="form-group">
                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "ConciliacionBanco", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdConciliacion = Model.IdConciliacion }, null)">

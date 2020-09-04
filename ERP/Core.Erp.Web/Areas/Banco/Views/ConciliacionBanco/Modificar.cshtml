@@ -71,6 +71,30 @@
         GridView_ConciliacionBanco_det.PerformCallback();
         GridView_ConciliacionBanco_x_cruzar.PerformCallback();
     }
+
+    function ActualizarTodo(EstadoVal) {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            Estado: EstadoVal
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ActualizarTodo", "ConciliacionBanco", new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridView_ConciliacionBanco_det.PerformCallback();
+        GridView_ConciliacionBanco_x_cruzar.PerformCallback();
+    }
+
     function Calcular() {
         var datos = {
             co_SaldoContable_MesAnt: $("#co_SaldoContable_MesAnt").val(),
@@ -277,6 +301,25 @@
                         </li>
                     </ul>
                     <div class="tab-content" style="padding-top: 20px">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <a type="button" class="btn btn-primary form-control" onclick="ActualizarTodo(true)" title="Aprobar todo">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <a type="button" class="btn btn-primary form-control" onclick="ActualizarTodo(false)" title="Desaprobar todo">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_por_aprobar">
 
                             <div class="row">

@@ -225,6 +225,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         #endregion
 
+        public JsonResult ActualizarTodo(bool Estado = false, decimal IdTransaccionSession = 0)
+        {
+            List_det.UpdateAll(IdTransaccionSession, Estado);
+            return Json("",JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GridViewPartial_ConciliacionBanco_x_cruzar()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
@@ -255,7 +261,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "ConciliacionBanco", "Index");
-            if (model.Estado == "I" || model.IdEstado_Concil_Cat == "CONCILIADO")
+            if (model.Estado == "I")
             {
                 info.Modificar = false;
                 info.Anular = false;
@@ -536,6 +542,15 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             ba_Conciliacion_det_IngEgr_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdPK == IdPk).FirstOrDefault();
             if(edited_info != null)
                 edited_info.seleccionado = !edited_info.seleccionado;
+        }
+        public void UpdateAll(decimal IdTransaccionSession, bool Estado)
+        {
+            List<ba_Conciliacion_det_IngEgr_Info> lst = get_list(IdTransaccionSession);
+            if(lst.Count > 0)
+                foreach (var item in lst)
+                {
+                    item.seleccionado = Estado;
+                }
         }
     }
 
