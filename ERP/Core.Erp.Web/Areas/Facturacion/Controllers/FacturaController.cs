@@ -246,12 +246,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             i_validar.lst_cuota = List_cuotas.get_list(i_validar.IdTransaccionSession);
 
             #region Talonario
+            
             var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
-            var info_documento = bus_talonario.GetUltimoNoUsado(i_validar.IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, pto_vta.EsElectronico, false);
+            if (pto_vta != null && pto_vta.EsElectronico)
+            {
+                var info_documento = bus_talonario.GetUltimoNoUsado(i_validar.IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, pto_vta.EsElectronico, false);                
+                i_validar.vt_NumFactura = info_documento.NumDocumento;
+            }
             i_validar.IdBodega = pto_vta.IdBodega;
             i_validar.vt_serie1 = pto_vta.Su_CodigoEstablecimiento;
             i_validar.vt_serie2 = pto_vta.cod_PuntoVta;
-            i_validar.vt_NumFactura = info_documento.NumDocumento;
             i_validar.IdCaja = pto_vta.IdCaja;
             #endregion
 
@@ -290,8 +294,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             i_validar.IdUsuarioUltModi = SessionFixed.IdUsuario;
 
             #region ValidacionDeTalonario
-            /*
-             if (i_validar.IdCbteVta == 0)
+            
+             if (i_validar.IdCbteVta == 0 && !pto_vta.EsElectronico)
             {
                 var talonario = bus_talonario.get_info(i_validar.IdEmpresa, i_validar.vt_tipoDoc, i_validar.vt_serie1, i_validar.vt_serie2, i_validar.vt_NumFactura);
                 if (talonario == null)
@@ -310,7 +314,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                     return false;
                 }                
             }
-             */
+            
             #endregion
 
             #region ValidacionCupoCredito
