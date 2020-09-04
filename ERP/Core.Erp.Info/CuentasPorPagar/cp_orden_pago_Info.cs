@@ -59,6 +59,11 @@ namespace Core.Erp.Info.CuentasPorPagar
         public ct_cbtecble_Info info_comprobante { get; set; }
         public string EstadoCancelacion { get; set; }
 
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
         public cp_orden_pago_Info()
         {
             detalle = new List<cp_orden_pago_det_Info>();

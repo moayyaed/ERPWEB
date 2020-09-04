@@ -1,10 +1,12 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorPagar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.CuentasPorPagar;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -37,6 +39,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_parametros_Info info_parametro = new cp_parametros_Info();
         cp_parametros_Bus bus_param = new cp_parametros_Bus();
         ct_cbtecble_tipo_Bus bus_tipocbte = new ct_cbtecble_tipo_Bus();
+        cp_conciliacionAnticipo_List Lista_ConciliacionAnticipo= new cp_conciliacionAnticipo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
 
@@ -65,30 +70,57 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
             cl_filtros_Info model = new cl_filtros_Info
             {
-                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_conc_anticipo.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_ConciliacionAnticipo.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_conc_anticipo.GetList(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin, true);
+            Lista_ConciliacionAnticipo.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ConciliacionAnticipoProveedor(DateTime? fecha_ini, DateTime? fecha_fin, int IdEmpresa = 0, int IdSucursal = 0)
+        public ActionResult GridViewPartial_ConciliacionAnticipoProveedor(bool Nuevo=false)
         {
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-
-            List<cp_conciliacionAnticipo_Info> model = bus_conc_anticipo.GetList(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            //ViewBag.IdEmpresa = IdEmpresa;
+            //ViewBag.IdSucursal = IdSucursal;
+            //List<cp_conciliacionAnticipo_Info> model = bus_conc_anticipo.GetList(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_ConciliacionAnticipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_ConciliacionAnticipoProveedor", model);
         }
 
@@ -108,6 +140,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             info_parametro = bus_param.get_info(IdEmpresa);
             cp_conciliacionAnticipo_Info model = new cp_conciliacionAnticipo_Info
             {
@@ -152,7 +190,49 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConciliacion = model.IdConciliacion, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdConciliacion = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            cp_conciliacionAnticipo_Info model = bus_conc_anticipo.GetInfo(IdEmpresa, IdConciliacion);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.InfoCbte = bus_cbte.get_info(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
+            model.Lista_det_Cbte = bus_cbte_det.get_list(model.IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToDecimal(model.IdCbteCble));
+
+            Lista_det_OP.set_list(model.Lista_det_OP, model.IdTransaccionSession);
+            Lista_det_Fact.set_list(model.Lista_det_Fact, model.IdTransaccionSession);
+            list_ct_cbtecble_det.set_list(model.Lista_det_Cbte, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            cargar_combos(IdEmpresa);
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0, int IdConciliacion = 0)
@@ -163,7 +243,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
             cp_conciliacionAnticipo_Info model = bus_conc_anticipo.GetInfo(IdEmpresa, IdConciliacion);
 
             if (model == null)
@@ -192,6 +276,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (!Validar(model, ref mensaje))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = mensaje;
                 cargar_combos(model.IdEmpresa);
                 return View(model);
@@ -199,9 +284,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (!bus_conc_anticipo.ModificarBD(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConciliacion = model.IdConciliacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdConciliacion = 0)
@@ -212,7 +298,11 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorPagar", "ConciliacionAnticipoProveedor", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             cp_conciliacionAnticipo_Info model = bus_conc_anticipo.GetInfo(IdEmpresa, Convert.ToInt32(IdConciliacion));
             if (model == null)
                 return RedirectToAction("Index");

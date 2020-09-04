@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.CuentasPorPagar.cp_nota_DebCre_Info
 @{
-    ViewBag.Title = ("Modificar nota de crédito" + " con ID #" + @Model.IdCbteCble_Nota);
+    ViewBag.Title = ("Consultar nota de crédito" + " con ID #" + @Model.IdCbteCble_Nota);
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -94,7 +94,7 @@
         win.focus();
     }
 </script>
-@using (Html.BeginForm("Modificar", "NotaCredito", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "NotaCredito", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
 
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
@@ -102,10 +102,40 @@
     @Html.HiddenFor(q => q.IdCbteCble_Nota)
     @Html.HiddenFor(q => q.IdTipoCbte_Nota)
 
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-11 col-md-1">
-                <label for="IdImprimir"></label>
+            <div class="col-md-offset-8 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","NotaCredito",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "NotaCredito", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdTipoCbte_Nota = Model.IdTipoCbte_Nota, IdCbteCble_Nota=Model.IdCbteCble_Nota }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "NotaCredito", new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa, IdTipoCbte_Nota=Model.IdTipoCbte_Nota, IdCbteCble_Nota=Model.IdCbteCble_Nota }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
@@ -423,10 +453,6 @@
         </div>
     </div>
     <div class="box-footer">
-    @if (ViewBag.MostrarBoton ?? false)
-    {
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    }
         <a class="btn btn-default" href="@Url.Action("Index","NotaCredito",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
     </div>
     @section Scripts {
@@ -457,9 +483,10 @@
 
 
 
-<script>
+<script type="text/javascript">
 $(function () {
     ocultar_mostrar_div();
+    MostrarBotonesAccion();
 
     $("#cn_num_doc_modificado").change(function () {
         rellenar_ceros();
@@ -492,6 +519,21 @@ $("#cmb_idtCredito").change(function () {
     $("#cmbTipoDocu_modif").empty();
     get_list_tipo_doc();
 });
+
+function MostrarBotonesAccion() {
+    if ($("#Nuevo").val() == 1)
+    {
+        $("#btnNuevo").show();
+    }
+    if ($("#Modificar").val() == 1)
+    {
+        $("#btnModificar").show();
+    }
+    if ($("#Anular").val() == 1)
+    {
+        $("#btnAnular").show();
+    }
+}
 
 function rellenar_ceros_izquierda() {
     var str = "" + Number($("#cn_Nota").val());

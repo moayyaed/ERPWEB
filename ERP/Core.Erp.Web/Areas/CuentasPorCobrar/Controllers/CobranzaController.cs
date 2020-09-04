@@ -298,7 +298,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdCobro= model.IdCobro, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdCobro= model.IdCobro, Exito = true });
         }
 
         public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, decimal IdCobro = 0, bool Exito = false)

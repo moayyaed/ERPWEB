@@ -198,39 +198,33 @@
 
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-4">
-               
+        <div class="col-md-12">
+            <div class="col-md-offset-5 col-md-1">
+                <div id="rideFact" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
+                        <i class="fa fa-print"></i>  RIDE Doc.
+                    </button>
+                </div>
             </div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-primary form-control" id="rideFact" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
-                    <i class="fa fa-print"></i>  RIDE Doc.
-                </button>
+            <div class="col-md-1">
+                <div id="ride" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención" hidden>
+                        <i class="fa fa-print"></i>  RIDE Ret.
+                    </button>
+                </div>
             </div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir RIDE de la retención">
-                    <i class="fa fa-print"></i>  RIDE Ret.
-                </button>
+            <div class="col-md-1">
+                <div id="sri" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="AutorizarSRI();" title="Autorizar SRI">
+                        <i class="fa fa-send"></i>  SRI
+                    </button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
-                    <i class="fa fa-send"></i>  SRI
-                </button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="col-md-offset-8 col-md-2">
+            <div class="col-md-offset-3 col-md-1">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
                     </button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Deudas",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
-                        <i class="fa fa-plus"></i>
-                    </a>
                 </div>
             </div>
         </div>

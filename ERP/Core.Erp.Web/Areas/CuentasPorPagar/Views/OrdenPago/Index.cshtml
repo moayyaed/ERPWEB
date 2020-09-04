@@ -40,7 +40,8 @@
 </script>
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
+@Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+@Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -139,7 +140,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_ordenes_pagos", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+            @Html.Action("GridViewPartial_ordenes_pagos", new { Nuevo = ViewBag.Nuevo })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

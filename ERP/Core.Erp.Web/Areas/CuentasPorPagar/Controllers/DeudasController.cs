@@ -203,7 +203,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_deudas(bool Nuevo=false)
         {
-
             //DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool MostrarDocumentosElectronicos = false, bool FiltrarPorFechaContabilizacion = false
             //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             //ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);

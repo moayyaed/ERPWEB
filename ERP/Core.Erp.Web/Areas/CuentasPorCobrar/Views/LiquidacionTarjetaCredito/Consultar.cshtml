@@ -115,7 +115,7 @@
         win.focus();
     }
 </script>
-@using (Html.BeginForm("Modificar", "LiquidacionTarjetaCredito", FormMethod.Post, new { @class = "form", @role = "form", @id="PostForm" }))
+@using (Html.BeginForm("Consultar", "LiquidacionTarjetaCredito", FormMethod.Post, new { @class = "form", @role = "form", @id="PostForm" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
