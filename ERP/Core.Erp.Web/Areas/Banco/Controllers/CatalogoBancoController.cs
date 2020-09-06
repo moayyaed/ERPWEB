@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Core.Erp.Bus.Banco;
 using Core.Erp.Info.Banco;
 using Core.Erp.Web.Helps;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -16,19 +18,42 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Index
 
         ba_Catalogo_Bus bus_catalogo = new ba_Catalogo_Bus();
-
+        ba_Catalogo_List Lista_Catalogo = new ba_Catalogo_List();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         public ActionResult Index(string IdTipoCatalogo = "")
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "CatalogoTipoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            ba_Catalogo_Info model = new ba_Catalogo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdTipoCatalogo = IdTipoCatalogo
+            };
+
+            var lst = bus_catalogo.get_list(model.IdTipoCatalogo, true);
+            Lista_Catalogo.set_list(lst, model.IdTransaccionSession);
+
             ViewBag.IdTipoCatalogo = IdTipoCatalogo;
             return View();
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_catalogo_banco(string IdTipoCatalogo = "")
+        public ActionResult GridViewPartial_catalogo_banco(bool Nuevo=false, string IdTipoCatalogo = "")
         {
-            List<ba_Catalogo_Info> model = new List<ba_Catalogo_Info>();
-            model = bus_catalogo.get_list(IdTipoCatalogo, true);
+            ViewBag.Nuevo = Nuevo;
             ViewBag.IdTipoCatalogo = IdTipoCatalogo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Catalogo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_catalogo_banco", model);
         }
         private void cargar_combos()
@@ -43,6 +68,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
         public ActionResult Nuevo(string IdTipoCatalogo = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "CatalogoTipoBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Catalogo_Info model = new ba_Catalogo_Info
             {
                 IdTipoCatalogo = IdTipoCatalogo
@@ -74,6 +105,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         public ActionResult Modificar(string IdTipoCatalogo = "", string IdCatalogo = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "CatalogoTipoBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Catalogo_Info model = bus_catalogo.get_info(IdTipoCatalogo, IdCatalogo);
             if (model == null)
                 return RedirectToAction("Index", new { IdCatalogo_tipo = IdTipoCatalogo });
@@ -97,6 +134,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         public ActionResult Anular(string IdTipoCatalogo = "", string IdCatalogo = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "CatalogoTipoBanco", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Catalogo_Info model = bus_catalogo.get_info(IdTipoCatalogo, IdCatalogo);
             if (model == null)
                 return RedirectToAction("Index", new { IdCatalogo_tipo = IdTipoCatalogo });
@@ -120,5 +163,25 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         #endregion
 
+    }
+
+    public class ba_Catalogo_List
+    {
+        string Variable = "ba_Catalogo_Info";
+        public List<ba_Catalogo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ba_Catalogo_Info> list = new List<ba_Catalogo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ba_Catalogo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ba_Catalogo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

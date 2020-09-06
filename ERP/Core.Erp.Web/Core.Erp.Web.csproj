@@ -10557,6 +10557,8 @@
     <Content Include="Areas\Caja\Views\ConciliacionCaja\Consultar.cshtml" />
     <Content Include="Areas\Caja\Views\TipoMovimientoCaja\Consultar.cshtml" />
     <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\CatalogoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\CatalogoTipoBanco\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

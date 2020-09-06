@@ -9,11 +9,17 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_CatalogoTipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 10")]
         public string IdTipoCatalogo { get; set; }
         [Required(ErrorMessage = ("el campo descripción es obligatorio"))]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "el campo descripción debe tener mínimo 1 caracter y máximo 100")]
         public string tc_Descripcion { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

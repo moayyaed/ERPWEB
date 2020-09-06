@@ -48,7 +48,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnModificar" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "GrupoPorTipoGasto", new { Area = "Contabilidad", IdGrupoCble=Model.IdGrupoCble }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "GrupoPorTipoGasto", new { Area = "Contabilidad", IdEmpresa=Model.IdEmpresa, IdTipo_Gasto=Model.IdTipo_Gasto }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
@@ -57,7 +57,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnAnular" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "GrupoPorTipoGasto", new { Area = "Contabilidad", IdGrupoCble=Model.IdGrupoCble }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "GrupoPorTipoGasto", new { Area = "Contabilidad", IdEmpresa=Model.IdEmpresa, IdTipo_Gasto=Model.IdTipo_Gasto }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
@@ -107,7 +107,6 @@
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","GrupoPorTipoGasto",new { Area = "Contabilidad" },null)">Cancelar</a>
     </div>
     @section Scripts {

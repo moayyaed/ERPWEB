@@ -93,7 +93,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     if (!bus_GrupoPorTipoGasto.guardarDB(info))
                         return View(info);
                     else
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Consultar", new { IdEmpresa = info.IdEmpresa, IdTipo_Gasto = info.IdTipo_Gasto, Exito = true });
                 }
                 else
                     return View(info);
@@ -140,7 +140,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     if (!bus_GrupoPorTipoGasto.modificarDB(info))
                         return View(info);
                     else
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Consultar", new { IdEmpresa = info.IdEmpresa, IdTipo_Gasto = info.IdTipo_Gasto, Exito = true });
                 }
                 else
                     return View(info);
@@ -163,7 +163,8 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                     return RedirectToAction("Index");
                 #endregion
 
-                return View(bus_GrupoPorTipoGasto.get_info(IdEmpresa, IdTipo_Gasto));
+                var model = bus_GrupoPorTipoGasto.get_info(IdEmpresa, IdTipo_Gasto);
+                return View(model);
 
             }
             catch (Exception)

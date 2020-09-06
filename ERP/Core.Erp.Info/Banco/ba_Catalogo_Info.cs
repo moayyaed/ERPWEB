@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Banco
 {
     public class ba_Catalogo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 50")]
         public string IdCatalogo { get; set; }
@@ -28,5 +29,10 @@ namespace Core.Erp.Info.Banco
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }
