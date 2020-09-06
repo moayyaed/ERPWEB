@@ -456,6 +456,7 @@ namespace Core.Erp.Data.Compras
                     if (Entity == null) return false;
 
                     Entity.Estado = "I";
+                    Entity.MotivoAnulacion = info.MotivoAnulacion;
                     Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                     Entity.IdEstadoAprobacion_cat = "ANU";
                     Entity.Fecha_UltAnu = DateTime.Now;

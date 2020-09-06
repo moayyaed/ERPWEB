@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Compras
 {
     public class com_catalogo_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(15, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 15")]
         public string IdCatalogocompra_tipo { get; set; }
@@ -17,6 +18,11 @@ namespace Core.Erp.Info.Compras
         public string Descripcion { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 }

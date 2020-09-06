@@ -29,37 +29,38 @@
     }
     @Html.HiddenFor(q => q.IdEmpresa);
     @Html.HiddenFor(q => q.IdMovimiento);
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-9 col-md-1">
-                @if (@ViewBag.Nuevo == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa }, null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Modificar == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdMovimiento = Model.IdMovimiento }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Anular == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "TipoFlujoMovimiento", new { Area = "Banco", IdEmpresa = Model.IdEmpresa, IdMovimiento = Model.IdMovimiento }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
@@ -127,10 +128,24 @@
 
 <script type="text/javascript">
     $(function () {
+        MostrarBotonesAccion();
+
         $("#IdSucursal").change(function () {
             GetListBancoPorSucursal();
         });
     });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1) {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1) {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1) {
+            $("#btnAnular").show();
+        }
+    }
 
     function GetListBancoPorSucursal() {
         $("#IdBanco").empty();

@@ -10559,6 +10559,14 @@
     <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Consultar.cshtml" />
     <Content Include="Areas\Banco\Views\CatalogoBanco\Consultar.cshtml" />
     <Content Include="Areas\Banco\Views\CatalogoTipoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\CatalogoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\CatalogoTipoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\Comprador\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\DepartamentoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\EstadoCierreCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenCompraLocal\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\TerminoPagoCompras\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

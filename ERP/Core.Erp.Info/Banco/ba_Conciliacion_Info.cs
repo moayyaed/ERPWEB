@@ -40,6 +40,9 @@ namespace Core.Erp.Info.Banco
         public double co_SaldoConciliado { get; set; }
         public double co_Diferencia { get; set; }
         public List<ba_Conciliacion_det_Info> List_detalle { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
     }

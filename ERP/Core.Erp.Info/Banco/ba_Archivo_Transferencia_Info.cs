@@ -46,5 +46,10 @@ namespace Core.Erp.Info.Banco
         public int? IdTipoCbte { get; set; }
         public decimal? IdCbteCble { get; set; }
         public string Extension { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

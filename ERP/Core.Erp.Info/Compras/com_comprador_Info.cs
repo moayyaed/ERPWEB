@@ -9,7 +9,7 @@ namespace Core.Erp.Info.Compras
 {
    public class com_comprador_Info
     {
-
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdComprador { get; set; }
         public string IdUsuario_com { get; set; }
@@ -25,5 +25,10 @@ namespace Core.Erp.Info.Compras
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

@@ -133,6 +133,10 @@
     @Html.HiddenFor(q => q.IdBanco)
     @Html.HiddenFor(q => q.IdPeriodo)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -163,13 +167,6 @@
                 }
             </div>
             <div class="col-md-1">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-1">
                 @if (@ViewBag.Nuevo == true)
                 {
                     <div class="form-group">
@@ -198,6 +195,13 @@
                         </a>
                     </div>
                 }
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

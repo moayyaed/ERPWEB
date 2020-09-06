@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Compras
 {
    public class com_departamento_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdDepartamento { get; set; }
         [Required(ErrorMessage = ("el campo descripción es obligatorio"))]
@@ -23,5 +24,9 @@ namespace Core.Erp.Info.Compras
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

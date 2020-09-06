@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Compras
 {
    public class com_estado_cierre_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 50")]
         public string IdEstado_cierre { get; set; }
@@ -23,5 +24,10 @@ namespace Core.Erp.Info.Compras
         public Nullable<System.DateTime> FechaHoraAnul { get; set; }
         public string IdUsuarioUltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

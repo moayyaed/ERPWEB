@@ -35,5 +35,9 @@ namespace Core.Erp.Info.Banco
         public int Cantidad { get; set; }
         public string ba_descripcion { get; set; }
         public int IdSucursal { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

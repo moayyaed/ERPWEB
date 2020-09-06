@@ -1,6 +1,6 @@
-﻿@model Core.Erp.Info.Banco.ba_CatalogoTipo_Info
+﻿@model Core.Erp.Info.Compras.com_departamento_Info
 @{
-    ViewBag.Title = "Consultar tipo de catálogo de banco";
+    ViewBag.Title = "Consultar departamento de compra";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,12 +8,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Consultar", "CatalogoTipoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+
+@using (Html.BeginForm("Consultar", "DepartamentoCompras", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
-    @Html.HiddenFor(q => q.IdTipoCatalogo)
-    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
-    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
-    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdDepartamento)
     @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
     @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
     @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
@@ -37,10 +37,10 @@
     }
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
+            <div class="col-md-offset-9 col-md-1">
                 <div class="form-group">
                     <div id="btnNuevo" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","CatalogoTipoBanco",new { Area = "Banco" },null)">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","DepartamentoCompras",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -49,8 +49,17 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnModificar" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "CatalogoTipoBanco", new { Area = "Banco" }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "DepartamentoCompras", new { Area = "Compras", IdEmpresa = Model.IdEmpresa, IdDepartamento = Model.IdDepartamento }, null)">
                             <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "DepartamentoCompras", new { Area = "Compras", IdEmpresa = Model.IdEmpresa, IdDepartamento = Model.IdDepartamento }, null)">
+                            <i class="fa fa-remove"></i>
                         </a>
                     </div>
                 </div>
@@ -59,49 +68,42 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="IdTipoCatalogo">Código*</label>
-                    @Html.TextBoxFor(q => q.IdTipoCatalogo, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(m => m.IdTipoCatalogo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="tc_Descripcion">Descripción*</label>
-                    @Html.TextBoxFor(q => q.tc_Descripcion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.tc_Descripcion, "", new { @class = "text-danger" })
+                    <label for="nom_departamento">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_departamento, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_departamento, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","CatalogoTipoBanco",new { Area = "Banco" },null)">Cancelar</a>
-    </div>
 
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","DepartamentoCompras", new { Area = "Compras"  },null)">Cancelar</a>
+    </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+
 <script type="text/javascript">
     $(function () {
         MostrarBotonesAccion();
     });
 
     function MostrarBotonesAccion() {
-        if ($("#Nuevo").val() == 1) {
+        if ($("#Nuevo").val() == 1)
+        {
             $("#btnNuevo").show();
         }
-        if ($("#Modificar").val() == 1) {
+        if ($("#Modificar").val() == 1)
+        {
             $("#btnModificar").show();
         }
-        if ($("#Anular").val() == 1) {
+        if ($("#Anular").val() == 1)
+        {
             $("#btnAnular").show();
         }
     }

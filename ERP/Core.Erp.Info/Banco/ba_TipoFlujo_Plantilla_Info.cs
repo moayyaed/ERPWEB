@@ -27,6 +27,9 @@ namespace Core.Erp.Info.Banco
 
         #region Campos que no existen en la tabla
         public List<ba_TipoFlujo_PlantillaDet_Info> Lista_TipoFlujo_PlantillaDet { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

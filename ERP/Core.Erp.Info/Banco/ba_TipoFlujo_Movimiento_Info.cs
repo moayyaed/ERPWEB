@@ -36,6 +36,9 @@ namespace Core.Erp.Info.Banco
         public string Descricion { get; set; }
         public string Su_Descripcion { get; set; }
         public string ba_descripcion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

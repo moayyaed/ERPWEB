@@ -1,33 +1,11 @@
 ﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
 @{
-    ViewBag.Title = "Modificar orden de servicio";
+    ViewBag.Title = "Consultar orden de servicio";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    if (ViewBag.mensaje != null)
-    {
-        <div class="alert alert-warning alert-dismissible">
-            <h4>
-                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
-            </h4>
-        </div>
-    }
-
-    if (ViewBag.MensajeSuccess != null)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible">
-                    <h4>
-                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
-                    </h4>
-                </div>
-            </div>
-        </div>
-    }
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script type="text/javascript">
@@ -50,7 +28,7 @@
         }
     }
 </script>
-@using (Html.BeginForm("Modificar", "OrdenServicio", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Consultar", "OrdenServicio", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
 
     @Html.HiddenFor(q => q.IdEmpresa)
@@ -61,7 +39,63 @@
     @Html.HiddenFor(q => q.IdComprador)
     @Html.HiddenFor(q => q.Tipo)
     @Html.HiddenFor(q => q.SecuenciaTipo)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
 
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-8 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","OrdenServicio",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "OrdenServicio", new { Area = "Compras", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdOrdenCompra=Model.IdOrdenCompra }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "OrdenServicio", new { Area = "Compras", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdOrdenCompra=Model.IdOrdenCompra }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -173,11 +207,6 @@
                     @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-offset-7 col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
-                    <i class="fa fa-print"></i>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -203,7 +232,6 @@
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index","OrdenServicio", new { Area = "Compras"  },null)">Cancelar</a>
     </div>
     @section Scripts {
@@ -211,6 +239,24 @@
     }
 }
 <script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
 
     function GetInfoProducto(s, e) {
         $("#Secuencia").text(0);

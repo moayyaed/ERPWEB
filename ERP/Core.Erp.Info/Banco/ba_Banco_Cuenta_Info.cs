@@ -41,5 +41,9 @@ namespace Core.Erp.Info.Banco
         public List<ba_Banco_Cuenta_x_tb_sucursal_Info> lstDet { get; set; }
         #endregion
 
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
     }
 }

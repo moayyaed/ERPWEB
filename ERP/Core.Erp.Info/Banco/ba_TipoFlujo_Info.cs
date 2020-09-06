@@ -33,6 +33,8 @@ namespace Core.Erp.Info.Banco
 
         public List<ba_Cbte_Ban_x_ba_TipoFlujo_Info> LstDet { get; set; }
 
-
-}
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+    }
 }

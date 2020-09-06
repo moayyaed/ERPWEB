@@ -36,6 +36,7 @@ namespace Core.Erp.Info.Compras
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaHoraAnul { get; set; }
         public string IdUsuarioUltAnu { get; set; }
+        [Required(ErrorMessage = ("el campo motivo de anulación es obligatorio"))]
         public string MotivoAnulacion { get; set; }
         public string MotivoReprobacion { get; set; }
         public decimal IdDepartamento { get; set; }
@@ -58,6 +59,12 @@ namespace Core.Erp.Info.Compras
         public List<com_ordencompra_local_det_Info> lst_det { get; set; }
         public Nullable<decimal> Total { get; set; }
         public string TerminoPago { get; set; }
+
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
         #region Campos de vwcom_ordencompra_local_x_ingresar
         public int Secuencia { get; set; }
