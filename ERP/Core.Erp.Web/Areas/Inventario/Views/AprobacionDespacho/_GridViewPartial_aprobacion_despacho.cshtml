@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_aprobacion_despacho";
-        settings.CallbackRouteValues = new { Controller = "AprobacionDespacho", Action = "GridViewPartial_aprobacion_despacho", Area = "Inventario", IdSucursal = ViewBag.IdSucursal, IdBodega = ViewBag.IdBodega };
+        settings.CallbackRouteValues = new { Controller = "AprobacionDespacho", Action = "GridViewPartial_aprobacion_despacho", Area = "Inventario" };
         settings.KeyFieldName = "SecuencialID";
         settings.Width = Unit.Percentage(100);
 
@@ -66,7 +66,7 @@
                 }).Render();
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
 
     });
 }

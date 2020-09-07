@@ -78,22 +78,34 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Vistas
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdBodega = 0
             };
 
             CargarCombosConsulta(model);
-
+            var lst = bus_producto_x_tbbodega.get_list_x_bodega(model.IdEmpresa, model.IdSucursal, model.IdBodega);
+            Lis_in_producto_x_tb_bodega_Info_List.set_list(lst, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombosConsulta(model);
+            var lst = bus_producto_x_tbbodega.get_list_x_bodega(model.IdEmpresa, model.IdSucursal, model.IdBodega);
+            Lis_in_producto_x_tb_bodega_Info_List.set_list(lst, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return View(model);
         }
 
@@ -109,16 +121,15 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ParametrizacionContableProducto(int IdSucursal = 0, int IdBodega = 0)
+        public ActionResult GridViewPartial_ParametrizacionContableProducto()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdEmpresa = IdEmpresa;
+            //ViewBag.IdSucursal = IdSucursal;
+            //ViewBag.IdBodega = IdBodega;
+            //List<in_producto_x_tb_bodega_Info> model = bus_producto_x_tbbodega.get_list_x_bodega(IdEmpresa, IdSucursal, IdBodega);
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.IdBodega = IdBodega;
-
-            List<in_producto_x_tb_bodega_Info> model = bus_producto_x_tbbodega.get_list_x_bodega(IdEmpresa, IdSucursal, IdBodega);
-            Lis_in_producto_x_tb_bodega_Info_List.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = Lis_in_producto_x_tb_bodega_Info_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_ParametrizacionContableProducto", model);
         }

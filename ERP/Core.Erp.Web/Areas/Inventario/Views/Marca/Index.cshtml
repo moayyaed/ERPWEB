@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Inventario.in_Marca_Info
 @{
     ViewBag.Title = "Consultas de familias de producto";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,6 +10,8 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_marca")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_marca", new { Nuevo = ViewBag.Nuevo })
 }
 

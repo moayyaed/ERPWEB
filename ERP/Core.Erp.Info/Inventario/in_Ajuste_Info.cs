@@ -35,6 +35,9 @@ namespace Core.Erp.Info.Inventario
         public string bo_Descripcion { get; set; }
         public List<in_AjusteDet_Info> lst_detalle { get; set; }
         public List<in_AjusteDet_Info> lst_movimiento { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

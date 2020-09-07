@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Inventario.in_Motivo_Inven_Info
 @{
     ViewBag.Title = "Consulta de motivos de inventario";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,7 +10,8 @@
 
 @using (Html.BeginForm())
 {
-
-    @Html.Action("GridViewPartial_motivoinven")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_motivoinven", new { Nuevo = ViewBag.Nuevo })
 
 }

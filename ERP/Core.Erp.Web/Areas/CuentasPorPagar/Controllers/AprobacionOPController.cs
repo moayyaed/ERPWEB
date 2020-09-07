@@ -22,24 +22,36 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
             cp_orden_pago_aprobacion_Info model = new cp_orden_pago_aprobacion_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
                 IdUsuarioAprobacion = string.IsNullOrEmpty(SessionFixed.IdUsuario) ? "" : SessionFixed.IdUsuario,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date,
             };
 
-            List_aprobacion_op.set_list(new List<cp_orden_pago_Info>(), model.IdTransaccionSession);
+            //List_aprobacion_op.set_list(new List<cp_orden_pago_Info>(), model.IdTransaccionSession);
+            var lst = bus_orden_pago.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            List_aprobacion_op.set_list(lst, model.IdTransaccionSession);
             cargar_combos_consulta(model.IdEmpresa);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cp_orden_pago_aprobacion_Info model)
         {
-            model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-
-            List_aprobacion_op.get_list(model.IdTransaccionSession);
+            //model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            //List_aprobacion_op.get_list(model.IdTransaccionSession);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            var lst = bus_orden_pago.get_list(model.IdEmpresa, model.fecha_ini, model.fecha_fin, model.IdSucursal);
+            List_aprobacion_op.set_list(lst, model.IdTransaccionSession);
             cargar_combos_consulta(model.IdEmpresa);
             return View(model);
         }
@@ -67,16 +79,17 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
         }
         #endregion
-        public ActionResult GridViewPartial_AprobacionOP(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal=0)
+        public ActionResult GridViewPartial_AprobacionOP()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
-            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-
-            var model = bus_orden_pago.get_list_aprobacion(IdEmpresa, ViewBag.fecha_ini, ViewBag.fecha_fin, IdSucursal);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
+            //var model = bus_orden_pago.get_list_aprobacion(IdEmpresa, ViewBag.fecha_ini, ViewBag.fecha_fin, IdSucursal);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_aprobacion_op.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_AprobacionOP", model);
         }
 

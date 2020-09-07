@@ -21,5 +21,11 @@ namespace Core.Erp.Info.Inventario
         public string nom_presentacion { get; set; }
         public string estado { get; set; }
         public bool EstadoBool { get; set; }
+
+        #region Campos que no existen en la tabla
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+        #endregion
     }
 }

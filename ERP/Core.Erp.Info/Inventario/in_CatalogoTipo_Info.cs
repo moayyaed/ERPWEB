@@ -10,6 +10,7 @@ namespace Core.Erp.Info.Inventario
     public class in_CatalogoTipo_Info
     {
         [Key]
+        public decimal IdTransaccionSession { get; set; }
         public int IdCatalogo_tipo { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = ("El campo código debe tener mínimo 1 caracter máximo 50"))]
@@ -20,5 +21,12 @@ namespace Core.Erp.Info.Inventario
         public string Descripcion { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
+
+
+        #region Campos que no existen en la tabla
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+        #endregion
     }
 }

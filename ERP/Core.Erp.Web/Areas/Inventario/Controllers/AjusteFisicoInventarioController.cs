@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -28,6 +30,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_parametro_Bus bus_in_param = new in_parametro_Bus();
         in_Catalogo_Bus bus_catalogo = new in_Catalogo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        in_Ajuste_List Lista_Ajuste = new in_Ajuste_List();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -49,8 +53,20 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Vistas
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdBodega = 0,
@@ -59,6 +75,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             };
 
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_ajuste.get_list(model.IdEmpresa, model.IdSucursal,true, model.fecha_ini, model.fecha_fin);
+            Lista_Ajuste.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
@@ -72,20 +90,29 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_ajuste.get_list(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
+            Lista_Ajuste.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_ajuste_fisico(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_ajuste_fisico(bool Nuevo=false)
         {
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-
-            List<in_Ajuste_Info> model = bus_ajuste.get_list(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.IdEmpresa = IdEmpresa;
+            //ViewBag.IdSucursal = IdSucursal;
+            //List<in_Ajuste_Info> model = bus_ajuste.get_list(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Ajuste.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_ajuste_fisico", model);
         }
         #endregion
@@ -98,6 +125,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
             #endregion
             in_parametro_Info i_param = bus_in_param.get_info(IdEmpresa);
             if (i_param == null)
@@ -124,6 +156,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!validar(model, ref mensaje))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -133,13 +166,14 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!bus_ajuste.guardarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdAjuste = model.IdAjuste, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdAjuste = model.IdAjuste, Exito = true });
         }
-        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdAjuste = 0, bool Exito = false)
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, int IdAjuste = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -147,15 +181,35 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+           
             in_Ajuste_Info model = bus_ajuste.get_info(IdEmpresa, IdSucursal, IdAjuste);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            else
+            {
+                if (model.Estado == true && model.IdCatalogo_Estado== "APRO")
+                {
+                    info.Modificar = false;
+                }
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
 
             model.lst_detalle = bus_ajuste_det.get_list(IdEmpresa, IdAjuste);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             foreach (var item in model.lst_detalle)
             {
-                in_Producto_Info info_producto = bus_producto.get_info(model.IdEmpresa,item.IdProducto);
+                in_Producto_Info info_producto = bus_producto.get_info(model.IdEmpresa, item.IdProducto);
                 item.pr_descripcion = info_producto.pr_descripcion;
             }
 
@@ -176,6 +230,45 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             return View(model);
         }
+        public ActionResult Modificar(int IdEmpresa = 0, int IdSucursal = 0, int IdAjuste = 0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+            in_Ajuste_Info model = bus_ajuste.get_info(IdEmpresa, IdSucursal, IdAjuste);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            model.lst_detalle = bus_ajuste_det.get_list(IdEmpresa, IdAjuste);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            foreach (var item in model.lst_detalle)
+            {
+                in_Producto_Info info_producto = bus_producto.get_info(model.IdEmpresa,item.IdProducto);
+                item.pr_descripcion = info_producto.pr_descripcion;
+            }
+
+            ListaDetalle.set_list(model.lst_detalle, model.IdTransaccionSession);
+            cargar_combos(model);
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
+        }
         [HttpPost]
         public ActionResult Modificar(in_Ajuste_Info model)
         {
@@ -184,6 +277,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!validar(model, ref mensaje))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -191,11 +285,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!bus_ajuste.modificarDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdAjuste = model.IdAjuste, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdAjuste = model.IdAjuste, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0, int IdSucursal = 0, decimal IdAjuste = 0)
         {
@@ -205,7 +300,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "AjusteFisicoInventario", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             in_Ajuste_Info model = bus_ajuste.get_info(IdEmpresa, IdSucursal, IdAjuste);
             if (model == null)
                 return RedirectToAction("Index");
@@ -242,6 +341,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!validar(model, ref mensaje))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
@@ -249,6 +349,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
             if (!bus_ajuste.anularDB(model))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model);
                 return View(model);
             }
@@ -376,6 +477,25 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #endregion
     }
 
+    public class in_Ajuste_List
+    {
+        string Variable = "in_Ajuste_Info";
+        public List<in_Ajuste_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession] == null)
+            {
+                List<in_Ajuste_Info> list = new List<in_Ajuste_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+            }
+            return (List<in_Ajuste_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession];
+        }
+
+        public void set_list(List<in_Ajuste_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession] = list;
+        }
+    }
     public class in_AjusteDet_List
     {
         string Variable = "in_AjusteDet_Info";

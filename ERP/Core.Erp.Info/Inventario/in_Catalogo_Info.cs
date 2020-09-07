@@ -23,5 +23,11 @@ namespace Core.Erp.Info.Inventario
         public string IdUsuario { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaUltMod { get; set; }
+
+        #region Campos que no existen en la tabla
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+        #endregion
     }
 }

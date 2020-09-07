@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Inventario
 {
     public class in_UnidadMedida_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
         [StringLength(25, MinimumLength = 1, ErrorMessage = "El campo código debe tener mínimo 1 caracter y máximo 25 caracteres")]
         public string IdUnidadMedida { get; set; }
@@ -28,5 +29,8 @@ namespace Core.Erp.Info.Inventario
 
         //Campos que no existen en la tabla
         public List<in_UnidadMedida_Equiv_conversion_Info> lst_unidad_medida_equiv { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

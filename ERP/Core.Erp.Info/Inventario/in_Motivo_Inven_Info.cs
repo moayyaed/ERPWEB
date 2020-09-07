@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Inventario
 {
     public class in_Motivo_Inven_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdMotivo_Inv { get; set; }
         [StringLength(20, MinimumLength = 1, ErrorMessage = ("El campo código debe tener máximo 20 caracteres"))]
@@ -31,6 +32,12 @@ namespace Core.Erp.Info.Inventario
         //Campos que no existen en la tabla
 
         public bool Genera_Movi_Inven_bool { get; set; }
+
+        #region Campos que no existen en la tabla
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+        #endregion
 
     }
 }

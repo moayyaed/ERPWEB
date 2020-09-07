@@ -10567,6 +10567,14 @@
     <Content Include="Areas\Compras\Views\OrdenCompraLocal\Consultar.cshtml" />
     <Content Include="Areas\Compras\Views\OrdenServicio\Consultar.cshtml" />
     <Content Include="Areas\Compras\Views\TerminoPagoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\CatalogoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\CatalogoTipoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Categoria\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Marca\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\MotivoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\UnidadDeMedida\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Presentacion\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10685,6 +10693,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

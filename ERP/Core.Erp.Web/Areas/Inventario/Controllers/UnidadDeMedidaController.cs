@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Web.Helps;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Inventario.Controllers
 {
@@ -18,15 +20,39 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_UnidadMedida_Bus bus_unidad_medida = new in_UnidadMedida_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_unidad_medida_equiv = new in_UnidadMedida_Equiv_conversion_Bus();
         in_UnidadMedida_Equiv_conversion_List list_unidad_medida_equiv = new in_UnidadMedida_Equiv_conversion_List();
+        in_UnidadMedida_List Lista_UnidadMedida = new in_UnidadMedida_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "UnidadDeMedida", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            in_UnidadMedida_Info model = new in_UnidadMedida_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession)
+            };
+
+            var lst = bus_unidad_medida.get_list(true);
+            Lista_UnidadMedida.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_unidad_medida()
+        public ActionResult GridViewPartial_unidad_medida(bool Nuevo = false)
         {
-            List<in_UnidadMedida_Info> model = bus_unidad_medida.get_list(true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_UnidadMedida.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_unidad_medida", model);
         }
         private void cargar_combos()
@@ -40,6 +66,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
         public ActionResult Nuevo()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "UnidadDeMedida", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             in_UnidadMedida_Info model = new in_UnidadMedida_Info();
             model.lst_unidad_medida_equiv = new List<in_UnidadMedida_Equiv_conversion_Info>();
             list_unidad_medida_equiv.set_list(model.lst_unidad_medida_equiv);
@@ -63,11 +95,42 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdUnidadMedida = model.IdUnidadMedida, Exito = true });
+        }
+
+        public ActionResult Consultar(string IdUnidadMedida = "", bool Exito=false)
+        {
+            in_UnidadMedida_Info model = bus_unidad_medida.get_info(IdUnidadMedida);
+            if (model == null)
+                return RedirectToAction("Index");
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "UnidadDeMedida", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.lst_unidad_medida_equiv = bus_unidad_medida_equiv.get_list(IdUnidadMedida);
+            list_unidad_medida_equiv.set_list(model.lst_unidad_medida_equiv);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            return View(model);
         }
 
         public ActionResult Modificar(string IdUnidadMedida = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "UnidadDeMedida", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             in_UnidadMedida_Info model = bus_unidad_medida.get_info(IdUnidadMedida);
             if(model == null)
                 return RedirectToAction("Index");
@@ -91,11 +154,17 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     return View(model);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdUnidadMedida = model.IdUnidadMedida, Exito = true });
         }
 
         public ActionResult Anular(string IdUnidadMedida = "")
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "UnidadDeMedida", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             in_UnidadMedida_Info model = bus_unidad_medida.get_info(IdUnidadMedida);
             if (model == null)
                 return RedirectToAction("Index");
@@ -159,6 +228,26 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_GridViewPartial_unidad_medida_det", model);
         }
         #endregion
+    }
+
+    public class in_UnidadMedida_List
+    {
+        string Variable = "in_UnidadMedida_Info";
+        public List<in_UnidadMedida_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<in_UnidadMedida_Info> list = new List<in_UnidadMedida_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<in_UnidadMedida_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<in_UnidadMedida_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class in_UnidadMedida_Equiv_conversion_List

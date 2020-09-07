@@ -1,6 +1,8 @@
 ﻿using Core.Erp.Bus.Compras;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Compras;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using System;
 using System.Collections.Generic;
@@ -17,18 +19,29 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         com_ordencompra_local_Bus bus_ordencompra = new com_ordencompra_local_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         com_orden_aprobacion_os_List List_apro = new com_orden_aprobacion_os_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
 
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
             com_orden_aprobacion_Info model = new com_orden_aprobacion_Info
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
                 IdUsuarioAprobacion = string.IsNullOrEmpty(SessionFixed.IdUsuario) ? "" : SessionFixed.IdUsuario,
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date,
 
             };
-            List_apro.set_list(new List<com_ordencompra_local_Info>(), model.IdTransaccionSession);
+            var lst = bus_ordencompra.GetListPorAprobar_OS(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            List_apro.set_list(lst, model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
@@ -36,22 +49,25 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         public ActionResult Index(com_orden_aprobacion_Info model)
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
-            List_apro.get_list(model.IdTransaccionSession);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            var lst = bus_ordencompra.GetListPorAprobar_OS(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            List_apro.set_list(lst, model.IdTransaccionSession);
             cargar_combos(model.IdEmpresa);
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_aprobacion_os(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal)
+        public ActionResult GridViewPartial_aprobacion_os()
         {
 
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
-            ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
-
-            var model = bus_ordencompra.GetListPorAprobar_OS(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            //ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
+            //ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
+            //ViewBag.IdSucursal = IdSucursal == 0 ? 0 : Convert.ToInt32(IdSucursal);
+            //var model = bus_ordencompra.GetListPorAprobar_OS(IdEmpresa, IdSucursal, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = List_apro.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_aprobacion_os", model);
         }
         #endregion

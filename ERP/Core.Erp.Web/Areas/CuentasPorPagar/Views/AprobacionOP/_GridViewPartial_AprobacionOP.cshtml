@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridViewPartial_AprobacionOP";
-        settings.CallbackRouteValues = new { Controller = "AprobacionOP", Action = "GridViewPartial_AprobacionOP", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "AprobacionOP", Action = "GridViewPartial_AprobacionOP" };
         settings.KeyFieldName = "IdOrdenPago";
 
         settings.Width = Unit.Percentage(100);
@@ -86,7 +86,8 @@
         });
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
-        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        //settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); OnBeginCallback(s,e) }";
     });
 }
 @grid.Bind(Model).GetHtml()

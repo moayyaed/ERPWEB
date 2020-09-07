@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_movimiento_inventario_x_aprobar";
-        settings.CallbackRouteValues = new { Controller = "AprobacionMovimientoInventario", Action = "GridViewPartial_movimiento_inventario_x_aprobar", IdSucursal = ViewBag.IdSucursal, IdBodega = ViewBag.IdBodega };
+        settings.CallbackRouteValues = new { Controller = "AprobacionMovimientoInventario", Action = "GridViewPartial_movimiento_inventario_x_aprobar" };
         settings.KeyFieldName = "SecuencialID";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -83,6 +83,7 @@
                 }).Render();
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()
