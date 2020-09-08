@@ -65,6 +65,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_cliente_contactos_Bus bus_cliente_contactos = new fa_cliente_contactos_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_factura_List Lista_Factura = new fa_factura_List();
+        fa_factura_tipo_Bus busTipoFactura = new fa_factura_tipo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -206,6 +207,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             var lst_cliente_contactos = bus_cliente_contactos.get_list(model.IdEmpresa, model.IdCliente);
             ViewBag.lst_cliente_contactos = lst_cliente_contactos;
+
+            var lst_tipo_factura = busTipoFactura.GetList(model.IdEmpresa, false);
+            ViewBag.lst_tipo_factura = lst_tipo_factura;
         }
         private bool validar(fa_factura_Info i_validar, ref string msg)
         {

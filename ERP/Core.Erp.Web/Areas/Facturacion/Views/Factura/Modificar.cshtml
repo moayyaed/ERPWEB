@@ -333,6 +333,13 @@
                 </ul>
                 <div class="tab-content" style="padding-top: 5px">
                     <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_general">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Tipo de documento*</label>
+                                @Html.DropDownListFor(q => q.IdFacturaTipo, new SelectList(ViewBag.lst_tipo_factura, "IdFacturaTipo", "Descripcion"), new { @class = "form-control", @id = "IdFacturaTipo" })
+                                @Html.ValidationMessageFor(q => q.IdFacturaTipo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="IdCatalogo_FormaPago">Forma de pago*</label>

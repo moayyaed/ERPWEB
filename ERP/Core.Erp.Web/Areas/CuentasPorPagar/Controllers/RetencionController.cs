@@ -537,7 +537,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             else
             {
-                if (info_codifo_sri.co_porRetencion != 0 & info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
+                if (info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
                 {
                     info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
@@ -581,7 +581,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
             else
             {
-                if (info_codifo_sri.co_porRetencion != 0 & info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
+                if (info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
                 {
                     info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
@@ -641,7 +641,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 }
                 var detalle_ret = List_cp_retencion_det.get_list(IdTransaccionSession);
                 var param_op = bus_parametros.get_info(IdEmpresa);
-                List_ct_cbtecble_det_List.delete_detail_New_details(param_op, detalle_ret, IdTransaccionSession, proveedor.IdCtaCble_CXP);
+                if (detalle_ret.Where(q=> q.re_Porcen_retencion > 0).Count() > 0)
+                {
+                    List_ct_cbtecble_det_List.delete_detail_New_details(param_op, detalle_ret, IdTransaccionSession, proveedor.IdCtaCble_CXP);
+                }else
+                    List_ct_cbtecble_det_List.set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
+
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -834,6 +839,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 int sec = 2;
 
                 set_list(new List<ct_cbtecble_det_Info>(), IdTransaccionSession);
+                
 
                 ct_cbtecble_det_Info cbtecble_haber_Info = new ct_cbtecble_det_Info();
                 cbtecble_haber_Info.secuencia = 1;

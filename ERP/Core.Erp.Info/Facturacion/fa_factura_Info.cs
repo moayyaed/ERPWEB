@@ -56,6 +56,8 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<double> valor_abono { get; set; }
 
         public int IdNivel { get; set; }
+        [Required(ErrorMessage = "El campo tipo de comprobante es obligatorio")]
+        public int IdFacturaTipo { get; set; }
 
         public fa_factura_resumen_Info info_resumen { get; set; }
 
