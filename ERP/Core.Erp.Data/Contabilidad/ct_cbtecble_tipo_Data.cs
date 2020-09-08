@@ -53,14 +53,14 @@ namespace Core.Erp.Data.Contabilidad
             }
         }
 
-        public ct_cbtecble_tipo_Info get_info(int IdTipoCbte)
+        public ct_cbtecble_tipo_Info get_info(int IdEmpresa, int IdTipoCbte)
         {
             try
             {
                 ct_cbtecble_tipo_Info info = new ct_cbtecble_tipo_Info();
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
-                    ct_cbtecble_tipo Entity = Context.ct_cbtecble_tipo.FirstOrDefault(q => q.IdTipoCbte == IdTipoCbte);
+                    ct_cbtecble_tipo Entity = Context.ct_cbtecble_tipo.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdTipoCbte == IdTipoCbte);
                     if (Entity == null) return null;
                     info = new ct_cbtecble_tipo_Info
                     {

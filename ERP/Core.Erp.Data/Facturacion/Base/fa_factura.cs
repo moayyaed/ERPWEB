@@ -29,6 +29,7 @@ namespace Core.Erp.Data.Facturacion.Base
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public decimal IdCbteVta { get; set; }
+        public int IdFacturaTipo { get; set; }
         public string CodCbteVta { get; set; }
         public string vt_tipoDoc { get; set; }
         public string vt_serie1 { get; set; }
@@ -69,6 +70,7 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual ICollection<fa_cuotas_x_doc> fa_cuotas_x_doc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_factura_det> fa_factura_det { get; set; }
+        public virtual fa_factura_tipo fa_factura_tipo { get; set; }
         public virtual fa_NivelDescuento fa_NivelDescuento { get; set; }
         public virtual fa_PuntoVta fa_PuntoVta { get; set; }
         public virtual fa_Vendedor fa_Vendedor { get; set; }

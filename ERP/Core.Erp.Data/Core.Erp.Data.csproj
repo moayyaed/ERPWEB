@@ -664,6 +664,9 @@
     <Compile Include="Facturacion\Base\fa_factura_resumen.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\fa_factura_x_ct_cbtecble.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -837,6 +840,7 @@
     <Compile Include="Facturacion\fa_cuotas_x_doc_Data.cs" />
     <Compile Include="Facturacion\fa_factura_Data.cs" />
     <Compile Include="Facturacion\fa_factura_det_Data.cs" />
+    <Compile Include="Facturacion\fa_factura_tipo_Data.cs" />
     <Compile Include="Facturacion\fa_factura_x_fa_guia_remision_Data.cs" />
     <Compile Include="Facturacion\fa_formaPago_Data.cs" />
     <Compile Include="Facturacion\fa_guia_remision_Data.cs" />

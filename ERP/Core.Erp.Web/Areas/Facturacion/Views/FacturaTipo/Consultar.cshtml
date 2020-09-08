@@ -1,0 +1,107 @@
+﻿@model Core.Erp.Info.Facturacion.fa_factura_tipo_Info
+@{
+    ViewBag.Title = ("Consultar tipo de factura" + " con ID #" + Model.IdFacturaTipo);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
+@using (Html.BeginForm("Consultar", "FacturaTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdFacturaTipo, new { @id = "IdFacturaTipo" })
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible">
+                        <h4>
+                            <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="alert alert-success alert-dismissible">
+                        <h4>
+                            <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+         <div class="col-md-12">
+             <div class="col-md-offset-9 col-md-1">
+                 @if (Model.Nuevo == 1)
+                 {
+                     <div class="form-group">
+                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "FacturaTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa }, null)">
+                             <i class="fa fa-plus"></i>
+                         </a>
+                     </div>
+                 }
+             </div>
+             <div class="col-md-1">
+                 @if (Model.Modificar == 1)
+                 {
+                     <div class="form-group">
+                         <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "FacturaTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdFacturaTipo = Model.IdFacturaTipo }, null)">
+                             <i class="fa fa-edit"></i>
+                         </a>
+                     </div>
+                 }
+             </div>
+             <div class="col-md-1">
+                 @if (Model.Anular == 1)
+                 {
+                     <div class="form-group">
+                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "FacturaTipo", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdFacturaTipo = Model.IdFacturaTipo }, null)">
+                             <i class="fa fa-remove"></i>
+                         </a>
+                     </div>
+                 }
+             </div>
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Codigo">Código*</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control", @id = "Codigo" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="Codigo">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control", @id = "Descripcion" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","FacturaTipo",new { Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

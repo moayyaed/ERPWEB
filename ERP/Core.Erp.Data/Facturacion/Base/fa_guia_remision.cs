@@ -60,12 +60,12 @@ namespace Core.Erp.Data.Facturacion.Base
     
         public virtual fa_cliente fa_cliente { get; set; }
         public virtual fa_cliente_contactos fa_cliente_contactos { get; set; }
-        public virtual fa_factura fa_factura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_factura_x_fa_guia_remision> fa_factura_x_fa_guia_remision { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_guia_remision_det> fa_guia_remision_det { get; set; }
         public virtual fa_MotivoTraslado fa_MotivoTraslado { get; set; }
         public virtual fa_PuntoVta fa_PuntoVta { get; set; }
+        public virtual fa_factura fa_factura { get; set; }
     }
 }

@@ -344,6 +344,7 @@
     <Compile Include="Areas\Facturacion\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\FacturaTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FormaPagoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaRemisionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaSinPreciosController.cs" />
@@ -10575,6 +10576,12 @@
     <Content Include="Areas\Inventario\Views\MotivoInventario\Consultar.cshtml" />
     <Content Include="Areas\Inventario\Views\UnidadDeMedida\Consultar.cshtml" />
     <Content Include="Areas\Inventario\Views\Presentacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\_GridViewPartial_facturaTipo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

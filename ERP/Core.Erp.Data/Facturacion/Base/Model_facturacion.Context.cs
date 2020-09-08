@@ -83,13 +83,14 @@ namespace Core.Erp.Data.Facturacion.Base
         public virtual DbSet<vwfa_notaCreDeb_x_fa_factura_NotaDeb> vwfa_notaCreDeb_x_fa_factura_NotaDeb { get; set; }
         public virtual DbSet<vwfa_factura_sin_guia> vwfa_factura_sin_guia { get; set; }
         public virtual DbSet<vwfa_guia_remision_det> vwfa_guia_remision_det { get; set; }
-        public virtual DbSet<fa_factura> fa_factura { get; set; }
         public virtual DbSet<fa_guia_remision> fa_guia_remision { get; set; }
         public virtual DbSet<fa_notaCreDeb> fa_notaCreDeb { get; set; }
         public virtual DbSet<fa_proforma> fa_proforma { get; set; }
         public virtual DbSet<fa_ProbabilidadCobro> fa_ProbabilidadCobro { get; set; }
         public virtual DbSet<fa_ProbabilidadCobroDet> fa_ProbabilidadCobroDet { get; set; }
         public virtual DbSet<vwfa_ProbabilidadCobroDet> vwfa_ProbabilidadCobroDet { get; set; }
+        public virtual DbSet<fa_factura> fa_factura { get; set; }
+        public virtual DbSet<fa_factura_tipo> fa_factura_tipo { get; set; }
     
         public virtual int SPFAC_EliminarCobroEfectivo(Nullable<int> idEmpresa, Nullable<int> idSucursal, Nullable<int> idBodega, Nullable<decimal> idCbteVta)
         {

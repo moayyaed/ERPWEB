@@ -78,29 +78,15 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_TerminoPago_Distribucion_fa_TerminoPago" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura_sin_guia" Width="1.5" PointX="19.375" PointY="19.75" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_guia_remision_det" Width="1.5" PointX="20.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_factura" Width="1.5" PointX="6" PointY="39.25" />
         <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision" Width="1.5" PointX="19.25" PointY="35.375" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb" Width="1.5" PointX="17" PointY="30.625" />
         <EntityTypeShape EntityType="Model_facturacion.fa_proforma" Width="1.5" PointX="6.25" PointY="31.25" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_catalogo" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_cliente" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_cliente" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_cliente" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_cliente_contactos" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_cliente_contactos" />
         <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_fa_cliente_contactos" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_cliente_contactos" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_cuotas_x_doc_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_NivelDescuento" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_PuntoVta" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_Vendedor" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_ct_cbtecble_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_cxc_cobro_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_guia_remision" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_det_fa_guia_remision" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_MotivoTraslado" />
@@ -120,6 +106,22 @@
         <EntityTypeShape EntityType="Model_facturacion.fa_ProbabilidadCobroDet" Width="1.5" PointX="22.625" PointY="8.5" />
         <AssociationConnector Association="Model_facturacion.FK_fa_ProbabilidadCobroDet_fa_ProbabilidadCobro" />
         <EntityTypeShape EntityType="Model_facturacion.vwfa_ProbabilidadCobroDet" Width="1.5" PointX="20.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_factura" Width="1.5" PointX="6" PointY="39.125" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_factura_tipo" Width="1.5" PointX="3.75" PointY="54.75" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_catalogo" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_cliente" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_cliente_contactos" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_cuotas_x_doc_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_det_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_factura_tipo" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_NivelDescuento" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_PuntoVta" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_fa_Vendedor" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_ct_cbtecble_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_cxc_cobro_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_factura" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

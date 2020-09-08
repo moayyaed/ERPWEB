@@ -12,27 +12,27 @@ namespace Core.Erp.Data.Facturacion.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class fa_NivelDescuento
+    public partial class fa_factura_tipo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public fa_NivelDescuento()
+        public fa_factura_tipo()
         {
-            this.fa_cliente = new HashSet<fa_cliente>();
-            this.fa_proforma = new HashSet<fa_proforma>();
             this.fa_factura = new HashSet<fa_factura>();
         }
     
         public int IdEmpresa { get; set; }
-        public int IdNivel { get; set; }
+        public int IdFacturaTipo { get; set; }
+        public string Codigo { get; set; }
         public string Descripcion { get; set; }
-        public string Observacion { get; set; }
-        public double Porcentaje { get; set; }
         public bool Estado { get; set; }
+        public string IdUsuarioCreacion { get; set; }
+        public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string IdUsuarioModificacion { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public string IdUsuarioAnulacion { get; set; }
+        public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        public string MotivoAnulacion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fa_cliente> fa_cliente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fa_proforma> fa_proforma { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fa_factura> fa_factura { get; set; }
     }

@@ -209,6 +209,7 @@
     <Compile Include="Facturacion\fa_factura_det_x_in_Ing_Egr_Inven_det_Info.cs" />
     <Compile Include="Facturacion\fa_factura_Info.cs" />
     <Compile Include="Facturacion\fa_factura_resumen_Info.cs" />
+    <Compile Include="Facturacion\fa_factura_tipo_Info.cs" />
     <Compile Include="Facturacion\fa_factura_x_fa_guia_remision_Info.cs" />
     <Compile Include="Facturacion\fa_formaPago_Info.cs" />
     <Compile Include="Facturacion\fa_guia_remision_det_Info.cs" />

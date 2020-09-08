@@ -30,9 +30,18 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
 
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "TipoComprobante", "Index");
-            ViewBag.Nuevo = info.Nuevo;
-            ViewBag.Modificar = info.Modificar;
-            ViewBag.Anular = info.Anular;
+            if (info != null)
+            {
+                ViewBag.Nuevo = info.Nuevo;
+                ViewBag.Modificar = info.Modificar;
+                ViewBag.Anular = info.Anular;
+            }else
+            {
+                ViewBag.Nuevo = false;
+                ViewBag.Modificar = false;
+                ViewBag.Anular = false;
+            }
+            
             #endregion
 
             ct_cbtecble_tipo_Info model = new ct_cbtecble_tipo_Info
@@ -49,9 +58,6 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_comprobante_tipo(bool Nuevo = false)
         {
-            //List<ct_cbtecble_tipo_Info> model = new List<ct_cbtecble_tipo_Info>();
-            //int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            //model = bus_comprobante_tipo.get_list(IdEmpresa, true);
             ViewBag.Nuevo = Nuevo;
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = Lista_ComprobanteTipo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -60,12 +66,13 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         }
         private void cargar_combos()
         {
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
             var lst_tipo = bus_tipo.get_list(IdEmpresa, false);
             ViewBag.lst_tipo = lst_tipo;
         }
         #endregion
+        
         #region Acciones
 
         public ActionResult Nuevo()
@@ -96,9 +103,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return RedirectToAction("Consultar", new { IdTipoCbte = model.IdTipoCbte, Exito = true });
         }
 
-        public ActionResult Consultar(int IdTipoCbte = 0, bool Exito=false)
+        public ActionResult Consultar(int IdEmpresa = 0, int IdTipoCbte = 0, bool Exito=false)
         {
-            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdTipoCbte);
+            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdEmpresa,IdTipoCbte);
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -121,9 +128,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return View(model);
         }
 
-        public ActionResult Modificar(int IdTipoCbte = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, int IdTipoCbte = 0)
         {
-            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdTipoCbte);
+            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdEmpresa,IdTipoCbte);
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -139,7 +146,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         [HttpPost]
         public ActionResult Modificar(ct_cbtecble_tipo_Info model)
         {
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_comprobante_tipo.modificarDB(model))
             {
                 cargar_combos();
@@ -148,7 +155,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             return RedirectToAction("Consultar", new { IdTipoCbte = model.IdTipoCbte, Exito = true });
         }
 
-        public ActionResult Anular(int IdTipoCbte = 0)
+        public ActionResult Anular(int IdEmpresa = 0, int IdTipoCbte = 0)
         {
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Contabilidad", "TipoComprobante", "Index");
@@ -156,7 +163,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
                 return RedirectToAction("Index");
             #endregion
 
-            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdTipoCbte);
+            ct_cbtecble_tipo_Info model = bus_comprobante_tipo.get_info(IdEmpresa, IdTipoCbte);
             if (model == null)
                 return RedirectToAction("Index");
             cargar_combos();
@@ -165,7 +172,7 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
         [HttpPost]
         public ActionResult Anular(ct_cbtecble_tipo_Info model)
         {
-            model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             if (!bus_comprobante_tipo.anularDB(model))
             {
                 cargar_combos();

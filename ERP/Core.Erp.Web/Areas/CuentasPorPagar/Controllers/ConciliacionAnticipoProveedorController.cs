@@ -609,7 +609,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
                         if (repetido == 0)
                         {
-                            var info_tipocbte = bus_tipocbte.get_info(info_det.IdTipoCbte_cxp);
+                            var info_tipocbte = bus_tipocbte.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), info_det.IdTipoCbte_cxp);
                             info_det_fact.IdEmpresa = info_det.IdEmpresa;
                             info_det_fact.IdOrdenPago = info_det.IdOrdenPago;
                             info_det_fact.IdConciliacion = info_det.IdConciliacion;
@@ -767,7 +767,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ct_cbtecble_tipo_Bus bus_tipocbte = new ct_cbtecble_tipo_Bus();
 
             cp_ConciliacionAnticipoDetCXP_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).FirstOrDefault();
-            var info_tipocbte = bus_tipocbte.get_info(edited_info.IdTipoCbte_cxp);
+            var info_tipocbte = bus_tipocbte.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), edited_info.IdTipoCbte_cxp);
 
             edited_info.tc_TipoCbte = info_tipocbte.tc_TipoCbte;
             edited_info.MontoAplicado = info_det.MontoAplicado;

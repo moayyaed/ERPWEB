@@ -21,11 +21,11 @@ namespace Core.Erp.Bus.Contabilidad
             }
         }
 
-        public ct_cbtecble_tipo_Info get_info(int IdTipoCbte)
+        public ct_cbtecble_tipo_Info get_info(int IdEmpresa, int IdTipoCbte)
         {
             try
             {
-                return odata.get_info(IdTipoCbte);
+                return odata.get_info(IdEmpresa, IdTipoCbte);
             }
             catch (Exception)
             {
