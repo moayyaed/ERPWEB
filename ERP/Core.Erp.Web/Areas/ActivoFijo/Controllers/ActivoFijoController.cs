@@ -19,6 +19,8 @@ using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Web.Areas.RRHH.Controllers;
 using Core.Erp.Web.Areas.General.Controllers;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
 {
@@ -45,6 +47,9 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         Af_Marca_List ListaMarcaAF = new Af_Marca_List();
         Af_Modelo_List ListaModeloAF = new Af_Modelo_List();
         Af_Area_List ListaAreaAF = new Af_Area_List();
+
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         public int IdActivoFijo_ { get; set; }
         public static byte[] imagen { get; set; }
         string mensaje = string.Empty;
@@ -53,19 +58,36 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #region Index
         public ActionResult Index()
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
 
-            var model = bus_activo.get_list(IdEmpresa, true);
-            ListaActivoFijo.set_list(model, IdTransaccionSession);
-            return View();
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "ActivoFijo", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            Af_Activo_fijo_Info model = new Af_Activo_fijo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+
+            var lst = bus_activo.get_list(model.IdEmpresa, true);
+            ListaActivoFijo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_activo_fijo()
+        public ActionResult GridViewPartial_activo_fijo(bool Nuevo=false)
         {
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-            var model = ListaActivoFijo.get_list(IdTransaccionSession);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaActivoFijo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             return PartialView("_GridViewPartial_activo_fijo", model);
         }
@@ -195,6 +217,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "ActivoFijo", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             Af_Activo_fijo_Info model = new Af_Activo_fijo_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -228,9 +255,61 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             {
                 cargar_combos(model.IdEmpresa);
                 return View(model);
-            }            
+            }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdActivoFijo = model.IdActivoFijo, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdActivoFijo = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            Af_Activo_fijo_Info model = bus_activo.get_info(IdEmpresa, IdActivoFijo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "ActivoFijo", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            else
+            {
+                if (model.Estado=="A" && model.Estado_Proceso!= "TIP_ESTADO_AF_ACTIVO")
+                {
+                    info.Modificar = false;
+                }
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+
+            try
+            {
+
+                model.imagen_af = System.IO.File.ReadAllBytes(Server.MapPath(UploadDirectory) + model.IdEmpresa.ToString() + model.IdActivoFijo.ToString() + ".jpg");
+            }
+            catch (Exception)
+            {
+
+                model.imagen_af = new byte[0];
+            }
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0, int IdActivoFijo = 0)
@@ -241,6 +320,12 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "ActivoFijo", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             Af_Activo_fijo_Info model = bus_activo.get_info(IdEmpresa, IdActivoFijo);
             if (model == null)
                 return RedirectToAction("Index");
@@ -280,11 +365,23 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdActivoFijo = model.IdActivoFijo, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int IdActivoFijo = 0)
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "ActivoFijo", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             Af_Activo_fijo_Info model = bus_activo.get_info(IdEmpresa, IdActivoFijo);
             if (model == null)
                 return RedirectToAction("Index");

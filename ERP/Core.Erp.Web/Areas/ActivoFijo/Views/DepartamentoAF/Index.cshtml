@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.ActivoFijo.Af_Departamento_Info
 @{
     ViewBag.Title = "Consulta de departamentos de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,7 +10,11 @@
 
 @using (Html.BeginForm())
 {
-@Html.Action("GridViewPartial_departamento_af", new { IdArea = ViewBag.IdArea })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdArea, new { @id = "IdArea" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+@Html.Action("GridViewPartial_departamento_af", new { IdArea = ViewBag.IdArea, Nuevo = ViewBag.Nuevo })
 
 <div class="box-footer">
     <a class="btn btn-default" href="@Url.Action("Index", "AreaAF", new { IdArea = ViewBag.IdArea, Area = "ActivoFijo" }, null)">Volver</a>

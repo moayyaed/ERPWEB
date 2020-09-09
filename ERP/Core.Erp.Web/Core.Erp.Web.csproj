@@ -10594,6 +10594,9 @@
     <Content Include="Areas\Inventario\Views\IngresoInventario\Consultar.cshtml" />
     <Content Include="Areas\Inventario\Views\TransferenciasInventario\Consultar.cshtml" />
     <Content Include="Areas\Inventario\Views\Consignacion\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\ActivoFijo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\DepartamentoAF\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
