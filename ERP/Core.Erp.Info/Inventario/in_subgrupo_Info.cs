@@ -40,6 +40,9 @@ namespace Core.Erp.Info.Inventario
         public string NomCategoria { get; set; }
         public string NomLinea { get; set; }
         public string NomGrupo { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Inventario.in_Consignacion_Info
 @{
-    ViewBag.Title = "Modificar consignación por proveedor";
+    ViewBag.Title = "Consultar consignación por proveedor";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,14 +8,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Modificar", "Consignacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "Consignacion", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdConsignacion)
     @Html.HiddenFor(q => q.IdSucursal)
     @Html.HiddenFor(q => q.IdNumMovi)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -36,8 +38,34 @@
     }
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-10 col-md-1">
-                <label for="IdImprimir"></label>
+            <div class="col-md-offset-8 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Consignacion",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Consignacion", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdConsignacion=Model.IdConsignacion }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Consignacion", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdConsignacion=Model.IdConsignacion  }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
@@ -117,10 +145,6 @@
         </div>
     </div>
     <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        }
         <a class="btn btn-default" href="@Url.Action("Index","Consignacion",new { Area = "Inventario" },null)">Cancelar</a>
     </div>
 
@@ -130,6 +154,24 @@
 }
 
 <script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
     function Imprimir() {
         var location = GetPathServer();
         var win = window.open(location +"/Reportes/InventarioReportes/INV_014?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdConsignacion="+@Model.IdConsignacion, '_blank');

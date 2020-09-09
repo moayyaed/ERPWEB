@@ -57,6 +57,9 @@ namespace Core.Erp.Info.Inventario
         public string SecuencialID { get; set; }
         public string Desc_mov_inv { get; set; }
         public string EstadoAprobacion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
         #region MyRegion

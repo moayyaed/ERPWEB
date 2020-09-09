@@ -1,0 +1,192 @@
+﻿@model Core.Erp.Info.Inventario.in_subgrupo_Info
+@{
+    ViewBag.Title = "Consultar subgrupo de producto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "Subgrupo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdSubgrupo)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Subgrupo",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdCategoria = Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Subgrupo", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdCategoria = Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo, IdSubgrupo = Model.IdSubgrupo }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Subgrupo", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdCategoria=Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo, IdSubgrupo = Model.IdSubgrupo }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cod_subgrupo">Código</label>
+                    @Html.TextBoxFor(q => q.cod_subgrupo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_subgrupo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCategoria">Categoría*</label>
+                    @Html.HiddenFor(q => q.IdCategoria)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCategoria, settings =>
+                   {
+                       settings.Name = "IdCategoria";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("IdCategoria", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("ca_Categoria", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdCategoria";
+                       settings.Properties.ValueType = typeof(string);
+                       settings.Properties.TextField = "ca_Categoria";
+                       settings.Properties.NullText = "== Seleccione ==";
+
+                       settings.Properties.DropDownButton.Enabled = false;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.lst_categorias).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdLinea">Línea*</label>
+                    @Html.HiddenFor(q => q.IdLinea)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdLinea, settings =>
+                   {
+                       settings.Name = "IdLinea";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("IdLinea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("nom_linea", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdLinea";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "nom_linea";
+                       settings.Properties.NullText = "== Seleccione ==";
+
+                       settings.Properties.DropDownButton.Enabled = false;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.ReadOnly = true;
+                   }).BindList(ViewBag.lst_lineas).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdGrupo">Grupo*</label>
+                    @Html.HiddenFor(q => q.IdGrupo)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdGrupo, settings =>
+               {
+                   settings.Name = "IdGrupo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdGrupo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("nom_grupo", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdGrupo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "nom_grupo";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_grupos).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nom_subgrupo">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_subgrupo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_subgrupo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index", "Subgrupo", new {IdEmpresa = Model.IdEmpresa, IdCategoria = Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo , Area = "Inventario" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+</script>

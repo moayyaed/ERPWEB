@@ -1,6 +1,9 @@
 ﻿using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -13,23 +16,48 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Index /Metodos
 
         in_grupo_Bus bus_grupo = new in_grupo_Bus();
-            in_categorias_Bus bus_categoria = new in_categorias_Bus();
-            in_linea_Bus bus_linea = new in_linea_Bus();
+        in_categorias_Bus bus_categoria = new in_categorias_Bus();
+        in_linea_Bus bus_linea = new in_linea_Bus();
+        in_grupo_List Lista_Grupo = new in_grupo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+
         public ActionResult Index(int IdEmpresa = 0 , string IdCategoria = "",int IdLinea = 0)
         {
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdCategoria = IdCategoria;
-            ViewBag.IdLinea = IdLinea;
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Categoria", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            in_grupo_Info model = new in_grupo_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdCategoria = IdCategoria,
+                IdLinea = IdLinea,
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+            };
+
+            var lst = bus_grupo.get_list(model.IdEmpresa, model.IdCategoria, model.IdLinea, true);
+            Lista_Grupo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_grupo(int IdEmpresa= 0 , string IdCategoria = "", int IdLinea = 0)
+        public ActionResult GridViewPartial_grupo(int IdEmpresa= 0 , string IdCategoria = "", int IdLinea = 0, bool Nuevo=false)
         {
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdCategoria = IdCategoria;
             ViewBag.IdLinea = IdLinea;
-            var model = bus_grupo.get_list(IdEmpresa,IdCategoria, IdLinea, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Grupo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_grupo", model);
         }
         private void cargar_combos(int IdEmpresa , string IdCategoria)
@@ -48,6 +76,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
         public ActionResult Nuevo(int IdEmpresa = 0 , string IdCategoria ="", int IdLinea = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Categoria", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             in_grupo_Info model = new in_grupo_Info
             {
                  IdEmpresa = IdEmpresa,
@@ -73,8 +107,43 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             }
             return RedirectToAction("Index", new { IdEmpresa = model.IdEmpresa, IdCategoria = model.IdCategoria, IdLinea = model.IdLinea });
         }
+
+        public ActionResult Consultar(int IdEmpresa = 0, string IdCategoria = "", int IdLinea = 0, int IdGrupo = 0, bool Exito=false)
+        {
+            in_grupo_Info model = bus_grupo.get_info(IdEmpresa, IdCategoria, IdLinea, IdGrupo);
+            if (model == null)
+            {
+                ViewBag.IdCategoria = IdCategoria;
+                ViewBag.IdLinea = IdLinea;
+                return RedirectToAction("Index", new { IdEmpresa = IdEmpresa, IdCategoria = IdCategoria, IdLinea = IdLinea });
+            }
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Categoria", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            cargar_combos(IdEmpresa, IdCategoria);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            return View(model);
+        }
+
         public ActionResult Modificar(int IdEmpresa = 0 , string IdCategoria="", int IdLinea = 0, int IdGrupo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Categoria", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             in_grupo_Info model = bus_grupo.get_info(IdEmpresa, IdCategoria, IdLinea, IdGrupo);
             if (model == null)
             {
@@ -101,6 +170,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
         public ActionResult Anular(int IdEmpresa = 0 , string IdCategoria = "", int IdLinea = 0, int IdGrupo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Categoria", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             in_grupo_Info model = bus_grupo.get_info(IdEmpresa, IdCategoria, IdLinea, IdGrupo);
             if (model == null)
             {

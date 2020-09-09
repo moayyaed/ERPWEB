@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Inventario
 {
    public class in_movi_inven_tipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }        
         public int IdMovi_inven_tipo { get; set; }
         [StringLength(10, MinimumLength = 0, ErrorMessage = "el campo código debe tener máximo 10")]
@@ -40,5 +41,8 @@ namespace Core.Erp.Info.Inventario
         //Campos que no existen en la tabla
         public List<in_movi_inven_tipo_x_tb_bodega_Info> lst_tipo_mov_x_bodega { get; set; }
         public string IdCatalogoAprobacion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

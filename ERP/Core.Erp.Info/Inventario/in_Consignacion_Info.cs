@@ -41,6 +41,9 @@ namespace Core.Erp.Info.Inventario
 
         #region Campos que no existen en la tabla
         public List<in_ConsignacionDet_Info> lst_producto_consignacion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

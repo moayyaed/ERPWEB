@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Inventario.in_ProductoTipo_Info
 @{
     ViewBag.Title = "Consulta de tipos de producto";
 
@@ -11,7 +11,8 @@
 
 @using (Html.BeginForm())
 {
-
-    @Html.Action("GridViewPartial_tipo_producto")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_tipo_producto", new { Nuevo = ViewBag.Nuevo })
 
 }

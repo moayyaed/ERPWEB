@@ -1,6 +1,4 @@
-﻿
-
-@model Core.Erp.Info.Helps.cl_filtros_Info
+﻿@model Core.Erp.Info.Helps.cl_filtros_Info
 @{
 
     {
@@ -16,7 +14,8 @@
 
 @using (Html.BeginForm("Index", "DevolucionInventario", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -103,7 +102,7 @@
         </div>
         <div class="box-body">
        
-                 @Html.Action("GridViewPartial_devolucion", new {IdSucursal = Model.IdSucursal, Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin })
+                 @Html.Action("GridViewPartial_devolucion", new { Nuevo = ViewBag.Nuevo })
 
 
         </div>

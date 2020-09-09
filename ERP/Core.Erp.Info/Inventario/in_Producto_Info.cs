@@ -96,6 +96,9 @@ namespace Core.Erp.Info.Inventario
         public int OrdenVcto { get; set; }
         public string IdCtaCtble_Inve { get; set; }
         public string tp_ManejaInven { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 
