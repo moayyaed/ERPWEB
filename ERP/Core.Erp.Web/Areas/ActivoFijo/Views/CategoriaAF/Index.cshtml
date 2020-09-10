@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Categoria_Info
 @{
     ViewBag.Title = "Consulta de categorías de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -9,8 +9,12 @@
 }
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_categoria_activo", new { IdEmpresa = ViewBag.IdEmpresa, IdActivoFijoTipo = ViewBag.IdActivoFijoTipo })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdActivoFijoTipo, new { @id = "IdActivoFijoTipo" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    @Html.Action("GridViewPartial_categoria_activo", new { IdEmpresa = Model.IdEmpresa, IdActivoFijoTipo = Model.IdActivoFijoTipo, Nuevo = ViewBag.Nuevo })
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","TipoAF",new { IdEmpresa = ViewBag.IdEmpresa, IdActivoFijoTipo = ViewBag.IdActivoFijoTipo, Area = "ActivoFijo" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoAF",new { IdEmpresa = Model.IdEmpresa, IdActivoFijoTipo = Model.IdActivoFijoTipo, Area = "ActivoFijo" },null)">Volver</a>
     </div>
 }

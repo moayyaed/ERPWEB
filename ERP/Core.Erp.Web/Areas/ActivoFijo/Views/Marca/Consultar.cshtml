@@ -1,6 +1,6 @@
-﻿@model Core.Erp.Info.ActivoFijo.Af_Area_Info
+﻿@model Core.Erp.Info.ActivoFijo.Af_Marca_Info
 @{
-    ViewBag.Title = "Consultar área de activo fijo";
+    ViewBag.Title = "Consultar marca de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,10 +8,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Consultar", "AreaAF", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Consultar", "Marca", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa);
-    @Html.HiddenFor(q => q.IdArea);
+    @Html.HiddenFor(q => q.IdMarca);
     @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
     @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
     @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
@@ -29,7 +29,7 @@
             <div class="col-md-offset-9 col-md-1">
                 <div class="form-group">
                     <div id="btnNuevo" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "AreaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "Marca", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa }, null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -38,7 +38,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnModificar" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "AreaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Marca", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdMarca = Model.IdMarca }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
@@ -47,7 +47,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnAnular" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "AreaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Marca", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdMarca = Model.IdMarca }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
@@ -60,21 +60,22 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="Descripcion">Descripción</label>
-                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(q => q.ma_Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ma_Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","AreaAF",new { Area = "ActivoFijo" },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Marca",new { Area = "ActivoFijo" },null)">Cancelar</a>
     </div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
+
 <script type="text/javascript">
     $(function () {
         MostrarBotonesAccion();

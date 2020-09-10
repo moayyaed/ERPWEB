@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.ActivoFijo;
 using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.ActivoFijo;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using System;
@@ -24,28 +26,59 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         Af_Depreciacion_Det_list lst_depreciacion_det = new Af_Depreciacion_Det_list();
         ct_cbtecble_det_List lst_comprobante_detalle = new ct_cbtecble_det_List();
         ct_cbtecble_det_Bus bus_comprobante_detalle = new ct_cbtecble_det_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
+        Af_Depreciacion_List Lista_Depreciacion = new Af_Depreciacion_List();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            cl_filtros_Info model = new cl_filtros_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
+            };
+
+            var lst = bus_depreciacion.get_list(model.IdEmpresa, true, model.fecha_ini, model.fecha_fin);
+            Lista_Depreciacion.set_list(lst, model.IdTransaccionSession);
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            var lst = bus_depreciacion.get_list(model.IdEmpresa, true, model.fecha_ini, model.fecha_fin);
+            Lista_Depreciacion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_depreciacion(DateTime? Fecha_ini, DateTime? Fecha_fin)
+        public ActionResult GridViewPartial_depreciacion(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.fecha_ini = Fecha_ini == null ? DateTime.Now : Fecha_ini;
-            ViewBag.fecha_fin = Fecha_fin == null ? DateTime.Now : Fecha_fin;
-            var model = bus_depreciacion.get_list(IdEmpresa, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Depreciacion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_depreciacion", model);
         }
 
@@ -138,6 +171,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             Af_Depreciacion_Info model = new Af_Depreciacion_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -171,9 +209,45 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdDepreciacion = model.IdDepreciacion, Exito = true });
         }
 
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdDepreciacion = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            Af_Depreciacion_Info model = bus_depreciacion.get_info(IdEmpresa, IdDepreciacion);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.lst_detalle = bus_depreciacion_det.get_list(IdEmpresa, IdDepreciacion);
+            model.lst_detalle_ct = bus_comprobante_detalle.get_list(IdEmpresa, Convert.ToInt32(model.IdTipoCbte), Convert.ToInt32(model.IdCbteCble));
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            lst_depreciacion_det.set_list(model.lst_detalle, model.IdTransaccionSession);
+            lst_comprobante_detalle.set_list(model.lst_detalle_ct, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            return View(model);
+        }
         public ActionResult Modificar(int IdEmpresa =0, decimal IdDepreciacion = 0)
         {
             #region Validar Session
@@ -181,6 +255,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
             Af_Depreciacion_Info model = bus_depreciacion.get_info(IdEmpresa, IdDepreciacion);
             if (model == null)
@@ -211,7 +290,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 ViewBag.mensaje = "No se ha podido modificar el registro";
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdDepreciacion = model.IdDepreciacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa =0 , decimal IdDepreciacion = 0)
@@ -221,6 +300,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "DepreciacionAF", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
             Af_Depreciacion_Info model = bus_depreciacion.get_info(IdEmpresa, IdDepreciacion);
             if (model == null)
@@ -263,6 +347,26 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         #endregion
     }
 
+    public class Af_Depreciacion_List
+    {
+        string Variable = "Af_Depreciacion_Info";
+
+        public List<Af_Depreciacion_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<Af_Depreciacion_Info> list = new List<Af_Depreciacion_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<Af_Depreciacion_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<Af_Depreciacion_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
     public class Af_Depreciacion_Det_list
     {
         string Variable = "Af_Depreciacion_Det_Info";

@@ -10597,6 +10597,16 @@
     <Content Include="Areas\ActivoFijo\Views\ActivoFijo\Consultar.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\AreaAF\Consultar.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\DepartamentoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CategoriaAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\Marca\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\Modelo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\TipoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\DepreciacionAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\RetiroActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\RevalorizacionActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\VentaActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CatalogoTipoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CatalogoAF\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

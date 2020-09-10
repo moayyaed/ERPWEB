@@ -28,5 +28,10 @@ namespace Core.Erp.Info.ActivoFijo
         public string MotiAnula { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

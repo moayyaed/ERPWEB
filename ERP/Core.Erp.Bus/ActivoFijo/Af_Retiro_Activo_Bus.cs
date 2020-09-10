@@ -81,7 +81,7 @@ namespace Core.Erp.Bus.ActivoFijo
             {
                 var af = odata_af.get_info(info.IdEmpresa, info.IdActivoFijo);
                 //armar un diario pasando los parametros que pida
-                var info_cbte = odata_ct.armar_info(info.lst_ct_cbtecble_det, info.IdEmpresa, af.IdSucursal, Convert.ToInt32(info.IdTipoCbte), 0, info.Concepto_Retiro, info.Fecha_Retiro);
+                var info_cbte = odata_ct.armar_info(info.lst_ct_cbtecble_det, info.IdEmpresa, af.IdSucursal, Convert.ToInt32(info.IdTipoCbte), Convert.ToDecimal(info.IdCbteCble), info.Concepto_Retiro, info.Fecha_Retiro);
                 //modifico el diario
                 if (odata_ct.modificarDB(info_cbte))
                 {

@@ -1,18 +1,18 @@
-﻿@model Core.Erp.Info.ActivoFijo.Af_Departamento_Info
+﻿@model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Categoria_Info
 @{
-    ViewBag.Title = "Consultar departamento de activo fijo";
+    ViewBag.Title = "Modificar categoría de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Consultar", "DepartamentoAF", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Modificar", "CategoriaAF", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
-    @Html.HiddenFor(q => q.IdDepartamento)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdActivoFijoTipo)
+    @Html.HiddenFor(q => q.IdCategoriaAF)
     @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
     @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
     @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
@@ -30,7 +30,7 @@
             <div class="col-md-offset-9 col-md-1">
                 <div class="form-group">
                     <div id="btnNuevo" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdDepartamento=Model.IdArea }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "CategoriaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa }, null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -39,7 +39,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnModificar" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea, IdDepartamento=Model.IdDepartamento }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "CategoriaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdActivoFijoTipo = Model.IdActivoFijoTipo, IdCategoriaAF = Model.IdCategoriaAF }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
@@ -48,7 +48,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnAnular" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea, IdDepartamento=Model.IdDepartamento }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "CategoriaAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdActivoFijoTipo = Model.IdActivoFijoTipo, IdCategoriaAF=Model.IdCategoriaAF }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
@@ -60,31 +60,41 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdArea">Area*</label>
-                    @Html.HiddenFor(q => q.IdArea)
-                    @Html.DevExpress().ComboBoxFor(q => q.IdArea, settings =>
+                    <label for="IdActivoFijoTipo">Tipo catálogo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdActivoFijoTipo, settings =>
                {
-                   settings.Name = "IdArea";
+                   settings.Name = "IdActivoFijoTipo";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   settings.Properties.Columns.Add("IdActivoFijoTipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Af_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
                    //Campo ID
-                   settings.Properties.ValueField = "IdArea";
-                   settings.Properties.ValueType = typeof(decimal);
-                   settings.Properties.TextField = "Descripcion";
+                   settings.Properties.ValueField = "IdActivoFijoTipo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Af_Descripcion";
                    settings.Properties.NullText = "== Seleccione ==";
 
                    settings.Properties.DropDownButton.Enabled = false;
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.ReadOnly = true;
-               }).BindList(ViewBag.lst_area).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodCategoriaAF">Código</label>
+                    @Html.TextBoxFor(q => q.CodCategoriaAF, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCategoriaAF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -96,10 +106,10 @@
             </div>
         </div>
     </div>
-
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","DepartamentoAF", new {  IdArea = Model.IdArea, Area = "ActivoFijo"  },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index", "CategoriaAF", new { IdActivoFijoTipo = Model.IdActivoFijoTipo, Area ="ActivoFijo" }, null)">Cancelar</a>
     </div>
+
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }

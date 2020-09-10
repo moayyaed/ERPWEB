@@ -11,7 +11,7 @@ namespace Core.Erp.Info.ActivoFijo
     {
         public decimal IdTransaccionSession { get; set; }
         
-      public int IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
         public int IdActivoFijoTipo { get; set; }
         [StringLength(150, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 150")]
         public string CodActivoFijo { get; set; }
@@ -45,6 +45,11 @@ namespace Core.Erp.Info.ActivoFijo
         [Required(ErrorMessage = ("el campo cuenta contable es obligatorio"))]
         public string IdCtaCble_Retiro { get; set; }
         public bool EstadoBool { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 }

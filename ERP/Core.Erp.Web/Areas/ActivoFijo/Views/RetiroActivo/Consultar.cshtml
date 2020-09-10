@@ -1,6 +1,7 @@
-﻿@model Core.Erp.Info.ActivoFijo.Af_Venta_Activo_Info
+﻿@model Core.Erp.Info.ActivoFijo.Af_Retiro_Activo_Info
 @{
-    ViewBag.Title = "Modificar venta de activo fijo";
+
+    ViewBag.Title = "Consultar retiro de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,14 +9,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Modificar", "VentaActivo", FormMethod.Post, new { @class = "form", @role = "form" }))
+<script>
+    function OnSelectedCtaCbleChanged() {
+        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
+    }
+    function GrupoComboBox_BeginCallback(s, e) {
+        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
+        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
+    }
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location + "/Reportes/ActivoFijoReportes/ACTF_003?IdEmpresa=" +@Model.IdEmpresa +"&IdRetiroActivo=" +@Model.IdRetiroActivo, '_blank');
+        win.focus();
+    }
+</script>
+
+@using (Html.BeginForm("Consultar", "RetiroActivo", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q => q.IdRetiroActivo)
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.IdVtaActivo)
     @Html.HiddenFor(q => q.IdCbteCble)
     @Html.HiddenFor(q => q.IdTipoCbte)
     @Html.HiddenFor(q => q.IdEmpresa_ct)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
 
     if (ViewBag.mensaje != null)
     {
@@ -37,37 +56,34 @@
     }
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-offset-8 col-md-1">
                 <div class="form-group">
-                    <label for="Cod_VtaActivo">Código</label>
-                    @Html.TextBoxFor(q => q.Cod_VtaActivo, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.Cod_VtaActivo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-md-offset-6 col-md-2">
-                <div class="form-group">
-                    <label for="">Fecha de venta</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.Fecha_Venta, settings =>
-                   {
-                       settings.Name = "Fecha_Venta";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Properties.AllowMouseWheel = false;
-                   }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.Fecha_Venta, "", new { @class = "text-danger" })
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "RetiroActivo", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa }, null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-1">
-                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "RetiroActivo", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdRetiroActivo = Model.IdRetiroActivo }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "RetiroActivo", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdRetiroActivo = Model.IdRetiroActivo }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                         <i class="fa fa-print"></i>
@@ -78,27 +94,59 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cod_Ret_Activo">Código</label>
+                    @Html.TextBoxFor(q => q.Cod_Ret_Activo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cod_Ret_Activo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-6 col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha de retiro</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.Fecha_Retiro, settings =>
+                    {
+                        settings.Name = "Fecha_Retiro";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Retiro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdActivoFijo">Activo fijo*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdActivoFijo, settings =>
-               {
-                   settings.Name = "IdActivoFijo";
-                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                   settings.Properties.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                   //Campo ID
-                   settings.Properties.ValueField = "IdActivoFijo";
-                   settings.Properties.ValueType = typeof(int);
-                   settings.Properties.TextField = "Af_Nombre";
-                   //Boton para seleccionar ningun registro
-                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                   settings.Properties.NullText = "== Seleccione ==";
-                   settings.Properties.DropDownButton.Enabled = false;
-                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                   settings.ReadOnly = true;
-               }).BindList(ViewBag.lst_fijo).GetHtml()
+                    {
+                        settings.Name = "IdActivoFijo";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                        settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                        settings.Properties.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdActivoFijo";
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.TextField = "Af_Nombre";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                        settings.Properties.NullText = "== Seleccione ==";
+                        settings.Properties.DropDownButton.Enabled = false;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.ReadOnly = true;
+                    }).BindList(ViewBag.lst_fijo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdActivoFijo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -144,7 +192,6 @@
             </div>
         </div>
     </div>
-
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
@@ -165,29 +212,15 @@
                                 @Html.ValidationMessageFor(q => q.NumComprobante, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="Valor_Venta">V. venta</label>
-                                @Html.TextBoxFor(q => q.Valor_Venta, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.Valor_Venta, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="Valor_Perdi_Gana">V. perdida y ganancia</label>
-                                @Html.TextBoxFor(q => q.Valor_Perdi_Gana, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.Valor_Perdi_Gana, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Concepto_Vta">Observación</label>
-                                @Html.TextBoxFor(q => q.Concepto_Vta, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(q => q.Concepto_Vta, "", new { @class = "text-danger" })
+                                <label for="Concepto_Retiro">Observación</label>
+                                @Html.TextBoxFor(q => q.Concepto_Retiro, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Concepto_Retiro, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -210,30 +243,30 @@
         </div>
     </div>
     <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        }
-        <a class="btn btn-default" href="@Url.Action("Index", "VentaActivo", new { Area = "ActivoFijo" }, null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index", "RetiroActivo", new { Area = "ActivoFijo" }, null)">Cancelar</a>
     </div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-<script>
-    function OnSelectedCtaCbleChanged() {
-        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
-    }
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
 
-    function GrupoComboBox_BeginCallback(s, e) {
-        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
-        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
-    }
-
-    function Imprimir() {
-        var location = GetPathServer();
-        var win = window.open(location +"/Reportes/ActivoFijoReportes/ACTF_002?IdEmpresa="+@Model.IdEmpresa+"&IdVtaActivo="+@Model.IdVtaActivo, '_blank');
-        win.focus();
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
     }
 </script>

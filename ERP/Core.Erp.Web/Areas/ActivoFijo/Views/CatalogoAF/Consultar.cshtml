@@ -1,6 +1,6 @@
-﻿@model Core.Erp.Info.ActivoFijo.Af_Departamento_Info
+﻿@model Core.Erp.Info.ActivoFijo.Af_Catalogo_Info
 @{
-    ViewBag.Title = "Consultar departamento de activo fijo";
+    ViewBag.Title = "Consultar catálogo de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -9,10 +9,9 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Consultar", "DepartamentoAF", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Consultar", "CatalogoAF", FormMethod.Post, new { @role = "form", @class = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa)
-    @Html.HiddenFor(q => q.IdDepartamento)
+    @Html.HiddenFor(q => q.IdCatalogo)
     @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
     @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
     @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
@@ -30,7 +29,7 @@
             <div class="col-md-offset-9 col-md-1">
                 <div class="form-group">
                     <div id="btnNuevo" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdDepartamento=Model.IdArea }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "CatalogoAF", new { Area = "ActivoFijo" }, null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -39,7 +38,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnModificar" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea, IdDepartamento=Model.IdDepartamento }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "CatalogoAF", new { Area = "ActivoFijo", IdTipoCatalogo = Model.IdTipoCatalogo, IdCatalogo = Model.IdCatalogo }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
@@ -48,7 +47,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnAnular" hidden>
-                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "DepartamentoAF", new { Area = "ActivoFijo", IdEmpresa = Model.IdEmpresa, IdArea = Model.IdArea, IdDepartamento=Model.IdDepartamento }, null)">
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "CatalogoAF", new { Area = "ActivoFijo", IdTipoCatalogo=Model.IdTipoCatalogo, IdCatalogo = Model.IdCatalogo  }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
@@ -60,26 +59,38 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdArea">Area*</label>
-                    @Html.HiddenFor(q => q.IdArea)
-                    @Html.DevExpress().ComboBoxFor(q => q.IdArea, settings =>
+                    <label for="IdTipoCatalogo">Tipo catálogo*</label>
+                    @Html.HiddenFor(q => q.IdTipoCatalogo)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCatalogo, settings =>
                {
-                   settings.Name = "IdArea";
+                   settings.Name = "IdTipoCatalogo";
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                   settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("IdTipoCatalogo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
                    settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
                    //Campo ID
-                   settings.Properties.ValueField = "IdArea";
-                   settings.Properties.ValueType = typeof(decimal);
+                   settings.Properties.ValueField = "IdTipoCatalogo";
+                   settings.Properties.ValueType = typeof(string);
                    settings.Properties.TextField = "Descripcion";
                    settings.Properties.NullText = "== Seleccione ==";
 
                    settings.Properties.DropDownButton.Enabled = false;
                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                    settings.ReadOnly = true;
-               }).BindList(ViewBag.lst_area).GetHtml()
-                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+               }).BindList(ViewBag.lst_tipos).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ICatalogo">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCatalogo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -97,14 +108,15 @@
         </div>
     </div>
 
+
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","DepartamentoAF", new {  IdArea = Model.IdArea, Area = "ActivoFijo"  },null)">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoAF", new { IdTipoCatalogo = Model.IdTipoCatalogo, Area = "ActivoFijo"  },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
 <script type="text/javascript">
     $(function () {
         MostrarBotonesAccion();
