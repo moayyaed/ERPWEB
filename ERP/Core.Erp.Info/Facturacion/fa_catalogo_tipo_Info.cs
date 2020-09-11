@@ -16,5 +16,9 @@ namespace Core.Erp.Info.Facturacion
         public string Descripcion { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

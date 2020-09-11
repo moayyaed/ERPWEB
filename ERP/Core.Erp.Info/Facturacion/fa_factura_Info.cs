@@ -83,6 +83,10 @@ namespace Core.Erp.Info.Facturacion
         
         public decimal? IdProforma { get; set; }
         public bool DescuentoReadOnly { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
         #region Campos super admin

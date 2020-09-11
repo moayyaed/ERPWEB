@@ -54,5 +54,10 @@ namespace Core.Erp.Info.Facturacion
         public string IdCiudad { get; set; }
         public string Descripcion_Ciudad { get; set; }
         public string IdParroquia { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

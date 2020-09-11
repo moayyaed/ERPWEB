@@ -19,5 +19,10 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo porcentaje es obligatorio")]
         public double Porcentaje { get; set; }
         public bool Estado { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

@@ -74,6 +74,9 @@ namespace Core.Erp.Info.Facturacion
         public List<fa_guia_remision_det_Info> lst_detalle { get; set; }
         public List<fa_factura_x_fa_guia_remision_Info> lst_detalle_x_factura { get; set; }
         public Nullable<decimal> IdProforma { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
 
         public bool GenerarFactura { get; set; }

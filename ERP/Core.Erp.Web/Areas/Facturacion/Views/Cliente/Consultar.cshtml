@@ -15,6 +15,9 @@
     @Html.HiddenFor(q => q.IdCliente)
     @Html.HiddenFor(q => q.IdContacto)
     @Html.HiddenFor(q => q.IdPersona, new { @id = "IdPersona" })
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -36,34 +39,31 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-9 col-md-1">
-                @if (@ViewBag.Nuevo == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo", "Cliente", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa }, null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Modificar == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Cliente", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdCliente = Model.IdCliente }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Anular == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Cliente", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdCliente = Model.IdCliente }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
@@ -383,43 +383,57 @@
     }
 }
 <script>
+    $(function () {
+        MostrarBotonesAccion();
+    
+        $("#pe_apellido").keyup(function () {
+            actualizar_nombre_completo();
+        });
+        $("#pe_nombre").keyup(function () {
+            actualizar_nombre_completo();
+        });
+        $("#pe_razonSocial").keyup(function () {
+            actualizar_nombre_completo();
+        });
 
-    $("#pe_apellido").keyup(function () {
-        actualizar_nombre_completo();
-    });
-    $("#pe_nombre").keyup(function () {
-        actualizar_nombre_completo();
-    });
-    $("#pe_razonSocial").keyup(function () {
-        actualizar_nombre_completo();
-    });
+        $("#IdTipoCredito").change(function () {
+            get_info_termino_pago();
+        });
 
-    $("#IdTipoCredito").change(function () {
-        get_info_termino_pago();
-    });
+        $("#pe_cedulaRuc").keyup(function () {
+            var tipo_doc = $("#IdTipoDocumento").val();
+            var cedula = $("#pe_cedulaRuc").val();
 
-    $("#pe_cedulaRuc").keyup(function () {
-        var tipo_doc = $("#IdTipoDocumento").val();
-        var cedula = $("#pe_cedulaRuc").val();
-
-        if (tipo_doc == "RUC") {
-            if (cedula.length > 13) {
-                var len = $("#pe_cedulaRuc").val();
-                len = len.substring(0, 13);
-                $("#pe_cedulaRuc").val(len);
-            }
-
-        }
-        else
-            if (tipo_doc == "CED") {
-                if (cedula.length > 10) {
+            if (tipo_doc == "RUC") {
+                if (cedula.length > 13) {
                     var len = $("#pe_cedulaRuc").val();
-                    len = len.substring(0, 10);
+                    len = len.substring(0, 13);
                     $("#pe_cedulaRuc").val(len);
                 }
+
             }
+            else
+                if (tipo_doc == "CED") {
+                    if (cedula.length > 10) {
+                        var len = $("#pe_cedulaRuc").val();
+                        len = len.substring(0, 10);
+                        $("#pe_cedulaRuc").val(len);
+                    }
+                }
+        });
     });
 
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1) {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1) {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1) {
+            $("#btnAnular").show();
+        }
+    }
 
     function actualizar_nombre_completo() {
         var apellido = $("#pe_apellido").val();

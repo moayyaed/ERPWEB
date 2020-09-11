@@ -392,25 +392,17 @@ function cargar_lista_contactos() {
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-5 col-md-1">
+            <div class="col-md-offset-10 col-md-1">
                 <label for="Autorizar"></label>
                 <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
                     <i class="fa fa-send"></i>  SRI
                 </button>
             </div>
-            <div class="col-md-offset-4 col-md-1">
+            <div class="col-md-1">
                 <label for="IdImprimir"></label>
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
                     <i class="fa fa-print"></i>
                 </button>
-            </div>
-            <div class="col-md-1">
-                <label for="IdNuevo"></label>
-                <div class="form-group">
-                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","NotaDeDebitoFacturacion",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                </div>
             </div>
         </div>
     </div>

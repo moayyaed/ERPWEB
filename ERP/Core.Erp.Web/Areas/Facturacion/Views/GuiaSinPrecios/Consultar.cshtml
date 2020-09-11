@@ -108,7 +108,9 @@
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
     @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
     if (ViewBag.mensaje != null)
     {
         <div class="alert alert-warning alert-dismissible">
@@ -140,44 +142,45 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-6 col-md-1">
-                @if (@ViewBag.Nuevo == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","GuiaSinPrecios",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Modificar == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "GuiaSinPrecios", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdGuiaRemision = Model.IdGuiaRemision }, null)">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Anular == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "GuiaSinPrecios", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdGuiaRemision = Model.IdGuiaRemision }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="ride" onclick="ImprimirRIDE();" title="Imprimir">
-                    <i class="fa fa-print"></i>  RIDE
-                </button>
+                <div id="ride" hidden>
+                    <button type="button" class="btn btn-primary form-control"  onclick="ImprimirRIDE();" title="Imprimir">
+                        <i class="fa fa-print"></i>  RIDE
+                    </button>
+                </div>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary form-control" id="sri" onclick="AutorizarSRI();" title="Autorizar SRI">
-                    <i class="fa fa-send"></i>  SRI
-                </button>
+                <div id="sri" hidden>
+                    <button type="button" class="btn btn-primary form-control" onclick="AutorizarSRI();" title="Autorizar SRI">
+                        <i class="fa fa-send"></i>  SRI
+                    </button>
+                </div>
             </div>
             <div class="col-md-1">
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
@@ -472,6 +475,7 @@
         GetUltimoDocumento_Factura();
         get_placa();
         MostrarBotonesSRI();
+        MostrarBotonesAccion();
 
         $("#IdSucursal").change(function () {
             CargarPuntosDeVenta();
@@ -486,6 +490,21 @@
             SetDireccionDestino();
         });
     });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
 
     function MostrarModal() {
         GridViewPartial_FacturasSinGuia.PerformCallback();

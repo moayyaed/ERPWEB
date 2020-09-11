@@ -38,6 +38,9 @@ namespace Core.Erp.Info.Facturacion
         public DateTime FechaIni { get; set; }
         public DateTime FechaFin { get; set; }
         public bool GenerarDevolucion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

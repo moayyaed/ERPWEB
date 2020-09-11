@@ -28,5 +28,8 @@ namespace Core.Erp.Info.Facturacion
         // campos que no existen
 
         public List<fa_TerminoPago_Distribucion_Info> Lst_fa_TerminoPago_Distribucion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }
