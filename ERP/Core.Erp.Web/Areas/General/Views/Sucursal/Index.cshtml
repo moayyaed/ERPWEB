@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.General.tb_sucursal_Info
 @{
     ViewBag.Title = "Consulta de sucursales";
 
@@ -11,8 +11,11 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdSucursal, new { @id = "IdSucursal" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_sucursal")
+    @Html.Action("GridViewPartial_sucursal", new { Nuevo = ViewBag.Nuevo })
 
 }
 

@@ -8,6 +8,8 @@ using Core.Erp.Bus.General;
 using Core.Erp.Info.General;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Web.Helps;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -18,22 +20,46 @@ namespace Core.Erp.Web.Areas.General.Controllers
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
+        tb_bodega_List Lista_Bodega = new tb_bodega_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+
         #endregion
 
         #region Index
-        public ActionResult Index(int IdEmpresa = 0 , int IdSucursal = 0)
+        public ActionResult Index()
         {
-            ViewBag.IdEmpresa = IdEmpresa;
-            ViewBag.IdSucursal = IdSucursal;
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            tb_bodega_Info model = new tb_bodega_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+            };
+
+            var lst = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, true);
+            Lista_Bodega.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_bodega(int IdEmpresa = 0 , int IdSucursal = 0)
+        public ActionResult GridViewPartial_bodega(int IdSucursal = 0, bool Nuevo=false)
         {
-            ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdSucursal = IdSucursal;
-            List<tb_bodega_Info> model = bus_bodega.get_list(IdEmpresa, IdSucursal, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Bodega.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_bodega", model);
         }
 
@@ -52,6 +78,11 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Acciones
         public ActionResult Nuevo(int  IdEmpresa = 0 , int IdSucursal = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             tb_bodega_Info model = new tb_bodega_Info {
                 IdEmpresa = IdEmpresa,
                 IdSucursal = IdSucursal
@@ -72,11 +103,44 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal=model.IdSucursal, IdBodega=model.IdBodega, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, int IdBodega = 0, bool Exito=false)
+        {
+            tb_bodega_Info model = bus_bodega.get_info(IdEmpresa, IdSucursal, IdBodega);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            ViewBag.IdEmpresa = IdEmpresa;
+            ViewBag.IdSucursal = IdSucursal;
+            cargar_combos(IdEmpresa);
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_bodega_Info model = bus_bodega.get_info(IdEmpresa, IdSucursal, IdBodega);
             if (model == null)
                 return RedirectToAction("Index", new { IdEmpresa = IdEmpresa, IdSucursal = IdSucursal });
@@ -97,11 +161,17 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, Exito = true });
         }
 
         public ActionResult Anular(int  IdEmpresa = 0 , int IdSucursal = 0, int IdBodega = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_bodega_Info model = bus_bodega.get_info(IdEmpresa, IdSucursal, IdBodega);
             if (model == null)
                 return RedirectToAction("Index", new { IdEmpresa = IdEmpresa, IdSucursal = IdSucursal });

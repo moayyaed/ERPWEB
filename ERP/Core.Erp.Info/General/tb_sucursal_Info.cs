@@ -44,6 +44,9 @@ namespace Core.Erp.Info.General
         public List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> ListaNivelDescuento { get; set; }
         public string IdString { get; set; }
         public bool Seleccionado { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
 

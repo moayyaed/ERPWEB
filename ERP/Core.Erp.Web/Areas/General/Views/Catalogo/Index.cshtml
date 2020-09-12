@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.General.tb_Catalogo_Info
 @{
     ViewBag.Title = "Consulta de catálogos";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,9 +10,10 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdTipoCatalogo, new { @id = "IdTipoCatalogo" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-
-    @Html.Action("GridViewPartial_catalogo", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo })
+    @Html.Action("GridViewPartial_catalogo", new { IdTipoCatalogo = Model.IdTipoCatalogo, Nuevo = ViewBag.Nuevo })
 
 
     <div class="box-footer">        

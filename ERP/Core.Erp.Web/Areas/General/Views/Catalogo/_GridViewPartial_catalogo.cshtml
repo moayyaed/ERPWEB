@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_catalogo";
-        settings.CallbackRouteValues = new { Controller = "Catalogo", Action = "GridViewPartial_catalogo", IdTipoCatalogo = ViewBag.IdTipoCatalogo };
+        settings.CallbackRouteValues = new { Controller = "Catalogo", Action = "GridViewPartial_catalogo", IdTipoCatalogo = ViewBag.IdTipoCatalogo, Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "CodCatalogo";
         //Configuración para que la grilla no muestre texto completo
@@ -61,20 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "ca_estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { CodCatalogo = DataBinder.Eval(tc.DataItem, "CodCatalogo"), IdTipoCatalogo = ViewBag.IdTipoCatalogo }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { CodCatalogo = DataBinder.Eval(tc.DataItem, "CodCatalogo"), IdTipoCatalogo = ViewBag.IdTipoCatalogo },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { CodCatalogo = DataBinder.Eval(tc.DataItem, "CodCatalogo"), IdTipoCatalogo = ViewBag.IdTipoCatalogo })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -94,6 +92,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

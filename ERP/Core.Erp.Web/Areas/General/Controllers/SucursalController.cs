@@ -11,6 +11,8 @@ using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Info.Contabilidad;
 using DevExpress.Web;
 using Core.Erp.Bus.Facturacion;
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -25,16 +27,41 @@ namespace Core.Erp.Web.Areas.General.Controllers
         tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus bus_formapago_x_niveldescuento = new tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus();
         tb_sucursal_FormaPago_x_fa_NivelDescuento_List FormaPago_x_NivelDescuento_List = new tb_sucursal_FormaPago_x_fa_NivelDescuento_List();
         List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info> Lista_FormaPago_x_NivelDescuento = new List<tb_sucursal_FormaPago_x_fa_NivelDescuento_Info>();
+        tb_sucursal_List Lista_Sucursal = new tb_sucursal_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            tb_sucursal_Info model = new tb_sucursal_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa)
+            };
+
+            var lst = bus_sucursal.get_list(model.IdEmpresa, true);
+            Lista_Sucursal.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_sucursal()
+        public ActionResult GridViewPartial_sucursal(bool Nuevo=false)
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_sucursal.get_list(IdEmpresa,true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Sucursal.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_sucursal", model);
         }        
         #endregion
@@ -114,6 +141,11 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             tb_sucursal_Info model = new tb_sucursal_Info
             {
                 IdEmpresa = IdEmpresa
@@ -134,11 +166,42 @@ namespace Core.Erp.Web.Areas.General.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, Exito = true });
         }
+        public ActionResult Consultar(int IdEmpresa = 0, int IdSucursal = 0, bool Exito=false)
+        {
+            tb_sucursal_Info model = bus_sucursal.get_info(IdEmpresa, IdSucursal);
+            if (model == null)
+                return RedirectToAction("Index");
 
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.ListaNivelDescuento = bus_formapago_x_niveldescuento.GetList(IdEmpresa, model.IdSucursal);
+            FormaPago_x_NivelDescuento_List.set_list(model.ListaNivelDescuento, model.IdTransaccionSession);
+
+            return View(model);
+        }
         public ActionResult Modificar(int IdEmpresa = 0 , int IdSucursal = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
             tb_sucursal_Info model = bus_sucursal.get_info(IdEmpresa, IdSucursal);
             if(model == null)
                 return RedirectToAction("Index");
@@ -159,11 +222,16 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0 , int IdSucursal = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Sucursal", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             tb_sucursal_Info model = bus_sucursal.get_info(IdEmpresa, IdSucursal);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaNivelDescuento = bus_formapago_x_niveldescuento.GetList(IdEmpresa, model.IdSucursal);

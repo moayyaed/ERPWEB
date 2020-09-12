@@ -32,6 +32,9 @@ namespace Core.Erp.Info.General
         #region Campos que no existen en la tabla
         public string IdString { get; set; }
         public bool EstadoBool { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
     }

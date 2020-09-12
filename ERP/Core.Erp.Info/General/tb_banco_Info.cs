@@ -24,5 +24,9 @@ namespace Core.Erp.Info.General
         public string CodigoLegal { get; set; }
         public bool TieneFormatoTransferencia { get; set; }
         public List<tb_banco_procesos_bancarios_x_empresa_Info> Lst_det { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

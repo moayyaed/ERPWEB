@@ -55,5 +55,8 @@ namespace Core.Erp.Info.General
         //public bool ObligadoAllevarConta_bool { get; set; }
         public bool EstadoBool { get; set; }
         public Image em_logo_imagen { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

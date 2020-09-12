@@ -10607,6 +10607,17 @@
     <Content Include="Areas\ActivoFijo\Views\VentaActivo\Consultar.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\CatalogoTipoAF\Consultar.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\CatalogoAF\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Banco\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Bodega\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Catalogo\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\CatalogoTipo\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Empresa\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Sucursal\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Parroquia\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Ciudad\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Provincia\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Region\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Pais\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
