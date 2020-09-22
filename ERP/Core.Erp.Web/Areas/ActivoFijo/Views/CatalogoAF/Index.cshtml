@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.ActivoFijo.Af_Catalogo_Info
 @{
     ViewBag.Title = "Consulta de catálogos de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,9 +10,9 @@
 
 @using (Html.BeginForm())
 {
-
-
-    @Html.Action("GridViewPartial_catalogo_af", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo })
+    @Html.HiddenFor(q => q.IdTipoCatalogo, new { @id = "IdTipoCatalogo" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_catalogo_af", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo, Nuevo = ViewBag.Nuevo })
 
     <div class="box-footer">
         <a class="btn btn-default" href="@Url.Action("Index","CatalogoTipoAF",new { IdTipoCatalogo = ViewBag.IdTipoCatalogo, Area = "ActivoFijo" },null)">Volver</a>

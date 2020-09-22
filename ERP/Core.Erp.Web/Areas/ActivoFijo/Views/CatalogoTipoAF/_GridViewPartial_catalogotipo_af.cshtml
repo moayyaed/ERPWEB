@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_catalogotipo_af";
-        settings.CallbackRouteValues = new { Controller = "CatalogoTipoAF", Action = "GridViewPartial_catalogotipo_af" };
+        settings.CallbackRouteValues = new { Controller = "CatalogoTipoAF", Action = "GridViewPartial_catalogotipo_af", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdTipoCatalogo";
         settings.Width = Unit.Percentage(100);
 
@@ -55,14 +55,17 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-            Html.ActionLink("Modificar", "Modificar", new { IdTipoCatalogo = DataBinder.Eval(tc.DataItem, "IdTipoCatalogo") })
+                    Html.ActionLink("Consultar", "Consultar", new { IdTipoCatalogo = DataBinder.Eval(tc.DataItem, "IdTipoCatalogo") })
                 );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -86,7 +89,7 @@
                 }).Render();
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -11,8 +11,10 @@
 
 @using (Html.BeginForm("Anular", "Parroquia", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdParroquia)
+    @Html.HiddenFor(q => q.IdPais)
+    @Html.HiddenFor(q => q.IdProvincia)
     @Html.HiddenFor(q => q.IdCiudad_Canton)
+    @Html.HiddenFor(q => q.IdParroquia)
 
     <div class="row">
         <div class="col-md-12">

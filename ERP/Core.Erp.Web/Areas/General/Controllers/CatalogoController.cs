@@ -1,5 +1,7 @@
 ﻿using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.General;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -16,6 +18,9 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Variables
         tb_Catalogo_Bus bus_catalogo = new tb_Catalogo_Bus();
         tb_CatalogoTipo_Bus bus_catalogo_tipo = new tb_CatalogoTipo_Bus();
+        tb_Catalogo_List Lista_Catalogo = new tb_Catalogo_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         #endregion
 
@@ -24,15 +29,36 @@ namespace Core.Erp.Web.Areas.General.Controllers
         public ActionResult Index(int IdTipoCatalogo = 0)
         {
             ViewBag.IdTipoCatalogo = IdTipoCatalogo;
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "CatalogoTipo", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            tb_Catalogo_Info model = new tb_Catalogo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdTipoCatalogo = IdTipoCatalogo
+            };
+
+            var lst = bus_catalogo.get_list(model.IdTipoCatalogo, true);
+            Lista_Catalogo.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_catalogo(int IdTipoCatalogo = 0)
+        public ActionResult GridViewPartial_catalogo(int IdTipoCatalogo = 0, bool Nuevo=false)
         {
-            List<tb_Catalogo_Info> model = new List<tb_Catalogo_Info>();            
-            model = bus_catalogo.get_list( IdTipoCatalogo, true);
             ViewBag.IdTipoCatalogo = IdTipoCatalogo;
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Catalogo.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_catalogo", model);
         }
 
@@ -46,6 +72,12 @@ namespace Core.Erp.Web.Areas.General.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdTipoCatalogo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "CatalogoTipo", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_Catalogo_Info model = new tb_Catalogo_Info
             {
                 IdTipoCatalogo = IdTipoCatalogo
@@ -76,8 +108,39 @@ namespace Core.Erp.Web.Areas.General.Controllers
             return RedirectToAction("Index", new { IdTipoCatalogo = model.IdTipoCatalogo });
         }
 
+        public ActionResult Consultar(string CodCatalogo = "", int IdTipoCatalogo = 0, bool Exito=false)
+        {
+            tb_Catalogo_Info model = bus_catalogo.get_info(CodCatalogo);
+            if (model == null)
+                return RedirectToAction("Index", new { IdTipoCatalogo = IdTipoCatalogo });
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "CatalogoTipo", "Index");
+            if (model.ca_estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            ViewBag.IdTipoCatalogo = model.IdTipoCatalogo;
+            cargar_combos();
+            return View(model);
+        }
+
         public ActionResult Modificar(string CodCatalogo = "", int IdTipoCatalogo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "CatalogoTipo", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
             tb_Catalogo_Info model = bus_catalogo.get_info(CodCatalogo);
             if (model == null)
                 return RedirectToAction("Index", new { IdTipoCatalogo = IdTipoCatalogo });
@@ -101,6 +164,12 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
         public ActionResult Anular(string CodCatalogo = "", int IdTipoCatalogo = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "CatalogoTipo", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_Catalogo_Info model = bus_catalogo.get_info(CodCatalogo);
             if (model == null)
                 return RedirectToAction("Index", new { IdTipoCatalogo = IdTipoCatalogo });
@@ -122,5 +191,25 @@ namespace Core.Erp.Web.Areas.General.Controllers
         }
         #endregion
 
+    }
+
+    public class tb_Catalogo_List
+    {
+        string Variable = "tb_Catalogo_Info";
+        public List<tb_Catalogo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<tb_Catalogo_Info> list = new List<tb_Catalogo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<tb_Catalogo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<tb_Catalogo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

@@ -37,5 +37,9 @@ namespace Core.Erp.Info.Facturacion
 
         public bool Seleccionado { get; set; }
 
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

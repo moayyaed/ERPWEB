@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_rev_activo";
-        settings.CallbackRouteValues = new { Controller = "RevalorizacionActivo", Action = "GridViewPartial_rev_activo" };
+        settings.CallbackRouteValues = new { Controller = "RevalorizacionActivo", Action = "GridViewPartial_rev_activo", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "Id_Mejora_Baja_Activo";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
 
@@ -61,20 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Mejora_Baja_Activo = DataBinder.Eval(tc.DataItem, "Id_Mejora_Baja_Activo") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Mejora_Baja_Activo = DataBinder.Eval(tc.DataItem, "Id_Mejora_Baja_Activo") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), Id_Mejora_Baja_Activo = DataBinder.Eval(tc.DataItem, "Id_Mejora_Baja_Activo") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -109,6 +107,7 @@
             });
             column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

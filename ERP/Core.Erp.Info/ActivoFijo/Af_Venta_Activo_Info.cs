@@ -50,5 +50,8 @@ namespace Core.Erp.Info.ActivoFijo
 
         //Campos que no existen en la tabla
         public List<ct_cbtecble_det_Info> lst_ct_cbtecble_det { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

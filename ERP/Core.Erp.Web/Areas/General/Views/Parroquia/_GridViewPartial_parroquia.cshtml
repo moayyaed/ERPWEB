@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_Parroquia";
-        settings.CallbackRouteValues = new { Controller = "Parroquia", Action = "GridViewPartial_Parroquia", IdCiudad = ViewBag.IdCiudad_Canton , IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais};
+        settings.CallbackRouteValues = new { Controller = "Parroquia", Action = "GridViewPartial_Parroquia", IdPais = ViewBag.IdPais, IdProvincia = ViewBag.IdProvincia, IdCiudad = ViewBag.IdCiudad_Canton, Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdParroquia";
         //Configuración para que la grilla no muestre texto completo
@@ -60,20 +60,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new {IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia"), IdCiudad = ViewBag.IdCiudad_Canton , IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia"), IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdPais = ViewBag.IdPais, IdProvincia = ViewBag.IdProvincia, IdCiudad = ViewBag.IdCiudad_Canton }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -93,6 +91,7 @@
 
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

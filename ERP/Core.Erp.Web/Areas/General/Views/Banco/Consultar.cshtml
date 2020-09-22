@@ -1,0 +1,145 @@
+﻿@model Core.Erp.Info.General.tb_banco_Info
+@{
+    ViewBag.Title = "Consultar banco";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "Banco", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdBanco)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Banco",new { Area = "General"},null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Banco", new { Area = "General", IdBanco = Model.IdBanco}, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Banco", new { Area = "General", IdBanco=Model.IdBanco }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="CodigoLegal">Código Legal</label>
+                    @Html.TextBoxFor(q => q.CodigoLegal, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodigoLegal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ba_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ba_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ba_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="checkbox">
+                        @Html.DevExpress().CheckBoxFor(q => q.TieneFormatoTransferencia,
+                         settings =>
+                         {
+                             settings.Name = "TieneFormatoTransferencia";
+                             settings.Checked = false;
+                             settings.Text = "Tiene formato transferencia";
+                             settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_detalle();}";
+                         }
+                     ).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="detalle">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_proceso_bancario")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","Banco", new {Area = "General"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+        MostrarBotonesAccion();
+        mostrar_detalle();
+    });
+
+    function mostrar_detalle() {
+        var det = TieneFormatoTransferencia.GetValue();
+        if (det == true) {
+            $("#detalle").show();
+        }
+        else {
+            $("#detalle").hide();
+        }
+    }
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1) {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1) {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1) {
+            $("#btnAnular").show();
+        }
+    }
+</script>

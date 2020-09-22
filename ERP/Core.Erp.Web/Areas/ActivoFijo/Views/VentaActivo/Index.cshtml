@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.ActivoFijo.Af_Venta_Activo_Info
 @{
     ViewBag.Title = "Consulta de ventas de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,7 +10,9 @@
 <script src="~/Scripts/ScriptsGenerales.js"></script>
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_venta_activo")
+    @Html.Action("GridViewPartial_venta_activo", new { Nuevo = ViewBag.Nuevo })
 
 }

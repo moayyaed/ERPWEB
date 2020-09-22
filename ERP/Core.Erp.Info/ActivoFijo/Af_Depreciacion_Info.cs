@@ -42,5 +42,8 @@ namespace Core.Erp.Info.ActivoFijo
 
         public List<Af_Depreciacion_Det_Info> lst_detalle { get; set; }
         public List<ct_cbtecble_det_Info> lst_detalle_ct { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

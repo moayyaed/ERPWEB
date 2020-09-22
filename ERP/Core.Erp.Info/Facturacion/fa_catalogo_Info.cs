@@ -33,5 +33,9 @@ namespace Core.Erp.Info.Facturacion
         [Required(ErrorMessage = "El campo motivo de anulación es obligatorio")]
         [StringLength(200, MinimumLength = 0, ErrorMessage = "el campo motivo de anulación debe tener máximo 200 caracteres")]
         public string MotiAnula { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

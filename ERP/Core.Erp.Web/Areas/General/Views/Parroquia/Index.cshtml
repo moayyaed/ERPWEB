@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.General.tb_parroquia_Info
 @{
     ViewBag.Title = "Consulta de parroquias";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,11 +10,15 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdPais, new { @id = "IdPais" })
+    @Html.HiddenFor(q => q.IdProvincia, new { @id = "IdProvincia" })
+    @Html.HiddenFor(q => q.IdCiudad_Canton, new { @id = "IdCiudad_Canton" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_parroquia", new { IdCiudad_canton = ViewBag.IdCiudad_canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais })
+    @Html.Action("GridViewPartial_parroquia", new { IdCiudad_canton = Model.IdCiudad_Canton, IdProvincia = Model.IdProvincia, IdPais = Model.IdPais, Nuevo = ViewBag.Nuevo })
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Ciudad",new { IdCiudad_canton = ViewBag.IdCiudad_canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais, Area = "General" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Ciudad",new { IdCiudad_canton = Model.IdCiudad_Canton, IdProvincia = Model.IdProvincia, IdPais = Model.IdPais, Area = "General" },null)">Volver</a>
     </div>
 
 }

@@ -9,6 +9,7 @@ namespace Core.Erp.Info.Inventario
 {
     public class in_ProductoTipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdProductoTipo { get; set; }
         [Required(ErrorMessage = "El campo descripción es obligatorio")]
@@ -39,5 +40,8 @@ namespace Core.Erp.Info.Inventario
         //Campos que no existen en la base
         public bool tp_EsCombo_bool { get; set; }
         public bool tp_ManejaInven_bool { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

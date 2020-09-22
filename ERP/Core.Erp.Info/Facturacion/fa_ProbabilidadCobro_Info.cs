@@ -28,6 +28,9 @@ namespace Core.Erp.Info.Facturacion
 
         #region Campos que no existen en la tabla
         public List<fa_ProbabilidadCobroDet_Info> lst_detalle { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

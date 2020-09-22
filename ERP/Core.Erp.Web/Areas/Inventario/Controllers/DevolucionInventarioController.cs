@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -21,37 +23,62 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         in_devolucion_inven_det_List List_det = new in_devolucion_inven_det_List();
         in_Ing_Egr_Inven_List Lista_IngEgr_Inven = new in_Ing_Egr_Inven_List();
+        in_devolucion_inven_List Lista_Devolucion = new in_devolucion_inven_List();
         in_Ing_Egr_Inven_Bus bus_inv = new in_Ing_Egr_Inven_Bus();
         in_devolucion_inven_det_Bus bus_det = new in_devolucion_inven_det_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombosConsulta(model.IdEmpresa);
+            var lst = bus_devolucion.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_Devolucion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
             CargarCombosConsulta(model.IdEmpresa);
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            var lst = bus_devolucion.get_list(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista_Devolucion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
-        public ActionResult GridViewPartial_devolucion( DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_devolucion( bool Nuevo=false )
         {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
-            ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            var model = bus_devolucion.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Devolucion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //var model = bus_devolucion.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
             return PartialView("_GridViewPartial_devolucion",model);
         }
         #endregion
@@ -100,6 +127,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             in_devolucion_inven_Info model = new in_devolucion_inven_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -135,7 +167,50 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdDev_Inven = model.IdDev_Inven, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdDev_Inven = 0, bool Exito=false)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            in_devolucion_inven_Info model = bus_devolucion.get_info(IdEmpresa, IdDev_Inven);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_det = bus_det.get_list(IdEmpresa, IdDev_Inven);
+            List_det.set_list(model.lst_det, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.FAC, 0, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0 , decimal IdDev_Inven = 0)
@@ -146,7 +221,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
             in_devolucion_inven_Info model = bus_devolucion.get_info(IdEmpresa, IdDev_Inven);
             if (model == null)
                 return RedirectToAction("Index");
@@ -184,7 +263,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdDev_Inven = model.IdDev_Inven, Exito = true });
         }
         public ActionResult Anular(int IdEmpresa = 0 , decimal IdDev_Inven = 0)
         {
@@ -194,7 +273,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             in_devolucion_inven_Info model = bus_devolucion.get_info(IdEmpresa, IdDev_Inven);
             if (model == null)
                 return RedirectToAction("Index");
@@ -297,6 +380,26 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return PartialView("_GridViewPartial_devolucion_det", model);
         }
         #endregion
+    }
+
+    public class in_devolucion_inven_List
+    {
+        string Variable = "in_devolucion_inven_Info";
+        public List<in_devolucion_inven_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<in_devolucion_inven_Info> list = new List<in_devolucion_inven_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<in_devolucion_inven_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<in_devolucion_inven_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     public class in_Ing_Egr_Inven_List

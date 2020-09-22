@@ -9,7 +9,7 @@ namespace Core.Erp.Info.General
 {
     public class tb_Catalogo_Info
     {
-
+        public decimal IdTransaccionSession { get; set; }
         [Key]
         [Required(ErrorMessage = ("el campo código es obligatorio"))]
         [StringLength(25, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 25")]
@@ -32,5 +32,9 @@ namespace Core.Erp.Info.General
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
 
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

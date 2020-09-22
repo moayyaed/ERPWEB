@@ -19,6 +19,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
         tb_comprobantes_sin_autorizacion_Bus bus_comprobantes = new tb_comprobantes_sin_autorizacion_Bus();
         tb_comprobantes_sin_autorizacion_List Lis_tb_comprobantes_sin_autorizacion_List = new tb_comprobantes_sin_autorizacion_List();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         #region vistas 
         public ActionResult Index()

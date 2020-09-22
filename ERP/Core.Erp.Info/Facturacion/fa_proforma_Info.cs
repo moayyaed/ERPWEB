@@ -59,6 +59,9 @@ namespace Core.Erp.Info.Facturacion
         public decimal IdProductoSeleccionado { get; set; }
         public string EstadoCierre { get; set; }
         public string Su_Descripcion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
 
         #region Campos de desbloqueo

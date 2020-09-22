@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_linea";
-        settings.CallbackRouteValues = new { Controller = "Linea", Action = "GridViewPartial_linea", IdEmpresa = ViewBag.IdEmpresa, IdCategoria = ViewBag.IdCategoria };
+        settings.CallbackRouteValues = new { Controller = "Linea", Action = "GridViewPartial_linea", IdEmpresa = ViewBag.IdEmpresa, IdCategoria = ViewBag.IdCategoria, Nuevo = ViewBag.Nuevo };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdLinea";
         //Configuración para que la grilla no muestre texto completo
@@ -60,20 +60,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdLinea = DataBinder.Eval(tc.DataItem, "IdLinea"), IdCategoria = ViewBag.IdCategoria }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdLinea = DataBinder.Eval(tc.DataItem, "IdLinea"), IdCategoria = ViewBag.IdCategoria },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdLinea = DataBinder.Eval(tc.DataItem, "IdLinea"), IdCategoria = ViewBag.IdCategoria })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa= Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdCategoria = ViewBag.IdCategoria }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdCategoria = ViewBag.IdCategoria }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -111,6 +109,7 @@
                 }
             });
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 
 }

@@ -9,6 +9,7 @@ namespace Core.Erp.Info.General
 {
     public class tb_pais_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Key]
         public string IdPais { get; set; }
         [Required(ErrorMessage = "El campo código es obligatorio")]
@@ -31,6 +32,9 @@ namespace Core.Erp.Info.General
         public string MotivoAnula { get; set; }
         public string nom_pc { get; set; }
         public string ip { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 }

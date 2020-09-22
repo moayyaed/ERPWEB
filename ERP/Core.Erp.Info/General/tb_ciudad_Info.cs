@@ -9,6 +9,7 @@ namespace Core.Erp.Info.General
 {
    public class tb_ciudad_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public string IdCiudad { get; set; }
         [Required(ErrorMessage = " el campo código es obligatorio")]
         [StringLength(25, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 25")]
@@ -33,6 +34,10 @@ namespace Core.Erp.Info.General
 
         //campos que no existen en la tabla
         public string IdPais { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 }

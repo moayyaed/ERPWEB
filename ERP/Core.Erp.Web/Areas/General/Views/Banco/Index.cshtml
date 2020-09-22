@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.General.tb_banco_Info
 @{
     ViewBag.Title = "Consulta de bancos";
 
@@ -10,8 +10,9 @@
 }
 @using (Html.BeginForm())
 {
-
-    @Html.Action("GridViewPartial_banco")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_banco", new { Nuevo = ViewBag.Nuevo })
 
 }
 

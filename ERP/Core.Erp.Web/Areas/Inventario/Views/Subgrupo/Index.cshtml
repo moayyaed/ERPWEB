@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.Inventario.in_subgrupo_Info
 @{
     ViewBag.Title = "Consulta de subgrupos de producto";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -9,11 +9,15 @@
 }
 @using (Html.BeginForm())
 {
-
-    @Html.Action("GridViewPartial_subgrupo", new { IdEmpresa = ViewBag.IdEmpresa, IdCategoria = ViewBag.IdCategoria, IdLinea = ViewBag.IdLinea, IdGrupo = ViewBag.IdGrupo })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdCategoria, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdLinea, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdGrupo, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_subgrupo", new { IdEmpresa = Model.IdEmpresa, IdCategoria = Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo, Nuevo = ViewBag.Nuevo })
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Grupo",new {IdEmpresa = ViewBag.IdEmpresa,IdCategoria = ViewBag.IdCategoria, IdLinea = ViewBag.IdLinea, IdGrupo = ViewBag.IdGrupo, Area = "Inventario" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Grupo",new {IdEmpresa = Model.IdEmpresa,IdCategoria = Model.IdCategoria, IdLinea = Model.IdLinea, IdGrupo = Model.IdGrupo, Area = "Inventario" },null)">Volver</a>
     </div>
 
 

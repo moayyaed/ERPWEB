@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_egreso_inventario";
-        settings.CallbackRouteValues = new { Controller = "EgresoInventario", Action = "GridViewPartial_egreso_inventario", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "EgresoInventario", Action = "GridViewPartial_egreso_inventario", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdNumMovi";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -72,28 +72,34 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) != "APRO")
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Modificar", "Modificar", new  { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
-                else if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO" && Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaDespacho")) == null)
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") })
+                );
+                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) != "APRO")
+                //{
+                //    ViewContext.Writer.Write(
+                //        Html.ActionLink("Modificar", "Modificar", new  { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") }) + "&nbsp;" +
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
+                //else if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoAproba")) == "APRO" && Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && Convert.ToDateTime(DataBinder.Eval(tc.DataItem, "FechaDespacho")) == null)
+                //{
+                //    ViewContext.Writer.Write(
+                //        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(tc.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(tc.DataItem, "IdNumMovi") },
+                //            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                //    );
+                //}
 
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa  = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -141,6 +147,7 @@
             });
             column.Width = Unit.Percentage(5);
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -1,0 +1,133 @@
+﻿@model Core.Erp.Info.General.tb_provincia_Info
+@{
+    ViewBag.Title = "Consultar provincia";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "Provincia", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdProvincia)
+    @Html.HiddenFor(q => q.IdPais)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Provincia",new { Area = "General",IdPais=Model.IdPais },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Provincia", new { Area = "General", IdProvincia=Model.IdProvincia }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Provincia", new { Area = "General", IdProvincia=Model.IdProvincia }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Cod_Provincia">Código</label>
+                    @Html.TextBoxFor(q => q.Cod_Provincia, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cod_Provincia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdPais">País</label>
+                    @Html.DropDownListFor(q => q.IdPais, new SelectList(ViewBag.lst_pais, "IdPais", "Nombre"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdPais, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cod_Region">Región*</label>
+                    @Html.DropDownListFor(q => q.Cod_Region, new SelectList(ViewBag.lst_region, "Cod_Region", "Nom_region"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Cod_Region, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion_Prov">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion_Prov, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion_Prov, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","Provincia", new {IdPais = Model.IdPais, Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+</script>

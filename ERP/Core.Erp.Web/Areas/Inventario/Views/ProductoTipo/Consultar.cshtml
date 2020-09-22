@@ -1,0 +1,173 @@
+﻿@model Core.Erp.Info.Inventario.in_ProductoTipo_Info
+@{
+    ViewBag.Title = "Consultar tipo de producto";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "ProductoTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdProductoTipo)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ProductoTipo",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa },null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "ProductoTipo", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdProductoTipo = Model.IdProductoTipo}, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "ProductoTipo", new { Area = "Inventario", IdEmpresa = Model.IdEmpresa, IdProductoTipo=Model.IdProductoTipo }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tp_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tp_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tp_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.tp_EsCombo_bool, settings =>
+                    {
+                        settings.Name = "tp_EsCombo_bool";
+                        settings.Text = "Es combo";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.tp_EsCombo_bool, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.tp_ManejaInven_bool, settings =>
+                    {
+                        settings.Name = "tp_ManejaInven_bool";
+                        settings.Text = "Maneja inventario";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.tp_ManejaInven_bool, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Aparece_fabricacion, settings =>
+                    {
+                        settings.Name = "Aparece_fabricacion";
+                        settings.Text = "Es fabricación";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Aparece_fabricacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Aparece_modu_Compras, settings =>
+                    {
+                        settings.Name = "Aparece_modu_Compras";
+                        settings.Text = "Aparece módulo compras";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Aparece_modu_Compras, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Aparece_modu_Inventario, settings =>
+                    {
+                        settings.Name = "Aparece_modu_Inventario";
+                        settings.Text = "Aparece módulo inventario";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Aparece_modu_Inventario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="check"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Aparece_modu_Ventas, settings =>
+                    {
+                        settings.Name = "Aparece_modu_Ventas";
+                        settings.Text = "Aparece módulo ventas";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Aparece_modu_Ventas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","ProductoTipo",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+</script>

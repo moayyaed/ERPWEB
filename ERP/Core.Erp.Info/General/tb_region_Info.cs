@@ -9,6 +9,7 @@ namespace Core.Erp.Info.General
 {
     public class tb_region_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Key]
         [Required(ErrorMessage = "El campo código es obligatorio")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 4 caracteres y máximo 10")]
@@ -19,5 +20,9 @@ namespace Core.Erp.Info.General
         public string codigo { get; set; }
         public bool estado { get; set; }
         public string IdPais { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

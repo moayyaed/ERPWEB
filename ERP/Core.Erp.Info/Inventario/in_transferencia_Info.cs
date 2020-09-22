@@ -51,7 +51,11 @@ namespace Core.Erp.Info.Inventario
         public in_Ing_Egr_Inven_Info info_egreso { get; set; }
         public in_movi_inven_tipo_Info info_movimiento { get; set; }
 
-        
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
+
 
         public in_transferencia_Info()
         {

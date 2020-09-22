@@ -58,6 +58,9 @@ namespace Core.Erp.Info.ActivoFijo
         public string IdCtaCble { get; set; }
         public string pc_Cuenta { get; set; }
         public byte[] imagen_af { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
 
     }
 

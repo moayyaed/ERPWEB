@@ -37,6 +37,9 @@ namespace Core.Erp.Info.Facturacion
         public string Su_Descripcion { get; set; }
         public string Su_CodigoEstablecimiento { get; set; }
         public string Descripcion { get; set; }
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
         #endregion
     }
 }

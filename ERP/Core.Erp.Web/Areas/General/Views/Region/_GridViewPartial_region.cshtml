@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_region";
-        settings.CallbackRouteValues = new { Controller = "Region", Action = "GridViewPartial_region", IdPais = ViewBag.IdPais };
+        settings.CallbackRouteValues = new { Controller = "Region", Action = "GridViewPartial_region", IdPais = ViewBag.IdPais, Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "Cod_Region";
         settings.Width = Unit.Percentage(100);
         //Configuración para que la grilla no muestre texto completo
@@ -60,20 +60,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { codRegion = DataBinder.Eval(tc.DataItem, "Cod_Region"), IdPais = ViewBag.IdPais }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { codRegion = DataBinder.Eval(tc.DataItem, "Cod_Region"), IdPais = ViewBag.IdPais },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { codRegion = DataBinder.Eval(tc.DataItem, "Cod_Region"), IdPais = ViewBag.IdPais })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdPais = ViewBag.IdPais }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdPais = ViewBag.IdPais }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -91,6 +89,7 @@
             column.Caption = "Estado";
             column.ColumnType = MVCxGridViewColumnType.CheckBox;
         });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

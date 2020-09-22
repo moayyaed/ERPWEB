@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_tipoactivo";
-        settings.CallbackRouteValues = new { Controller = "TipoAF", Action = "GridViewPartial_tipoactivo" };
+        settings.CallbackRouteValues = new { Controller = "TipoAF", Action = "GridViewPartial_tipoactivo", Nuevo = ViewBag.Nuevo };
         settings.KeyFieldName = "IdActivoFijoTipo";
         settings.Width = Unit.Percentage(100);
 
@@ -61,20 +61,18 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdActivoFijoTipo = DataBinder.Eval(tc.DataItem, "IdActivoFijoTipo") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdActivoFijoTipo = DataBinder.Eval(tc.DataItem, "IdActivoFijoTipo") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
-                }
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdActivoFijoTipo = DataBinder.Eval(tc.DataItem, "IdActivoFijoTipo") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
@@ -99,18 +97,18 @@
             column.Width = Unit.Pixel(100);
             column.SetDataItemTemplateContent(container =>
             {
-            if (Convert.ToString(DataBinder.Eval(container.DataItem, "Estado")) == "A")
-            {
-                Html.DevExpress().HyperLink(hyperlink =>
+                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Estado")) == "A")
                 {
-                    var keyValue = DataBinder.Eval(container.DataItem, "IdActivoFijoTipo");
-                    hyperlink.Properties.Text = "Categorías";
-                    hyperlink.NavigateUrl = Url.Action("Index", "CategoriaAF", new { IdEmpresa = DataBinder.Eval(container.DataItem, "IdEmpresa"), IdActivoFijoTipo = keyValue });
-                }).Render();
+                    Html.DevExpress().HyperLink(hyperlink =>
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdActivoFijoTipo");
+                        hyperlink.Properties.Text = "Categorías";
+                        hyperlink.NavigateUrl = Url.Action("Index", "CategoriaAF", new { IdEmpresa = DataBinder.Eval(container.DataItem, "IdEmpresa"), IdActivoFijoTipo = keyValue });
+                    }).Render();
                 }
             });
         });
-
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
 }
 @grid.Bind(Model).GetHtml()

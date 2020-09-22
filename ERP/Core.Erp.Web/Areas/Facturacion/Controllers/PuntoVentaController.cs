@@ -169,10 +169,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "PuntoVenta", "Index");
-            ViewBag.Nuevo = info.Nuevo;
-            ViewBag.Modificar = info.Modificar;
-            ViewBag.Anular = info.Anular;
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
             #endregion
+
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;

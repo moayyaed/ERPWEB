@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.ActivoFijo;
 using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.ActivoFijo;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
@@ -25,21 +27,44 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
         ct_plancta_Bus bus_cuenta = new ct_plancta_Bus();
         string mensaje = string.Empty;
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        Af_Retiro_Activo_List Lista_Retiro = new Af_Retiro_Activo_List();
         #endregion
 
         #region Index
 
         public ActionResult Index()
         {
-            return View();
-        }
-        public ActionResult GridViewPartial_retiro_activo()
-        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
 
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var model = bus_retiro.get_list(IdEmpresa, true);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "RetiroActivo", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            Af_Retiro_Activo_Info model = new Af_Retiro_Activo_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_retiro.get_list(model.IdEmpresa, true);
+            Lista_Retiro.set_list(lst, model.IdTransaccionSession);
+
+            return View(model);
+        }
+        public ActionResult GridViewPartial_retiro_activo(bool Nuevo=false)
+        {
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Retiro.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_retiro_activo", model);
         }
         #endregion
@@ -102,6 +127,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "RetiroActivo", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             Af_Retiro_Activo_Info model = new Af_Retiro_Activo_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -131,16 +161,64 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetiroActivo = model.IdRetiroActivo, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdRetiroActivo = model.IdRetiroActivo, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdRetiroActivo = 0, bool Exito = false)
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdRetiroActivo = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            Af_Retiro_Activo_Info model = bus_retiro.get_info(IdEmpresa, IdRetiroActivo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "RetiroActivo", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte == null ? 0 : Convert.ToInt32(model.IdTipoCbte), model.IdCbteCble == null ? 0 : Convert.ToDecimal(model.IdCbteCble));
+            list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det, model.IdTransaccionSession);
+            cargar_combos(IdEmpresa);
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_Retiro, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdRetiroActivo = 0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "RetiroActivo", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
             #endregion
             Af_Retiro_Activo_Info model = bus_retiro.get_info(IdEmpresa, IdRetiroActivo);
             if (model == null)
@@ -149,8 +227,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             model.lst_ct_cbtecble_det = bus_comprobante_detalle.get_list(IdEmpresa, model.IdTipoCbte == null ? 0 : Convert.ToInt32(model.IdTipoCbte), model.IdCbteCble == null ? 0 : Convert.ToDecimal(model.IdCbteCble));
             list_ct_cbtecble_det.set_list(model.lst_ct_cbtecble_det,model.IdTransaccionSession);
             cargar_combos(IdEmpresa);
-            if (Exito)
-                ViewBag.MensajeSuccess = MensajeSuccess;
+
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_Retiro, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref mensaje))
@@ -178,7 +255,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 cargar_combos(model.IdEmpresa);
                 return View(model);
             }
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdRetiroActivo = model.IdRetiroActivo, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdRetiroActivo = model.IdRetiroActivo, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdRetiroActivo = 0)
@@ -188,6 +265,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 return RedirectToAction("Login", new { Area = "", Controller = "Account" });
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "ActivoFijo", "RetiroActivo", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
             #endregion
             Af_Retiro_Activo_Info model = bus_retiro.get_info(IdEmpresa, IdRetiroActivo);
             if (model == null)
@@ -229,5 +311,26 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
+    }
+
+    public class Af_Retiro_Activo_List
+    {
+        string Variable = "Af_Retiro_Activo_Info";
+
+        public List<Af_Retiro_Activo_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<Af_Retiro_Activo_Info> list = new List<Af_Retiro_Activo_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<Af_Retiro_Activo_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<Af_Retiro_Activo_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }

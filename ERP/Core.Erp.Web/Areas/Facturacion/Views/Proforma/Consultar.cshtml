@@ -315,6 +315,9 @@ function cargar_lista_contactos() {
     @Html.HiddenFor(q => q.IdProforma)
     @Html.HiddenFor(q => q.EstadoCierre)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
 
     if (ViewBag.MensajeSuccess != null)
     {
@@ -399,46 +402,45 @@ function cargar_lista_contactos() {
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-offset-8 col-md-1">
-                @if(@ViewBag.Nuevo == true)
-                {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Proforma",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
-                @if (@ViewBag.Modificar == true)
+                @if (Model.EstadoCierre == "ABIERTO")
                 {
-                    if (Model.EstadoCierre == "ABIERTO")
-                    {
-                        <div class="form-group">
-                            <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Proforma", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdProforma=Model.IdProforma }, null)">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </div>
-                    }
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Proforma", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdProforma=Model.IdProforma }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+                }
 
-                    if (Model.EstadoCierre == "FACTURADO")
-                    {
-                        <div class="form-group">
-                            <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("ModificarProFact", "Proforma", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdProforma=Model.IdProforma }, null)">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </div>
-                    }
-                }
-            </div>
-            <div class="col-md-1">
-                @if (@ViewBag.Anular == true)
+                @if (Model.EstadoCierre == "FACTURADO")
                 {
-                    <div class="form-group">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("ModificarProFact", "Proforma", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdProforma=Model.IdProforma }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+                }
+                </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Proforma", new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa, IdSucursal = Model.IdSucursal, IdProforma=Model.IdProforma }, null)">
                             <i class="fa fa-remove"></i>
                         </a>
                     </div>
-                }
+                </div>
             </div>
             <div class="col-md-1">
                 <div class="form-group">
@@ -620,4 +622,25 @@ function cargar_lista_contactos() {
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
         }
+    }
+
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
         }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+</script>

@@ -10,7 +10,8 @@ using DevExpress.Web;
 using Core.Erp.Web.Helps;
 using System.IO;
 using ExcelDataReader;
-
+using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.General.Controllers
 {
@@ -23,24 +24,53 @@ namespace Core.Erp.Web.Areas.General.Controllers
         tb_empresa_List ListaEmpresa = new tb_empresa_List();
         tb_sucursal_List ListaSucursal = new tb_sucursal_List();
         tb_bodega_List ListaBodega = new tb_bodega_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Empresa", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            tb_empresa_Info model = new tb_empresa_Info
+            {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+            };
+
+            var lst = bus_empresa.get_list(true);
+            ListaEmpresa.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_empresa()
+        public ActionResult GridViewPartial_empresa(bool Nuevo = false)
         {
-            List<tb_empresa_Info> model = bus_empresa.get_list(true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = ListaEmpresa.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_empresa", model);
         }
 
         #endregion
         #region Acciones
-
         public ActionResult Nuevo()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Empresa", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_empresa_Info model = new tb_empresa_Info
             {
                 em_fechaInicioContable = DateTime.Now.Date,
@@ -59,11 +89,43 @@ namespace Core.Erp.Web.Areas.General.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, Exito = true });
+        }
+
+        public ActionResult Consultar(int IdEmpresa = 0, bool Exito=false)
+        {
+            tb_empresa_Info model = bus_empresa.get_info(IdEmpresa);
+            if (model.em_logo == null)
+                model.em_logo = new byte[0];
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Empresa", "Index");
+            if (model.Estado == "I")
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            return View(model);
         }
 
         public ActionResult Modificar(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Empresa", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_empresa_Info model = bus_empresa.get_info(IdEmpresa);
             if (model.em_logo == null)
                 model.em_logo = new byte[0];
@@ -79,11 +141,17 @@ namespace Core.Erp.Web.Areas.General.Controllers
             {
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "General", "Empresa", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             tb_empresa_Info model = bus_empresa.get_info(IdEmpresa);
             if (model.em_logo == null)
                 model.em_logo = new byte[0];

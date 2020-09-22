@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.ActivoFijo.Af_Retiro_Activo_Info
 @{
     ViewBag.Title = "Consulta de retiros de activo fijo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -9,7 +9,8 @@
 }
 @using (Html.BeginForm())
 {
-
-    @Html.Action("GridViewPartial_retiro_activo")
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.Action("GridViewPartial_retiro_activo", new { Nuevo = ViewBag.Nuevo })
 
 }

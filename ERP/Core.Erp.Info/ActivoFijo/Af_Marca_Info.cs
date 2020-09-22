@@ -9,6 +9,7 @@ namespace Core.Erp.Info.ActivoFijo
 {
     public class Af_Marca_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdMarca { get; set; }
         [Required(ErrorMessage = "El campo descripción es obligatorio")]
@@ -22,5 +23,9 @@ namespace Core.Erp.Info.ActivoFijo
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         [Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

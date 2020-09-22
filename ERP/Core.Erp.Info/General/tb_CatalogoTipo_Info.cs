@@ -9,6 +9,7 @@ namespace Core.Erp.Info.General
 {
     public class tb_CatalogoTipo_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         [Key]
         [Required(ErrorMessage =" el campo ID es obligatorio")]
         public int IdTipoCatalogo { get; set; }
@@ -28,5 +29,10 @@ namespace Core.Erp.Info.General
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnulacion { get; set; }
+
+
+        public int Nuevo { get; set; }
+        public int Modificar { get; set; }
+        public int Anular { get; set; }
     }
 }

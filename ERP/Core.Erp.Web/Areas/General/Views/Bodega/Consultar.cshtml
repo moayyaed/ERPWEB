@@ -1,0 +1,179 @@
+﻿@model Core.Erp.Info.General.tb_bodega_Info
+@{
+    ViewBag.Title = "Consultar bodega";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Consultar", "Bodega", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdBodega)
+    @Html.HiddenFor(q => q.Nuevo, new { @id = "Nuevo" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "Modificar" })
+    @Html.HiddenFor(q => q.Anular, new { @id = "Anular" })
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <div class="form-group">
+                    <div id="btnNuevo" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Bodega",new { Area = "General", IdEmpresa = Model.IdEmpresa, IdSucursal=Model.IdSucursal},null)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnModificar" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Modificar" href="@Url.Action("Modificar", "Bodega", new { Area = "General", IdEmpresa = Model.IdEmpresa, IdSucursal=Model.IdSucursal, IdBodega = Model.IdBodega }, null)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div id="btnAnular" hidden>
+                        <a type="button" class="btn btn-primary form-control" title="Anular" href="@Url.Action("Anular", "Bodega", new { Area = "General", IdEmpresa = Model.IdEmpresa, IdSucursal=Model.IdSucursal, IdBodega = Model.IdBodega }, null)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cod_bodega">Código</label>
+                    @Html.TextBoxFor(q => q.cod_bodega, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_bodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="bo_EsBodega"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.bo_EsBodega, settings =>
+                            {
+                                settings.Name = "bo_EsBodega";
+                                settings.Text = "Es bodega";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.bo_EsBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.HiddenFor(q => q.IdSucursal)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdSucursal, settings =>
+               {
+                   settings.Name = "IdSucursal";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdSucursal", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Su_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdSucursal";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Su_Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.ReadOnly = true;
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="bo_Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.bo_Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.bo_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCtble_Inve">Cta. Cble Inventario</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCtble_Inve, settings =>
+               {
+                   settings.Name = "IdCtaCtble_Inve";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCtaCble";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "pc_Cuenta";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_cuentas).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCtaCtble_Inve, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","Bodega",new { Area = "General", IdSucursal = Model.IdSucursal },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        MostrarBotonesAccion();
+    });
+
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+</script>

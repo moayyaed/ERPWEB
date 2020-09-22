@@ -1,9 +1,11 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -30,6 +32,8 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        in_Consignacion_List Lista_Consignacion = new in_Consignacion_List();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         #endregion
 
         public ConsignacionController()
@@ -79,19 +83,42 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Index
         public ActionResult Index()
         {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
             cl_filtros_Info model = new cl_filtros_Info
             {
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
+                IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
             CargarCombos(model.IdEmpresa);
+            var lst = bus_in_Consignacion.GetList(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
+            Lista_Consignacion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
-            model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+            SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
             CargarCombos(model.IdEmpresa);
+            var lst = bus_in_Consignacion.GetList(model.IdEmpresa, model.IdSucursal, true, model.fecha_ini, model.fecha_fin);
+            Lista_Consignacion.set_list(lst, model.IdTransaccionSession);
             return View(model);
         }
         #endregion
@@ -127,14 +154,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        public ActionResult GridViewPartial_Consignacion(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_Consignacion(bool Nuevo=false)
         {
-            ViewBag.IdSucursal = IdSucursal;
-            ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
-            ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
-            List<in_Consignacion_Info> model = bus_in_Consignacion.GetList(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Consignacion.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //List<in_Consignacion_Info> model = bus_in_Consignacion.GetList(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_Consignacion", model);
         }
 
@@ -168,7 +193,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
             in_Consignacion_Info model = new in_Consignacion_Info {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
@@ -202,10 +231,10 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int IdConsignacion=0, bool Exito = false)
+        public ActionResult Consultar(int IdEmpresa = 0, int IdConsignacion = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -215,6 +244,54 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             #endregion
 
             in_Consignacion_Info model = bus_in_Consignacion.GetInfo(IdEmpresa, IdConsignacion);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            if (model.Estado == false)
+            {
+                info.Modificar = false;
+                info.Anular = false;
+            }
+            model.Nuevo = (info.Nuevo == true ? 1 : 0);
+            model.Modificar = (info.Modificar == true ? 1 : 0);
+            model.Anular = (info.Anular == true ? 1 : 0);
+            #endregion
+
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_producto_consignacion = bus_consignacion_det.GetList(model.IdEmpresa, Convert.ToInt32(model.IdConsignacion));
+            in_ConsignacionDet_List.set_list(model.lst_producto_consignacion, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+            #region Validacion Periodo
+            ViewBag.MostrarBoton = true;
+            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
+            {
+                ViewBag.mensaje = mensaje;
+                ViewBag.MostrarBoton = false;
+            }
+            #endregion
+
+            CargarCombosAccion(model.IdEmpresa, model.IdSucursal);
+            return View(model);
+        }
+
+        public ActionResult Modificar(int IdEmpresa = 0, int IdConsignacion=0)
+        {
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+            in_Consignacion_Info model = bus_in_Consignacion.GetInfo(IdEmpresa, IdConsignacion);
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -223,8 +300,6 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             model.lst_producto_consignacion = bus_consignacion_det.GetList(model.IdEmpresa, Convert.ToInt32(model.IdConsignacion));
             in_ConsignacionDet_List.set_list(model.lst_producto_consignacion, model.IdTransaccionSession);
 
-            if (Exito)
-                ViewBag.MensajeSuccess = MensajeSuccess;
             #region Validacion Periodo
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.INV, model.IdSucursal, ref mensaje))
@@ -256,7 +331,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
+            return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdConsignacion = model.IdConsignacion, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, decimal IdConsignacion = 0)
@@ -267,7 +342,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
             in_Consignacion_Info model = bus_in_Consignacion.GetInfo(IdEmpresa, Convert.ToInt32(IdConsignacion));
             if (model == null)
                 return RedirectToAction("Index");
@@ -460,6 +539,26 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
 
         #endregion
+    }
+
+    public class in_Consignacion_List
+    {
+        string Variable = "in_Consignacion_Info";
+        public List<in_Consignacion_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<in_Consignacion_Info> list = new List<in_Consignacion_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<in_Consignacion_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<in_Consignacion_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 
     //siempre incluir clase para detalle

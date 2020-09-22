@@ -1,4 +1,4 @@
-﻿
+﻿@model Core.Erp.Info.General.tb_provincia_Info
 @{
     ViewBag.Title = "Consulta de provincias";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
@@ -10,10 +10,12 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(q => q.IdPais, new { @id = "IdPais" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
-    @Html.Action("GridViewPartial_provincia", new { IdPais = ViewBag.IdPais})
+    @Html.Action("GridViewPartial_provincia", new { IdPais = Model.IdPais, Nuevo = ViewBag.Nuevo })
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Pais",new { IdPais = ViewBag.IdPais, Area = "General" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Pais",new { IdPais = Model.IdPais, Area = "General" },null)">Volver</a>
     </div>
 }

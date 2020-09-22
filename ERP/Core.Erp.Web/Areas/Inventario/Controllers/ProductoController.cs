@@ -18,6 +18,7 @@ using Core.Erp.Info.Facturacion;
 using System.IO;
 using ExcelDataReader;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Info.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Inventario.Controllers
 {
@@ -52,6 +53,9 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_subgrupo_List Lista_Subgrupo = new in_subgrupo_List();
         in_Marca_List Lista_Marca = new in_Marca_List();
         in_presentacion_List Lista_Presentacion = new in_presentacion_List();
+
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -112,15 +116,35 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+            #endregion
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Producto", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            #endregion
+
+            in_Producto_Info model = new in_Producto_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+            };
+
+            var lst = bus_producto.get_list(model.IdEmpresa, true);
+            Lista_Producto.set_list(lst, model.IdTransaccionSession);
+            return View(model);
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_producto()
+        public ActionResult GridViewPartial_producto(bool Nuevo=false)
         {
-
-            int IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
-            List<in_Producto_Info> model = bus_producto.get_list(IdEmpresa, true);
+            ViewBag.Nuevo = Nuevo;
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_Producto.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_producto", model);
         }
         [ValidateInput(false)]
@@ -164,6 +188,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Producto", "Index");
+                if (!info.Nuevo)
+                    return RedirectToAction("Index");
+                #endregion
+
                 in_Producto_Info model = new in_Producto_Info
                 {
                     IdEmpresa = IdEmpresa,
@@ -233,7 +263,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 }
 
                 Producto_imagen.pr_imagen = null;
-                return RedirectToAction("Index");
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdProducto = model.IdProducto, Exito = true });
             }
             catch (Exception ex)
             {
@@ -246,6 +276,52 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 return View(model);
             }
         }
+        public ActionResult Consultar(int IdEmpresa = 0, decimal IdProducto = 0, bool Exito=false)
+        {
+            try
+            {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+
+                in_Producto_Info model = bus_producto.get_info(IdEmpresa, IdProducto);
+                if (model == null)
+                    return RedirectToAction("Index");
+
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Producto", "Index");
+                if (model.Estado == "I")
+                {
+                    info.Modificar = false;
+                    info.Anular = false;
+                }
+                model.Nuevo = (info.Nuevo == true ? 1 : 0);
+                model.Modificar = (info.Modificar == true ? 1 : 0);
+                model.Anular = (info.Anular == true ? 1 : 0);
+                #endregion
+
+                cargar_combos(model);
+                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                model.list_producto_x_fa_NivelDescuento = bus_producto_x_NivelDescuento.get_list(model.IdEmpresa, model.IdProducto);
+                model.lst_producto_composicion = bus_producto_composicion.get_list(model.IdEmpresa, model.IdProducto);
+                model.lst_producto_x_bodega = bus_producto_x_bodega.get_list(model.IdEmpresa, model.IdProducto);
+                Lis_in_producto_x_tb_bodega_Info_List.set_list(model.lst_producto_x_bodega, model.IdTransaccionSession);
+                list_producto_composicion.set_list(model.lst_producto_composicion, model.IdTransaccionSession);
+                list_producto_x_fa_NivelDescuento.set_list(model.list_producto_x_fa_NivelDescuento, model.IdTransaccionSession);
+
+                if (Exito)
+                    ViewBag.MensajeSuccess = MensajeSuccess;
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ActionResult Modificar(int IdEmpresa = 0 , decimal IdProducto = 0)
         {
             try
@@ -255,6 +331,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     return RedirectToAction("Login", new { Area = "", Controller = "Account" });
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Producto", "Index");
+                if (!info.Modificar)
+                    return RedirectToAction("Index");
                 #endregion
                 in_Producto_Info model = bus_producto.get_info(IdEmpresa, IdProducto);
                 if (model == null)
@@ -327,7 +408,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 }
 
                 Producto_imagen.pr_imagen = null;
-                return RedirectToAction("Index");
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdProducto = model.IdProducto, Exito = true });
             }
             catch (Exception ex)
             {
@@ -348,6 +429,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                     return RedirectToAction("Login", new { Area = "", Controller = "Account" });
                 SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+                #region Permisos
+                seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Producto", "Index");
+                if (!info.Anular)
+                    return RedirectToAction("Index");
                 #endregion
                 in_Producto_Info model = bus_producto.get_info(IdEmpresa, IdProducto);
                 if (model == null)
