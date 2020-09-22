@@ -505,6 +505,66 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.lst_estado_apro = lst_estado_apro;
         }
 
+        private void CargarCombos_INV_008(cl_filtros_inventario_Info model)
+        {
+            model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            var lst_sucursal = bus_sucursal.get_list(model.IdEmpresa, false);
+            lst_sucursal.Add(new tb_sucursal_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdSucursal = 0,
+                Su_Descripcion = "TODAS"
+            });
+            ViewBag.lst_sucursal = lst_sucursal;
+
+            tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
+            var lst_bodega = bus_bodega.get_list(model.IdEmpresa, model.IdSucursal, false);
+            lst_bodega.Add(new tb_bodega_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdBodega = 0,
+                bo_Descripcion = "TODAS"
+            });
+
+            ViewBag.lst_bodega = lst_bodega;
+
+            ct_CentroCosto_Bus bus_cc = new ct_CentroCosto_Bus();
+            var lst_centro = bus_cc.get_list(model.IdEmpresa, false, true);
+            ViewBag.lst_centro = lst_centro;
+
+            in_movi_inven_tipo_Bus bus_movi = new in_movi_inven_tipo_Bus();
+            var lst_movi = bus_movi.get_list(model.IdEmpresa, "", false);
+            lst_movi.Add(new in_movi_inven_tipo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdMovi_inven_tipo = 0,
+                tm_descripcion = "TODAS"
+            });
+            ViewBag.lst_movi = lst_movi;
+
+            
+            in_Producto_Bus bus_producto = new in_Producto_Bus();
+            var lst_producto = bus_producto.get_list(model.IdEmpresa, false);
+            ViewBag.lst_producto = lst_producto;
+
+            Dictionary<string, string> lst_TipoMov = new Dictionary<string, string>();
+            lst_TipoMov.Add("", "TODOS");
+            lst_TipoMov.Add("+", "INGRESOS");
+            lst_TipoMov.Add("-", "EGRESOS");
+            ViewBag.lst_TipoMov = lst_TipoMov;
+
+            in_ProductoTipo_Bus busProductoTipo = new in_ProductoTipo_Bus();
+            var lstProductoTipo = busProductoTipo.get_list(model.IdEmpresa, false);
+            lstProductoTipo.Add(new in_ProductoTipo_Info
+            {
+                IdProductoTipo = 0,
+                tp_descripcion = "TODOS"
+            });
+            ViewBag.lstProductoTipo = lstProductoTipo;
+        }
+
         public ActionResult INV_005(bool mostrar_detallado = false)
         {
             cl_filtros_inventario_Info model = new cl_filtros_inventario_Info
@@ -731,7 +791,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdCentroCosto=""
             };
 
-            cargar_combos(model);
+            CargarCombos_INV_008(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -750,6 +810,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCentroCosto.Value = model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_IdProductoTipo.Value = model.IdProductoTipo;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
@@ -759,7 +820,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         [HttpPost]
         public ActionResult INV_008(cl_filtros_inventario_Info model)
         {
-            cargar_combos(model);
+            CargarCombos_INV_008(model);
             INV_008_Rpt report = new INV_008_Rpt();
             #region Cargo diseño desde base
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
@@ -779,6 +840,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_signo.Value = model.tipo_movi;
+            report.p_IdProductoTipo.Value = model.IdProductoTipo;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;

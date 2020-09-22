@@ -12,8 +12,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdClaseProveedor { get; set; }
-        [Required(ErrorMessage = "El campo código es obligatorio")]
-        [StringLength(25, MinimumLength = 1, ErrorMessage = "el campo código debe tener mínimo 1 caracter y máximo 25")]
+        [StringLength(25, ErrorMessage = "el campo código debe tener máximo 25")]
         public string cod_clase_proveedor { get; set; }
 
         [Required(ErrorMessage = "El campo descripción es obligatorio")]

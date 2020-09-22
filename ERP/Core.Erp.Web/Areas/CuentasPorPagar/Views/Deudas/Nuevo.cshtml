@@ -300,7 +300,18 @@
 
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>              </label>
+                    <div class="bg-green color-palette form-control" id="DivMicroEmpresa" style="display:none">
+                        <span class="center-block">Régimen de microempresas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-6">
@@ -317,6 +328,7 @@
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
+            
             <div class="col-md-10">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
@@ -1050,7 +1062,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    console.log(data);
                     if(data.length>0){
                         alert("Existen anticipos o NC con saldo pendiente de aplicar");
                         Gridview_ConciliacionAnticipoDeudas.PerformCallback();
@@ -1124,7 +1135,10 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $("#co_plazo").val(data.pr_plazo);
-
+                    if (data.EsMicroEmpresa == 1) {
+                        $("#DivMicroEmpresa").show();
+                    }else
+                        $("#DivMicroEmpresa").hide();
                     CambiarVcto();
                 },
                 error: function (error) {
@@ -1251,7 +1265,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 $.each(data, function (i, row) {
                     $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
                     $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());

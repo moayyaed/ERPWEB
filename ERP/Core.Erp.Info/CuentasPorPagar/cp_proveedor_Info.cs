@@ -61,6 +61,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public int Nuevo { get; set; }
         public int Modificar { get; set; }
         public int Anular { get; set; }
+        public int EsMicroEmpresa { get; set; }
         #endregion
 
         public cp_proveedor_Info()

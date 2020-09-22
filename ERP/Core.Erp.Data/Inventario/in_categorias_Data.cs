@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,42 +14,30 @@ namespace Core.Erp.Data.Inventario
         {
             try
             {
-                List<in_categorias_Info> Lista;
-                using (Entities_inventario Context = new Entities_inventario())
+                List<in_categorias_Info> Lista = new List<in_categorias_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.in_categorias
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new in_categorias_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdCategoria = q.IdCategoria,
-                                     cod_categoria = q.cod_categoria,
-                                     ca_Categoria = q.ca_Categoria,
-                                     Estado = q.Estado,
-                                     IdCtaCble_venta = q.IdCtaCble_venta,
-                                     IdCtaCtble_Costo = q.IdCtaCtble_Costo,
-                                     IdCtaCtble_Inve = q.IdCtaCtble_Inve,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.in_categorias
-                                  where q.IdEmpresa == IdEmpresa
-                                  && q.Estado == "A"
-                                  select new in_categorias_Info
-                                  {
-                                      IdEmpresa = q.IdEmpresa,
-                                      IdCategoria = q.IdCategoria,
-                                      cod_categoria = q.cod_categoria,
-                                      ca_Categoria = q.ca_Categoria,
-                                      Estado = q.Estado,
-                                      IdCtaCble_venta = q.IdCtaCble_venta,
-                                      IdCtaCtble_Costo = q.IdCtaCtble_Costo,
-                                      IdCtaCtble_Inve = q.IdCtaCtble_Inve,
-
-                                      EstadoBool = q.Estado == "A" ? true : false
-                                  }).ToList();
+                    connection.Open();
+                    string query = "select IdEmpresa,IdCategoria,ca_Categoria,Estado,IdCtaCtble_Inve,IdCtaCtble_Costo,IdCtaCble_venta, cod_categoria, case when Estado = 'A' THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END EstadoBool from in_categorias where IdEmpresa = "+IdEmpresa.ToString()+" and Estado = "+(mostrar_anulados ? "Estado" : "'A'");
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new in_categorias_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdCategoria = Convert.ToString(reader["IdCategoria"]),
+                            ca_Categoria = Convert.ToString(reader["ca_Categoria"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            IdCtaCtble_Inve = Convert.ToString(reader["IdCtaCtble_Inve"]),
+                            IdCtaCble_venta = Convert.ToString(reader["IdCtaCble_venta"]),
+                            IdCtaCtble_Costo = Convert.ToString(reader["IdCtaCtble_Costo"]),
+                            cod_categoria = Convert.ToString(reader["cod_categoria"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                        });
+                    }
+                    reader.Close();
                 }
                 return Lista;
             }

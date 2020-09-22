@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,35 +14,27 @@ namespace Core.Erp.Data.Inventario
         {
             try
             {
-                List<in_UnidadMedida_Info> Lista;
+                List<in_UnidadMedida_Info> Lista = new List<in_UnidadMedida_Info>();
 
-                using (Entities_inventario Context = new Entities_inventario())
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.in_UnidadMedida
-                             select new in_UnidadMedida_Info
-                             {
-                                 IdUnidadMedida = q.IdUnidadMedida,
-                                 cod_alterno = q.cod_alterno,
-                                 Descripcion = q.Descripcion,
-                                 Estado = q.Estado,
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.in_UnidadMedida
-                                 where q.Estado == "A"
-                                 select new in_UnidadMedida_Info
-                                 {
-                                     IdUnidadMedida = q.IdUnidadMedida,
-                                     cod_alterno = q.cod_alterno,
-                                     Descripcion = q.Descripcion,
-                                     Estado = q.Estado,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    connection.Open();
+                    string query = "select IdUnidadMedida, cod_alterno, Descripcion, Estado from in_UnidadMedida where Estado = "+(mostrar_anulados ? "Estado" : "'A'");
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new in_UnidadMedida_Info
+                        {
+                            IdUnidadMedida = Convert.ToString(reader["IdUnidadMedida"]),
+                            cod_alterno = Convert.ToString(reader["cod_alterno"]),
+                            Descripcion = Convert.ToString(reader["Descripcion"]),
+                            Estado = Convert.ToString(reader["Estado"])
+                        });                        
+                    }
+                    reader.Close();
                 }
-
+                
                 return Lista;
             }
             catch (Exception)

@@ -99,6 +99,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         [Required(ErrorMessage = "El campo fecha es obligatorio")]
         public System.DateTime FechaRetencion { get; set; }
         public bool? MueveInventario { get; set; }
+        public int EsMicroEmpresa { get; set; }
 
         public cp_orden_giro_Info()
 

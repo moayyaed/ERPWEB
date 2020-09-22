@@ -14,7 +14,7 @@ AS
 SELECT        c.IdEmpresa, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura AS vt_NumFactura, c.IdCbteVta IdCliente, per.pe_nombreCompleto, cat.Nombre AS NombreFormaPago, c.IdCatalogo_FormaPago, c.Estado, 
                          c.vt_fecha, c.IdUsuario Ve_Vendedor, c.IdUsuario IdVendedor, tb_sucursal.Su_Descripcion, tb_sucursal.Su_Telefonos, tb_sucursal.Su_Direccion, tb_sucursal.Su_Ruc,
 						 r.SubtotalIVAConDscto, r.SubtotalSinIVAConDscto, r.ValorIVA, r.Total, isnull(anu.FacturasAnuladas,0)FacturasAnuladas, '['+fp.IdFormaPago+'] '+ fp.nom_FormaPago nom_FormaPago,
-						 per.pe_cedulaRuc, c.vt_Observacion, 'Facturas IVA '+cast(cast(r.PorIva as int)as varchar(10))+'%' Tarifa
+						 per.pe_cedulaRuc, c.vt_Observacion, tf.Descripcion+ ' IVA '+cast(cast(r.PorIva as int)as varchar(10))+'%' Tarifa
 FROM            fa_factura AS c INNER JOIN
                          fa_cliente AS cli ON c.IdEmpresa = cli.IdEmpresa AND c.IdCliente = cli.IdCliente INNER JOIN
                          tb_persona AS per ON cli.IdPersona = per.IdPersona INNER JOIN
@@ -22,7 +22,8 @@ FROM            fa_factura AS c INNER JOIN
                          tb_sucursal ON c.IdEmpresa = tb_sucursal.IdEmpresa AND c.IdSucursal = tb_sucursal.IdSucursal LEFT OUTER JOIN
                          fa_catalogo AS cat ON c.IdCatalogo_FormaPago = cat.IdCatalogo LEFT JOIN 
 						 fa_factura_resumen AS R on c.IdEmpresa = r.IdEmpresa and c.IdSucursal = r.IdSucursal and c.IdBodega = r.IdBodega and c.IdCbteVta = r.IdCbteVta LEFT JOIN
-						 fa_formaPago as fp on cli.FormaPago = fp.IdFormaPago
+						 fa_formaPago as fp on cli.FormaPago = fp.IdFormaPago inner join
+						 fa_factura_tipo as tf on c.IdEmpresa = tf.IdEmpresa and c.IdFacturaTipo = tf.IdFacturaTipo
 						 
 						 left join (
 							 select f.IdEmpresa, count(*) FacturasAnuladas

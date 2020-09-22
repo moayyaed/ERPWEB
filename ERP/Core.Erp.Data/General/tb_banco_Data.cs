@@ -2,6 +2,7 @@
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,32 +15,26 @@ namespace Core.Erp.Data.General
         {
             try
             {
-                List<tb_banco_Info> Lista;
-                using (Entities_general Context = new Entities_general())
+                List<tb_banco_Info> Lista = new List<tb_banco_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.tb_banco
-                             select new tb_banco_Info
-                             {
-                                 IdBanco = q.IdBanco,
-                                 ba_descripcion = q.ba_descripcion,
-                                 Estado = q.Estado,
-                                 CodigoLegal = q.CodigoLegal,
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.tb_banco
-                                 where q.Estado == "A"
-                                 select new tb_banco_Info
-                                 {
-                                     IdBanco = q.IdBanco,
-                                     ba_descripcion = q.ba_descripcion,
-                                     Estado = q.Estado,
-                                     CodigoLegal = q.CodigoLegal,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    connection.Open();
+                    string query = "select IdBanco, ba_descripcion, Estado, CodigoLegal, Estado, Case when Estado = 'A' then cast(1 as bit) else cast(0 as bit) end as EstadoBool from tb_banco where Estado = "+(mostrar_anulados ? "Estado" : "'A'");
+                    SqlCommand command = new SqlCommand(query,connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new tb_banco_Info
+                        {
+                            IdBanco = Convert.ToInt32(reader["IdBanco"]),
+                            ba_descripcion = Convert.ToString(reader["ba_descripcion"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            CodigoLegal = Convert.ToString(reader["CodigoLegal"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"])
+                        });
+                    }
+                    reader.Close();
                 }
                 return Lista;
             }

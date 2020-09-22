@@ -3,8 +3,8 @@
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
         settings.Name = "IdCtaCble_Gasto";
-        settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Width = Unit.Percentage(100); 
+        settings.Properties.DropDownWidth = Unit.Pixel(1000);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
         settings.CallbackRouteValues = new { Controller = "Proveedor", Action = "CmbCtaCbleGasto_Proveedor", Area = "CuentasPorPagar" };
         settings.Properties.CallbackPageSize = 15;

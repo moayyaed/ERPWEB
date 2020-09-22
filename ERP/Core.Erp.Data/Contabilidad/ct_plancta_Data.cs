@@ -2,6 +2,7 @@
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,8 +39,34 @@ namespace Core.Erp.Data.Contabilidad
             {
                 List<ct_plancta_Info> Lista = new List<ct_plancta_Info>();
 
-                Entities_contabilidad context_g = new Entities_contabilidad();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+                    string query = "select  A.IdEmpresa, A.IdCtaCble, A.pc_Cuenta, A.IdCtaCblePadre, B.pc_Cuenta "
+                                + " from ct_plancta as a left join"
+                                + " ct_plancta as b on a.IdEmpresa = b.IdEmpresa AND A.IdCtaCblePadre = B.IdCtaCble"
+                                + " WHERE A.IdEmpresa = " + IdEmpresa.ToString() + " AND(A.IdCtaCble + A.pc_Cuenta) LIKE '%" + filter + "%'"
+                                + " and a.pc_Estado = 'A' and a.pc_EsMovimiento = " + (!MostrarCtaPadre ? "'S'" : "a.pc_EsMovimiento")
+                                + " ORDER BY A.IdEmpresa, A.IdCtaCble, A.pc_Cuenta"
+                                + " OFFSET " + skip.ToString() + " ROWS FETCH NEXT " + take.ToString() + " ROWS ONLY";
 
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new ct_plancta_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdCtaCble = Convert.ToString(reader["IdCtaCble"]),
+                            pc_Cuenta = Convert.ToString(reader["pc_Cuenta"]),
+                            IdCtaCblePadre = Convert.ToString(reader["IdCtaCblePadre"]),
+                            pc_Cuenta_padre = Convert.ToString(reader["pc_Cuenta"])
+                        });                        
+                    }
+                    reader.Close();
+                }
+                /*
+                Entities_contabilidad context_g = new Entities_contabilidad();
                 {
                     List<ct_plancta> lstg;
                     if(!MostrarCtaPadre)
@@ -57,8 +84,9 @@ namespace Core.Erp.Data.Contabilidad
                             });
                         }
                 }
-
+                
                 context_g.Dispose();
+                */
                 return Lista;
             }
             catch (Exception)

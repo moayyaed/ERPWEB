@@ -5,71 +5,87 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Data.Reportes.Base;
+using System.Data.SqlClient;
+
 namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_008_Data
     {
-        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, string signo, int IdMovi_inven_tipo)
+        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, string signo, int IdMovi_inven_tipo, int IdProductoTipo)
         {
             try
             {
-                int IdProductoIni = IdProducto;
-                int IdProductoFin = IdProducto == 0 ? 999999999 : IdProducto;
+                List<INV_008_Info> Lista = new List<INV_008_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
 
-                int IdSucursalIni = IdSucursal;
-                int IdSucursalFin = IdSucursal == 0 ? 99999999 : IdSucursal;
+                    string query = "SELECT        d.IdEmpresa, d.IdSucursal, d.IdMovi_inven_tipo, d.IdNumMovi, d.Secuencia, s.Su_Descripcion, b.bo_Descripcion, m.cm_tipo_movi, m.tm_descripcion, mot.Desc_mov_inv, per.pe_nombreCompleto, p.pr_codigo, "
+                                    + " p.pr_descripcion, c.IdEstadoAproba, d.dm_cantidad, d.mv_costo, d.IdOrdenCompra, d.IdCentroCosto, d.IdMotivo_Inv, c.cm_fecha, c.Estado, d.IdBodega, d.IdProducto, cc.cc_Descripcion, pt.tp_descripcion"
+                                    + " FROM            dbo.in_Producto AS p INNER JOIN"
+                                    + " dbo.in_Ing_Egr_Inven_det AS d INNER JOIN"
+                                    + " dbo.in_Ing_Egr_Inven AS c ON d.IdEmpresa = c.IdEmpresa AND d.IdSucursal = c.IdSucursal AND d.IdMovi_inven_tipo = c.IdMovi_inven_tipo AND d.IdNumMovi = c.IdNumMovi INNER JOIN"
+                                    + " dbo.in_movi_inven_tipo AS m ON d.IdEmpresa = m.IdEmpresa AND d.IdMovi_inven_tipo = m.IdMovi_inven_tipo ON p.IdEmpresa = d.IdEmpresa AND p.IdProducto = d.IdProducto INNER JOIN"
+                                    + " dbo.tb_bodega AS b ON d.IdEmpresa = b.IdEmpresa AND d.IdSucursal = b.IdSucursal AND d.IdBodega = b.IdBodega INNER JOIN"
+                                    + " dbo.tb_sucursal AS s ON b.IdEmpresa = s.IdEmpresa AND b.IdSucursal = s.IdSucursal LEFT OUTER JOIN"
+                                    + " dbo.in_Motivo_Inven AS mot ON d.IdMotivo_Inv = mot.IdMotivo_Inv AND d.IdEmpresa = mot.IdEmpresa LEFT OUTER JOIN"
+                                    + " dbo.tb_persona AS per INNER JOIN"
+                                    + " dbo.cp_proveedor AS pro ON per.IdPersona = pro.IdPersona ON c.IdEmpresa = pro.IdEmpresa AND c.IdResponsable = pro.IdProveedor LEFT OUTER JOIN"
+                                    + " dbo.ct_CentroCosto AS cc ON d.IdEmpresa = cc.IdEmpresa AND d.IdCentroCosto = cc.IdCentroCosto LEFT JOIN"
+                                    + " in_ProductoTipo as pt on p.IdEmpresa = pt.IdEmpresa and p.IdProductoTipo = pt.IdProductoTipo"
+                                    + " WHERE(c.Estado = 'A')";
 
-                int IdBodegaIni = IdBodega;
-                int IdBodegaFin = IdBodega == 0 ? 99999999 : IdBodega;
+                    if (IdProducto != 0)
+                        query += " AND d.IdProducto = "+IdProducto.ToString();
 
-                int IdMovi_inven_tipoIni = IdMovi_inven_tipo;
-                int IdMovi_inven_tipoFin = IdMovi_inven_tipo == 0 ? 99999999 : IdMovi_inven_tipo;
+                    if (IdSucursal != 0)
+                        query += " AND d.IdSucursal = "+IdSucursal.ToString();
 
-                List<INV_008_Info> Lista;
-                using (Entities_reportes Context = new Entities_reportes())
-                {                    
-                    Lista = Context.VWINV_008.Where(
-                        q=>q.IdEmpresa == IdEmpresa
-                        && IdSucursalIni <= q.IdSucursal
-                        && q.IdSucursal <= IdSucursalFin
-                        && IdBodegaIni <= q.IdBodega
-                        && q.IdBodega <= IdBodegaFin
-                        && IdProductoIni <= q.IdProducto
-                        && q.IdProducto <= IdProductoFin
-                        && fecha_ini <= q.cm_fecha
-                        && q.cm_fecha <= fecha_fin
-                        && q.IdCentroCosto == (string.IsNullOrEmpty(IdCentroCosto) ? q.IdCentroCosto : IdCentroCosto)
-                        && q.cm_tipo_movi == (string.IsNullOrEmpty(signo) ? q.cm_tipo_movi : signo )
-                        && IdMovi_inven_tipoIni <= q.IdMovi_inven_tipo
-                        && q.IdMovi_inven_tipo <= IdMovi_inven_tipoFin
-                    ).Select(q => new INV_008_Info
+                    if (IdBodega != 0)
+                        query += " AND d.IdBodega = "+IdBodega.ToString();
+
+                    if (IdMovi_inven_tipo != 0)
+                        query += " AND d.IdMovi_inven_tipo = "+IdMovi_inven_tipo.ToString();
+
+                    if (IdProductoTipo != 0)
+                        query += " AND p.IdProductoTipo = "+IdProductoTipo.ToString();
+
+                    SqlCommand command = new SqlCommand(query,connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        IdEmpresa = q.IdEmpresa,
-                        bo_Descripcion = q.bo_Descripcion,
-                        cm_fecha = q.cm_fecha,
-                        cm_tipo_movi = q.cm_tipo_movi,
-                        Desc_mov_inv = q.Desc_mov_inv,
-                        dm_cantidad = q.dm_cantidad,
-                        Estado = q.Estado,
-                        IdBodega = q.IdBodega,
-                        IdCentroCosto = q.IdCentroCosto,
-                        IdEstadoAproba = q.IdEstadoAproba,
-                        IdMotivo_Inv = q.IdMotivo_Inv,
-                        IdMovi_inven_tipo = q.IdMovi_inven_tipo,
-                        IdNumMovi = q.IdNumMovi,
-                        IdOrdenCompra = q.IdOrdenCompra,
-                        IdProducto = q.IdProducto,
-                        IdSucursal = q.IdSucursal,
-                        mv_costo = q.mv_costo,
-                        pe_nombreCompleto = q.pe_nombreCompleto,
-                        pr_codigo = q.pr_codigo,
-                        pr_descripcion = q.pr_descripcion,
-                        Secuencia = q.Secuencia,
-                        Su_Descripcion = q.Su_Descripcion,
-                        tm_descripcion = q.tm_descripcion,
-                        cc_Descripcion = q.cc_Descripcion
-                    }).ToList();
+                        Lista.Add(new INV_008_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            bo_Descripcion = Convert.ToString(reader["bo_Descripcion"]),
+                            cm_fecha = Convert.ToDateTime(reader["cm_fecha"]),
+                            cm_tipo_movi = Convert.ToString(reader["cm_tipo_movi"]),
+                            Desc_mov_inv = Convert.ToString(reader["Desc_mov_inv"]),
+                            dm_cantidad = Convert.ToDouble(reader["dm_cantidad"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            IdBodega = Convert.ToInt32(reader["IdBodega"]),
+                            IdCentroCosto = Convert.ToString(reader["IdCentroCosto"]),
+                            IdEstadoAproba = Convert.ToString(reader["IdEstadoAproba"]),
+                            IdMotivo_Inv = string.IsNullOrEmpty(reader["IdMotivo_Inv"].ToString()) ? null : (int?)(reader["IdMotivo_Inv"]),
+                            IdMovi_inven_tipo = Convert.ToInt32(reader["IdMovi_inven_tipo"]),
+                            IdNumMovi = Convert.ToDecimal(reader["IdNumMovi"]),
+                            IdOrdenCompra = string.IsNullOrEmpty(reader["IdOrdenCompra"].ToString()) ? null : (decimal?)(reader["IdOrdenCompra"]),
+                            IdProducto = Convert.ToDecimal(reader["IdProducto"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            mv_costo = Convert.ToDouble(reader["mv_costo"]),
+                            pe_nombreCompleto = Convert.ToString(reader["pe_nombreCompleto"]),
+                            pr_codigo = Convert.ToString(reader["pr_codigo"]),
+                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
+                            Secuencia = Convert.ToInt32(reader["Secuencia"]),
+                            Su_Descripcion = Convert.ToString(reader["Su_Descripcion"]),
+                            tm_descripcion = Convert.ToString(reader["tm_descripcion"]),
+                            cc_Descripcion = Convert.ToString(reader["cc_Descripcion"]),
+                            tp_descripcion = Convert.ToString(reader["tp_descripcion"])
+                        });
+                    }
+                    reader.Close();
                 }
+                
                 return Lista;
             }
             catch (Exception)

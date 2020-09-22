@@ -2,6 +2,7 @@
 using Core.Erp.Info.Facturacion;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Core.Erp.Data.Facturacion
@@ -256,26 +257,28 @@ namespace Core.Erp.Data.Facturacion
         {
             try
             {
-                List<fa_PuntoVta_Info> Lista;
-                using (Entities_facturacion Context = new Entities_facturacion())
+                List<fa_PuntoVta_Info> Lista = new List<fa_PuntoVta_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    Lista = (from q in Context.fa_PuntoVta
-                                where q.IdEmpresa == IdEmpresa
-                                && q.IdSucursal == IdSucursal
-                                && q.codDocumentoTipo == codDocumentoTipo
-                                && q.estado == true
-                                select new fa_PuntoVta_Info
-                                {
-                                    IdEmpresa = q.IdEmpresa,
-                                    IdSucursal = q.IdSucursal,
-                                    IdBodega = q.IdBodega,
-                                    IdPuntoVta = q.IdPuntoVta,
-                                    cod_PuntoVta = q.cod_PuntoVta,
-                                    nom_PuntoVta = q.nom_PuntoVta,
-                                    estado = q.estado,
-                                    CobroAutomatico = q.CobroAutomatico
-
-                                }).ToList();
+                    connection.Open();
+                    string query = "select IdEmpresa, IdSucursal, IdBodega, IdPuntoVta, cod_PuntoVta, nom_PuntoVta, estado, CobroAutomatico from fa_PuntoVta where IdEmpresa = "+IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and CodDocumentoTipo = '"+codDocumentoTipo+"'";
+                    SqlCommand command = new SqlCommand(query,connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_PuntoVta_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdBodega = Convert.ToInt32(reader["IdBodega"]),
+                            IdPuntoVta = Convert.ToInt32(reader["IdPuntoVta"]),
+                            cod_PuntoVta = Convert.ToString(reader["cod_PuntoVta"]),
+                            nom_PuntoVta = Convert.ToString(reader["nom_PuntoVta"]),
+                            estado = Convert.ToBoolean(reader["estado"]),
+                            CobroAutomatico = Convert.ToBoolean(reader["CobroAutomatico"])
+                        });
+                    }
+                    reader.Close();
                 }
                 return Lista;
             }

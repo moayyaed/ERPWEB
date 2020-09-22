@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,42 +14,29 @@ namespace Core.Erp.Data.Inventario
         {
             try
             {
-                List<in_linea_Info> Lista;
-                using (Entities_inventario Context = new Entities_inventario())
+                List<in_linea_Info> Lista = new List<in_linea_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    if(mostrar_anulados)
-                    Lista = (from q in Context.in_linea
-                             where q.IdEmpresa == IdEmpresa
-                             && q.IdCategoria == IdCategoria
-                             select new in_linea_Info
-                             {
-                                 IdEmpresa = q.IdEmpresa,
-                                 IdCategoria = q.IdCategoria,
-                                 IdLinea = q.IdLinea,
-                                 cod_linea = q.cod_linea,
-                                 nom_linea = q.nom_linea,
-                                 Estado = q.Estado,
-
-                                 EstadoBool = q.Estado == "A" ? true : false
-
-                             }).ToList();
-                    else
-                        Lista = (from q in Context.in_linea
-                                 where q.IdEmpresa == IdEmpresa
-                                 &&q.IdCategoria == IdCategoria
-                                 && q.Estado == "A"
-                                 select new in_linea_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdCategoria = q.IdCategoria,
-                                     IdLinea = q.IdLinea,
-                                     cod_linea = q.cod_linea,
-                                     nom_linea = q.nom_linea,
-                                     Estado = q.Estado,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
+                    connection.Open();
+                    string query = "select IdEmpresa,IdCategoria,IdLinea,cod_linea,nom_linea,observacion,Estado, case when Estado = 'A' THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END EstadoBool from in_linea where IdEmpresa = " + IdEmpresa.ToString() + " and IdCategoria = '"+IdCategoria+"'  and Estado = " + (mostrar_anulados ? "Estado" : "'A'");
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new in_linea_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdCategoria = Convert.ToString(reader["IdCategoria"]),
+                            IdLinea = Convert.ToInt32(reader["IdLinea"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            nom_linea = Convert.ToString(reader["nom_linea"]),
+                            observacion = Convert.ToString(reader["observacion"]),
+                            cod_linea = Convert.ToString(reader["cod_linea"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                        });
+                    }
+                    reader.Close();
                 }
                 return Lista;
             }

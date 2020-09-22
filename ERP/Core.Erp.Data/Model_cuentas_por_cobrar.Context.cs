@@ -49,7 +49,7 @@ namespace Core.Erp.Data
         public DbSet<cxc_LiquidacionRetProvDet> cxc_LiquidacionRetProvDet { get; set; }
         public DbSet<vwcxc_LiquidacionRetProvDet> vwcxc_LiquidacionRetProvDet { get; set; }
         public DbSet<vwcxc_LiquidacionRetProvDet_PorCruzar> vwcxc_LiquidacionRetProvDet_PorCruzar { get; set; }
-        public DbSet<cxc_cobro> cxc_cobro { get; set; }
         public DbSet<vwcxc_cobro_para_retencion> vwcxc_cobro_para_retencion { get; set; }
+        public DbSet<cxc_cobro> cxc_cobro { get; set; }
     }
 }

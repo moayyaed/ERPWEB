@@ -166,6 +166,20 @@
                     </div>
                 </div>
 
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
+                                <div id="Ajax_CXP">
+                                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                                </div>
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_contactos_telefonos">
 
@@ -211,19 +225,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_contabilidad">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
-                                <div id="Ajax_CXP">
-                                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
-                                </div>                                
-                                @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">

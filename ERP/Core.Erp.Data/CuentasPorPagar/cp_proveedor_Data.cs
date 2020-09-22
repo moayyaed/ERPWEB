@@ -3,6 +3,7 @@ using Core.Erp.Info.CuentasPorPagar;
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,52 +17,40 @@ namespace Core.Erp.Data.CuentasPorPagar
         {
             try
             {
-                List<cp_proveedor_Info> Lista;
-                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                List<cp_proveedor_Info> Lista = new List<cp_proveedor_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.vwcp_proveedor_consulta
-                                 join t in Context.cp_proveedor_clase
-                                 on new { q.IdEmpresa, q.IdClaseProveedor } equals new { t.IdEmpresa, t.IdClaseProveedor }
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new cp_proveedor_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdProveedor = q.IdProveedor,
-                                     pr_estado = q.pr_estado,
-                                     descripcion_clas_prove = t.descripcion_clas_prove,
-                                     IdEntidad=q.IdProveedor,
-                                     info_persona = new Info.General.tb_persona_Info
-                                     {
-                                         IdPersona = q.IdPersona,
-                                         pe_nombreCompleto = q.pe_nombreCompleto,
-                                         pe_cedulaRuc = q.pe_cedulaRuc
-                                     },
+                    connection.Open();
 
-                                     EstadoBool = q.pr_estado == "A" ? true : false
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.vwcp_proveedor_consulta
-                                 join t in Context.cp_proveedor_clase
-                                 on new { q.IdEmpresa, q.IdClaseProveedor } equals new { t.IdEmpresa, t.IdClaseProveedor }
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.pr_estado == "A"
-                                 select new cp_proveedor_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     IdProveedor = q.IdProveedor,
-                                     pr_estado = q.pr_estado,
-                                     descripcion_clas_prove = t.descripcion_clas_prove,
-                                     info_persona = new Info.General.tb_persona_Info
-                                     {
-                                         IdPersona = q.IdPersona,
-                                         pe_nombreCompleto = q.pe_nombreCompleto,
-                                         pe_cedulaRuc = q.pe_cedulaRuc
-                                     },
-
-                                     EstadoBool = q.pr_estado == "A" ? true : false
-                                 }).ToList();
+                    string query = "select a.IdEmpresa, a.IdProveedor, a.pr_estado, c.descripcion_clas_prove, a.IdPersona, b.pe_nombreCompleto, b.pe_cedulaRuc, case when a.pr_estado = 'A' THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS EstadoBool"
+                                +" from cp_proveedor as a inner join"
+                                +" tb_persona as b on a.IdPersona = b.IdPersona left join"
+                                +" cp_proveedor_clase as c on a.IdEmpresa = c.IdEmpresa and a.IdClaseProveedor = c.IdClaseProveedor"
+                                +" where a.IdEmpresa = "+IdEmpresa.ToString()+" "+(mostrar_anulados ? "" : "and a.pr_estado = 'A'")+" order by b.pe_nombreCompleto";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new cp_proveedor_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdProveedor = Convert.ToDecimal(reader["IdProveedor"]),
+                            pr_estado = Convert.ToString(reader["pr_estado"]),
+                            descripcion_clas_prove = Convert.ToString(reader["descripcion_clas_prove"]),
+                            IdPersona = Convert.ToDecimal(reader["IdPersona"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                            info_persona = new Info.General.tb_persona_Info
+                            {
+                                IdPersona = Convert.ToDecimal(reader["IdPersona"]),
+                                pe_nombreCompleto = Convert.ToString(reader["pe_nombreCompleto"]),
+                                pe_cedulaRuc = Convert.ToString(reader["pe_cedulaRuc"])
+                            }
+                        });
+                    }
+                    reader.Close();
                 }
+                
                 return Lista;
             }
             catch (Exception)
@@ -76,49 +65,65 @@ namespace Core.Erp.Data.CuentasPorPagar
             try
             {
                 cp_proveedor_Info info = new cp_proveedor_Info();
-                Entities_cuentas_por_pagar Context_p = new Entities_cuentas_por_pagar();
-                Entities_general Context_g = new Entities_general();
 
-                cp_proveedor Entity = Context_p.cp_proveedor.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdProveedor == IdProveedor);
-                    if (Entity == null) return null;
-                    info = new cp_proveedor_Info
-                    {
-                        IdEmpresa = Entity.IdEmpresa,
-                        IdProveedor = Entity.IdProveedor,
-                        IdPersona = Entity.IdPersona,
-                        IdClaseProveedor = Entity.IdClaseProveedor,
-                        IdCiudad = Entity.IdCiudad,
-                        IdBanco_acreditacion = Entity.IdBanco_acreditacion,
-                        IdCtaCble_CXP = Entity.IdCtaCble_CXP,
-                        IdCtaCble_Gasto = Entity.IdCtaCble_Gasto,
-                        IdTipoCta_acreditacion_cat = Entity.IdTipoCta_acreditacion_cat,
-                        pr_contribuyenteEspecial_bool = Entity.pr_contribuyenteEspecial == "S" ? true : false,
-                        es_empresa_relacionada = Entity.es_empresa_relacionada,
-                        num_cta_acreditacion = Entity.num_cta_acreditacion,
-                        pr_codigo = Entity.pr_codigo,
-                        pr_plazo = Entity.pr_plazo,
-                        pr_estado = Entity.pr_estado,
-                        pr_correo = Entity.pr_correo,
-                        pr_direccion = Entity.pr_direccion,
-                        pr_telefonos = Entity.pr_telefonos,
-                        pr_celular = Entity.pr_celular,
-                        IdCtaCble_Anticipo = Entity.IdCtaCble_Anticipo
-                    };
-                tb_persona Entity_p = Context_g.tb_persona.Where(q => q.IdPersona == info.IdPersona).FirstOrDefault();
-                info.info_persona = new Info.General.tb_persona_Info
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    IdPersona = Entity_p.IdPersona,
-                    pe_apellido = Entity_p.pe_apellido,
-                    pe_nombre = Entity_p.pe_nombre,
-                    pe_cedulaRuc = Entity_p.pe_cedulaRuc,
-                    pe_nombreCompleto = Entity_p.pe_nombreCompleto,
-                    pe_razonSocial = Entity_p.pe_razonSocial,
-                    pe_Naturaleza = Entity_p.pe_Naturaleza,
-                    IdTipoDocumento = Entity_p.IdTipoDocumento
-                };
+                    connection.Open();
+                    string query = "select a.IdEmpresa, a.IdProveedor,a.IdPersona, a.IdClaseProveedor, a.IdCiudad, a.IdBanco_acreditacion,"
+                                +" a.IdCtaCble_CXP, a.IdCtaCble_Gasto,a.IdTipoCta_acreditacion_cat, case when a.pr_contribuyenteEspecial = 'S' THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END pr_contribuyenteEspecial_bool,"
+                                +" a.es_empresa_relacionada, a.num_cta_acreditacion, a.pr_codigo, a.pr_plazo, a.pr_estado, a.pr_correo, a.pr_direccion,"
+                                +" a.pr_telefonos, a.pr_celular, a.IdCtaCble_Anticipo,"
+                                +" b.pe_apellido, b.pe_nombre, b.pe_cedulaRuc, b.pe_nombreCompleto, b.pe_razonSocial, b.pe_Naturaleza, b.IdTipoDocumento,"
+                                +" case when c.Ruc is null then 0 else 1 end as EsMicroEmpresa"
+                                +" from cp_proveedor as a inner join"
+                                +" tb_persona as b on a.IdPersona = b.IdPersona left join"
+                                +" cp_proveedor_microempresa as c on b.pe_cedulaRuc = c.Ruc"
+                                +" where a.IdEmpresa = "+IdEmpresa.ToString()+" and a.IdProveedor = "+IdProveedor.ToString();
+                    SqlCommand command = new SqlCommand(query,connection);
+                    var ValidateValue = command.ExecuteScalar();
+                    if (ValidateValue == null)
+                        return null;
 
-                Context_p.Dispose();
-                Context_g.Dispose();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        info = new cp_proveedor_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdProveedor = Convert.ToDecimal(reader["IdProveedor"]),
+                            IdClaseProveedor = Convert.ToInt32(reader["IdClaseProveedor"]),
+                            IdPersona = Convert.ToDecimal(reader["IdPersona"]),
+                            IdCiudad = Convert.ToString(reader["IdCiudad"]),
+                            IdBanco_acreditacion = string.IsNullOrEmpty(reader["IdBanco_acreditacion"].ToString()) ? null : (int?)(reader["IdBanco_acreditacion"]),
+                            IdCtaCble_CXP = Convert.ToString(reader["IdCtaCble_CXP"]),
+                            IdCtaCble_Gasto = Convert.ToString(reader["IdCtaCble_Gasto"]),
+                            IdTipoCta_acreditacion_cat = Convert.ToString(reader["IdTipoCta_acreditacion_cat"]),
+                            pr_contribuyenteEspecial_bool = Convert.ToBoolean(reader["pr_contribuyenteEspecial_bool"]),
+                            es_empresa_relacionada = Convert.ToBoolean(reader["es_empresa_relacionada"]),
+                            num_cta_acreditacion = Convert.ToString(reader["num_cta_acreditacion"]),
+                            pr_codigo = Convert.ToString(reader["pr_codigo"]),
+                            pr_plazo = Convert.ToInt32(reader["pr_plazo"]),
+                            pr_estado = Convert.ToString(reader["pr_estado"]),
+                            pr_correo = Convert.ToString(reader["pr_correo"]),
+                            pr_direccion = Convert.ToString(reader["pr_direccion"]),
+                            pr_telefonos = Convert.ToString(reader["pr_telefonos"]),
+                            pr_celular = Convert.ToString(reader["pr_celular"]),
+                            IdCtaCble_Anticipo = Convert.ToString(reader["IdCtaCble_Anticipo"]),
+                            EsMicroEmpresa = Convert.ToInt32(reader["EsMicroEmpresa"]),
+                            info_persona = new Info.General.tb_persona_Info
+                            {
+                                pe_apellido = Convert.ToString(reader["pe_apellido"]),
+                                pe_nombre = Convert.ToString(reader["pe_nombre"]),
+                                pe_cedulaRuc = Convert.ToString(reader["pe_cedulaRuc"]),
+                                pe_nombreCompleto = Convert.ToString(reader["pe_nombreCompleto"]),
+                                pe_razonSocial = Convert.ToString(reader["pe_razonSocial"]),
+                                pe_Naturaleza = Convert.ToString(reader["pe_Naturaleza"]),
+                                IdTipoDocumento = Convert.ToString(reader["IdTipoDocumento"])
+                            }
+                        };
+                    }
+                    reader.Close();
+                }
                 return info;
             }
             catch (Exception)

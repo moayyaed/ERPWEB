@@ -2,6 +2,7 @@
 using DevExpress.Web;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,33 +79,36 @@ namespace Core.Erp.Data.General
         {
             tb_sucursal_Info info = new tb_sucursal_Info();
 
-            Entities_general context_g = new Entities_general();
+            using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+            {
+                connection.Open();
+                string query = "Select IdEmpresa, IdSucursal, codigo, Estado, Es_establecimiento, Su_CodigoEstablecimiento, Su_Ruc, Su_Direccion, Su_JefeSucursal, IdCtaCble_cxp, IdCtaCble_vtaIVA, IdCtaCble_vtaIVA0 from tb_sucursal where IdEmpresa = " + IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and Estado = 'A'";
+                SqlCommand command = new SqlCommand(query,connection);
+                var ValidateValue = command.ExecuteScalar();
+                if (ValidateValue == null)
+                    return null;
 
-            info = (from q in context_g.tb_sucursal
-                    where q.Estado == "A"
-                    && q.IdEmpresa == IdEmpresa
-                    && q.IdSucursal == IdSucursal
-                    select new tb_sucursal_Info
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    info = new tb_sucursal_Info
                     {
-                        IdSucursal = q.IdSucursal,
-                        Su_Descripcion = q.Su_Descripcion,
-                        codigo = q.codigo,
-                        Estado = q.Estado,
-                        Es_establecimiento = q.Es_establecimiento,
-                        IdEmpresa = q.IdEmpresa,
-                        Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,
-                        Su_Direccion = q.Su_Direccion,
-                        Su_JefeSucursal = q.Su_JefeSucursal,
-                        Su_Ruc = q.Su_Ruc,
-                        Su_Telefonos = q.Su_Telefonos,
-                        IdCtaCble_cxp = q.IdCtaCble_cxp,
-                        IdCtaCble_vtaIVA = q.IdCtaCble_vtaIVA,
-                        IdCtaCble_vtaIVA0 = q.IdCtaCble_vtaIVA0
-                        
-                    }).FirstOrDefault();
-
-            context_g.Dispose();
-
+                        IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                        IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                        codigo = Convert.ToString(reader["codigo"]),
+                        Estado = Convert.ToString(reader["Estado"]),
+                        Es_establecimiento = Convert.ToBoolean(reader["Es_establecimiento"]),
+                        Su_CodigoEstablecimiento = Convert.ToString(reader["Su_CodigoEstablecimiento"]),
+                        Su_Direccion = Convert.ToString(reader["Su_Direccion"]),
+                        Su_JefeSucursal = Convert.ToString(reader["Su_JefeSucursal"]),
+                        Su_Ruc = Convert.ToString(reader["Su_Ruc"]),
+                        IdCtaCble_cxp = Convert.ToString(reader["IdCtaCble_cxp"]),
+                        IdCtaCble_vtaIVA = Convert.ToString(reader["IdCtaCble_vtaIVA"]),
+                        IdCtaCble_vtaIVA0 = Convert.ToString(reader["IdCtaCble_vtaIVA0"]),
+                    };
+                }
+                reader.Close();
+            }
             return info;
         }
 

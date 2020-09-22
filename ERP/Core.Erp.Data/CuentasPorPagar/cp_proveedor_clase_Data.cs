@@ -116,7 +116,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdClaseProveedor = info.IdClaseProveedor = get_id(info.IdEmpresa),
-                        cod_clase_proveedor = info.cod_clase_proveedor,
+                        cod_clase_proveedor = info.cod_clase_proveedor = info.IdClaseProveedor.ToString(),
                         descripcion_clas_prove = info.descripcion_clas_prove,
                         IdCtaCble_CXP = info.IdCtaCble_CXP,
                         IdCtaCble_gasto = info.IdCtaCble_gasto,
@@ -144,7 +144,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                     cp_proveedor_clase Entity = Context.cp_proveedor_clase.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdClaseProveedor == info.IdClaseProveedor);
                     if (Entity == null)
                         return false;
-                    Entity.cod_clase_proveedor = info.cod_clase_proveedor;
+                    Entity.cod_clase_proveedor = info.cod_clase_proveedor ?? info.IdClaseProveedor.ToString();
                     Entity.descripcion_clas_prove = info.descripcion_clas_prove;
                     Entity.IdCtaCble_CXP = info.IdCtaCble_CXP;
                     Entity.IdCtaCble_gasto = info.IdCtaCble_gasto;

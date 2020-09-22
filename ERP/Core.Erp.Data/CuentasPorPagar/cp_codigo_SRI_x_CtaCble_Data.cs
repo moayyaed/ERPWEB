@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.CuentasPorPagar;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,36 +79,34 @@ namespace Core.Erp.Data.CuentasPorPagar
             {
 
                 List<cp_codigo_SRI_Info> lista = new List<cp_codigo_SRI_Info>();
-                using (Entities_cuentas_por_pagar Contex=new Entities_cuentas_por_pagar())
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    var select_ = from q in Contex.vwcp_codigo_SRI
-                                  where q.IdEmpresa == IdEmpresa
-                                  && q.IdTipoSRI== "COD_IDCREDITO"
-                                  && q.co_estado=="A"
-                                  orderby q.co_f_valides_hasta descending
-                                  select q;
-
-                    foreach (var item in select_)
+                    connection.Open();
+                    string query = "select a.IdCodigo_SRI, a.codigoSRI, a.co_codigoBase,'['+cast(a.IdCodigo_SRI as varchar)+'] '+ a.co_descripcion AS co_descripcion, a.co_porRetencion, a.co_f_valides_desde,"
+                                + " a.co_f_valides_hasta, a.co_estado, a.IdTipoSRI"
+                                +" from cp_codigo_SRI as a left joIN"
+                                +" [dbo].[cp_codigo_SRI_x_CtaCble] as b on a.IdCodigo_SRI = b.IdCodigo_SRI"
+                                +" where a.co_estado = 'A' and a.IdTipoSRI = 'COD_IDCREDITO' "
+                                + " ORDER BY codigoSRI desc";
+                    SqlCommand command = new SqlCommand(query,connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        cp_codigo_SRI_Info dat = new cp_codigo_SRI_Info();
-                        dat.IdCodigo_SRI = item.IdCodigo_SRI;
-                        dat.codigoSRI = item.codigoSRI;
-                        dat.co_codigoBase = item.co_codigoBase;
-                        dat.co_descripcion = item.co_descripcion;
-                        dat.co_porRetencion = item.co_porRetencion;
-                        dat.co_f_valides_desde = item.co_f_valides_desde;
-                        dat.co_f_valides_hasta = item.co_f_valides_hasta;
-                        dat.co_estado = item.co_estado;
-                        dat.IdTipoSRI = item.IdTipoSRI;
-                        if (item.codigoSRI == "01")
-                            dat.co_descripcion = "[" + item.codigoSRI + "] - " + item.co_descripcion + " " + item.co_porRetencion.ToString().Replace("0", "") + "12%";
-                        else
-                            dat.co_descripcion = "[" + item.codigoSRI + "] - " + item.co_descripcion + " " + item.co_porRetencion + "%";
-
-
-
-                        lista.Add(dat);
+                        lista.Add(new cp_codigo_SRI_Info
+                        {
+                            IdCodigo_SRI = Convert.ToInt32(reader["IdCodigo_SRI"]),
+                            codigoSRI = Convert.ToString(reader["codigoSRI"]),
+                            co_codigoBase = Convert.ToString(reader["co_codigoBase"]),
+                            co_descripcion = Convert.ToString(reader["co_descripcion"]),
+                            co_porRetencion = Convert.ToInt32(reader["co_porRetencion"]),
+                            co_f_valides_desde = Convert.ToDateTime(reader["co_f_valides_desde"]),
+                            co_f_valides_hasta = Convert.ToDateTime(reader["co_f_valides_hasta"]),
+                            co_estado = Convert.ToString(reader["co_estado"]),
+                            IdTipoSRI = Convert.ToString(reader["IdTipoSRI"])
+                        });
                     }
+                    reader.Close();
                 }
               
                 return (lista);

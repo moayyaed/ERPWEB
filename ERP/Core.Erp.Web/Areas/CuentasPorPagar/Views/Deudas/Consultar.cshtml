@@ -165,7 +165,8 @@
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
     @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
     @Html.HiddenFor(q => q.EsDocumentoElectronico, new { @id = "EsDocumentoElectronico" })
-    
+    @Html.HiddenFor(q => q.EsMicroEmpresa, new { @id = "EsMicroEmpresa" })
+
     @Html.HiddenFor(q => q.co_fechaOg)
 
     @Html.HiddenFor(q => q.info_retencion.IdRetencion);
@@ -202,7 +203,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-5 col-md-1">
+            <div class="col-md-2">
+                <div class="bg-green color-palette form-control" id="DivMicroEmpresa" style="display:none">
+                    <span class="center-block">Régimen de microempresas</span>
+                </div>
+            </div>
+            <div class="col-md-offset-3 col-md-1">
                 <div id="rideFact" hidden>
                     <button type="button" class="btn btn-primary form-control" onclick="ImprimirRIDEElectronico();" title="Imprimir RIDE de documento electrónico">
                         <i class="fa fa-print"></i>  RIDE Doc.
@@ -509,7 +515,6 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="co_observacion">Diario contable*</label>
-                                @*@Html.Action("GridViewPartial_deudas_dc")*@
                                 @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
                             </div>
                         </div>
@@ -1006,6 +1011,10 @@
                     $("#co_plazo").val(data.pr_plazo);
                     var date = moment(co_FechaFactura.GetValue(), "DD-MM-YYYY").add(data.pr_plazo, 'days');
                     co_FechaFactura_vct.SetValue(new Date(date));
+                    if (data.EsMicroEmpresa == 1) {
+                        $("#DivMicroEmpresa").show();
+                    }else
+                        $("#DivMicroEmpresa").hide();
                 },
                 error: function (error) {
                 }
@@ -1275,6 +1284,12 @@
         {
             $("#sri").show();
         }
+
+        if($("#EsMicroEmpresa").val() == 1)
+        {
+            $("#DivMicroEmpresa").show();
+        }else
+            $("#DivMicroEmpresa").hide();
 
     }
 

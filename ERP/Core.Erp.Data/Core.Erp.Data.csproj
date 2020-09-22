@@ -325,6 +325,7 @@
     <Compile Include="Compras\com_ordencompra_local_resumen_Data.cs" />
     <Compile Include="Compras\com_parametro_Data.cs" />
     <Compile Include="Compras\com_TerminoPago_Data.cs" />
+    <Compile Include="ConexionesERP.cs" />
     <Compile Include="Contabilidad\ats_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
@@ -568,6 +569,7 @@
     <Compile Include="CuentasPorPagar\cp_parametros_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_clase_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_microempresa_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_det_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Data.cs" />

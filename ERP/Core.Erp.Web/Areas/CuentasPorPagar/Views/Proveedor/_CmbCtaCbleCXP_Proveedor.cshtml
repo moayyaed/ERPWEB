@@ -4,7 +4,7 @@
     {
         settings.Name = "IdCtaCble_CXP";
         settings.Width = Unit.Percentage(100);
-        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1000);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
         settings.CallbackRouteValues = new { Controller = "Proveedor", Action = "CmbCtaCbleCXP_Proveedor", Area = "CuentasPorPagar" };
         settings.Properties.CallbackPageSize = 15;
@@ -24,7 +24,7 @@
         settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
     })
     .BindList(new Core.Erp.Web.Areas.CuentasPorPagar.Controllers.ProveedorController().get_list_bajo_demanda_ctacble_cxp, new Core.Erp.Web.Areas.CuentasPorPagar.Controllers.ProveedorController().get_info_bajo_demanda_ctacble_cxp)
-    .Bind(Model.GetType() == typeof(Core.Erp.Info.CuentasPorPagar.cp_proveedor_Info) ? "" : Model);
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.CuentasPorPagar.cp_proveedor_Info) ? Model.IdCtaCble_CXP : (Model.GetType() == typeof(Core.Erp.Info.Contabilidad.ct_plancta_Info) ? Model.IdCtaCble : Model));
 
 }
 @comboBox.GetHtml()

@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.SeguridadAcceso;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,69 +14,91 @@ namespace Core.Erp.Data.SeguridadAcceso
         {
             try
             {
-                List<seg_Menu_x_Empresa_x_Usuario_Info> Lista;
+                List<seg_Menu_x_Empresa_x_Usuario_Info> Lista = new List<seg_Menu_x_Empresa_x_Usuario_Info>();
 
-                using (Entities_seguridad_acceso Context = new Entities_seguridad_acceso())
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    Lista = (from m in Context.seg_Menu
-                             join me in Context.seg_Menu_x_Empresa
-                             on m.IdMenu equals me.IdMenu
-                             join meu in Context.seg_Menu_x_Empresa_x_Usuario
-                             on new { me.IdEmpresa, me.IdMenu } equals new { meu.IdEmpresa, meu.IdMenu }
-                             where m.Habilitado == true && meu.IdEmpresa == IdEmpresa
-                             && meu.IdUsuario == IdUsuario
-                             orderby m.PosicionMenu
-                             select new seg_Menu_x_Empresa_x_Usuario_Info
-                             {
-                                 seleccionado = true,
-                                 IdEmpresa = meu.IdEmpresa,
-                                 IdUsuario = meu.IdUsuario,
-                                 IdMenu = meu.IdMenu,
-                                 Nuevo = meu.Nuevo,
-                                 Modificar = meu.Modificar,
-                                 Anular = meu.Anular,
-                                 IdMenuPadre = m.IdMenuPadre,
-                                 DescripcionMenu = m.DescripcionMenu,
-                                 info_menu = new seg_Menu_Info
-                                 {
-                                     IdMenu = m.IdMenu,
-                                     DescripcionMenu = m.DescripcionMenu,
-                                     IdMenuPadre = m.IdMenuPadre,
-                                     PosicionMenu = m.PosicionMenu,
-                                     web_nom_Action = m.web_nom_Action,
-                                     web_nom_Area = m.web_nom_Area,
-                                     web_nom_Controller = m.web_nom_Controller
-                                 }
-                             }).ToList();
+                    connection.Open();
 
-                    if(MostrarTodo)
-                    Lista.AddRange((from q in Context.seg_Menu
-                                    join me in Context.seg_Menu_x_Empresa
-                                    on q.IdMenu equals me.IdMenu
-                                    where q.Habilitado == true && me.IdEmpresa  == IdEmpresa
-                                    && !Context.seg_Menu_x_Empresa_x_Usuario.Any(meu => meu.IdMenu == q.IdMenu && meu.IdEmpresa == IdEmpresa && meu.IdUsuario == IdUsuario)
-                                    select new seg_Menu_x_Empresa_x_Usuario_Info
-                                    {
-                                        seleccionado = false,
-                                        IdEmpresa = IdEmpresa,
-                                        IdUsuario = IdUsuario,
-                                        IdMenu = q.IdMenu,
-                                        IdMenuPadre = q.IdMenuPadre,
-                                        DescripcionMenu = q.DescripcionMenu,
-                                        Nuevo = true,
-                                        Modificar = true,
-                                        Anular = true,
-                                        info_menu = new seg_Menu_Info
-                                        {
-                                            IdMenu = q.IdMenu,
-                                            DescripcionMenu = q.DescripcionMenu,
-                                            IdMenuPadre = q.IdMenuPadre,
-                                            PosicionMenu = q.PosicionMenu
-                                        }
+                    #region Menu asignado
+                    string query = "select b.IdEmpresa, b.IdMenu, b.Nuevo, b.Modificar, b.Anular, a.DescripcionMenu, a.Habilitado, a.IdMenuPadre, a.PosicionMenu, a.web_nom_Action, a.web_nom_Area, a.web_nom_Controller"
+                                + " from seg_Menu as a inner join"
+                                + " seg_Menu_x_Empresa_x_Usuario as b on a.IdMenu = b.IdMenu inner join"
+                                + " seg_Menu_x_Empresa as c on c.IdMenu = b.IdMenu and c.IdEmpresa = b.IdEmpresa"
+                                + " where b.IdEmpresa = " + IdEmpresa.ToString() + " and b.IdUsuario = '" + IdUsuario + "' and a.Habilitado = 1"
+                                + " order by a.PosicionMenu";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new seg_Menu_x_Empresa_x_Usuario_Info
+                        {
+                            seleccionado = true,
+                            IdEmpresa = IdEmpresa,
+                            IdUsuario = IdUsuario,
+                            IdMenu = Convert.ToInt32(reader["IdMenu"]),
+                            Nuevo = Convert.ToBoolean(reader["Nuevo"]),
+                            Modificar = Convert.ToBoolean(reader["Modificar"]),
+                            Anular = Convert.ToBoolean(reader["Anular"]),
+                            IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
+                            DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
+                            info_menu = new seg_Menu_Info
+                            {
+                                IdMenu = Convert.ToInt32(reader["IdMenu"]),
+                                DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
+                                IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
+                                PosicionMenu = Convert.ToInt32(reader["PosicionMenu"]),
+                                web_nom_Action = Convert.ToString(reader["web_nom_Action"]),
+                                web_nom_Area = Convert.ToString(reader["web_nom_Area"]),
+                                web_nom_Controller = Convert.ToString(reader["web_nom_Controller"])
+                            }
+                        });
+                    }
+                    reader.Close();
+                    #endregion
 
-                                    }).ToList());
+                    #region Menu no asignado
+                    if (MostrarTodo)
+                    {
+                        string queryAsignados = "select c.IdEmpresa, c.IdMenu,  a.DescripcionMenu, a.Habilitado, a.IdMenuPadre, a.PosicionMenu, a.web_nom_Action, a.web_nom_Area, a.web_nom_Controller"
+                                            + " from seg_Menu as a inner join"
+                                            + " seg_Menu_x_Empresa as c on c.IdMenu = a.IdMenu"
+                                            + " where c.IdEmpresa = " + IdEmpresa.ToString() + " and a.Habilitado = 1 and not exists("
+                                            + " select f.IdEmpresa from seg_Menu_x_Empresa_x_Usuario as f where c.IdEmpresa = f.IdEmpresa and c.IdMenu = f.IdMenu and f.IdUsuario = '" + IdUsuario + "') "
+                                            + " order by a.PosicionMenu";
+
+                        SqlCommand commandNoAsignado = new SqlCommand(query, connection);
+                        SqlDataReader readerNA = commandNoAsignado.ExecuteReader();
+                        while (readerNA.Read())
+                        {
+                            Lista.Add(new seg_Menu_x_Empresa_x_Usuario_Info
+                            {
+                                seleccionado = false,
+                                IdEmpresa = IdEmpresa,
+                                IdUsuario = IdUsuario,
+                                IdMenu = Convert.ToInt32(reader["IdMenu"]),
+                                Nuevo = true,
+                                Modificar = true,
+                                Anular = true,
+                                IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
+                                DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
+                                info_menu = new seg_Menu_Info
+                                {
+                                    IdMenu = Convert.ToInt32(reader["IdMenu"]),
+                                    DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
+                                    IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
+                                    PosicionMenu = Convert.ToInt32(reader["PosicionMenu"]),
+                                    web_nom_Action = Convert.ToString(reader["web_nom_Action"]),
+                                    web_nom_Area = Convert.ToString(reader["web_nom_Area"]),
+                                    web_nom_Controller = Convert.ToString(reader["web_nom_Controller"])
+                                }
+                            });
+                        }
+                        readerNA.Close();
+                    }
+                    #endregion
                 }
-
+                
                 return Lista;
             }
             catch (Exception)

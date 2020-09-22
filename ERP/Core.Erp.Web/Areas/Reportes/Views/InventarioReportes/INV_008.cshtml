@@ -154,6 +154,13 @@
                             @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdProductoTipo">Tipo producto</label>
+                            @Html.DropDownListFor(q => q.IdProductoTipo, new SelectList(ViewBag.lstProductoTipo, "IdProductoTipo", "tp_descripcion"), new { @class = "form-control", @id = "IdProductoTipo" })
+                            @Html.ValidationMessageFor(q => q.IdProductoTipo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
                     <!-- /.box-body -->

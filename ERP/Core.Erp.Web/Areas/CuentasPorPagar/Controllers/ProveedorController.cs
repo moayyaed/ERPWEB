@@ -61,13 +61,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region Metodos ComboBox bajo demanda CtaCbleCXP
         public ActionResult CmbCtaCbleCXP_Proveedor()
         {
-            int model = new int();
+            string model = string.Empty;
             return PartialView("_CmbCtaCbleCXP_Proveedor", model);
         }
 
         public ActionResult ChangeValuePartial_CXP(string IdCtaCble = "")
         {
             string model = IdCtaCble;
+            
             return PartialView("_CmbCtaCbleCXP_Proveedor", model);
         }
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_cxp(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -186,10 +187,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             var lst_ciudad = bus_ciudad.get_list("",false);
             ViewBag.lst_ciudad = lst_ciudad;
-
-            var lst_codigo = bus_codigo.get_list(IdTipoSRI, false);
-            ViewBag.lst_codigo = lst_codigo;
-
+            
             var lst_clase = bus_clase.get_list(IdEmpresa, false);
             ViewBag.lst_clase = lst_clase;
 
