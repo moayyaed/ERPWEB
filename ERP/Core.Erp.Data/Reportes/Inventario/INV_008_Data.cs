@@ -33,7 +33,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                                     + " dbo.cp_proveedor AS pro ON per.IdPersona = pro.IdPersona ON c.IdEmpresa = pro.IdEmpresa AND c.IdResponsable = pro.IdProveedor LEFT OUTER JOIN"
                                     + " dbo.ct_CentroCosto AS cc ON d.IdEmpresa = cc.IdEmpresa AND d.IdCentroCosto = cc.IdCentroCosto LEFT JOIN"
                                     + " in_ProductoTipo as pt on p.IdEmpresa = pt.IdEmpresa and p.IdProductoTipo = pt.IdProductoTipo"
-                                    + " WHERE(c.Estado = 'A')";
+                                    + " WHERE(c.Estado = 'A') and c.cm_fecha between DATEFROMPARTS("+fecha_ini.Year.ToString()+","+fecha_ini.Month.ToString()+","+fecha_ini.Day.ToString()+ ") AND DATEFROMPARTS(" + fecha_fin.Year.ToString() + "," + fecha_fin.Month.ToString() + "," + fecha_fin.Day.ToString() + ")";
 
                     if (IdProducto != 0)
                         query += " AND d.IdProducto = "+IdProducto.ToString();
@@ -49,6 +49,13 @@ namespace Core.Erp.Data.Reportes.Inventario
 
                     if (IdProductoTipo != 0)
                         query += " AND p.IdProductoTipo = "+IdProductoTipo.ToString();
+
+                    if (!string.IsNullOrEmpty(IdCentroCosto))
+                        query += " AND d.IdCentroCosto = '" + IdCentroCosto+"'";
+
+                    if (!string.IsNullOrEmpty(signo))
+                        query = " AND m.cm_tipo_movi = '"+signo+"'";
+
 
                     SqlCommand command = new SqlCommand(query,connection);
                     SqlDataReader reader = command.ExecuteReader();

@@ -83,12 +83,12 @@ namespace Core.Erp.Data.CuentasPorPagar
                 using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
                     connection.Open();
-                    string query = "select a.IdCodigo_SRI, a.codigoSRI, a.co_codigoBase,'['+cast(a.IdCodigo_SRI as varchar)+'] '+ a.co_descripcion AS co_descripcion, a.co_porRetencion, a.co_f_valides_desde,"
+                    string query = "select a.IdCodigo_SRI, a.codigoSRI, a.co_codigoBase,'['+cast(a.codigoSRI as varchar)+'] '+ a.co_descripcion AS co_descripcion, a.co_porRetencion, a.co_f_valides_desde,"
                                 + " a.co_f_valides_hasta, a.co_estado, a.IdTipoSRI"
                                 +" from cp_codigo_SRI as a left joIN"
                                 +" [dbo].[cp_codigo_SRI_x_CtaCble] as b on a.IdCodigo_SRI = b.IdCodigo_SRI"
                                 +" where a.co_estado = 'A' and a.IdTipoSRI = 'COD_IDCREDITO' "
-                                + " ORDER BY codigoSRI desc";
+                                + " ORDER BY codigoSRI";
                     SqlCommand command = new SqlCommand(query,connection);
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())

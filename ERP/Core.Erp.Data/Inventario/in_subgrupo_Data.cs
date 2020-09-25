@@ -29,6 +29,7 @@ namespace Core.Erp.Data.Inventario
                             IdCategoria = Convert.ToString(reader["IdCategoria"]),
                             IdLinea = Convert.ToInt32(reader["IdLinea"]),
                             IdGrupo = Convert.ToInt32(reader["IdGrupo"]),
+                            IdSubgrupo = Convert.ToInt32(reader["IdSubgrupo"]),
                             Estado = Convert.ToString(reader["Estado"]),
                             nom_subgrupo = Convert.ToString(reader["nom_subgrupo"]),
                             observacion = Convert.ToString(reader["observacion"]),

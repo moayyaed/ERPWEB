@@ -67,7 +67,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                                             + " select f.IdEmpresa from seg_Menu_x_Empresa_x_Usuario as f where c.IdEmpresa = f.IdEmpresa and c.IdMenu = f.IdMenu and f.IdUsuario = '" + IdUsuario + "') "
                                             + " order by a.PosicionMenu";
 
-                        SqlCommand commandNoAsignado = new SqlCommand(query, connection);
+                        SqlCommand commandNoAsignado = new SqlCommand(queryAsignados, connection);
                         SqlDataReader readerNA = commandNoAsignado.ExecuteReader();
                         while (readerNA.Read())
                         {
@@ -76,21 +76,21 @@ namespace Core.Erp.Data.SeguridadAcceso
                                 seleccionado = false,
                                 IdEmpresa = IdEmpresa,
                                 IdUsuario = IdUsuario,
-                                IdMenu = Convert.ToInt32(reader["IdMenu"]),
+                                IdMenu = Convert.ToInt32(readerNA["IdMenu"]),
                                 Nuevo = true,
                                 Modificar = true,
                                 Anular = true,
-                                IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
-                                DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
+                                IdMenuPadre = string.IsNullOrEmpty(readerNA["IdMenuPadre"].ToString()) ? null : (int?)readerNA["IdMenuPadre"],
+                                DescripcionMenu = Convert.ToString(readerNA["DescripcionMenu"]),
                                 info_menu = new seg_Menu_Info
                                 {
-                                    IdMenu = Convert.ToInt32(reader["IdMenu"]),
-                                    DescripcionMenu = Convert.ToString(reader["DescripcionMenu"]),
-                                    IdMenuPadre = string.IsNullOrEmpty(reader["IdMenuPadre"].ToString()) ? null : (int?)reader["IdMenuPadre"],
-                                    PosicionMenu = Convert.ToInt32(reader["PosicionMenu"]),
-                                    web_nom_Action = Convert.ToString(reader["web_nom_Action"]),
-                                    web_nom_Area = Convert.ToString(reader["web_nom_Area"]),
-                                    web_nom_Controller = Convert.ToString(reader["web_nom_Controller"])
+                                    IdMenu = Convert.ToInt32(readerNA["IdMenu"]),
+                                    DescripcionMenu = Convert.ToString(readerNA["DescripcionMenu"]),
+                                    IdMenuPadre = string.IsNullOrEmpty(readerNA["IdMenuPadre"].ToString()) ? null : (int?)readerNA["IdMenuPadre"],
+                                    PosicionMenu = Convert.ToInt32(readerNA["PosicionMenu"]),
+                                    web_nom_Action = Convert.ToString(readerNA["web_nom_Action"]),
+                                    web_nom_Area = Convert.ToString(readerNA["web_nom_Area"]),
+                                    web_nom_Controller = Convert.ToString(readerNA["web_nom_Controller"])
                                 }
                             });
                         }

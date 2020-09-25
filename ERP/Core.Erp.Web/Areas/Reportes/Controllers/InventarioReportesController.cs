@@ -810,6 +810,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdCentroCosto.Value = model.IdCentroCosto;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.p_signo.Value = model.tipo_movi;
             report.p_IdProductoTipo.Value = model.IdProductoTipo;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
