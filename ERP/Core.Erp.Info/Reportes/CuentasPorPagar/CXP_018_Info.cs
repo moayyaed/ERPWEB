@@ -37,6 +37,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string Grupo { get; set; }
         public int? TotalDias { get; set; }
         public DateTime? co_FechaContabilizacion { get; set; }
+        public int? DiasAcum { get; set; }
         #endregion
     }
 }

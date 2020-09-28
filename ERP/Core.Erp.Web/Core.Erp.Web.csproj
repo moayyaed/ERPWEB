@@ -10618,6 +10618,7 @@
     <Content Include="Areas\General\Views\Provincia\Consultar.cshtml" />
     <Content Include="Areas\General\Views\Region\Consultar.cshtml" />
     <Content Include="Areas\General\Views\Pais\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

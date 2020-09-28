@@ -58,10 +58,8 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCobro = DataBinder.Eval(tc.DataItem, "IdCobro") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdCobro = DataBinder.Eval(tc.DataItem, "IdCobro") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                    Html.ActionLink("Consultar", "Consultar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") })
+                );
             });
             c.SetHeaderTemplateContent(tc =>
             {
@@ -72,14 +70,6 @@
                     );
                 }
             });
-            c.SetDataItemTemplateContent(tc =>
-            {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "AplicarRetencion", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdSucursal = DataBinder.Eval(tc.DataItem, "IdSucursal"), IdBodega = DataBinder.Eval(tc.DataItem, "IdBodega"), IdCbteVta = DataBinder.Eval(tc.DataItem, "IdCbteVta"), CodTipoDocumento = DataBinder.Eval(tc.DataItem, "vt_tipoDoc") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                );
-            });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Percentage(10);
@@ -88,41 +78,34 @@
             c.Width = Unit.Pixel(150);
         });
         settings.Columns.Add("IdCbteVta", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(8);
-        settings.Columns.Add("vt_NumFactura", "# Documento").Width = Unit.Percentage(10);
-        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(25);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
+        settings.Columns.Add("vt_NumFactura", "# Documento").Width = Unit.Percentage(15);
+        settings.Columns.Add("pe_nombreCompleto", "Cliente").Width = Unit.Percentage(35);
 
         settings.Columns.Add(column =>
         {
             column.FieldName = "vt_fecha";
             column.Caption = "Fecha";
             column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-            column.Width = Unit.Percentage(7);
+            column.Width = Unit.Percentage(10);
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "vt_fech_venc";
-            column.Caption = "Fecha Vcto.";
-            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
-            column.Width = Unit.Percentage(7);
-        });
-        settings.Columns.Add(column =>
-        {
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "vt_Subtotal";
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "vt_Iva";
             column.Caption = "I.V.A.";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
         });
         settings.Columns.Add(column =>
         {
-            column.Width = Unit.Percentage(5);
+            column.Width = Unit.Percentage(10);
             column.FieldName = "vt_Total";
             column.Caption = "Total";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";

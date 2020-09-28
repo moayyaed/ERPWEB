@@ -37,5 +37,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string descripcion_clas_prove { get; set; }
         public Nullable<int> DiasVcto { get; set; }
         public Nullable<System.DateTime> co_FechaContabilizacion { get; set; }
+        public Nullable<int> DiasAcum { get; set; }
     }
 }

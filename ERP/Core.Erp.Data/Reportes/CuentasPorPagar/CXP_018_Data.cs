@@ -52,7 +52,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         DiasVcto = q.DiasVcto,
                         Orden = (q.DiasVcto < 0 ? 1 : 2),
                         Grupo = (q.DiasVcto < 0 ? "VENCIDO" : "POR VENCER"),
-                        co_FechaContabilizacion = q.co_FechaContabilizacion
+                        co_FechaContabilizacion = q.co_FechaContabilizacion,
+                        DiasAcum = q.DiasAcum
                     }).ToList();
 
                     var lstA = lst.GroupBy(q => new { q.Orden, q.IdProveedor }).Select(q => new
@@ -93,7 +94,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  Orden = q.Orden,
                                  Grupo = q.Grupo,
                                  TotalDias = g.TotalDias,
-                                 co_FechaContabilizacion = q.co_FechaContabilizacion
+                                 co_FechaContabilizacion = q.co_FechaContabilizacion,
+                                 DiasAcum = q.DiasAcum
                              }).ToList();
                 }
                 

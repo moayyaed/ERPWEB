@@ -208,8 +208,18 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "CuentasPorCobrar", "CobranzaRetenciones", "Index");
-            if (!info.Nuevo)
-                return RedirectToAction("Index");
+            if (info != null)
+            {
+                if (!info.Nuevo)
+                    return RedirectToAction("Index");
+                if (info.Modificar)
+                    model.Modificar = 1;
+                if (info.Anular)
+                    model.Anular = 1;
+                if (info.Nuevo)
+                    model.Nuevo = 1;
+            }
+            
             #endregion
 
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta, CodTipoDocumento);
@@ -286,7 +296,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("AplicarRetencion", new {IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, CodTipoDocumento=model.vt_tipoDoc, Exito = true });
+            return RedirectToAction("Consultar", new {IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta, CodTipoDocumento=model.vt_tipoDoc, Exito = true });
         }
         #endregion
 

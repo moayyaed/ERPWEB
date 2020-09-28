@@ -523,7 +523,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 if (info_det.re_baseRetencion != 0)
                 {
-                    info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
+                    decimal BaseRetencion = Convert.ToDecimal(info_det.re_baseRetencion);
+                    decimal PorRetencion = Convert.ToDecimal(info_codifo_sri.co_porRetencion / 100);
+                    info_det.re_valor_retencion = Convert.ToDouble(Math.Round(BaseRetencion * PorRetencion, 2, MidpointRounding.AwayFromZero));
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
 
                     // calculando valores retencion
@@ -539,7 +541,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 if (info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
                 {
-                    info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
+                    decimal BaseRetencion = Convert.ToDecimal(info_det.re_baseRetencion);
+                    decimal PorRetencion = Convert.ToDecimal(info_codifo_sri.co_porRetencion / 100);
+                    info_det.re_valor_retencion = Convert.ToDouble(Math.Round(BaseRetencion * PorRetencion, 2, MidpointRounding.AwayFromZero));
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
 
 
@@ -573,7 +577,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 if (info_det.re_baseRetencion != 0)
                 {
                     info_det.re_baseRetencion = info_det.re_baseRetencion;
-                    info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
+                    decimal BaseRetencion = Convert.ToDecimal(info_det.re_baseRetencion);
+                    decimal PorRetencion = Convert.ToDecimal(info_codifo_sri.co_porRetencion / 100);
+                    info_det.re_valor_retencion = Convert.ToDouble(Math.Round(BaseRetencion * PorRetencion ,2,MidpointRounding.AwayFromZero));
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
                     List_cp_retencion_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                     model = List_cp_retencion_det.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -583,7 +589,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 if (info_det.re_baseRetencion != null & info_det.re_baseRetencion != 0)
                 {
-                    info_det.re_valor_retencion = (info_det.re_baseRetencion * info_codifo_sri.co_porRetencion) / 100;
+                    decimal BaseRetencion = Convert.ToDecimal(info_det.re_baseRetencion);
+                    decimal PorRetencion = Convert.ToDecimal(info_codifo_sri.co_porRetencion / 100);
+                    info_det.re_valor_retencion = Convert.ToDouble(Math.Round(BaseRetencion * PorRetencion, 2, MidpointRounding.AwayFromZero));
                     info_det.IdCtacble = info_codifo_sri.info_codigo_ctacble.IdCtaCble;
                     info_det.re_Codigo_impuesto = info_det.re_Codigo_impuesto;
                     List_cp_retencion_det.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
