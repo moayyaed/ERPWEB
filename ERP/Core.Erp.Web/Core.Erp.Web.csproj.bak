@@ -48,33 +48,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.CodeParser.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Data.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.DataAccess.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.ExpressApp.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Pdf.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Persistent.Base.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v17.2.Export, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Sparkline.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxPivotGrid.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxThemes.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxTreeList.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Mvc5.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Resources.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpo.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraBars.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraGauges.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v17.2.Web, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Charts.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.ExpressApp.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Persistent.Base.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxTreeList.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Resources.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.1.Web.WebForms, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.1.Web, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="ExcelDataReader, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.3.4.2\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
@@ -117,9 +118,6 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -304,6 +302,7 @@
     <Compile Include="Areas\Contabilidad\Controllers\ComprobanteContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\DinardapController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\GrupoContableController.cs" />
+    <Compile Include="Areas\Contabilidad\Controllers\GrupoPorTipoGastoController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\ParametroContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PeriodoContableController.cs" />
     <Compile Include="Areas\Contabilidad\Controllers\PlanDeCuentasController.cs" />
@@ -317,6 +316,7 @@
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CatalogoTipoCXCController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CobranzaController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\CobranzaRetencionesController.cs" />
+    <Compile Include="Areas\CuentasPorCobrar\Controllers\LiquidacionRetencionClienteController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\LiquidacionTarjetaCreditoController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\MotivoLiquidacionController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\ParametroCXCController.cs" />
@@ -344,6 +344,7 @@
     <Compile Include="Areas\Facturacion\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\FacturaTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FormaPagoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaRemisionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaSinPreciosController.cs" />
@@ -352,6 +353,7 @@
     <Compile Include="Areas\Facturacion\Controllers\NotaDeCreditoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\NotaDeDebitoFacturacionController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ParametrosFacturacionController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\ProbabilidadCobroController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ProformaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\PuntoVentaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\TerminoPagoController.cs" />
@@ -448,6 +450,8 @@
     <Compile Include="Areas\Reportes\Views\RRHHReportes\PivotGridDataOutputDemosHelper.cs" />
     <Compile Include="Areas\RRHH\Controllers\ActaFiniquitoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjusteBeneficiosSocialesController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRentaController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRenta_OIController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjustesAnticipoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosActualizacionSueldoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosTransferenciasController.cs" />
@@ -805,6 +809,24 @@
     <Compile Include="Reportes\Contabilidad\CONTA_010_Rpt.Designer.cs">
       <DependentUpon>CONTA_010_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Rpt.Designer.cs">
+      <DependentUpon>CONTA_011_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_012_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_012_Rpt.Designer.cs">
+      <DependentUpon>CONTA_012_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Rpt.Designer.cs">
+      <DependentUpon>CONTA_013_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -882,6 +904,12 @@
     </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.Designer.cs">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.Designer.cs">
+      <DependentUpon>CXC_012_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.cs">
       <SubType>Component</SubType>
@@ -1050,6 +1078,18 @@
     </Compile>
     <Compile Include="Reportes\CuentasPorPagar\CXP_018_Rpt.Designer.cs">
       <DependentUpon>CXP_018_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_019_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_019_Rpt.Designer.cs">
+      <DependentUpon>CXP_019_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_020_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_020_Rpt.Designer.cs">
+      <DependentUpon>CXP_020_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
@@ -1230,6 +1270,12 @@
     </Compile>
     <Compile Include="Reportes\Inventario\INV_002_sum_Rpt.Designer.cs">
       <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_022_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_022_Rpt.Designer.cs">
+      <DependentUpon>INV_022_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Inventario\INV_004_Rpt.cs">
       <SubType>Component</SubType>
@@ -1578,6 +1624,18 @@
     </Compile>
     <Compile Include="Reportes\RRHH\ROL_028_Rpt.Designer.cs">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -9729,11 +9787,7 @@
     <Content Include="Areas\Caja\Views\TipoMovimientoCaja\_CmbCuenta_Tipo_movimiento.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ParametroAF\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\ActivoFijo\Views\ParametroAF\_CmbCuenta_Param3.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param1.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param2.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param5.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param4.cshtml" />
-    <Content Include="Areas\CuentasPorPagar\Views\ParametrosCXP\_CmbCuenta_Param3.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param1.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param2.cshtml" />
     <Content Include="Areas\Facturacion\Views\ParametrosFacturacion\_CmbCuenta_Param3.cshtml" />
@@ -10048,7 +10102,7 @@
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Index.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_GridViewPartial_Motivo_Liquidacion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Nuevo.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\ParametroCXC\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Anular.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_CmbCuenta_Motivo_det.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\_GridViewPartial_motivo_x_sucursal.cshtml" />
@@ -10389,7 +10443,184 @@
     <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\_CmbPuntoCargo_CbteCblePlantilla.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_010.cshtml" />
     <Content Include="Areas\Caja\Views\ConciliacionCaja\Anular.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Index.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionCliente.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Nuevo.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionClienteDet.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\_GridViewPartial_LiquidacionRetencionClienteXCruzar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\DepartamentoPorArea\_CmbDivision.cshtml" />
+    <Content Include="Areas\RRHH\Views\DepartamentoPorArea\_CmbArea.cshtml" />
+    <Content Include="Areas\Reportes\Views\InventarioReportes\INV_022.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_ProbabilidadCobro.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_ProbabilidadCobroDet.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\_GridViewPartial_Facturas.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Anular.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorCobrarReportes\CXC_012.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_011.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_012.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Index.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\_GridViewPartial_GrupoPorTipoGasto.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Nuevo.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\_CmbCuenta_TipoGastoPadre.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Modificar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Anular.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_013.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_019.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_020.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste_det.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
+    <Content Include="Areas\Inventario\Views\ParametrizacionContableProducto\_CmbCuenta_Vta.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Factura\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PeriodoContable\NuevoMasivo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeDebitoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NotaDeCreditoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaRemision\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\GuiaSinPrecios\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Proforma\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CambioProducto\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ProbabilidadCobro\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ChequeBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\DepositoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\NotaDeCreditoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\NotaDeDebitoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoMovimiento\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ConciliacionBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\ArchivoBancario\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ComprobanteContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierreAnual\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CierrePorModuloPorSucursal\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoNotaBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TipoFlujoPlantilla\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\TalonarioChequeBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\BancoCuenta\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlantillaComprobanteContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCostoNivel\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\CentroCosto\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\AnioFiscal\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargo\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PuntoCargoGrupo\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlanDeCuentas\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PlanDeCuentasNivel\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\TipoComprobante\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\PeriodoContable\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\ClasificacionEBIT\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\ClienteTipo\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\TerminoPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ConciliacionAnticipo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FormaPago\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\MotivoTraslado\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CatalogoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\CatalogoTipoFacturacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\NivelDescuento\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\PuntoVenta\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Cliente\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\TipoNota\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Vendedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CatalogoTipoCXC\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CatalogoCXC\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\TipoCobro\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\MotivoLiquidacion\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionRetencionCliente\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\LiquidacionTarjetaCredito\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ClaseProveedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\TipoCodigoSRI\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\CodigoSRI\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Deudas\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\Retencion\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\NotaCredito\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\NotaDebito\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\SolicitudPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\OrdenPago\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Consultar.cshtml" />
+    <Content Include="Areas\Caja\Views\Caja\Consultar.cshtml" />
+    <Content Include="Areas\Caja\Views\CajaMovimientoEgreso\Consultar.cshtml" />
+    <Content Include="Areas\Caja\Views\CajaMovimientoIngreso\Consultar.cshtml" />
+    <Content Include="Areas\Caja\Views\ConciliacionCaja\Consultar.cshtml" />
+    <Content Include="Areas\Caja\Views\TipoMovimientoCaja\Consultar.cshtml" />
+    <Content Include="Areas\Contabilidad\Views\GrupoPorTipoGasto\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\CatalogoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Banco\Views\CatalogoTipoBanco\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\CatalogoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\CatalogoTipoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\Comprador\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\DepartamentoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\EstadoCierreCompras\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenCompraLocal\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\OrdenServicio\Consultar.cshtml" />
+    <Content Include="Areas\Compras\Views\TerminoPagoCompras\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\AjusteFisicoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\CatalogoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\CatalogoTipoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Categoria\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Marca\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\MotivoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\UnidadDeMedida\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Presentacion\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\_GridViewPartial_facturaTipo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Consultar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Modificar.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Nuevo.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaTipo\Anular.cshtml" />
+    <Content Include="Areas\Inventario\Views\Subgrupo\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Linea\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Grupo\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Producto\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\ProductoTipo\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\TipoMovimiento\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\DevolucionInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventarioOrdenCompra\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\EgresoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\IngresoInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\TransferenciasInventario\Consultar.cshtml" />
+    <Content Include="Areas\Inventario\Views\Consignacion\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\ActivoFijo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\AreaAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\DepartamentoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CategoriaAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\Marca\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\Modelo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\TipoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\DepreciacionAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\RetiroActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\RevalorizacionActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\VentaActivo\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CatalogoTipoAF\Consultar.cshtml" />
+    <Content Include="Areas\ActivoFijo\Views\CatalogoAF\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Banco\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Bodega\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Catalogo\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\CatalogoTipo\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Empresa\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Sucursal\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Parroquia\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Ciudad\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Provincia\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Region\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\Pais\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Consultar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
+    <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10651,6 +10882,15 @@
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_010_Rpt.resx">
       <DependentUpon>CONTA_010_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_011_Rpt.resx">
+      <DependentUpon>CONTA_011_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_012_Rpt.resx">
+      <DependentUpon>CONTA_012_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_013_Rpt.resx">
+      <DependentUpon>CONTA_013_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_001_diario_Rpt.resx">
       <DependentUpon>CXC_001_diario_Rpt.cs</DependentUpon>
     </EmbeddedResource>
@@ -10689,6 +10929,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_009_Rpt.resx">
       <DependentUpon>CXC_009_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_012_Rpt.resx">
+      <DependentUpon>CXC_012_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorCobrar\CXC_010_Rpt.resx">
       <DependentUpon>CXC_010_Rpt.cs</DependentUpon>
@@ -10773,6 +11016,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_018_Rpt.resx">
       <DependentUpon>CXP_018_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_019_Rpt.resx">
+      <DependentUpon>CXP_019_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_020_Rpt.resx">
+      <DependentUpon>CXP_020_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
@@ -10863,6 +11112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_002_sum_Rpt.resx">
       <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_022_Rpt.resx">
+      <DependentUpon>INV_022_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_004_Rpt.resx">
       <DependentUpon>INV_004_Rpt.cs</DependentUpon>
@@ -11037,6 +11289,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_028_Rpt.resx">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_OI_Rpt.resx">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_Rpt.resx">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

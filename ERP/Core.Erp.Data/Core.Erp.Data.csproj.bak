@@ -46,7 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Web.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -323,6 +325,7 @@
     <Compile Include="Compras\com_ordencompra_local_resumen_Data.cs" />
     <Compile Include="Compras\com_parametro_Data.cs" />
     <Compile Include="Compras\com_TerminoPago_Data.cs" />
+    <Compile Include="ConexionesERP.cs" />
     <Compile Include="Contabilidad\ats_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Data.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
@@ -337,6 +340,7 @@
     <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Data.cs" />
     <Compile Include="Contabilidad\ct_ClasificacionEBIT_Data.cs" />
     <Compile Include="Contabilidad\ct_grupocble_Data.cs" />
+    <Compile Include="Contabilidad\ct_grupo_x_Tipo_Gasto_Data.cs" />
     <Compile Include="Contabilidad\ct_parametro_Data.cs" />
     <Compile Include="Contabilidad\ct_periodo_Data.cs" />
     <Compile Include="Contabilidad\ct_periodo_x_tb_modulo_Data.cs" />
@@ -502,6 +506,9 @@
     <Compile Include="ct_grupocble.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="ct_grupo_x_Tipo_Gasto.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
     <Compile Include="ct_parametro.cs">
       <DependentUpon>Model_contabilidad.tt</DependentUpon>
     </Compile>
@@ -530,12 +537,14 @@
     <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_motivo_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Param_conta_x_sucursal_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionRetProvDet_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjetaDet_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_x_cxc_cobro_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Data.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Parametro_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionRetProv_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Data.cs" />
@@ -560,6 +569,7 @@
     <Compile Include="CuentasPorPagar\cp_parametros_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_clase_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_microempresa_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_det_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Data.cs" />
@@ -588,6 +598,12 @@
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="cxc_cobro_x_ct_cbtecble.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_LiquidacionRetProv.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_LiquidacionRetProvDet.cs">
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="cxc_LiquidacionTarjeta.cs">
@@ -650,6 +666,9 @@
     <Compile Include="Facturacion\Base\fa_factura_resumen.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\fa_factura_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\fa_factura_x_ct_cbtecble.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -699,6 +718,12 @@
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="Facturacion\Base\fa_parametro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_ProbabilidadCobro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Base\fa_ProbabilidadCobroDet.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
     <Compile Include="Facturacion\Base\fa_proforma.cs">
@@ -788,6 +813,9 @@
     <Compile Include="Facturacion\Base\vwfa_notaCreDeb_x_fa_factura_NotaDeb.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\vwfa_ProbabilidadCobroDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\vwfa_proforma.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -814,6 +842,7 @@
     <Compile Include="Facturacion\fa_cuotas_x_doc_Data.cs" />
     <Compile Include="Facturacion\fa_factura_Data.cs" />
     <Compile Include="Facturacion\fa_factura_det_Data.cs" />
+    <Compile Include="Facturacion\fa_factura_tipo_Data.cs" />
     <Compile Include="Facturacion\fa_factura_x_fa_guia_remision_Data.cs" />
     <Compile Include="Facturacion\fa_formaPago_Data.cs" />
     <Compile Include="Facturacion\fa_guia_remision_Data.cs" />
@@ -825,6 +854,8 @@
     <Compile Include="Facturacion\fa_notaCreDeb_det_Data.cs" />
     <Compile Include="Facturacion\fa_notaCreDeb_x_fa_factura_NotaDeb_Data.cs" />
     <Compile Include="Facturacion\fa_parametro_Data.cs" />
+    <Compile Include="Facturacion\fa_ProbabilidadCobroDet_Data.cs" />
+    <Compile Include="Facturacion\fa_ProbabilidadCobro_Data.cs" />
     <Compile Include="Facturacion\fa_proforma_Data.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Data.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Data.cs" />
@@ -1360,6 +1391,12 @@
     <Compile Include="Reportes\Base\SPCONTA_009_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\SPCONTA_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\SPCONTA_012_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\SPCXC_004_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1373,6 +1410,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPCXC_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\SPCXC_012_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPCXP_007_Result.cs">
@@ -1391,6 +1431,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPCXP_018_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\SPCXP_019_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPFAC_005_Result.cs">
@@ -1433,6 +1476,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPINV_021_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\SPINV_022_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\SPROL_012_Result.cs">
@@ -1528,6 +1574,9 @@
     <Compile Include="Reportes\Base\VWCONTA_010.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWCONTA_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Base\VWCXC_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1591,9 +1640,6 @@
     <Compile Include="Reportes\Base\VWCXP_006_diario.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\Base\VWCXP_007.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\Base\VWCXP_009.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -1610,6 +1656,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\VWCXP_017.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Base\VWCXP_020.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Base\VWFAC_001.cs">
@@ -1780,6 +1829,9 @@
     <Compile Include="Reportes\Base\VWROL_028.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWROL_029.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
@@ -1795,6 +1847,9 @@
     <Compile Include="Reportes\Contabilidad\CONTA_009_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_008_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_007_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_013_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_011_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_012_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Data.cs" />
@@ -1808,6 +1863,7 @@
     <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_012_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_011_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_001_Data.cs" />
@@ -1822,6 +1878,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_006_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_006_diario_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_007_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_019_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_008_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_009_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_010_Data.cs" />
@@ -1833,6 +1890,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_017_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_020_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_002_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
@@ -1860,6 +1918,7 @@
     <Compile Include="Reportes\Importacion\IMP_002_gastos_Data.cs" />
     <Compile Include="Reportes\Importacion\IMP_003_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_001_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_022_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_004_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_008_Data.cs" />
     <Compile Include="Reportes\Inventario\INV_009_Data.cs" />
@@ -1909,10 +1968,20 @@
     <Compile Include="Reportes\RRHH\ROL_026_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_027_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_028_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_029_Data.cs" />
     <Compile Include="ro_Acta_Finiquito.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_Acta_Finiquito_Detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRenta.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRentaDet.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRentaDetOI.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_archivos_bancos_generacion.cs">
@@ -2145,6 +2214,9 @@
     </Compile>
     <Compile Include="RRHH\ro_Acta_Finiquito_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDetOI_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDet_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRenta_Data.cs" />
     <Compile Include="RRHH\ro_archivosCSV_Data.cs" />
     <Compile Include="RRHH\ro_ArchivosIess_Data.cs" />
     <Compile Include="RRHH\ro_archivos_bancos_generacion_Data.cs" />
@@ -2426,6 +2498,9 @@
     <Compile Include="vwcaj_Caja_Movimiento_x_Conciliar.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwcp_AnticiposyNCxCruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwcp_codigo_SRI.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -2466,6 +2541,9 @@
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_det_ing_x_os_x_cruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_LiquidacionDeCompras.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcp_orden_giro_SinRetencion.cs">
@@ -2535,6 +2613,12 @@
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcxc_cobro_para_retencion.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_LiquidacionRetProvDet.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_LiquidacionRetProvDet_PorCruzar.cs">
       <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
     </Compile>
     <Compile Include="vwcxc_LiquidacionTarjeta.cs">
@@ -2678,6 +2762,9 @@
     <Compile Include="vwRo_ActaFiniquito.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwro_AjusteImpuestoRentaDet.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwro_ArchivosIess.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -2685,6 +2772,12 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_archivos_bancos_generacion_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_area.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_area_x_departamento.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_EmpleadoNovedadCargaMasiva.cs">
@@ -2759,6 +2852,9 @@
     <Compile Include="vwro_nomina_sin_percebir_sueldo.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwro_Nomina_Tipoliqui.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwro_nomina_x_horas_extras_aprobadas.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -2772,6 +2868,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_participacion_utilidad_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRo_periodo_x_ro_Nomina_TipoLiqui.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwRo_Prestamo.cs">
