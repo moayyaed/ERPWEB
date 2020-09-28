@@ -11,7 +11,7 @@ namespace Core.Erp.Data.Reportes.Inventario
 {
     public class INV_008_Data
     {
-        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, string signo, int IdMovi_inven_tipo, int IdProductoTipo)
+        public List<INV_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, string signo, int IdMovi_inven_tipo, int IdProductoTipo, string IdCategoria, int IdLinea, int IdGrupo, int IdSubGrupo)
         {
             try
             {
@@ -56,6 +56,17 @@ namespace Core.Erp.Data.Reportes.Inventario
                     if (!string.IsNullOrEmpty(signo))
                         query = " AND m.cm_tipo_movi = '"+signo+"'";
 
+                    if (!string.IsNullOrEmpty(IdCategoria))
+                        query += " AND p.IdCategoria = '" + IdCategoria + "'";
+
+                    if (IdLinea != 0)
+                        query += " AND p.IdLinea = " + IdLinea.ToString();
+
+                    if (IdGrupo != 0)
+                        query += " AND p.IdGrupo= " + IdGrupo.ToString();
+
+                    if (IdSubGrupo != 0)
+                        query += " AND p.IdSubGrupo= " + IdSubGrupo.ToString();
 
                     SqlCommand command = new SqlCommand(query,connection);
                     SqlDataReader reader = command.ExecuteReader();
@@ -93,6 +104,99 @@ namespace Core.Erp.Data.Reportes.Inventario
                     reader.Close();
                 }
                 
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<INV_008_Info> GetListResumen(int IdEmpresa, int IdSucursal, int IdBodega, int IdProducto, DateTime fecha_ini, DateTime fecha_fin, string IdCentroCosto, string signo, int IdMovi_inven_tipo, int IdProductoTipo, string IdCategoria, int IdLinea, int IdGrupo, int IdSubGrupo)
+        {
+            try
+            {
+                List<INV_008_Info> Lista = new List<INV_008_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    string query = "select b.IdEmpresa, b.IdSucursal, b.IdBodega, b.IdProducto, c.pr_codigo, c.pr_descripcion, c.IdCategoria, c.IdLinea, c.IdGrupo, c.IdSubGrupo, "
+                                +" g.ca_Categoria, f.nom_linea, e.nom_grupo, d.nom_subgrupo, b.dm_cantidad dm_cantidad, b.dm_cantidad * b.mv_costo as mv_costo,"
+                                +" CASE WHEN b.dm_cantidad > 0 then ' INGRESO' ELSE 'EGRESO' END AS Tipo"
+                                +" from in_Ing_Egr_Inven as a inner join"
+                                +" in_Ing_Egr_Inven_det as b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdMovi_inven_tipo = b.IdMovi_inven_tipo and a.IdNumMovi = b.IdNumMovi left join"
+                                +" in_Producto as c on c.IdEmpresa = b.IdEmpresa and c.IdProducto = b.IdProducto left join"
+                                +" in_subgrupo as d on c.IdEmpresa = d.IdEmpresa and c.IdCategoria = d.IdCategoria and c.IdLinea = d.IdLinea and c.IdGrupo = d.IdGrupo and c.IdSubGrupo = d.IdSubgrupo left join"
+                                +" in_grupo as e on c.IdEmpresa = e.IdEmpresa and c.IdCategoria = e.IdCategoria and c.IdLinea = e.IdLinea and c.IdGrupo = e.IdGrupo left join"
+                                +" in_linea as f on c.IdEmpresa = f.IdEmpresa and c.IdCategoria = f.IdCategoria and c.IdLinea = f.IdLinea left join"
+                                +" in_categorias as g on g.IdEmpresa = c.IdEmpresa and g.IdCategoria = c.IdCategoria left join"
+                                + " in_movi_inven_tipo as h on h.IdEmpresa = a.IdEmpresa and h.IdMovi_inven_tipo = a.IdMovi_inven_tipo"
+                                + " WHERE(a.Estado = 'A') and a.cm_fecha between DATEFROMPARTS(" + fecha_ini.Year.ToString() + "," + fecha_ini.Month.ToString() + "," + fecha_ini.Day.ToString() + ") AND DATEFROMPARTS(" + fecha_fin.Year.ToString() + "," + fecha_fin.Month.ToString() + "," + fecha_fin.Day.ToString() + ")";
+
+                    if (IdProducto != 0)
+                        query += " AND b.IdProducto = " + IdProducto.ToString();
+
+                    if (IdSucursal != 0)
+                        query += " AND b.IdSucursal = " + IdSucursal.ToString();
+
+                    if (IdBodega != 0)
+                        query += " AND b.IdBodega = " + IdBodega.ToString();
+
+                    if (IdMovi_inven_tipo != 0)
+                        query += " AND b.IdMovi_inven_tipo = " + IdMovi_inven_tipo.ToString();
+
+                    if (IdProductoTipo != 0)
+                        query += " AND b.IdProductoTipo = " + IdProductoTipo.ToString();
+
+                    if (!string.IsNullOrEmpty(IdCentroCosto))
+                        query += " AND b.IdCentroCosto = '" + IdCentroCosto + "'";
+
+                    if (!string.IsNullOrEmpty(signo))
+                        query = " AND h.cm_tipo_movi = '" + signo + "'";
+
+                    if (!string.IsNullOrEmpty(IdCategoria))
+                        query += " AND c.IdCategoria = '" + IdCategoria + "'";
+
+                    if (IdLinea != 0)
+                        query += " AND c.IdLinea = " + IdLinea.ToString();
+
+                    if (IdGrupo != 0)
+                        query += " AND c.IdGrupo= " + IdGrupo.ToString();
+
+                    if (IdSubGrupo != 0)
+                        query += " AND c.IdSubGrupo= " + IdSubGrupo.ToString();
+
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new INV_008_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdBodega = Convert.ToInt32(reader["IdBodega"]),
+                            IdProducto = Convert.ToDecimal(reader["IdProducto"]),
+                            pr_codigo = Convert.ToString(reader["pr_codigo"]),
+                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
+                            IdCategoria = Convert.ToString(reader["IdCategoria"]),
+                            IdLinea = Convert.ToInt32(reader["IdLinea"]),
+                            IdGrupo = Convert.ToInt32(reader["IdGrupo"]),
+                            IdSubGrupo = Convert.ToInt32(reader["IdSubGrupo"]),
+                            ca_Categoria = Convert.ToString(reader["ca_Categoria"]),
+                            nom_linea = Convert.ToString(reader["nom_linea"]),
+                            nom_grupo = Convert.ToString(reader["nom_grupo"]),
+                            nom_subgrupo = Convert.ToString(reader["nom_subgrupo"]),
+                            Tipo = Convert.ToString(reader["Tipo"]),
+                            dm_cantidad = Convert.ToDouble(reader["dm_cantidad"]),
+                            mv_costo = Convert.ToDouble(reader["mv_costo"])
+                        });
+                    }
+                    reader.Close();
+                }
+
                 return Lista;
             }
             catch (Exception)

@@ -118,7 +118,6 @@
 
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6">
@@ -135,7 +134,7 @@
                             @Html.Partial("_CmbCentroCosto_Inventario", Model.IdCentroCosto)
                             @Html.ValidationMessageFor(q => q.IdCentroCosto, "", new { @class = "text-danger" })
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -163,37 +162,93 @@
                     </div>
                 </div>
             </div>
-                    <!-- /.box-body -->
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@ViewBag.Title</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                            <i class="fa fa-times"></i>
-                        </button>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdCategoria">Categoría</label>
+                            @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
+                            @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdLinea">Línea</label>
+                            @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
+                            @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="dGrupo">Grupo</label>
+                            @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSubGrupo">Subgrupo</label>
+                            @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-                <div class="box-body">
-                    @Html.DevExpress().WebDocumentViewer(settings =>
-                    {
-                        settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
-                        settings.MobileMode = false;
-                        settings.Name = "webDocumentViewer";
-                    }).Bind(ViewBag.Report).GetHtml()
+            </div>
+        </div>
+    </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">@ViewBag.Title</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i>
+                    </button>
                 </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    [@Session["IdEmpresa"]] @Session["nom_empresa"]
+            </div>
+            <div class="box-body">
+
+                <div id="Tabs" role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab_stock" aria-controls="stock" role="tab" data-toggle="tab">Detallado</a>
+                        </li>
+                        <li>
+                            <a href="#tab_listado" aria-controls="listado" role="tab" data-toggle="tab">Resumido</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="padding-top: 20px">
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_stock">
+                            @Html.DevExpress().WebDocumentViewer(settings =>
+                               {
+                                   settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+                                   settings.MobileMode = false;
+                                   settings.Name = "webDocumentViewer1";
+                               }).Bind(ViewBag.Report).GetHtml()
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_listado">
+
+                            @Html.DevExpress().WebDocumentViewer(settings =>
+                               {
+                                   settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+                                   settings.MobileMode = false;
+                                   settings.Name = "webDocumentViewer2";
+                               }).Bind(ViewBag.ReportResumen).GetHtml()
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        [@Core.Erp.Web.Helps.SessionFixed.IdEmpresa] @Core.Erp.Web.Helps.SessionFixed.NomEmpresa
+                    </div>
+                    <!-- /.box-footer-->
                 </div>
                 <!-- /.box-footer-->
             </div>
-            }
+        </div>
+}
 <script type="text/javascript">
 $(function () {
 
@@ -260,4 +315,117 @@ function cargar_tipo_movimiento() {
         }
     });
 };
+</script>
+<script>
+    $(function () {
+        //cargar_bodega();
+    });
+
+    $("#IdSucursal").change(function () {
+        cargar_bodega();
+    });
+
+    $("#IdCategoria").change(function () {
+        cargar_lineas();
+    });
+
+    $("#IdLinea").change(function () {
+        cargar_grupos();
+    });
+    $("#IdGrupo").change(function () {
+        cargar_subgrupos();
+    });
+
+
+            function cargar_lineas() {
+            $("#IdLinea").empty();
+
+            var datos = {
+                IdCategoria: $("#IdCategoria").val(),
+                IdEmpresa: $("#IdEmpresa").val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_lineas", "InventarioReportes", new { Area = "Reportes" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#IdLinea").append("<option value=" + row.IdLinea + ">" + row.nom_linea + "</option>");
+                    });
+                    $("#IdLinea").val("0");
+                    cargar_grupos();
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+
+    function cargar_grupos() {
+        $("#IdGrupo").empty();
+
+        var datos = {
+            IdCategoria: $("#IdCategoria").val(),
+            IdLinea: $("#IdLinea").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_grupos", "InventarioReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdGrupo").append("<option value=" + row.IdGrupo + ">" + row.nom_grupo + "</option>");
+                });
+                $("#IdGrupo").val("0");
+                cargar_subgrupos();
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+    function cargar_subgrupos() {
+        $("#IdSubGrupo").empty();
+
+        var datos = {
+            IdCategoria: $("#IdCategoria").val(),
+            IdLinea: $("#IdLinea").val(),
+            IdGrupo: $("#IdGrupo").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_subgrupos", "InventarioReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdSubGrupo").append("<option value=" + row.IdSubgrupo + ">" + row.nom_subgrupo + "</option>");
+                });
+                $("#IdSubGrupo").val("0");
+            },
+            error: function (error) {
+            }
+        });
+    };
 </script>

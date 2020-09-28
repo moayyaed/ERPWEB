@@ -8,6 +8,8 @@ namespace Core.Erp.Info.Reportes.Inventario
 {
     public class INV_008_Info
     {
+        public string ca_Categoria { get; set; }
+
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdMovi_inven_tipo { get; set; }
@@ -33,5 +35,13 @@ namespace Core.Erp.Info.Reportes.Inventario
         public decimal IdProducto { get; set; }
         public string cc_Descripcion { get; set; }
         public string tp_descripcion { get; set; }
+        public string IdCategoria { get; set; }
+        public int IdLinea { get; set; }
+        public int IdSubGrupo { get; set; }
+        public string nom_linea { get; set; }
+        public string nom_grupo { get; set; }
+        public string nom_subgrupo { get; set; }
+        public string Tipo { get; set; }
+        public int IdGrupo { get; set; }
     }
 }

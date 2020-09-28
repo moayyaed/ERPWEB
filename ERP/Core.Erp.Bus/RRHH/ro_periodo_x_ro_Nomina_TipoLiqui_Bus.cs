@@ -35,6 +35,7 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
+                //return new List<ro_periodo_x_ro_Nomina_TipoLiqui_Info>();
                 return odata.get_list_utimo_periodo_aprocesar(IdEmpresa, IdNominaTipo, IdNominaTipoLiq);
             }
             catch (Exception)

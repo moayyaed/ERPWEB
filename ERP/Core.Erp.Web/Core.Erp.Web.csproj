@@ -1273,6 +1273,12 @@
     <Compile Include="Reportes\Inventario\INV_002_sum_Rpt.Designer.cs">
       <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Inventario\INV_008_resumen_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Inventario\INV_008_resumen_Rpt.Designer.cs">
+      <DependentUpon>INV_008_resumen_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Inventario\INV_022_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -11114,6 +11120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_002_sum_Rpt.resx">
       <DependentUpon>INV_002_sum_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Inventario\INV_008_resumen_Rpt.resx">
+      <DependentUpon>INV_008_resumen_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Inventario\INV_022_Rpt.resx">
       <DependentUpon>INV_022_Rpt.cs</DependentUpon>

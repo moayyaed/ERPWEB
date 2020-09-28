@@ -563,6 +563,46 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 tp_descripcion = "TODOS"
             });
             ViewBag.lstProductoTipo = lstProductoTipo;
+
+            in_categorias_Bus bus_categoria = new in_categorias_Bus();
+            var lst_categoria = bus_categoria.get_list(model.IdEmpresa, false);
+            lst_categoria.Add(new in_categorias_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdCategoria = "",
+                ca_Categoria = "Todos"
+            });
+            ViewBag.lst_categoria = lst_categoria;
+
+            in_linea_Bus bus_linea = new in_linea_Bus();
+            var lst_linea = bus_linea.get_list(model.IdEmpresa, model.IdCategoria, false);
+            lst_linea.Add(new in_linea_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdLinea = 0,
+                nom_linea = "Todos"
+            });
+            ViewBag.lst_linea = lst_linea;
+
+            in_grupo_Bus bus_grupo = new in_grupo_Bus();
+            var lst_grupo = bus_grupo.get_list(model.IdEmpresa, model.IdCategoria, model.IdLinea, false);
+            lst_grupo.Add(new in_grupo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdGrupo = 0,
+                nom_grupo = "Todos"
+            });
+            ViewBag.lst_grupo = lst_grupo;
+
+            in_subgrupo_Bus bus_subgrupo = new in_subgrupo_Bus();
+            var lst_subgrupo = bus_subgrupo.get_list(model.IdEmpresa, model.IdCategoria, model.IdLinea, model.IdGrupo, false);
+            lst_subgrupo.Add(new in_subgrupo_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdSubgrupo = 0,
+                nom_subgrupo = "Todos"
+            });
+            ViewBag.lst_subgrupo = lst_subgrupo;
         }
 
         public ActionResult INV_005(bool mostrar_detallado = false)
@@ -788,7 +828,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 tipo_movi= "",
                 IdBodega = 0,
                 IdProducto=0,
-                IdCentroCosto=""
+                IdCentroCosto="",
+                IdCategoria = ""
             };
 
             CargarCombos_INV_008(model);
@@ -812,9 +853,37 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_signo.Value = model.tipo_movi;
             report.p_IdProductoTipo.Value = model.IdProductoTipo;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
+
+            #region Resumen
+            INV_008_resumen_Rpt report_resumen = new INV_008_resumen_Rpt();
+            report_resumen.p_IdEmpresa.Value = model.IdEmpresa;
+            report_resumen.p_IdSucursal.Value = model.IdSucursal;
+            report_resumen.p_IdBodega.Value = model.IdBodega;
+            report_resumen.p_IdProducto.Value = model.IdProducto;
+            report_resumen.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
+            report_resumen.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report_resumen.p_fecha_ini.Value = model.fecha_ini;
+            report_resumen.p_fecha_fin.Value = model.fecha_fin;
+            report_resumen.p_signo.Value = model.tipo_movi;
+            report_resumen.p_IdProductoTipo.Value = model.IdProductoTipo;
+            report_resumen.p_IdCategoria.Value = model.IdCategoria;
+            report_resumen.p_IdLinea.Value = model.IdLinea;
+            report_resumen.p_IdGrupo.Value = model.IdGrupo;
+            report_resumen.p_IdSubGrupo.Value = model.IdSubGrupo;
+
+            report_resumen.usuario = SessionFixed.IdUsuario.ToString();
+            report_resumen.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.ReportResumen = report_resumen;
+            #endregion
+
             return View(model);
         }
 
@@ -842,9 +911,37 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fecha_fin.Value = model.fecha_fin;
             report.p_signo.Value = model.tipo_movi;
             report.p_IdProductoTipo.Value = model.IdProductoTipo;
+            report.p_IdCategoria.Value = model.IdCategoria;
+            report.p_IdLinea.Value = model.IdLinea;
+            report.p_IdGrupo.Value = model.IdGrupo;
+            report.p_IdSubGrupo.Value = model.IdSubGrupo;
+
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
             ViewBag.Report = report;
+
+            #region Resumen
+            INV_008_resumen_Rpt report_resumen = new INV_008_resumen_Rpt();
+            report_resumen.p_IdEmpresa.Value = model.IdEmpresa;
+            report_resumen.p_IdSucursal.Value = model.IdSucursal;
+            report_resumen.p_IdBodega.Value = model.IdBodega;
+            report_resumen.p_IdProducto.Value = model.IdProducto;
+            report_resumen.p_IdMovi_Inven_Tipo.Value = model.IdMovi_inven_tipo;
+            report_resumen.p_IdCentroCosto.Value = model.IdCentroCosto;
+            report_resumen.p_fecha_ini.Value = model.fecha_ini;
+            report_resumen.p_fecha_fin.Value = model.fecha_fin;
+            report_resumen.p_signo.Value = model.tipo_movi;
+            report_resumen.p_IdProductoTipo.Value = model.IdProductoTipo;
+            report_resumen.p_IdCategoria.Value = model.IdCategoria;
+            report_resumen.p_IdLinea.Value = model.IdLinea;
+            report_resumen.p_IdGrupo.Value = model.IdGrupo;
+            report_resumen.p_IdSubGrupo.Value = model.IdSubGrupo;
+
+            report_resumen.usuario = SessionFixed.IdUsuario.ToString();
+            report_resumen.empresa = SessionFixed.NomEmpresa.ToString();
+            ViewBag.ReportResumen = report_resumen;
+            #endregion
+
             return View(model);
         }
 
