@@ -219,10 +219,17 @@
 
         <div class="row" id="div_tipo">
             <div class="col-md-6">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <label for="co_serie">Serie*</label>
+                        <label for="co_serie">Estab.*</label>
                         @Html.TextBoxFor(q => q.cn_serie1, new { @class = "form-control", @id = "cn_serie1" })
+                        @Html.ValidationMessageFor(q => q.cn_serie2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="co_serie">Pto. Emi*</label>
+                        @Html.TextBoxFor(q => q.cn_serie2, new { @class = "form-control", @id = "cn_serie1" })
                         @Html.ValidationMessageFor(q => q.cn_serie2, "", new { @class = "text-danger" })
                     </div>
                 </div>

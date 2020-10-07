@@ -184,7 +184,29 @@
             win.focus();
         }
     }
+    function MostrarBotonesAccion() {
+        if ($("#Nuevo").val() == 1)
+        {
+            $("#btnNuevo").show();
+        }
+        if ($("#Modificar").val() == 1)
+        {
+            $("#btnModificar").show();
+        }
+        if ($("#Anular").val() == 1)
+        {
+            $("#btnAnular").show();
+        }
+    }
+    $(function () {
+        MostrarBotonesAccion();
+    })
 
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_005?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdConciliacion="+@Model.IdConciliacion, '_blank');
+        win.focus();
+    }
 </script>
 
 @using (Html.BeginForm("Consultar", "ConciliacionAnticipoProveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -236,9 +258,17 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-offset-9 col-md-1">
+            <div class="col-md-offset-8 col-md-1">
+                <div id="ride">
+                    <button type="button" class="btn btn-primary form-control" onclick="Imprimir();" title="Imprimir" hidden>
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
                 <div class="form-group">
                     <div id="btnNuevo" hidden>
                         <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ConciliacionAnticipoProveedor",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">

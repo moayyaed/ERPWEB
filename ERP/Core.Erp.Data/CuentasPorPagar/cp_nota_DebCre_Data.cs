@@ -216,6 +216,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.cod_nota = info.cod_nota;
                         Entity.Fecha_contable = info.Fecha_contable;
                         Entity.cn_Fecha_vcto = info.cn_Fecha_vcto.Date;
+                        Entity.cn_serie1 = info.cn_serie1;
+                        Entity.cn_serie2 = info.cn_serie2;
                         Entity.cn_Nota = info.cn_Nota;
                         Entity.cn_observacion = info.cn_observacion;
                         Entity.cn_subtotal_iva = info.cn_subtotal_iva;
