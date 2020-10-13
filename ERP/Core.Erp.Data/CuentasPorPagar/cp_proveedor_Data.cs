@@ -112,6 +112,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             EsMicroEmpresa = Convert.ToInt32(reader["EsMicroEmpresa"]),
                             info_persona = new Info.General.tb_persona_Info
                             {
+                                IdPersona = Convert.ToDecimal(reader["IdPersona"]),
                                 pe_apellido = Convert.ToString(reader["pe_apellido"]),
                                 pe_nombre = Convert.ToString(reader["pe_nombre"]),
                                 pe_cedulaRuc = Convert.ToString(reader["pe_cedulaRuc"]),

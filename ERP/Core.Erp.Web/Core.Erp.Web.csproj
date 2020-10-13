@@ -368,6 +368,7 @@
     <Compile Include="Areas\General\Controllers\CatalogoTipoController.cs" />
     <Compile Include="Areas\General\Controllers\CiudadController.cs" />
     <Compile Include="Areas\General\Controllers\ComprobantesSinAutorizacionController.cs" />
+    <Compile Include="Areas\General\Controllers\DocumentoPorEmpresaController.cs" />
     <Compile Include="Areas\General\Controllers\EmpresaController.cs" />
     <Compile Include="Areas\General\Controllers\ImagenesController.cs" />
     <Compile Include="Areas\General\Controllers\ImpuestoController.cs" />
@@ -10627,6 +10628,7 @@
     <Content Include="Areas\General\Views\Region\Consultar.cshtml" />
     <Content Include="Areas\General\Views\Pais\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Consultar.cshtml" />
+    <Content Include="Areas\General\Views\DocumentoPorEmpresa\Index.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

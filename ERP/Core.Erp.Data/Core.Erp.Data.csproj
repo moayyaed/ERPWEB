@@ -888,6 +888,7 @@
     <Compile Include="General\tb_region_Data.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Data.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Data.cs" />
+    <Compile Include="General\tb_sis_Documento_Tipo_x_Empresa_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_Tipo_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_x_ctacble_Data.cs" />

@@ -54,7 +54,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                         query += " AND d.IdCentroCosto = '" + IdCentroCosto+"'";
 
                     if (!string.IsNullOrEmpty(signo))
-                        query = " AND m.cm_tipo_movi = '"+signo+"'";
+                        query += " AND m.cm_tipo_movi = '"+signo+"'";
 
                     if (!string.IsNullOrEmpty(IdCategoria))
                         query += " AND p.IdCategoria = '" + IdCategoria + "'";
@@ -154,7 +154,7 @@ namespace Core.Erp.Data.Reportes.Inventario
                         query += " AND b.IdCentroCosto = '" + IdCentroCosto + "'";
 
                     if (!string.IsNullOrEmpty(signo))
-                        query = " AND h.cm_tipo_movi = '" + signo + "'";
+                        query += " AND h.cm_tipo_movi = '" + signo + "'";
 
                     if (!string.IsNullOrEmpty(IdCategoria))
                         query += " AND c.IdCategoria = '" + IdCategoria + "'";

@@ -10,24 +10,36 @@ namespace Core.Erp.Data
     {
         public static string GetConnectionString()
         {
-            /*
-            string ip = "fixed.database.windows.net";
-            string password = "admin*2016";
-            string user = "administrador";
-            string InitialCatalog = "AgricolaYTransporte";
-            */
+            string ip = string.Empty;
+            string password = string.Empty;
+            string user = string.Empty;
+            string InitialCatalog = string.Empty;
+            string Cadena = "LOCAL";
+            switch (Cadena)
+            {
+                case "WEB":
+                    ip = "fixed.database.windows.net";
+                    password = "admin*2016";
+                    user = "administrador";
+                    InitialCatalog = "AgricolaYTransporte";
+                    break;
+
+                case "GRAFINPREN":
+                    ip = "10.100.5.140";
+                    password = "admin*2016";
+                    user = "sa";
+                    InitialCatalog = "DBERP";
+                    break;
+
+                case "LOCAL":
+                    ip = "localhost";
+                    password = "admin*2016";
+                    user = "sa";
+                    InitialCatalog = "DBERP_GRAFINPREN";
+                    break;
+            }
             
-            string ip = "localhost";
-            string password = "admin*2016";
-            string user = "sa";
-            string InitialCatalog = "DBERP_GRAFINPREN";
             
-            /*
-            string ip = "10.100.5.140";
-            string password = "admin*2016";
-            string user = "sa";
-            string InitialCatalog = "DBERP";
-            */
             return "data source=" + ip + ";initial catalog=" + InitialCatalog + ";user id=" + user + ";password=" + password + ";MultipleActiveResultSets=True;";
         }
     }

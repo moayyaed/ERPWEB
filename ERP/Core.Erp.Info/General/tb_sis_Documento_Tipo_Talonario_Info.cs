@@ -26,6 +26,7 @@ namespace Core.Erp.Info.General
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         [Required(ErrorMessage = "El campo sucursal es obligatorio")]
+        [Range(1,int.MaxValue,ErrorMessage = "El campo sucursal es obligatorio")]
         public int IdSucursal { get; set; }
         public string NumAutorizacion { get; set; }
         public bool es_Documento_Electronico { get; set; }
