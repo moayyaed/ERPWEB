@@ -66,6 +66,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_factura_List Lista_Factura = new fa_factura_List();
         fa_factura_tipo_Bus busTipoFactura = new fa_factura_tipo_Bus();
+        fa_proforma_Bus bus_proforma = new fa_proforma_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
         #region Index
@@ -690,7 +691,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(new { resultado }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetProformasPorFacturar(int IdSucursal = 0, decimal IdCliente = 0)
+        public JsonResult GetProformasPorFacturar(int IdSucursal = 0, decimal IdCliente = 0, decimal IdTransaccionSession=0)
         {
             bool resultado = true;
 
@@ -701,6 +702,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult GetProformas(int IdSucursal = 0, decimal IdCliente = 0, decimal IdProforma = 0, decimal IdTransaccionSession = 0)
         {
             bool resultado = true;
+            string Observacion = "";
+            string TerminoPago = "";
+            int Plazo = 0;
+            int Vendedor = 0;
 
             var list = bus_det.get_list_proforma(Convert.ToInt32(SessionFixed.IdEmpresa), IdSucursal, IdCliente, IdProforma);
             if (list.Count() == 0)
@@ -714,7 +719,59 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             List_det.set_list(detalle_factura, IdTransaccionSession);
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            fa_factura_det_Info info = new fa_factura_det_Info();
+            var ListaDetalle = List_det.get_list(IdTransaccionSession).ToList();
+
+            var lst_agrupada = (from q in ListaDetalle
+                                group q by new
+                                {
+                                    q.IdEmpresa,
+                                    q.IdSucursal,
+                                    q.IdProforma,
+                                    q.pf_observacion,
+                                    q.IdTerminoPago,
+                                    q.pf_plazo,
+                                    q.IdVendedor
+                                } into a
+                                select new fa_factura_det_Info
+                                {
+                                    IdEmpresa = a.Key.IdEmpresa,
+                                    IdSucursal = a.Key.IdSucursal,
+                                    IdProforma = a.Key.IdProforma,
+                                    pf_observacion = a.Key.pf_observacion,
+                                    IdTerminoPago = a.Key.IdTerminoPago,
+                                    pf_plazo = a.Key.pf_plazo,
+                                    IdVendedor = a.Key.IdVendedor
+                                }).ToList();
+
+            var ListaAgrupada = new List<fa_factura_det_Info>();
+
+            foreach (var item in lst_agrupada)
+            {
+                ListaAgrupada.Add(new fa_factura_det_Info
+                {
+                    IdEmpresa = item.IdEmpresa,
+                    IdSucursal = item.IdSucursal,
+                    IdProforma = item.IdProforma,
+                    pf_observacion = item.pf_observacion,
+                    IdTerminoPago = item.IdTerminoPago,
+                    pf_plazo = item.pf_plazo,
+                    IdVendedor = item.IdVendedor
+                });
+            }
+
+            if (ListaAgrupada.Count > 0)
+            {
+                info = ListaAgrupada.LastOrDefault();
+                Observacion = info.pf_observacion;
+                TerminoPago = info.IdTerminoPago;
+                Plazo = info.pf_plazo;
+                Vendedor = info.IdVendedor;
+            }
+
+            return Json(new { Observacion = Observacion, TerminoPago = TerminoPago, Plazo = Plazo, Vendedor = Vendedor }, JsonRequestBehavior.AllowGet);
+
+            //return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         public void CargarCuotas(DateTime? FechaPrimerPago, string IdTerminoPago = "", double ValorPrimerPago = 0, decimal IdTransaccionSession = 0)
         {
@@ -1172,8 +1229,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var model = get_list_proformas();
             return PartialView("_GridViewPartial_PFactura_det", model);
         }
-        public void AddProformas(string IDs = "", decimal IdTransaccionSession =0)
+        public JsonResult AddProformas(string IDs = "", decimal IdTransaccionSession =0)
         {
+            string Observacion = "";
+            string TerminoPago = "";
+            int Plazo = 0;
+            int Vendedor = 0;
+
             if (!string.IsNullOrEmpty(IDs))
             {
                 string[] array = IDs.Split(',');
@@ -1190,8 +1252,60 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                             //lst_det_f.Add(pf);
                         }
                 }
+
+                fa_factura_det_Info info = new fa_factura_det_Info();
+                var ListaDetalle = List_det.get_list(IdTransaccionSession).ToList();
+
+                var lst_agrupada = (from q in ListaDetalle
+                                    group q by new
+                                    {
+                                        q.IdEmpresa,
+                                        q.IdSucursal,
+                                        q.IdProforma,
+                                        q.pf_observacion,
+                                        q.IdTerminoPago, 
+                                        q.pf_plazo,
+                                        q.IdVendedor
+                                    } into a
+                                    select new fa_factura_det_Info
+                                    {
+                                        IdEmpresa = a.Key.IdEmpresa,
+                                        IdSucursal = a.Key.IdSucursal,
+                                        IdProforma = a.Key.IdProforma,
+                                        pf_observacion = a.Key.pf_observacion,
+                                        IdTerminoPago = a.Key.IdTerminoPago,
+                                        pf_plazo = a.Key.pf_plazo,
+                                        IdVendedor = a.Key.IdVendedor
+                                    }).ToList();
+
+                var ListaAgrupada= new List<fa_factura_det_Info>();
+
+                foreach (var item in lst_agrupada)
+                {
+                    ListaAgrupada.Add(new fa_factura_det_Info
+                    {
+                        IdEmpresa = item.IdEmpresa,
+                        IdSucursal = item.IdSucursal,
+                        IdProforma = item.IdProforma,
+                        pf_observacion = item.pf_observacion,
+                        IdTerminoPago = item.IdTerminoPago,
+                        pf_plazo = item.pf_plazo,
+                        IdVendedor = item.IdVendedor
+                    });
+                }
+
+                if (ListaAgrupada.Count > 0)
+                {
+                    info = ListaAgrupada.LastOrDefault();
+                    Observacion = info.pf_observacion;
+                    TerminoPago = info.IdTerminoPago;
+                    Plazo = info.pf_plazo;
+                    Vendedor = info.IdVendedor;
+                }
                 //List_det.set_list(lst_det_f,IdTransaccionSession);
             }
+
+            return Json(new { Observacion = Observacion, TerminoPago= TerminoPago, Plazo= Plazo, Vendedor= Vendedor }, JsonRequestBehavior.AllowGet);
         }
         public List<fa_factura_det_Info> get_list_proformas()
         {

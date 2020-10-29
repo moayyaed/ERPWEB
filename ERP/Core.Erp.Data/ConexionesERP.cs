@@ -14,7 +14,7 @@ namespace Core.Erp.Data
             string password = string.Empty;
             string user = string.Empty;
             string InitialCatalog = string.Empty;
-            string Cadena = "WEB";
+            string Cadena = "LOCAL";
             switch (Cadena)
             {
                 case "WEB":
@@ -35,7 +35,7 @@ namespace Core.Erp.Data
                     ip = "localhost";
                     password = "admin*2016";
                     user = "sa";
-                    InitialCatalog = "DBERP_GRAFINPREN";
+                    InitialCatalog = "DBERPWEB";
                     break;
             }
             

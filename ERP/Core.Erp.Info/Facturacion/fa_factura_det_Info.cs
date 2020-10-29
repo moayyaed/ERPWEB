@@ -47,12 +47,18 @@ namespace Core.Erp.Info.Facturacion
         public double CantidadAnterior { get; set; }
         public bool? se_distribuye { get; set; }
         public string cc_Descripcion { get; set; }
-        public decimal NumCotizacion { get; set; }
-        public decimal NumOPr { get; set; }
+        public Nullable<decimal> NumCotizacion { get; set; }
+        public Nullable<decimal> NumOPr { get; set; }
         public double vt_Subtotal_item { get; set; }
         public double vt_iva_item { get; set; }
         public double vt_total_item { get; set; }
         public double? Saldo { get; set; }
+
+
+        public string IdTerminoPago { get; set; }
+        public int pf_plazo { get; set; }
+        public string pf_observacion { get; set; }
+        public int IdVendedor { get; set; }
         #endregion
 
     }

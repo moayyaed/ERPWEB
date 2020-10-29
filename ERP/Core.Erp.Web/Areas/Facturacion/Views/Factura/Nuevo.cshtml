@@ -398,6 +398,13 @@ function cargar_lista_contactos() {
                         if (data == false) {
                             alert('No existe datos para el número de proforma ' + proforma + ' ingresado');
                         }
+                        else{
+                            $("#vt_tipo_venta").val(data.TerminoPago);
+                            $("#vt_plazo").val(data.Plazo);
+                            $("#IdVendedor").val(data.Vendedor);
+                            $("#vt_Observacion").val(data.Observacion);
+                        }
+
                     },
                     error: function (error) {
                     }
@@ -411,7 +418,8 @@ function cargar_lista_contactos() {
         if (IdCliente.GetValue() > 0) {
             var datos = {
             IdSucursal: $("#IdSucursal").val(),
-            IdCliente: IdCliente.GetValue()
+            IdCliente: IdCliente.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
         }
         $.ajax({
             type: 'POST',
@@ -423,7 +431,10 @@ function cargar_lista_contactos() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
+                //$("#vt_tipo_venta").val(data.TerminoPago);
+                //$("#vt_plazo").val(data.Plazo);
+                //$("#IdVendedor").val(data.Vendedor);
+                //$("#vt_Observacion").val(data.Observacion);
             },
             error: function (error) {
             }
@@ -450,7 +461,10 @@ function cargar_lista_contactos() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
+                $("#vt_tipo_venta").val(data.TerminoPago);
+                $("#vt_plazo").val(data.Plazo);
+                $("#IdVendedor").val(data.Vendedor);
+                $("#vt_Observacion").val(data.Observacion);
             },
             error: function (error) {
             }
@@ -758,7 +772,7 @@ function cargar_lista_contactos() {
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="pf_observacion">Observación</label>
-                    @Html.TextBoxFor(q => q.vt_Observacion, new { @class = "form-control" })
+                    @Html.TextBoxFor(q => q.vt_Observacion, new { @class = "form-control", @id = "vt_Observacion" })
                     @Html.ValidationMessageFor(q => q.vt_Observacion, "", new { @class = "text-danger" })
                 </div>
             </div>
