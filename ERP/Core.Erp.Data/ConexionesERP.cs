@@ -35,7 +35,7 @@ namespace Core.Erp.Data
                     ip = "localhost";
                     password = "admin*2016";
                     user = "sa";
-                    InitialCatalog = "DBERPWEB";
+                    InitialCatalog = "DBERP_GRAFINPREN";
                     break;
             }
             
