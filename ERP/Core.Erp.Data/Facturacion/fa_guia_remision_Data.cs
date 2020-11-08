@@ -233,7 +233,7 @@ namespace Core.Erp.Data.Facturacion
                     
                     foreach (var item in info.lst_detalle_x_factura)
                     {
-                        if (item.IdCbteVta != 0)
+                        if (item.IdCbteVta != null && item.IdCbteVta != 0)
                             Context.fa_factura_x_fa_guia_remision.Add(new fa_factura_x_fa_guia_remision
                             {
                                 fa_IdEmpresa = info.IdEmpresa,
@@ -445,7 +445,7 @@ namespace Core.Erp.Data.Facturacion
             catch (Exception ex)
             {
                 tb_LogError_Data LogData = new tb_LogError_Data();
-                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_guia_remision_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuarioCreacion });
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.InnerException.Message, Clase = "fa_guia_remision_Data", Metodo = "guardarDB", IdUsuario = info.IdUsuarioCreacion });
                 return false;
             }
         }

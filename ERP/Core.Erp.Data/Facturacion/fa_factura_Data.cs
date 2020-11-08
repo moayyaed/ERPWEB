@@ -278,7 +278,7 @@ namespace Core.Erp.Data.Facturacion
                     valor_abono = info.valor_abono,
                     IdUsuario = info.IdUsuario,
                     IdNivel = info.IdNivel,
-                    IdFacturaTipo = info.IdFacturaTipo,
+                    IdFacturaTipo = info.IdFacturaTipo == 0 ? 1 : info.IdFacturaTipo,
                     IdContacto = (info.IdContacto ==0 ? null : info.IdContacto)
 
                 };
