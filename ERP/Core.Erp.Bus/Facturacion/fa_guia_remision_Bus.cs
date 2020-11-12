@@ -20,6 +20,7 @@ namespace Core.Erp.Bus.Facturacion
         tb_sis_Documento_Tipo_Talonario_Data data_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
         tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
         fa_factura_x_fa_guia_remision_Data odata_fac_x_guia = new fa_factura_x_fa_guia_remision_Data();
+        fa_factura_det_Data odata_fac_det = new fa_factura_det_Data();
 
         public List<fa_guia_remision_Info> get_list(int IdEmpresa, DateTime fecha_inicio, DateTime fecha_fin)
         {
@@ -111,11 +112,44 @@ namespace Core.Erp.Bus.Facturacion
                 string mensaje = "";
                 if (info.IdCliente == 0)
                     mensaje = "Seleccione cliente";
+
                 if (info.lst_detalle == null)
+                {
                     mensaje = "No existe detalle para la guia";
+                }
                 else
-                    if(info.lst_detalle.Count()==0)
-                    mensaje = "No existe detalle para la guia";
+                {
+                    if (info.lst_detalle.Count() == 0)
+                    {
+                        mensaje = "No existe detalle para la guia";
+                    }
+                    else
+                    {
+                        if (info.GenerarFactura==true)
+                        {
+                            var count = 0;
+                            foreach (var item in info.lst_detalle)
+                            {
+                                var existe_factura = odata_fac_det.existe_factura_det(Convert.ToInt32(item.IdEmpresa_pf), Convert.ToInt32(item.IdSucursal_pf), Convert.ToDecimal(item.IdProforma), Convert.ToInt32(item.Secuencia_pf));
+                                if (existe_factura.IdEmpresa_pf != null)
+                                {
+                                    count++;
+                                    item.SeFactura = false;
+                                }
+                                else
+                                {
+                                    item.SeFactura = true;
+                                }
+                            }
+
+                            if (count > 0)
+                            {
+                                mensaje = "La factura no se puede generar porque el detalle de la proforma ya ha sido facturado";
+                            }
+                        }
+                    }    
+                }
+                    
 
                 
                 /*

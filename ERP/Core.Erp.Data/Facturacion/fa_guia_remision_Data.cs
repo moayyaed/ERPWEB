@@ -336,6 +336,7 @@ namespace Core.Erp.Data.Facturacion
                         info_fact.IdNivel = 1;
                         info_fact.CodCbteVta = info.CodGuiaRemision;
 
+                        var lst_detalle_factura = info.lst_detalle.Where(q=>q.SeFactura==true);
                         foreach (var item in info.lst_detalle)
                         {
                             fa_factura_det_Info info_fact_detalle = new fa_factura_det_Info

@@ -55,6 +55,7 @@ namespace Core.Erp.Info.Facturacion
         public int IdVendedor { get; set; }
         public string  IdCatalogo_FormaPago { get; set; }
         public string IdTerminoPago { get; set; }
+        public bool SeFactura { get; set; }
         //public string ca_Categoria { get; set; }
         //public Nullable<System.DateTime> lote_fecha_fab { get; set; }
         //public string lote_num_lote { get; set; }

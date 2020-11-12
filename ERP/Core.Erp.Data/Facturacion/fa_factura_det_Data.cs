@@ -206,6 +206,54 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
+        public fa_factura_det_Info existe_factura_det(int IdEmpresa, int IdSucursal, decimal IdProforma, int Secuencia_pf)
+        {
+            try
+            {
+                fa_factura_det_Info info = new fa_factura_det_Info();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "select * from fa_factura_det d where d.IdEmpresa_pf = " + IdEmpresa + " and d.IdSucursal_pf= "+ IdSucursal+" and d.IdProforma = "+ IdProforma+" and d.Secuencia_pf = "+ Secuencia_pf;
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        info = new fa_factura_det_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdProforma = Convert.ToDecimal(reader["IdProforma"]),
+                            Secuencia = Convert.ToInt32(reader["Secuencia"]),
+                            IdProducto = Convert.ToInt32(reader["IdProducto"]),
+                            vt_cantidad = Convert.ToDouble(reader["vt_cantidad"]),
+                            vt_Precio = Convert.ToDouble(reader["vt_Precio"]),
+                            vt_Subtotal = Convert.ToDouble(reader["vt_Subtotal"]),
+                            vt_iva = Convert.ToDouble(reader["vt_iva"]),
+                            vt_PorDescUnitario = Convert.ToDouble(reader["vt_PorDescUnitario"]),
+                            vt_por_iva = Convert.ToDouble(reader["vt_por_iva"]),
+                            vt_total = Convert.ToDouble(reader["vt_total"]),
+                            IdCod_Impuesto_Iva = reader["IdCod_Impuesto_Iva"].ToString(),
+                            IdEmpresa_pf = string.IsNullOrEmpty(reader["IdEmpresa_pf"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdEmpresa_pf"]),
+                            IdSucursal_pf = string.IsNullOrEmpty(reader["IdSucursal_pf"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdSucursal_pf"]),
+                            Secuencia_pf = string.IsNullOrEmpty(reader["Secuencia_pf"].ToString()) ? (int?)null : Convert.ToInt32(reader["Secuencia_pf"])
+                        };
+                    }
+                    reader.Close();
+                }
+
+                return info;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         public List<fa_factura_det_Info> get_list_proforma(int IdEmpresa, int IdSucursal, decimal IdCliente, decimal IdProforma)
         {
             try
