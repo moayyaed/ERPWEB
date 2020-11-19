@@ -14,7 +14,7 @@ namespace Core.Erp.Data
             string password = string.Empty;
             string user = string.Empty;
             string InitialCatalog = string.Empty;
-            string Cadena = "LOCAL";
+            string Cadena = "GRAFINPREN";
             switch (Cadena)
             {
                 case "WEB":
