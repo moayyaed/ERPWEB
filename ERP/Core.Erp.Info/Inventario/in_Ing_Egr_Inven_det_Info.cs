@@ -58,5 +58,17 @@ namespace Core.Erp.Info.Inventario
         public double CantidadAnterior { get; set; }
         public int SecuenciaTipo { get; set; }
         #endregion
+
+        #region Campos de contabilizacion
+        public string IdCtaCble_Motivo { get; set; }
+        public string P_IdCtaCble_transitoria_transf_inven { get; set; }
+        public string IdCtaCtble_Inve { get; set; }
+        public string IdCtaCtble_Costo { get; set; }
+        public bool EsTransferencia { get; set; }
+        public string IdCtaCble_MotivoDet { get; set; }
+        public string IdCtaCble_CostoProducto { get; set; }
+        public string bo_Descripcion { get; set; }
+        public string CodMoviInven { get; set; }
+        #endregion
     }
 }

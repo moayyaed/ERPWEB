@@ -6,6 +6,7 @@ using Core.Erp.Info.General;
 using Core.Erp.Info.Inventario;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -587,7 +588,63 @@ namespace Core.Erp.Data.Inventario
                 if (tipo_movi.Genera_Diario_Contable == false)
                     return false;
 
-                var lst = db_i.vwin_Ing_Egr_Inven_PorContabilizar.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdMovi_inven_tipo == IdMovi_inven_tipo && q.IdNumMovi == IdNumMovi).ToList();
+
+                #region Get list
+                var lst = new List<in_Ing_Egr_Inven_det_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT        dbo.in_Ing_Egr_Inven_det.IdEmpresa, dbo.in_Ing_Egr_Inven_det.IdSucursal, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo, dbo.in_Ing_Egr_Inven_det.IdNumMovi, dbo.in_Ing_Egr_Inven_det.Secuencia, "
+                                        + " dbo.in_Ing_Egr_Inven_det.IdEmpresa_inv, dbo.in_Ing_Egr_Inven_det.IdSucursal_inv, dbo.in_Ing_Egr_Inven_det.IdBodega_inv, dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo_inv, dbo.in_Ing_Egr_Inven_det.IdNumMovi_inv, "
+                                        + " dbo.in_Ing_Egr_Inven_det.secuencia_inv, dbo.in_producto_x_tb_bodega.IdCtaCble_Inven AS IdCtaCtble_Inve, dbo.in_categorias.IdCtaCtble_Costo, dbo.in_Motivo_Inven.IdCtaCble AS IdCtaCble_Motivo, "
+                                        + " dbo.in_parametro.P_IdCtaCble_transitoria_transf_inven, dbo.in_Ing_Egr_Inven_det.dm_cantidad* dbo.in_Ing_Egr_Inven_det.mv_costo AS Valor, dbo.in_Ing_Egr_Inven.Estado, "
+                                        + " CASE WHEN dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_egresoBodegaOrigen OR"
+                                        + " dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = in_parametro.IdMovi_inven_tipo_ingresoBodegaDestino THEN CAST(1 AS bit) ELSE CAST(0 AS bit) END AS EsTransferencia, dbo.in_Ing_Egr_Inven_det.IdCentroCosto, "
+                                        + " in_Motivo_Inven_1.IdCtaCble AS IdCtaCble_MotivoDet, dbo.in_producto_x_tb_bodega.IdCtaCble_Costo AS IdCtaCble_CostoProducto, CASE WHEN len(in_Producto.pr_codigo)"
+                                        + " = 0 THEN '' ELSE '[' + in_Producto.pr_codigo + '] ' END + dbo.in_Producto.pr_descripcion AS pr_descripcion, dbo.tb_bodega.bo_Descripcion, in_Ing_Egr_Inven.CodMoviInven"
+                                        + " FROM            dbo.in_Ing_Egr_Inven_det INNER JOIN"
+                                        + " dbo.in_Producto ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_Producto.IdProducto INNER JOIN"
+                                        + " dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria INNER JOIN"
+                                        + " dbo.tb_bodega ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.tb_bodega.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.tb_bodega.IdSucursal AND"
+                                        + " dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.tb_bodega.IdBodega INNER JOIN"
+                                        + " dbo.in_Ing_Egr_Inven ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_Ing_Egr_Inven.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.in_Ing_Egr_Inven.IdSucursal AND"
+                                        + " dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = dbo.in_Ing_Egr_Inven.IdMovi_inven_tipo AND dbo.in_Ing_Egr_Inven_det.IdNumMovi = dbo.in_Ing_Egr_Inven.IdNumMovi INNER JOIN"
+                                        + " dbo.in_Motivo_Inven ON dbo.in_Ing_Egr_Inven.IdEmpresa = dbo.in_Motivo_Inven.IdEmpresa AND dbo.in_Ing_Egr_Inven.IdMotivo_Inv = dbo.in_Motivo_Inven.IdMotivo_Inv INNER JOIN"
+                                        + " dbo.in_parametro ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_parametro.IdEmpresa LEFT OUTER JOIN"
+                                        + " dbo.in_producto_x_tb_bodega ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.in_producto_x_tb_bodega.IdSucursal AND"
+                                        + " dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.in_producto_x_tb_bodega.IdBodega AND dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN"
+                                        + " bo.in_Motivo_Inven AS in_Motivo_Inven_1 ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = in_Motivo_Inven_1.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdMotivo_Inv = in_Motivo_Inven_1.IdMotivo_Inv"
+                                        + " WHERE(dbo.in_Ing_Egr_Inven_det.IdSucursal_inv IS NOT NULL) and dbo.in_Ing_Egr_Inven_det.IdEmpresa = " + IdEmpresa.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdSucursal = " + IdSucursal.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = " + IdMovi_inven_tipo.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdNumMovi = " + IdNumMovi.ToString();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lst.Add(new in_Ing_Egr_Inven_det_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdCtaCble_Motivo = Convert.ToString(reader["IdCtaCble_Motivo"]),
+                            IdCtaCtble_Costo = Convert.ToString(reader["IdCtaCtble_Costo"]),
+                            IdCtaCtble_Inve = Convert.ToString(reader["IdCtaCtble_Inve"]),
+                            P_IdCtaCble_transitoria_transf_inven = Convert.ToString(reader["P_IdCtaCble_transitoria_transf_inven"]),
+                            EsTransferencia = Convert.ToBoolean(reader["EsTransferencia"]),
+                            IdCtaCble_MotivoDet = Convert.ToString(reader["IdCtaCble_MotivoDet"]),
+                            IdCentroCosto = Convert.ToString(reader["IdCentroCosto"]),
+                            IdCtaCble_CostoProducto = Convert.ToString(reader["IdCtaCble_CostoProducto"]),
+                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
+                            bo_Descripcion = Convert.ToString(reader["bo_Descripcion"]),
+                            IdEmpresa_inv = reader["IdEmpresa_inv"] == DBNull.Value ? null : (int?)(reader["IdEmpresa_inv"]),
+                            IdSucursal_inv = reader["IdSucursal_inv"] == DBNull.Value ? null : (int?)(reader["IdSucursal_inv"]),
+                            IdMovi_inven_tipo_inv = reader["IdMovi_inven_tipo_inv"] == DBNull.Value ? null : (int?)(reader["IdMovi_inven_tipo_inv"]),
+                            IdBodega_inv = reader["IdBodega_inv"] == DBNull.Value ? null : (int?)(reader["IdBodega_inv"]),
+                            IdNumMovi_inv = reader["IdNumMovi_inv"] == DBNull.Value ? null : (int?)(reader["IdNumMovi_inv"]),
+                            mv_costo = Convert.ToDouble(reader["Valor"]),
+                            CodMoviInven = Convert.ToString(reader["CodMoviInven"])
+                        });
+                    }
+                }
+                #endregion
+                
                 if (lst.Count == 0)
                     return false;
 
@@ -608,7 +665,8 @@ namespace Core.Erp.Data.Inventario
                                  q.IdNumMovi_inv,
                                  q.IdCtaCble_CostoProducto,
                                  q.pr_descripcion,
-                                 q.bo_Descripcion
+                                 q.bo_Descripcion,
+                                 q.CodMoviInven,
                 }).Select(g=> new
                              {
                                  g.Key.IdCtaCble_Motivo,
@@ -627,8 +685,11 @@ namespace Core.Erp.Data.Inventario
                                  g.Key.IdCtaCble_CostoProducto,
                                  g.Key.pr_descripcion,
                                  g.Key.bo_Descripcion,
-                                 Valor = g.Sum(q=>q.Valor)
+                                 g.Key.CodMoviInven,
+                                 Valor = g.Sum(q=>q.mv_costo)
                              }).ToList();
+
+                string CodMoviInven = lst_g[0].CodMoviInven;
 
                 List < in_movi_inve_detalle_x_ct_cbtecble_det > lst_rel = new List<in_movi_inve_detalle_x_ct_cbtecble_det>();
                 List<ct_cbtecble_det_Info> lst_ct = new List<ct_cbtecble_det_Info>();
@@ -661,7 +722,7 @@ namespace Core.Erp.Data.Inventario
                     });
                 }
 
-                var diario = odata_ct.armar_info(lst_ct, IdEmpresa, IdSucursal, (int)tipo_movi.IdTipoCbte, 0, tipo_movi.tm_descripcion + " #" + IdNumMovi + " " + Observacion, Fecha);
+                var diario = odata_ct.armar_info(lst_ct, IdEmpresa, IdSucursal, (int)tipo_movi.IdTipoCbte, 0, (string.IsNullOrEmpty(CodMoviInven) ? "" : ("OP "+ CodMoviInven+" ")) + tipo_movi.tm_descripcion + " #" + IdNumMovi + " " + Observacion, Fecha);
 
                 diario.lst_ct_cbtecble_det.RemoveAll(q => q.dc_Valor == 0);
                 diario.lst_ct_cbtecble_det.RemoveAll(q => string.IsNullOrEmpty(q.IdCtaCble));
