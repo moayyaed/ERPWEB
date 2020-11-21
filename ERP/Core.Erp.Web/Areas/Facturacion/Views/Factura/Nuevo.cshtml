@@ -403,6 +403,7 @@ function cargar_lista_contactos() {
                             $("#vt_plazo").val(data.Plazo);
                             $("#IdVendedor").val(data.Vendedor);
                             $("#vt_Observacion").val(data.Observacion);
+                            get_info_termino_pago();
                         }
 
                     },
@@ -465,6 +466,7 @@ function cargar_lista_contactos() {
                 $("#vt_plazo").val(data.Plazo);
                 $("#IdVendedor").val(data.Vendedor);
                 $("#vt_Observacion").val(data.Observacion);
+                get_info_termino_pago();
             },
             error: function (error) {
             }
