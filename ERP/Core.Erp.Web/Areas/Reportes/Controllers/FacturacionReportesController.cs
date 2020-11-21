@@ -1,4 +1,5 @@
 ﻿
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
@@ -599,6 +600,72 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
 
+        #region FAC_014
+        private void CargarCombosFAC_014(cl_filtros_facturacion_Info model)
+        {
+            ct_CentroCosto_Bus busCentroCosto = new ct_CentroCosto_Bus();
+            var lstCentroCosto = busCentroCosto.get_list(model.IdEmpresa, false, true);
+            lstCentroCosto.Add(new Info.Contabilidad.ct_CentroCosto_Info
+            {
+                IdCentroCosto = "",
+                cc_Descripcion = "TODOS"
+            });
+            ViewBag.lstCentroCosto = lstCentroCosto;
+        }
+        public ActionResult FAC_014()
+        {
+
+            cl_filtros_facturacion_Info model = new cl_filtros_facturacion_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdCliente = 0
+            };
+            CargarCombosFAC_014(model);
+            FAC_014_Rpt report = new FAC_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdCentroCosto.Value = model.IdCatalogo_FormaPago;
+            report.p_FechaDesde.Value = model.fecha_ini;
+            report.p_FechaHasta.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult FAC_014(cl_filtros_facturacion_Info model)
+        {
+            FAC_014_Rpt report = new FAC_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "FAC_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            CargarCombosFAC_014(model);
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdCliente.Value = model.IdCliente;
+            report.p_IdCentroCosto.Value = model.IdCatalogo_FormaPago;
+            report.p_FechaDesde.Value = model.fecha_ini;
+            report.p_FechaHasta.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        #endregion
 
         public ActionResult FAC_011()
         {

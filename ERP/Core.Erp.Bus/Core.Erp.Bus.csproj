@@ -386,6 +386,7 @@
     <Compile Include="Reportes\Facturacion\FAC_012_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_diario_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_014_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Bus.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Bus.cs" />

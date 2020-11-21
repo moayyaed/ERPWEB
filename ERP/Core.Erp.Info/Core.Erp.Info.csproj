@@ -418,6 +418,7 @@
     <Compile Include="Reportes\Facturacion\FAC_012_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_diario_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Info.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_014_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Info.cs" />

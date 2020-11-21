@@ -1909,6 +1909,7 @@
     <Compile Include="Reportes\Facturacion\FAC_012_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_013_diario_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_014_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_015_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_016_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_017_Data.cs" />

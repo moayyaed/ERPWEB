@@ -8,9 +8,9 @@
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("FAC_014", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("FAC_010", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     <div class="box">
         <div class="box-header with-border">
             <div class="row">
@@ -29,6 +29,24 @@
         </div>
         <div class="box-body">
             <div class="row">
+                <div class="col-md-12">                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="IdCliente">Cliente</label>
+                            @Html.Partial("_CmbCliente_Facturacion", Model.IdCliente)
+                            @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger", @id = "IdCliente" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="IdCatalogo_FormaPago">Centro de costo</label>
+                            @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lstCentroCosto, "IdCentroCosto", "cc_Descripcion"), new { @class = "form-control", @id = "IdCatalogo_FormaPago" })
+                            @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -38,14 +56,14 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
-                           {
-                               settings.Name = "fecha_ini";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
+                               {
+                                   settings.Name = "fecha_ini";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
                                 @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -77,6 +95,7 @@
     </div>
 
 
+
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">@ViewBag.Title</h3>
@@ -102,5 +121,5 @@
             [@Session["IdEmpresa"]] @Session["nom_empresa"]
         </div>
         <!-- /.box-footer-->
-    </div>    
+    </div>
 }
