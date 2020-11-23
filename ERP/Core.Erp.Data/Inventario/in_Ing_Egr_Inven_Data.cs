@@ -615,7 +615,7 @@ namespace Core.Erp.Data.Inventario
                                         + " dbo.in_parametro ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_parametro.IdEmpresa LEFT OUTER JOIN"
                                         + " dbo.in_producto_x_tb_bodega ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdSucursal = dbo.in_producto_x_tb_bodega.IdSucursal AND"
                                         + " dbo.in_Ing_Egr_Inven_det.IdBodega = dbo.in_producto_x_tb_bodega.IdBodega AND dbo.in_Ing_Egr_Inven_det.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN"
-                                        + " bo.in_Motivo_Inven AS in_Motivo_Inven_1 ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = in_Motivo_Inven_1.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdMotivo_Inv = in_Motivo_Inven_1.IdMotivo_Inv"
+                                        + " dbo.in_Motivo_Inven AS in_Motivo_Inven_1 ON dbo.in_Ing_Egr_Inven_det.IdEmpresa = in_Motivo_Inven_1.IdEmpresa AND dbo.in_Ing_Egr_Inven_det.IdMotivo_Inv = in_Motivo_Inven_1.IdMotivo_Inv"
                                         + " WHERE(dbo.in_Ing_Egr_Inven_det.IdSucursal_inv IS NOT NULL) and dbo.in_Ing_Egr_Inven_det.IdEmpresa = " + IdEmpresa.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdSucursal = " + IdSucursal.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdMovi_inven_tipo = " + IdMovi_inven_tipo.ToString() + " and dbo.in_Ing_Egr_Inven_det.IdNumMovi = " + IdNumMovi.ToString();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
@@ -623,23 +623,28 @@ namespace Core.Erp.Data.Inventario
                         lst.Add(new in_Ing_Egr_Inven_det_Info
                         {
                             IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
-                            IdCtaCble_Motivo = Convert.ToString(reader["IdCtaCble_Motivo"]),
-                            IdCtaCtble_Costo = Convert.ToString(reader["IdCtaCtble_Costo"]),
-                            IdCtaCtble_Inve = Convert.ToString(reader["IdCtaCtble_Inve"]),
-                            P_IdCtaCble_transitoria_transf_inven = Convert.ToString(reader["P_IdCtaCble_transitoria_transf_inven"]),
-                            EsTransferencia = Convert.ToBoolean(reader["EsTransferencia"]),
-                            IdCtaCble_MotivoDet = Convert.ToString(reader["IdCtaCble_MotivoDet"]),
-                            IdCentroCosto = Convert.ToString(reader["IdCentroCosto"]),
-                            IdCtaCble_CostoProducto = Convert.ToString(reader["IdCtaCble_CostoProducto"]),
-                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
-                            bo_Descripcion = Convert.ToString(reader["bo_Descripcion"]),
-                            IdEmpresa_inv = reader["IdEmpresa_inv"] == DBNull.Value ? null : (int?)(reader["IdEmpresa_inv"]),
-                            IdSucursal_inv = reader["IdSucursal_inv"] == DBNull.Value ? null : (int?)(reader["IdSucursal_inv"]),
-                            IdMovi_inven_tipo_inv = reader["IdMovi_inven_tipo_inv"] == DBNull.Value ? null : (int?)(reader["IdMovi_inven_tipo_inv"]),
-                            IdBodega_inv = reader["IdBodega_inv"] == DBNull.Value ? null : (int?)(reader["IdBodega_inv"]),
-                            IdNumMovi_inv = reader["IdNumMovi_inv"] == DBNull.Value ? null : (int?)(reader["IdNumMovi_inv"]),
-                            mv_costo = Convert.ToDouble(reader["Valor"]),
-                            CodMoviInven = Convert.ToString(reader["CodMoviInven"])
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdMovi_inven_tipo = Convert.ToInt32(reader["IdMovi_inven_tipo"]),
+                            IdNumMovi = Convert.ToInt32(reader["IdNumMovi"]),
+                            Secuencia = Convert.ToInt32(reader["Secuencia"]),
+                            IdEmpresa_inv = string.IsNullOrEmpty(reader["IdEmpresa_inv"].ToString()) ? (int?)null : (int?)(reader["IdEmpresa_inv"]),
+                            IdSucursal_inv = string.IsNullOrEmpty(reader["IdSucursal_inv"].ToString()) ? (int?)null : (int?)(reader["IdSucursal_inv"]),
+                            IdBodega_inv = string.IsNullOrEmpty(reader["IdBodega_inv"].ToString())?(int?)null : (int?)(reader["IdBodega_inv"]),
+                            IdMovi_inven_tipo_inv = string.IsNullOrEmpty(reader["IdMovi_inven_tipo_inv"].ToString()) ? (int?)null : (int?)(reader["IdMovi_inven_tipo_inv"]),
+                            IdNumMovi_inv = string.IsNullOrEmpty(reader["IdNumMovi_inv"].ToString()) ? (decimal?)null : (decimal?)(reader["IdNumMovi_inv"]),
+                            secuencia_inv = string.IsNullOrEmpty(reader["secuencia_inv"].ToString()) ? (int?)null : (int?)(reader["secuencia_inv"]),
+                            IdCtaCtble_Inve = string.IsNullOrEmpty(reader["IdCtaCtble_Inve"].ToString()) ? null : reader["IdCtaCtble_Inve"].ToString(),
+                            IdCtaCtble_Costo = string.IsNullOrEmpty(reader["IdCtaCtble_Costo"].ToString()) ? null : reader["IdCtaCtble_Costo"].ToString(),
+                            IdCtaCble_Motivo = string.IsNullOrEmpty(reader["IdCtaCble_Motivo"].ToString()) ? null: reader["IdCtaCble_Motivo"].ToString(),
+                            P_IdCtaCble_transitoria_transf_inven = string.IsNullOrEmpty(reader["P_IdCtaCble_transitoria_transf_inven"].ToString()) ? null : reader["P_IdCtaCble_transitoria_transf_inven"].ToString(),
+                            mv_costo = Convert.ToDouble(reader["Valor"]), 
+                            EsTransferencia = string.IsNullOrEmpty(reader["EsTransferencia"].ToString()) ? false : Convert.ToBoolean(reader["EsTransferencia"]),
+                            IdCtaCble_MotivoDet = string.IsNullOrEmpty(reader["IdCtaCble_MotivoDet"].ToString()) ? null : reader["IdCtaCble_MotivoDet"].ToString(),
+                            IdCentroCosto = string.IsNullOrEmpty(reader["EsTransferencia"].ToString()) ? null : reader["IdCentroCosto"].ToString(),
+                            IdCtaCble_CostoProducto = string.IsNullOrEmpty(reader["IdCtaCble_CostoProducto"].ToString()) ? null : reader["IdCtaCble_CostoProducto"].ToString(),
+                            pr_descripcion = reader["pr_descripcion"].ToString(),
+                            bo_Descripcion = reader["bo_Descripcion"].ToString(),
+                            CodMoviInven = string.IsNullOrEmpty(reader["CodMoviInven"].ToString()) ? null : Convert.ToString(reader["CodMoviInven"])
                         });
                     }
                 }
@@ -690,7 +695,7 @@ namespace Core.Erp.Data.Inventario
                              }).ToList();
 
                 string CodMoviInven = lst_g[0].CodMoviInven;
-
+                
                 List < in_movi_inve_detalle_x_ct_cbtecble_det > lst_rel = new List<in_movi_inve_detalle_x_ct_cbtecble_det>();
                 List<ct_cbtecble_det_Info> lst_ct = new List<ct_cbtecble_det_Info>();
                 int Secuencia = 1;
@@ -772,9 +777,10 @@ namespace Core.Erp.Data.Inventario
 
                 db_c.Dispose();
                 db_i.Dispose();
+                
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 db_c.Dispose();
                 db_i.Dispose();
