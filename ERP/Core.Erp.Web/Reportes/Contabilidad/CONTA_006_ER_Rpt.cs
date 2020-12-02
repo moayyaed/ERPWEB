@@ -47,6 +47,12 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 
+            if (Convert.ToBoolean(p_mostrarAcumulado.Value))
+            {
+                CelSumFinal.Visible = false;
+            }else
+                CelSumFinal.Visible = true;
+
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
             if (emp != null)
