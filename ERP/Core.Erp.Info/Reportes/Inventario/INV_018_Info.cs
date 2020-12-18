@@ -37,5 +37,11 @@ namespace Core.Erp.Info.Reportes.Inventario
         public string nom_linea { get; set; }
         public double Total { get; set; }
         public string NombreEstado { get; set; }
+        public string IdCategoria { get; set; }
+        public int IdLinea { get; set; }
+        public int IdGrupo { get; set; }
+        public int IdSubGrupo { get; set; }
+        public string nom_grupo { get; set; }
+        public string nom_subgrupo { get; set; }
     }
 }
