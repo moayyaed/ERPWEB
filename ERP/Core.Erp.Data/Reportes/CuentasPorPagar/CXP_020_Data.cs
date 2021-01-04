@@ -1,4 +1,5 @@
-﻿using Core.Erp.Data.Reportes.Base;
+﻿using Core.Erp.Data.General;
+using Core.Erp.Data.Reportes.Base;
 using Core.Erp.Info.Reportes.CuentasPorPagar;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,22 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                             Cantidad = item.Cantidad,
                             CostoUni = item.CostoUni
                         });
+                    }
+                }
+
+                if (Lista.Count > 0)
+                {
+                    var Detalle = Lista[0];
+                    if (!string.IsNullOrEmpty(Detalle.co_factura) && (string.IsNullOrEmpty(Detalle.Num_Autorizacion) || Detalle.Num_Autorizacion == "1234567890"))
+                    {
+                        tb_empresa_Data odataEmpresa = new tb_empresa_Data();
+                        tb_sis_Documento_Tipo_Talonario_Data odataTalonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                        string[] Array = Detalle.co_serie.Split('-');
+                        if (Array.Count() == 3)
+                        {
+                            string ClaveAcceso = odataTalonario.GeneraClaveAcceso(Detalle.co_FechaFactura, "06", odataEmpresa.get_info(IdEmpresa).em_ruc, Array[0] + Array[1], Detalle.co_factura);
+                            Lista.ForEach(q => q.Num_Autorizacion = ClaveAcceso);
+                        }
                     }
                 }
 

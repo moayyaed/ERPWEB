@@ -333,5 +333,83 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        /// <param name="fechaEmision">Fecha documento</param>
+        /// <param name="tipoComprobante">01 Factura, 03 Liquidación, 04 Nota de credito, 05 Nota de debito, 06 Guia de remisión, 07 Retención</param>
+        /// <param name="ruc">RUC Empresa</param>
+        /// <param name="serie">Establecimiento y punto de emisión (6 dígitos)</param>
+        /// <param name="numeroComprobante">9 digitos del secuencial</param>
+        /// <param name="codigoNumerico">Puede no asignarse</param>
+        /// <param name="tipoEmision">Puede no asignarse</param>
+        /// <param name="ambiente">Puede no asignarse</param>
+        /// <returns></returns>
+        public string GeneraClaveAcceso(DateTime fechaEmision, string tipoComprobante, string ruc, string serie, string numeroComprobante, string codigoNumerico = "12345678", string tipoEmision = "1", string ambiente = "2")
+        {
+            try
+            {
+                if ((ruc != null) && (ruc.Length < 13))
+                {
+                    ruc = String.Format("%013d", new Object[] { ruc });
+                }
+                String fecha = fechaEmision.ToString("ddMMyyyy");
+                StringBuilder clave = new StringBuilder(fecha);
+                clave.Append(tipoComprobante);
+                clave.Append(ruc);
+                clave.Append(ambiente);
+                clave.Append(serie);
+                clave.Append(numeroComprobante);
+                clave.Append(codigoNumerico);
+                clave.Append(tipoEmision);
+
+                int digitoVer = GeneraDigitoVerificadorModulo11(clave.ToString());
+                
+                return clave.ToString() + digitoVer.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public int GeneraDigitoVerificadorModulo11(string cadena)
+        {
+            try
+            {
+                int baseMultiplicador = 7;
+
+                int[] aux = new int[cadena.Length];
+                int multiplicador = 2;
+                int total = 0;
+                int verificador = 0;
+                for (int i = aux.Length - 1; i >= 0; i--)
+                {
+                    aux[i] = Convert.ToInt32(cadena[i].ToString());
+                    aux[i] *= multiplicador;
+                    multiplicador++;
+                    if (multiplicador > baseMultiplicador)
+                    {
+                        multiplicador = 2;
+                    }
+                    total += aux[i];
+                }
+                if ((total == 0) || (total == 1))
+                {
+                    verificador = 0;
+                }
+                else
+                {
+                    verificador = 11 - total % 11 == 11 ? 0 : 11 - total % 11;
+                }
+                if (verificador == 10)
+                {
+                    verificador = 1;
+                }
+                return verificador;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
     }
 }

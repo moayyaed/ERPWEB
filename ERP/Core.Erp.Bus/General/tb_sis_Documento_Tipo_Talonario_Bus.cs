@@ -118,5 +118,18 @@ namespace Core.Erp.Bus.General
                 throw;
             }
         }
+
+        public string GeneraClaveAcceso(DateTime fechaEmision, string tipoComprobante, string ruc, string serie, string numeroComprobante, string codigoNumerico = "12345678", string tipoEmision = "1", string ambiente = "2")
+        {
+            try
+            {
+                return odata.GeneraClaveAcceso(fechaEmision, tipoComprobante, ruc, serie, numeroComprobante, codigoNumerico, tipoEmision, ambiente);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Data.General;
+
 namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_007_Data
@@ -14,6 +16,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
             try
             {
                 List<FAC_007_Info> Lista;
+
                 using (Entities_reportes Context = new Entities_reportes())
                 {
                     Lista = (from q in Context.VWFAC_007
@@ -65,7 +68,7 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  SubtotalIVASinDscto = q.SubtotalIVASinDscto,
                                  SubtotalSinIVAConDscto = q.SubtotalSinIVAConDscto,
                                  SubtotalSinIVASinDscto = q.SubtotalSinIVASinDscto,
-                                 T_SubtotalConDscto=q.T_SubtotalConDscto,
+                                 T_SubtotalConDscto = q.T_SubtotalConDscto,
                                  T_SubtotalSinDscto = q.T_SubtotalSinDscto,
                                  ValorIVA = q.ValorIVA,
                                  vt_total = q.vt_total,
@@ -73,6 +76,22 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  vt_detallexItems = q.vt_detallexItems,
                                  vt_plazo = q.vt_plazo
                              }).ToList();
+                }
+
+                if (Lista.Count > 0)
+                {
+                    var Detalle = Lista[0];
+                    if (string.IsNullOrEmpty(Detalle.vt_autorizacion))
+                    {
+                        tb_empresa_Data odataEmpresa = new tb_empresa_Data();
+                        tb_sis_Documento_Tipo_Talonario_Data odataTalonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                        string[] Array = Detalle.vt_NumFactura.Split('-');
+                        if (Array.Count() == 3)
+                        {
+                            string ClaveAcceso = odataTalonario.GeneraClaveAcceso(Detalle.vt_fecha, "01", odataEmpresa.get_info(IdEmpresa).em_ruc, Array[0] + Array[1], Array[2]);
+                            Lista.ForEach(q => q.vt_autorizacion = ClaveAcceso);
+                        }
+                    }
                 }
                 return Lista;
             }

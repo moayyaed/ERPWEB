@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Data.General;
+
 namespace Core.Erp.Data.Reportes.CuentasPorPagar
 {
     public class CXP_013_Data
@@ -44,6 +46,23 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  co_FechaFactura = q.co_FechaFactura
                              }).ToList();
                 }
+
+                if (Lista.Count > 0)
+                {
+                    var Detalle = Lista[0];
+                    if (!string.IsNullOrEmpty(Detalle.NumRetencion) && string.IsNullOrEmpty(Detalle.NAutorizacion))
+                    {
+                        tb_empresa_Data odataEmpresa = new tb_empresa_Data();
+                        tb_sis_Documento_Tipo_Talonario_Data odataTalonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                        string[] Array = Detalle.NumRetencion.Split('-');
+                        if (Array.Count() == 3)
+                        {
+                            string ClaveAcceso = odataTalonario.GeneraClaveAcceso(Detalle.FechaDeEmision, "07", odataEmpresa.get_info(IdEmpresa).em_ruc, Array[0] + Array[1], Array[2]);
+                            Lista.ForEach(q => q.NAutorizacion = ClaveAcceso);
+                        }
+                    }
+                }
+
                 return Lista;
             }
             catch (Exception)

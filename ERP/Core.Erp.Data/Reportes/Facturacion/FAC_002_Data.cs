@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Erp.Data.Reportes.Base;
+using Core.Erp.Data.General;
+
 namespace Core.Erp.Data.Reportes.Facturacion
 {
     public class FAC_002_Data
@@ -60,6 +62,21 @@ namespace Core.Erp.Data.Reportes.Facturacion
                                  sc_cantidad = q.sc_cantidad
                              }).ToList();
                 }
+
+                if (Lista.Count > 0)
+                {
+                    var Detalle = Lista[0];
+                    
+                    if (!string.IsNullOrEmpty(Detalle.NumNota_Impresa) && string.IsNullOrEmpty(Detalle.NumAutorizacion))
+                    {
+                        tb_empresa_Data odataEmpresa = new tb_empresa_Data();
+                        tb_sis_Documento_Tipo_Talonario_Data odataTalonario = new tb_sis_Documento_Tipo_Talonario_Data();
+                        string[] Array = Detalle.NumNota_Impresa.Split('-');
+                        string ClaveAcceso = odataTalonario.GeneraClaveAcceso(Detalle.no_fecha, Detalle.CreDeb == "C" ? "04" : "05", odataEmpresa.get_info(IdEmpresa).em_ruc, Detalle.Serie1 + Detalle.Serie2, Array[2]);
+                        Lista.ForEach(q => q.NumAutorizacion = ClaveAcceso);
+                    }
+                }
+
                 return Lista;
             }
             catch (Exception)
