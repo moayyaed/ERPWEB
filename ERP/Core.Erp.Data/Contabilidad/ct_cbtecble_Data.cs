@@ -171,7 +171,7 @@ namespace Core.Erp.Data.Contabilidad
                                 IdCtaCble = item.IdCtaCble,                                
                                 secuencia = secuencia++,
                                 dc_para_conciliar = item.dc_para_conciliar,
-                                IdCentroCosto = item.IdCentroCosto,
+                                IdCentroCosto = string.IsNullOrEmpty(item.IdCentroCosto) ? null : item.IdCentroCosto,
                                 IdPunto_cargo = item.IdPunto_cargo,
                                 IdPunto_cargo_grupo = item.IdPunto_cargo_grupo
                             };
