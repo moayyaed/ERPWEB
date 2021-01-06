@@ -708,7 +708,7 @@ namespace Core.Erp.Data.RRHH
                         ru_estado = item.ru_estado,
                         ru_orden = item.ru_orden,
                         rub_concep = item.rub_concep,
-                       // rub_ctacon = item.rub_ctacon,
+                        rub_ctacon = item.rub_ctacon,
                         rub_provision = item.rub_provision,
                         rub_nocontab = item.rub_nocontab,
                         rub_aplica_IESS = item.rub_aplica_IESS,
