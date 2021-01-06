@@ -708,7 +708,7 @@ namespace Core.Erp.Data.RRHH
                         ru_estado = item.ru_estado,
                         ru_orden = item.ru_orden,
                         rub_concep = item.rub_concep,
-                        rub_ctacon = item.rub_ctacon,
+                       // rub_ctacon = item.rub_ctacon,
                         rub_provision = item.rub_provision,
                         rub_nocontab = item.rub_nocontab,
                         rub_aplica_IESS = item.rub_aplica_IESS,
@@ -850,25 +850,25 @@ namespace Core.Erp.Data.RRHH
                     Context_rrhh.ro_empleado_x_rubro_acumulado.Add(Entity_RubroAcumulado);
                 }
 
-                //foreach (var item in Lista_TipoNomina)
-                //{
-                //    ro_Nomina_Tipo Entity_TipoNomina = new ro_Nomina_Tipo
-                //    {
-                //        IdEmpresa = item.IdEmpresa,
-                //        IdNomina_Tipo = item.IdNomina_Tipo,
-                //        Descripcion = item.Descripcion,
-                //        IdUsuario = item.IdUsuario,
-                //        IdUsuarioAnu = null,
-                //        MotivoAnu = null,
-                //        IdUsuarioUltModi = null,
-                //        FechaAnu = null,
-                //        FechaTransac = item.FechaTransac,
-                //        FechaUltModi = null,
-                //        Estado = item.Estado
-                //    };
+                foreach (var item in Lista_TipoNomina)
+                {
+                    ro_Nomina_Tipo Entity_TipoNomina = new ro_Nomina_Tipo
+                    {
+                        IdEmpresa = item.IdEmpresa,
+                        IdNomina_Tipo = item.IdNomina_Tipo,
+                        Descripcion = item.Descripcion,
+                        IdUsuario = item.IdUsuario,
+                        IdUsuarioAnu = null,
+                        MotivoAnu = null,
+                        IdUsuarioUltModi = null,
+                        FechaAnu = null,
+                        FechaTransac = item.FechaTransac,
+                        FechaUltModi = null,
+                        Estado = item.Estado
+                    };
 
-                //    Context_rrhh.ro_Nomina_Tipo.Add(Entity_TipoNomina);
-                //}
+                    Context_rrhh.ro_Nomina_Tipo.Add(Entity_TipoNomina);
+                }
 
 
                 foreach (var item in Lista_Contrato)
@@ -893,24 +893,24 @@ namespace Core.Erp.Data.RRHH
                     Context_rrhh.ro_contrato.Add(Entity_contrato);
                 }
 
-                //foreach (var item in Lista_CargasFamiliares)
-                //{
-                //    ro_cargaFamiliar Entity_CargaFamiliar = new ro_cargaFamiliar
-                //    {
-                //        IdEmpresa = item.IdEmpresa,
-                //        IdCargaFamiliar = item.IdCargaFamiliar,
-                //        IdEmpleado = item.IdEmpleado,
-                //        Cedula = item.Cedula,
-                //        Sexo = item.Sexo,
-                //        TipoFamiliar = item.TipoFamiliar,
-                //        Nombres = item.Nombres,
-                //        FechaNacimiento = item.FechaNacimiento,
-                //        Estado = item.Estado,
-                //        FechaDefucion = item.FechaDefucion,
-                //        capacidades_especiales = item.capacidades_especiales
-                //    };
-                //    Context_rrhh.ro_cargaFamiliar.Add(Entity_CargaFamiliar);
-                //}
+                foreach (var item in Lista_CargasFamiliares)
+                {
+                    ro_cargaFamiliar Entity_CargaFamiliar = new ro_cargaFamiliar
+                    {
+                        IdEmpresa = item.IdEmpresa,
+                        IdCargaFamiliar = item.IdCargaFamiliar,
+                        IdEmpleado = item.IdEmpleado,
+                        Cedula = item.Cedula,
+                        Sexo = item.Sexo,
+                        TipoFamiliar = item.TipoFamiliar,
+                        Nombres = item.Nombres,
+                        FechaNacimiento = item.FechaNacimiento,
+                        Estado = item.Estado,
+                        FechaDefucion = item.FechaDefucion,
+                        capacidades_especiales = item.capacidades_especiales
+                    };
+                    Context_rrhh.ro_cargaFamiliar.Add(Entity_CargaFamiliar);
+                }
 
                 Context_rrhh.SaveChanges();
                 Context_rrhh.Dispose();                
