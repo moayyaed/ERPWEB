@@ -2,7 +2,6 @@
 using Core.Erp.Data.RRHH;
 using Core.Erp.Info.General;
 using Core.Erp.Info.RRHH;
-using Core.Erp.Info.RRHH.RDEP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,11 +111,12 @@ namespace Core.Erp.Bus.RRHH
 
                 Lista_RDEP.ForEach(item =>
                 {
-                    rdep.anio = Convert.ToString(item.pe_anio);
-
+                    rdep.anio = Convert.ToInt32(item.pe_anio);
                     datRetRelDepTyp info_det = new datRetRelDepTyp();
+
                     info_det.empleado = new datEmpTyp();                    
                     info_det.empleado.benGalpg = benGalpgType.NO;
+                    info_det.empleado.enfcatastro = enfcatastroType.NO;
                     info_det.empleado.tipIdRet = datEmpTypTipIdRet.C;
                     info_det.empleado.idRet = item.pe_cedulaRuc;
                     info_det.empleado.apellidoTrab = item.pe_apellido.Replace("Ñ", "N").Trim();
@@ -131,11 +131,11 @@ namespace Core.Erp.Bus.RRHH
                     info_det.empleado.porcentajeDiscap = "0";
                     info_det.empleado.tipIdDiscap = tipIdDiscapTyp.N;
                     info_det.empleado.idDiscap = "999";
-                    info_det.deducAliementSpecified = true;
-                    info_det.deducVestimSpecified = true;
-                    info_det.deducSaludSpecified = true;
+                    //info_det.deducAliementSpecified = true;
+                    //info_det.deducVestimSpecified = true;
+                    //info_det.deducSaludSpecified = true;
                     info_det.deducEducaSpecified = true;
-                    info_det.deducViviendaSpecified = true;
+                    //info_det.deducViviendaSpecified = true;
                     info_det.deducArtycultSpecified = true;
                     info_det.suelSal = (item.Sueldo) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.Sueldo);
                     info_det.sobSuelComRemu = (item.IngresoVarios) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.IngresoVarios);
@@ -153,12 +153,13 @@ namespace Core.Erp.Bus.RRHH
                     info_det.aporPerIessConOtrosEmpls = Convert.ToDecimal(item.IessPorOtrosEmpleadores);
                     info_det.deducVivienda = Convert.ToDecimal(item.GastoVivienda);
                     info_det.deducSalud = Convert.ToDecimal(item.GastoSalud);
-                    info_det.deducEduca = Convert.ToDecimal(item.GastoEucacion);
+                    info_det.deducEduca = Convert.ToDecimal(0.00);
+                    info_det.deducEducartcult = Convert.ToDecimal(item.GastoEucacion);
                     info_det.deducAliement = Convert.ToDecimal(item.GastoAlimentacion);
                     info_det.deducVestim = Convert.ToDecimal(item.GastoVestimenta);
                     info_det.deducArtycult = 0;
                     info_det.basImp = Convert.ToDecimal((item.BaseImponibleGravada));
-                    info_det.impRentCaus = Convert.ToDecimal((item.ImpuestoRentaCausado));
+                    info_det.impRentCaus =Math.Round( Convert.ToDecimal((item.ImpuestoRentaCausado)),2, MidpointRounding.AwayFromZero);
                     info_det.valRetAsuOtrosEmpls = Convert.ToDecimal((item.ValorImpuestoPorOtroEmplador));
                     info_det.valImpAsuEsteEmpl = Convert.ToDecimal((item.ValorImpuestoPorEsteEmplador));
                     info_det.valRet = Convert.ToDecimal((item.ValorImpuestoRetenidoTrabajador));
