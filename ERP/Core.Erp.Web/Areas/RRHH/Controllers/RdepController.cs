@@ -5,7 +5,6 @@ using Core.Erp.Bus.RRHH;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.RRHH;
-using Core.Erp.Info.RRHH.RDEP;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using System;
