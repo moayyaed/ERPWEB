@@ -111,7 +111,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             Subtotal = item.Subtotal,
                             ValorIva = item.ValorIva,
                             Total = item.Total,
-                            IdCtaCbleInv = item.IdCtaCbleInv,
+                            IdCtaCbleInv = string.IsNullOrEmpty(item.IdCtaCbleInv) ? null : item.IdCtaCbleInv,
 
                             IdEmpresa_oc = item.IdEmpresa_oc,
                             IdSucursal_oc = item.IdSucursal_oc,

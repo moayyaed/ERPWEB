@@ -492,7 +492,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.lst_det_oc = info.lst_det_oc == null ? new List<cp_orden_giro_det_ing_x_oc_Info>() : info.lst_det_oc;
                 foreach (var item in info.lst_det_oc)
                 {
-                    if(string.IsNullOrEmpty(item.IdCtaCble))
+                    if(info.MueveInventario ?? false && string.IsNullOrEmpty(item.IdCtaCble))
                         mensaje = "El producto "+item.pr_descripcion+" no tiene cuenta contable, por favor asigne";
                 }
 

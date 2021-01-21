@@ -55,7 +55,7 @@ namespace Core.Erp.Bus.Contabilidad
                 
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
-                decimal TotalFact = info_ats.lst_ventas.Where(q => q.tipoComprobante == "18").Sum(v => v.ventasEstab);
+                decimal TotalFact = info_ats.lst_ventas.Where(q => q.tipoComprobante == "18" || q.tipoComprobante == "370").Sum(v => v.ventasEstab);
                 decimal TotalNC = info_ats.lst_ventas.Where(q => q.tipoComprobante == "04").Sum(v => v.ventasEstab);
                 ats.totalVentas = Math.Round(TotalFact - TotalNC, 2, MidpointRounding.AwayFromZero);
                 #endregion
@@ -299,7 +299,8 @@ namespace Core.Erp.Bus.Contabilidad
                              det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
                              det_ventas.montoIceSpecified = true;
                              det_ventas.formasDePago = null;
-                             if (det_ventas.tipoComprobante == "18")
+
+                             if (det_ventas.tipoComprobante == "18" || det_ventas.tipoComprobante == "41" || det_ventas.tipoComprobante == "370")
                              {
                                  string[] AFormaPago = { "20" };
                                  det_ventas.formasDePago = AFormaPago;
@@ -341,7 +342,7 @@ namespace Core.Erp.Bus.Contabilidad
                             ventaEst vtas_esta = new ventaEst();
                             vtas_esta.codEstab = item.codEstab;
                             vtas_esta.ventasEstab = item.ventasEstab;
-                            vtas_esta.ventasEstab = (info_ats.lst_ventas.Where(y => y.tipoComprobante == "18").Sum(v => v.ventasEstab)) - info_ats.lst_ventas.Where(y => y.tipoComprobante == "04").Sum(v => v.ventasEstab);
+                            vtas_esta.ventasEstab = (info_ats.lst_ventas.Where(y => y.tipoComprobante == "18" || y.tipoComprobante == "370").Sum(v => v.ventasEstab)) - info_ats.lst_ventas.Where(y => y.tipoComprobante == "04").Sum(v => v.ventasEstab);
 
                             vtas_esta.ivaComp = Convert.ToDecimal("0.00");
                             ats.ventasEstablecimiento.Add(vtas_esta);
