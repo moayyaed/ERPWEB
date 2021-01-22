@@ -140,6 +140,24 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             var lst_punto = bus_punto.GetList(IdEmpresa, false);
             ViewBag.lst_punto = lst_punto;
         }
+
+        private void cargar_combos_CONTA013(int IdEmpresa, int IdPunto_cargo_grupo)
+        {            
+            ct_punto_cargo_grupo_Bus bus_punto_grupo = new ct_punto_cargo_grupo_Bus();
+            var lst_punto = bus_punto_grupo.GetList(IdEmpresa, false);
+            ViewBag.lst_punto = lst_punto;
+
+            ct_punto_cargo_Bus bus_punto = new ct_punto_cargo_Bus();
+            var lst_punto_cargo = bus_punto.GetList(IdEmpresa, IdPunto_cargo_grupo, false, false);
+            lst_punto_cargo.Add(new ct_punto_cargo_Info
+            {
+                IdPunto_cargo_grupo = IdPunto_cargo_grupo,
+                IdPunto_cargo = 0,
+                nom_punto_cargo = "TODOS"
+                
+            });
+            ViewBag.lst_punto_cargo = lst_punto_cargo;
+        }
         private void cargar_combo_cbte(cl_filtros_Info model)
         {
             ct_cbtecble_tipo_Bus bus_tipo = new ct_cbtecble_tipo_Bus();
@@ -961,11 +979,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fechaini.Value = model.fecha_ini;
             report.p_fechafin.Value = model.fecha_fin;
             report.p_IdPunto_cargo_grupo.Value = model.IdPunto_cargo_grupo;
+            report.p_IdPunto_cargo.Value = model.IdPunto_cargo;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
-            cargar_combos(model.IdEmpresa);
+            cargar_combos_CONTA013(model.IdEmpresa, model.IdPunto_cargo_grupo);
             return View(model);
         }
         [HttpPost]
@@ -977,11 +996,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_fechaini.Value = model.fecha_ini;
             report.p_fechafin.Value = model.fecha_fin;
             report.p_IdPunto_cargo_grupo.Value = model.IdPunto_cargo_grupo;
+            report.p_IdPunto_cargo.Value = model.IdPunto_cargo;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
-            cargar_combos(model.IdEmpresa);
+            cargar_combos_CONTA013(model.IdEmpresa, model.IdPunto_cargo_grupo);
             return View(model);
         }
     }

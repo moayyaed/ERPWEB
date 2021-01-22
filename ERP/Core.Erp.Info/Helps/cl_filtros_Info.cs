@@ -199,6 +199,7 @@ namespace Core.Erp.Info.Helps
         public bool MostrarSaldoDetallado { get; set; }
         public int IdSucursal { get; set; }
         public int IdPunto_cargo_grupo { get; set; }
+        public int IdPunto_cargo { get; set; }
         public string IdUsuario { get; set; }
         public int IdPeriodoIni { get; set; }
         public int IdPeriodoFin { get; set; }

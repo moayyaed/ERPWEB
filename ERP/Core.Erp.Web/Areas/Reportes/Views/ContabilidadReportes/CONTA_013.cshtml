@@ -31,7 +31,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="IdEmpresa">Grupo de punto de cargo</label>
                             @Html.DevExpress().ComboBoxFor(q => q.IdPunto_cargo_grupo, settings =>
@@ -42,6 +42,7 @@
                                    settings.Properties.Columns.Add("IdPunto_cargo_grupo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
                                    settings.Properties.Columns.Add("nom_punto_cargo_grupo", "Grupo de punto de cargo").Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    //Campo ID
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){ CargarPuntoCargo(); }";
                                    settings.Properties.ValueField = "IdPunto_cargo_grupo";
                                    settings.Properties.ValueType = typeof(int);
                                    settings.Properties.TextField = "nom_punto_cargo_grupo";
@@ -49,6 +50,13 @@
                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                }).BindList(ViewBag.lst_punto).GetHtml()
                             @Html.ValidationMessageFor(q => q.IdPunto_cargo_grupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdNivel">Cargo</label>
+                            @Html.DropDownListFor(q => q.IdPunto_cargo, new SelectList(ViewBag.lst_punto_cargo, "IdPunto_cargo", "nom_punto_cargo"), new { @class = "form-control", @id = "IdPunto_cargo" })
+                            @Html.ValidationMessageFor(q => q.IdPunto_cargo, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -123,3 +131,34 @@
         <!-- /.box-footer-->
     </div>
 }
+
+<script type="text/javascript">
+
+    function CargarPuntoCargo() {
+        $("#IdPunto_cargo").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdPuntoCargoGrupo : IdPunto_cargo_grupo.GetValue()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntoCargo", "ContabilidadReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPunto_cargo").append("<option value=" + row.IdPunto_cargo + ">" + row.nom_punto_cargo + "</option>");
+                    $("#IdPunto_cargo").val("0");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

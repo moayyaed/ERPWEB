@@ -29,9 +29,10 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             DateTime fechaIni = p_fechaini.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechaini.Value);
             DateTime fechaFin = p_fechafin.Value == null ? DateTime.Now : Convert.ToDateTime(p_fechafin.Value);
             int IdPunto_cargo_grupo = p_IdPunto_cargo_grupo.Value == null ? 0 : Convert.ToInt32(p_IdPunto_cargo_grupo.Value);
+            int IdPunto_cargo = string.IsNullOrEmpty(p_IdPunto_cargo.Value.ToString()) ? 0 : Convert.ToInt32(p_IdPunto_cargo.Value);
 
             CONTA_013_Bus bus_rpt = new CONTA_013_Bus();
-            List<CONTA_013_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdPunto_cargo_grupo, fechaIni, fechaFin);
+            List<CONTA_013_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdPunto_cargo_grupo, IdPunto_cargo, fechaIni, fechaFin);
 
             this.DataSource = lst_rpt;
 

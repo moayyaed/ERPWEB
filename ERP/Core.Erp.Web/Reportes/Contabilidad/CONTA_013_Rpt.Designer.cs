@@ -93,6 +93,7 @@
             this.xrTableCell21 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
+            this.p_IdPunto_cargo = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -120,6 +121,8 @@
             this.xrTable5});
             this.Detail.HeightF = 20F;
             this.Detail.Name = "Detail";
+            this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("cb_Fecha", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             // 
             // xrTable5
             // 
@@ -772,6 +775,12 @@
             this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.Contabilidad.CONTA_013_Info);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
+            // p_IdPunto_cargo
+            // 
+            this.p_IdPunto_cargo.Name = "p_IdPunto_cargo";
+            this.p_IdPunto_cargo.ValueInfo = "0";
+            this.p_IdPunto_cargo.Visible = false;
+            // 
             // CONTA_013_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -795,8 +804,9 @@
             this.p_IdEmpresa,
             this.p_fechafin,
             this.p_fechaini,
-            this.p_IdPunto_cargo_grupo});
-            this.Version = "19.1";
+            this.p_IdPunto_cargo_grupo,
+            this.p_IdPunto_cargo});
+            this.Version = "20.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CONTA_013_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
@@ -875,5 +885,6 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell21;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell23;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdPunto_cargo;
     }
 }

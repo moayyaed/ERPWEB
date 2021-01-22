@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Info.RRHH;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -318,49 +319,79 @@ namespace Core.Erp.Data.RRHH
             try
             {
                 List<ro_rdep_det_Info> Lista = new List<ro_rdep_det_Info>();
-
-                using (Entities_rrhh Context = new Entities_rrhh())
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    Lista = Context.vwrdep_IngrEgr_x_Empleado.Where(q => q.IdEmpresa == IdEmpresa 
-                    && q.Id_Rdep == Id_Rdep).OrderBy(q=> q.pe_apellido).ThenBy(q => q.pe_nombre).Select(q => new ro_rdep_det_Info
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+
+                    command.CommandText = "SELECT EntidadRegulatoria.ro_rdep.pe_anio FROM EntidadRegulatoria.ro_rdep WHERE IdEmpresa = " + IdEmpresa.ToString() + " and Id_Rdep = " + Id_Rdep.ToString();
+                    SqlDataReader reader = command.ExecuteReader();
+                    int Anio = 0;
+                    while (reader.Read())
                     {
-                        IdEmpresa = q.IdEmpresa,
-                        IdSucursal = q.IdSucursal,
-                        Id_Rdep = q.Id_Rdep,
-                        pe_anio = q.pe_anio,
-                        Su_CodigoEstablecimiento = q.Su_CodigoEstablecimiento,     
-                        Observacion =  q.Observacion,
-                        Secuencia = q.Secuencia,
-                        pe_cedulaRuc = q.pe_cedulaRuc,
-                        Empleado = q.pe_apellido + " " + q.pe_nombre,
-                        pe_nombre = q.pe_nombre,
-                        pe_apellido = q.pe_apellido,
-                        Sueldo = q.Sueldo,
-                        FondosReserva = q.FondosReserva,
-                        DecimoTercerSueldo = q.DecimoTercerSueldo,
-                        DecimoCuartoSueldo = q.DecimoCuartoSueldo,
-                        Vacaciones = q.Vacaciones,
-                        AportePErsonal = q.AportePErsonal,
-                        GastoAlimentacion = q.GastoAlimentacion,
-                        GastoEucacion = q.GastoEucacion,
-                        GastoSalud = q.GastoSalud,
-                        GastoVestimenta = q.GastoVestimenta,
-                        GastoVivienda = q.GastoVivienda,
-                        Utilidades = q.Utilidades,
-                        IngresoVarios = q.IngresoVarios,
-                        IngresoPorOtrosEmpleaodres = q.IngresoPorOtrosEmpleaodres,
-                        IessPorOtrosEmpleadores = q.IessPorOtrosEmpleadores,
-                        ValorImpuestoPorEsteEmplador = q.ValorImpuestoPorEsteEmplador,
-                        ValorImpuestoPorOtroEmplador = q.ValorImpuestoPorOtroEmplador,
-                        ExoneraionPorDiscapacidad = q.ExoneraionPorDiscapacidad,
-                        ExoneracionPorTerceraEdad = q.ExoneracionPorTerceraEdad,
-                        OtrosIngresosRelacionDependencia = q.OtrosIngresosRelacionDependencia,
-                        ImpuestoRentaCausado = q.ImpuestoRentaCausado,
-                        ValorImpuestoRetenidoTrabajador = q.ValorImpuestoRetenidoTrabajador,
-                        ImpuestoRentaAsumidoPorEsteEmpleador = q.ImpuestoRentaAsumidoPorEsteEmpleador,
-                        BaseImponibleGravada = q.BaseImponibleGravada,
-                        IngresosGravadorPorEsteEmpleador = q.IngresosGravadorPorEsteEmpleador
-                    }).ToList();                    
+                        Anio = Convert.ToInt32(reader["pe_anio"]);
+                    }
+                    reader.Close();
+
+                    command.CommandText = "SELECT        EntidadRegulatoria.ro_rdep.IdEmpresa, EntidadRegulatoria.ro_rdep.Id_Rdep, EntidadRegulatoria.ro_rdep.IdSucursal, EntidadRegulatoria.ro_rdep.pe_anio, EntidadRegulatoria.ro_rdep.IdNomina_Tipo, "
+                                        + " EntidadRegulatoria.ro_rdep.Su_CodigoEstablecimiento, EntidadRegulatoria.ro_rdep.Observacion, EntidadRegulatoria.ro_rdep.Estado, EntidadRegulatoria.ro_rdep_det.Secuencia, EntidadRegulatoria.ro_rdep_det.IdEmpleado, "
+                                        + " EntidadRegulatoria.ro_rdep_det.pe_cedulaRuc, EntidadRegulatoria.ro_rdep_det.pe_apellido +' '+ EntidadRegulatoria.ro_rdep_det.pe_nombre as Empleado, EntidadRegulatoria.ro_rdep_det.pe_apellido, EntidadRegulatoria.ro_rdep_det.pe_nombre, EntidadRegulatoria.ro_rdep_det.Sueldo, "
+                                        + " EntidadRegulatoria.ro_rdep_det.FondosReserva, EntidadRegulatoria.ro_rdep_det.DecimoTercerSueldo, EntidadRegulatoria.ro_rdep_det.DecimoCuartoSueldo, EntidadRegulatoria.ro_rdep_det.Vacaciones, "
+                                        + " EntidadRegulatoria.ro_rdep_det.AportePErsonal, EntidadRegulatoria.ro_rdep_det.GastoAlimentacion, EntidadRegulatoria.ro_rdep_det.GastoEucacion, EntidadRegulatoria.ro_rdep_det.GastoSalud, "
+                                        + " EntidadRegulatoria.ro_rdep_det.GastoVestimenta, EntidadRegulatoria.ro_rdep_det.GastoVivienda, EntidadRegulatoria.ro_rdep_det.Utilidades, EntidadRegulatoria.ro_rdep_det.IngresoVarios, "
+                                        + " EntidadRegulatoria.ro_rdep_det.IngresoPorOtrosEmpleaodres, EntidadRegulatoria.ro_rdep_det.IessPorOtrosEmpleadores, EntidadRegulatoria.ro_rdep_det.ValorImpuestoPorEsteEmplador, "
+                                        + " EntidadRegulatoria.ro_rdep_det.ValorImpuestoPorOtroEmplador, EntidadRegulatoria.ro_rdep_det.ExoneraionPorDiscapacidad, EntidadRegulatoria.ro_rdep_det.ExoneracionPorTerceraEdad, "
+                                        + " EntidadRegulatoria.ro_rdep_det.OtrosIngresosRelacionDependencia, EntidadRegulatoria.ro_rdep_det.ImpuestoRentaCausado, EntidadRegulatoria.ro_rdep_det.ValorImpuestoRetenidoTrabajador, "
+                                        + " EntidadRegulatoria.ro_rdep_det.ImpuestoRentaAsumidoPorEsteEmpleador, EntidadRegulatoria.ro_rdep_det.BaseImponibleGravada, EntidadRegulatoria.ro_rdep_det.IngresosGravadorPorEsteEmpleador"
+                                        + " FROM            EntidadRegulatoria.ro_rdep INNER JOIN"
+                                        + " EntidadRegulatoria.ro_rdep_det ON EntidadRegulatoria.ro_rdep.IdEmpresa = EntidadRegulatoria.ro_rdep_det.IdEmpresa AND EntidadRegulatoria.ro_rdep.Id_Rdep = EntidadRegulatoria.ro_rdep_det.Id_Rdep"
+                                        + " WHERE EntidadRegulatoria.ro_rdep.IdEmpresa = " + IdEmpresa.ToString() + " and (EntidadRegulatoria.ro_rdep.Estado = 1) and EntidadRegulatoria.ro_rdep.pe_anio = " + Anio.ToString()
+                                        + " order by EntidadRegulatoria.ro_rdep_det.pe_apellido +' '+ EntidadRegulatoria.ro_rdep_det.pe_nombre";
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new ro_rdep_det_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            Id_Rdep = Convert.ToInt32(reader["Id_Rdep"]),
+                            pe_anio = Convert.ToInt32(reader["pe_anio"]),
+                            Su_CodigoEstablecimiento = reader["Su_CodigoEstablecimiento"].ToString(),
+                            Observacion = reader["Observacion"].ToString(),
+                            Secuencia = Convert.ToInt32(reader["Secuencia"]),
+                            pe_cedulaRuc = reader["pe_cedulaRuc"].ToString(),
+                            Empleado = reader["Empleado"].ToString(),
+                            pe_nombre = reader["pe_nombre"].ToString(),
+                            pe_apellido = reader["pe_apellido"].ToString(),
+                            Sueldo = reader["Sueldo"] == DBNull.Value ? null : (double?)reader["Sueldo"],
+                            FondosReserva = reader["FondosReserva"] == DBNull.Value ? null : (double?)reader["FondosReserva"],
+                            DecimoTercerSueldo = reader["DecimoTercerSueldo"] == DBNull.Value ? null : (double?)reader["DecimoTercerSueldo"],
+                            DecimoCuartoSueldo = reader["DecimoCuartoSueldo"] == DBNull.Value ? null : (double?)reader["DecimoCuartoSueldo"],
+                            Vacaciones = reader["Vacaciones"] == DBNull.Value ? null : (double?)reader["Vacaciones"],
+                            AportePErsonal = reader["AportePErsonal"] == DBNull.Value ? null : (double?)reader["AportePErsonal"],
+                            GastoAlimentacion = reader["GastoAlimentacion"] == DBNull.Value ? null : (double?)reader["GastoAlimentacion"],
+                            GastoEucacion = reader["GastoEucacion"] == DBNull.Value ? null : (double?)reader["GastoEucacion"],
+                            GastoSalud = reader["GastoSalud"] == DBNull.Value ? null : (double?)reader["GastoSalud"],
+                            GastoVestimenta = reader["GastoVestimenta"] == DBNull.Value ? null : (double?)reader["GastoVestimenta"],
+                            GastoVivienda = reader["GastoVivienda"] == DBNull.Value ? null : (double?)reader["GastoVivienda"],
+                            Utilidades = reader["Utilidades"] == DBNull.Value ? null : (double?)reader["Utilidades"],
+                            IngresoVarios = reader["IngresoVarios"] == DBNull.Value ? null : (double?)reader["IngresoVarios"],
+                            IngresoPorOtrosEmpleaodres = reader["IngresoPorOtrosEmpleaodres"] == DBNull.Value ? null : (double?)reader["IngresoPorOtrosEmpleaodres"],
+                            IessPorOtrosEmpleadores = reader["IessPorOtrosEmpleadores"] == DBNull.Value ? null : (double?)reader["IessPorOtrosEmpleadores"],
+                            ValorImpuestoPorEsteEmplador = reader["ValorImpuestoPorEsteEmplador"] == DBNull.Value ? null : (double?)reader["ValorImpuestoPorEsteEmplador"],
+                            ValorImpuestoPorOtroEmplador = reader["ValorImpuestoPorOtroEmplador"] == DBNull.Value ? null : (double?)reader["ValorImpuestoPorOtroEmplador"],
+                            ExoneraionPorDiscapacidad = reader["ExoneraionPorDiscapacidad"] == DBNull.Value ? null : (double?)reader["ExoneraionPorDiscapacidad"],
+                            ExoneracionPorTerceraEdad = reader["ExoneracionPorTerceraEdad"] == DBNull.Value ? null : (double?)reader["ExoneracionPorTerceraEdad"],
+                            OtrosIngresosRelacionDependencia = reader["OtrosIngresosRelacionDependencia"] == DBNull.Value ? null : (double?)reader["OtrosIngresosRelacionDependencia"],
+                            ImpuestoRentaCausado = reader["ImpuestoRentaCausado"] == DBNull.Value ? null : (double?)reader["ImpuestoRentaCausado"],
+                            ValorImpuestoRetenidoTrabajador = reader["ValorImpuestoRetenidoTrabajador"] == DBNull.Value ? null : (double?)reader["ValorImpuestoRetenidoTrabajador"],
+                            ImpuestoRentaAsumidoPorEsteEmpleador = reader["ImpuestoRentaAsumidoPorEsteEmpleador"] == DBNull.Value ? null : (double?)reader["ImpuestoRentaAsumidoPorEsteEmpleador"],
+                            BaseImponibleGravada = reader["BaseImponibleGravada"] == DBNull.Value ? null : (double?)reader["BaseImponibleGravada"],
+                            IngresosGravadorPorEsteEmpleador = reader["IngresosGravadorPorEsteEmpleador"] == DBNull.Value ? null : (double?)reader["IngresosGravadorPorEsteEmpleador"]
+                        });
+                    }
+                    reader.Close();
                 }
 
                 return Lista;
