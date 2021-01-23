@@ -137,7 +137,7 @@ namespace Core.Erp.Bus.RRHH
                     info_det.deducEducaSpecified = true;
                     //info_det.deducViviendaSpecified = true;
                     info_det.deducArtycultSpecified = true;
-                    info_det.suelSal = (item.Sueldo) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.Sueldo);
+                    info_det.suelSal = (item.Sueldo) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.Sueldo);                    
                     info_det.sobSuelComRemu = (item.IngresoVarios) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.IngresoVarios);
                     info_det.partUtil = Convert.ToDecimal(item.Utilidades);
                     info_det.intGrabGen = Convert.ToDecimal(item.IngresoPorOtrosEmpleaodres);
