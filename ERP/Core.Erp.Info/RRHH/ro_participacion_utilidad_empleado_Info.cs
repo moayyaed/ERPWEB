@@ -12,11 +12,10 @@ namespace Core.Erp.Info.RRHH
         public int IdEmpresa { get; set; }
         public int IdUtilidad { get; set; }
         public decimal IdEmpleado { get; set; }
-        public double DiasTrabajados { get; set; }
-        public double CargasFamiliares { get; set; }
+        public int DiasTrabajados { get; set; }
+        public int CargasFamiliares { get; set; }
         public double ValorIndividual { get; set; }
         public double ValorCargaFamiliar { get; set; }
-        public double ValorExedenteIESS { get; set; }
         public double ValorTotal { get; set; }
         public string Observacion { get; set; }
 
