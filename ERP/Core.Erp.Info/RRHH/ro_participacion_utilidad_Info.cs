@@ -11,14 +11,14 @@ namespace Core.Erp.Info.RRHH
     {
         public int IdEmpresa { get; set; }
         public int IdUtilidad { get; set; }
-        [Required(ErrorMessage = "El campo nómina es obligatorio")]
-        public int IdNomina_Tipo { get; set; }
-        [Required(ErrorMessage = "El campo tipo de nómina es obligatorio")]
-
-        public int IdNomina_TipoLiqui { get; set; }
+       
         [Required(ErrorMessage = "El campo período es obligatorio")]
 
         public int IdPeriodo { get; set; }
+        [Required(ErrorMessage = "El monto de utilidad es obligatorio")]
+        [RegularExpression("^\\d+$", ErrorMessage = "El campo debe contener sólo números")]
+        public double Utilidad { get; set; }
+
         [Required(ErrorMessage = "El monto individual es obligatorio")]
         [RegularExpression("^\\d+$", ErrorMessage = "El campo debe contener sólo números")]
         public double UtilidadDerechoIndividual { get; set; }

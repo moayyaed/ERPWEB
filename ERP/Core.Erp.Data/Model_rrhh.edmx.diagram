@@ -29,8 +29,6 @@
         <EntityTypeShape EntityType="Model_rrhh.ro_nomina_x_horas_extras" Width="1.5" PointX="18" PointY="85.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_nomina_x_horas_extras_det" Width="1.5" PointX="20.25" PointY="67.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar" Width="1.5" PointX="12.75" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad" Width="1.5" PointX="15" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad_empleado" Width="1.5" PointX="17.25" PointY="54" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_periodo" Width="1.5" PointX="10.5" PointY="43.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_periodo_x_ro_Nomina_TipoLiqui" Width="1.5" PointX="12.75" PointY="40.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_Tipo_Prestamo" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
@@ -40,8 +38,6 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_x_titulos" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_Historico_Liquidacion_Vacaciones" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_horario_planificacion_det" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_rubro_tipo" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Acta_Finiquito_Detalle_ro_Acta_Finiquito" ManuallyRouted="false" />
         <AssociationConnector Association="Model_rrhh.FK_ro_area_ro_Division" ManuallyRouted="false" />
@@ -62,8 +58,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_nomina_x_horas_extras" ManuallyRouted="false" />
         <AssociationConnector Association="Model_rrhh.FK_ro_nomina_x_horas_extras_ro_periodo_x_ro_Nomina_TipoLiqui" ManuallyRouted="false" />
         <AssociationConnector Association="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_turno" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" ManuallyRouted="false" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_ro_periodo_x_ro_Nomina_TipoLiqui" ManuallyRouted="false" />
         <AssociationConnector Association="Model_rrhh.FK_ro_periodo_x_ro_Nomina_TipoLiqui_ro_periodo" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_rrhh.ro_tabla_Impu_Renta" Width="1.5" PointX="17.375" PointY="11.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_x_Proyeccion_Gastos_Personales" Width="1.5" PointX="17.375" PointY="14.75" />
@@ -207,7 +201,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_marcaciones_x_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_NominasPagosCheques_det_ro_empleado" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" />
         <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_empleado" />
@@ -273,6 +266,12 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" Width="1.5" PointX="27.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad" Width="1.5" PointX="32.75" PointY="1" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad_empleado" Width="1.5" PointX="36" PointY="31.75" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" Width="1.5" PointX="2.75" PointY="14.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
