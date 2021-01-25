@@ -16,11 +16,11 @@ namespace Core.Erp.Info.RRHH
 
         public int IdPeriodo { get; set; }
         [Required(ErrorMessage = "El monto de utilidad es obligatorio")]
-        [RegularExpression("^\\d+$", ErrorMessage = "El campo debe contener sólo números")]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]
         public double Utilidad { get; set; }
 
         [Required(ErrorMessage = "El monto individual es obligatorio")]
-        [RegularExpression("^\\d+$", ErrorMessage = "El campo debe contener sólo números")]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]
         public double UtilidadDerechoIndividual { get; set; }
         [Required(ErrorMessage = "El monto por carga es obligatorio")]
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]

@@ -44,7 +44,25 @@
                     @Html.ValidationMessageFor(q => q.UtilidadCargaFamiliar, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <div class="col-md-1">               
+                <div class="form-group">
+                    <br>
+                        <button type="button" class="btn btn-primary" onclick="calcular_utilidades()" id="bt_calcular">Calcular</button>
+                    </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <br>
+                    <a class="btn btn-default" href="@Url.Action("Index","ParticipacionUtilidad",new { Area = "RRHH" },null)">Cancelar</a>	
+                </div>
+            </div>
+           
         </div>
     </div>
     <div class="row">
@@ -54,11 +72,7 @@
             </div>
         </div>
     </div>
-    <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="calcular_utilidades()">Calcular</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","ParticipacionUtilidad",new { Area = "RRHH" },null)">Cancelar</a>
-    </div>
+   
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
@@ -67,7 +81,7 @@
 
 <script>
 
-    $("#IdPeriodo").change(function () {
+    $("#Utilidad").change(function () {
         calcular_base();
     });
 
@@ -98,7 +112,7 @@
     function calcular_base() {
         var utilidad = $("#Utilidad").val();
         var individual = utilidad*0.95;
-        var cargas = individual*0.05;
+        var cargas = utilidad * 0.05;
 
         $('#UtilidadDerechoIndividual').val(individual.toFixed(2));
         $('#UtilidadCargaFamiliar').val(cargas.toFixed(2));
