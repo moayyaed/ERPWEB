@@ -18,15 +18,15 @@
             
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="FechaFin">Período*</label>
-                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "IdPeriodo" })
+                    <label for="FechaFin">Año*</label>
+                    @Html.TextBoxFor(q => q.IdPeriodo, new { @class = "form-control", @id = "IdPeriodo" })
                     @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="FechaFin">Utilidad*</label>
-                    @Html.TextBoxFor(q => q.Utilidad, new { @class = "form-control", @id = "UtilidadDerechoIndividual" })
+                    @Html.TextBoxFor(q => q.Utilidad, new { @class = "form-control", @id = "Utilidad" })
                     @Html.ValidationMessageFor(q => q.Utilidad, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -67,7 +67,9 @@
 
 <script>
 
-
+    $("#IdPeriodo").change(function () {
+        calcular_base();
+    });
 
         function calcular_utilidades() {
             var datos = {
@@ -92,4 +94,15 @@
                 }
             });
         };
+
+    function calcular_base() {
+        var utilidad = $("#Utilidad").val();
+        var individual = utilidad*0.95;
+        var cargas = individual*0.05;
+
+        $('#UtilidadDerechoIndividual').val(individual.toFixed(2));
+        $('#UtilidadCargaFamiliar').val(cargas.toFixed(2));
+
+
+    }
 </script>
