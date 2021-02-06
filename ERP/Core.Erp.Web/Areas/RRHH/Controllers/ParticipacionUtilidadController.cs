@@ -65,7 +65,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                cargar_combos(info.IdNomina_Tipo,info.IdNomina_TipoLiqui);
 
                 if (info == null)
                 {
@@ -77,7 +76,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     IdEmpresa = GetIdEmpresa();
                     info.IdPeriodo = 20181284;
-                    info.IdNomina_TipoLiqui = 5;
                     info.IdEmpresa = IdEmpresa;
                     info.detalle = Session["detalle"] as List<ro_participacion_utilidad_empleado_Info>;
                     bus_utilidad.guardarDB(info);
@@ -100,7 +98,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = GetIdEmpresa();
                 info= bus_utilidad.get_info(IdEmpresa, IdUtilidad);
                 Session["detalle"] = info.detalle;
-                cargar_combos(info.IdNomina_Tipo,info.IdNomina_TipoLiqui);
 
                 return View(info);
             }
@@ -115,7 +112,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
                 info.IdEmpresa = GetIdEmpresa();
                 if (!bus_utilidad.anularDB(info))
                     return View(info);
@@ -138,7 +134,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 IdEmpresa = GetIdEmpresa();
                 info = bus_utilidad.get_info(IdEmpresa, IdUtilidad);
                 Session["detalle"] = info.detalle;
-                cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
 
                 return View(info);
             }
@@ -153,7 +148,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                 cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);
 
                 if (info==null)
                 {
@@ -262,7 +256,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 IdEmpresa = GetIdEmpresa();
-                info_utilidad.IdNomina_Tipo = IdNomina_Tipo;
                 info_utilidad.IdPeriodo = info_utilidad.IdPeriodo;
                 info_utilidad.UtilidadDerechoIndividual = UtilidadDerechoIndividual;
                 info_utilidad.UtilidadCargaFamiliar = UtilidadCargaFamiliar;

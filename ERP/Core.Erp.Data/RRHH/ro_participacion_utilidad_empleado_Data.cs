@@ -62,8 +62,6 @@ namespace Core.Erp.Data.RRHH
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdUtilidad = q.IdUtilidad,
-                                 IdNomina = q.IdNomina,
-                                 IdNominaTipo_liq=q.IdNominaTipo_liq,
                                  IdPeriodo=q.IdPeriodo,
                                  IdEmpleado = q.IdEmpleado,
                                  em_status = q.em_status,
@@ -73,7 +71,6 @@ namespace Core.Erp.Data.RRHH
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  CargasFamiliares = q.CargasFamiliares,
                                  ValorCargaFamiliar=q.ValorCargaFamiliar,
-                                 ValorExedenteIESS=q.ValorExedenteIESS,
                                  ValorIndividual=q.ValorIndividual,
                                  ValorTotal=q.ValorTotal,
                                  DiasTrabajados=q.DiasTrabajados,
@@ -106,14 +103,10 @@ namespace Core.Erp.Data.RRHH
                 {
                     Lista = (from q in Context.vwro_participacion_utilidad_empleado
                              where q.IdEmpresa == IdEmpresa
-                             && q.IdNomina == IdNomina
-                             && q.IdNominaTipo_liq==IdNominaTipo
                              && q.IdPeriodo==IdPeriodo
                              select new ro_participacion_utilidad_empleado_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
-                                 IdNomina=q.IdNomina,
-                                 IdNominaTipo_liq=q.IdNominaTipo_liq,
                                  IdPeriodo=q.IdPeriodo,
                                  IdUtilidad = q.IdUtilidad,
                                  IdEmpleado = q.IdEmpleado,
@@ -124,7 +117,6 @@ namespace Core.Erp.Data.RRHH
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  CargasFamiliares = q.CargasFamiliares,
                                  ValorCargaFamiliar = q.ValorCargaFamiliar,
-                                 ValorExedenteIESS = q.ValorExedenteIESS,
                                  ValorIndividual = q.ValorIndividual,
                                  ValorTotal = q.ValorTotal,
                                  DiasTrabajados = q.DiasTrabajados,
@@ -160,7 +152,6 @@ namespace Core.Erp.Data.RRHH
                             IdEmpleado=info.IdEmpleado,
                             CargasFamiliares=info.CargasFamiliares,
                             ValorCargaFamiliar=info.ValorCargaFamiliar,
-                            ValorExedenteIESS=info.ValorExedenteIESS,
                             ValorIndividual=info.ValorIndividual,
                             ValorTotal=info.ValorTotal,
                             DiasTrabajados=info.DiasTrabajados

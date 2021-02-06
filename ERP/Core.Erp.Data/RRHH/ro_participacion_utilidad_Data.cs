@@ -22,18 +22,13 @@ namespace Core.Erp.Data.RRHH
                                  select new ro_participacion_utilidad_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
-                                     IdNomina_Tipo = q.IdNomina,
                                      IdUtilidad=q.IdUtilidad,
-                                     IdNomina_TipoLiqui = q.IdNominaTipo_liq,
                                      IdPeriodo = q.IdPeriodo,
                                      UtilidadDerechoIndividual=q.UtilidadDerechoIndividual,
                                      UtilidadCargaFamiliar=q.UtilidadCargaFamiliar,
                                      pe_FechaIni=q.pe_FechaIni,
                                      pe_FechaFin=q.pe_FechaFin,
-                                     Procesado=q.Procesado,
-                                     Cerrado=q.Cerrado,
                                      Estado=q.Estado,
-                                     Descripcion=q.Descripcion,
 
                                      EstadoBool = q.Estado == "A" ? true : false
 
@@ -44,14 +39,9 @@ namespace Core.Erp.Data.RRHH
                                  select new ro_participacion_utilidad_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
-                                     IdNomina_Tipo = q.IdNomina,
-                                     IdNomina_TipoLiqui = q.IdNominaTipo_liq,
                                      IdPeriodo = q.IdPeriodo,
                                      pe_FechaIni = q.pe_FechaIni,
                                      pe_FechaFin = q.pe_FechaFin,
-                                     Procesado = q.Procesado,
-                                     Cerrado = q.Cerrado,
-                                     Descripcion = q.Descripcion,
 
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
@@ -80,8 +70,6 @@ namespace Core.Erp.Data.RRHH
                     {
                         IdEmpresa = Entity.IdEmpresa,
                         IdUtilidad = Entity.IdUtilidad,
-                        IdNomina_Tipo = Entity.IdNomina,
-                        IdNomina_TipoLiqui= Entity.IdNominaTipo_liq,
                         IdPeriodo=Entity.IdPeriodo,
                         UtilidadCargaFamiliar=Entity.UtilidadCargaFamiliar,
                         UtilidadDerechoIndividual=Entity.UtilidadDerechoIndividual
@@ -130,8 +118,6 @@ namespace Core.Erp.Data.RRHH
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdUtilidad = info.IdUtilidad = get_id(info.IdEmpresa),
-                        IdNomina = info.IdNomina_Tipo,
-                        IdNominaTipo_liq = info.IdNomina_TipoLiqui,
                         IdPeriodo = info.IdPeriodo,
                         FechaIngresa = DateTime.Now,
                         UsuarioIngresa=info.UsuarioIngresa,
