@@ -1834,6 +1834,9 @@
     <Compile Include="Reportes\Base\VWROL_029.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\VWROL_030.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
@@ -1971,6 +1974,7 @@
     <Compile Include="Reportes\RRHH\ROL_026_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_027_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_028_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_030_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_029_Data.cs" />
     <Compile Include="ro_Acta_Finiquito.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>

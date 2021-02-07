@@ -79,16 +79,64 @@
             c.Width = Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdUtilidad","ID");
-        settings.Columns.Add("pe_FechaIni", "Desde");
-        settings.Columns.Add("pe_FechaFin", "Hasta");
-        settings.Columns.Add("UtilidadDerechoIndividual","10% Idividual");
-        settings.Columns.Add("UtilidadCargaFamiliar","5% por cargas");
         settings.Columns.Add(column =>
         {
+            column.FieldName = "IdUtilidad";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_FechaIni";
+            column.Caption = "Desde";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_FechaFin";
+            column.Caption = "Hasta";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Utilidad";
+            column.Caption = "Utilidad";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "UtilidadDerechoIndividual";
+            column.Caption = "10% Idividual";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "UtilidadCargaFamiliar";
+            column.Caption = "5% Idividual";
+            column.PropertiesEdit.DisplayFormatString = "{0:c2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Resumen";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_004", "RRHHReportes", new { Area = "Reportes", IdUtilidad = DataBinder.Eval(c.DataItem, "IdUtilidad") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(4);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Descuentos";
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_030", "RRHHReportes", new { Area = "Reportes", IdPeriodo = DataBinder.Eval(c.DataItem, "IdPeriodo") }, Request.Url.Scheme) + "');\"></span>");
             });
             column.Width = System.Web.UI.WebControls.Unit.Percentage(4);
         });

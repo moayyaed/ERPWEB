@@ -452,6 +452,7 @@
     <Compile Include="Reportes\RRHH\ROL_026_Bus.cs" />
     <Compile Include="Reportes\RRHH\ROL_027_Bus.cs" />
     <Compile Include="Reportes\RRHH\ROL_028_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_030_Bus.cs" />
     <Compile Include="Reportes\RRHH\ROL_029_Bus.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Bus.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Bus.cs" />

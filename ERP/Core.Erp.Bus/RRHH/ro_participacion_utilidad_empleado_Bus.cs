@@ -42,9 +42,8 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                ro_periodo_Info info_periodo = bus_periodo.get_info(IdEmpresa, IdPeriodo);
-                DateTime FechaInicio = info_periodo.pe_FechaIni;
-                DateTime FechaFin = info_periodo.pe_FechaFin;
+                DateTime FechaInicio = new DateTime(IdPeriodo, 1,1);
+                DateTime FechaFin = new DateTime(IdPeriodo, 12, 31);
                 double factorB = 0;
                 lista= odata.get_list(IdEmpresa, IdNomina, FechaInicio, FechaFin);
                 int DiasTrabajados = 0;
@@ -91,31 +90,7 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public bool guardarDB(List<ro_participacion_utilidad_empleado_Info> lista)
-        {
-            try
-            {
-                return odata.guardarDB(lista);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }     
-        public bool anularDB(int IdEmpresa, int IdUtilidad)
-        {
-            try
-            {
-                return odata.anularDB(IdEmpresa,IdUtilidad);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+     
 
         private int Dias_trabajados_x_un_contrato(ro_participacion_utilidad_empleado_Info info, DateTime Fi, DateTime Ff)
         {

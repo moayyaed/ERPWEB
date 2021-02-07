@@ -10,6 +10,7 @@ namespace Core.Erp.Info.RRHH
    public class ro_participacion_utilidad_Info
     {
         public int IdEmpresa { get; set; }
+        public decimal IdTransaccionSession { get; set; }
         public int IdUtilidad { get; set; }
        
         [Required(ErrorMessage = "El campo período es obligatorio")]
@@ -41,6 +42,8 @@ namespace Core.Erp.Info.RRHH
         public System.DateTime pe_FechaIni { get; set; }
         public System.DateTime pe_FechaFin { get; set; }
         public string Descripcion { get; set; }
+        public int IdSucursal { get; set; }
+
         public List<ro_participacion_utilidad_empleado_Info> detalle { get; set; }
         public ro_participacion_utilidad_Info()
         {

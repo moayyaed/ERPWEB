@@ -41,30 +41,8 @@ namespace Core.Erp.Bus.RRHH
         public bool guardarDB(ro_participacion_utilidad_Info info)
         {
             try
-            { int IdUtilidad = 0;
-
-                info_new = (odata.get_info(info.IdEmpresa, info.IdUtilidad));
-                if (info_new == null)
-                {
-                    if (odata.guardarDB(info, ref IdUtilidad))
-                    {
-                        odataDetalle.anularDB(info.IdEmpresa, info.IdUtilidad);
-                        info.detalle.ForEach(v => v.IdUtilidad = IdUtilidad);
-                        return odataDetalle.guardarDB(info.detalle);
-                    }
-                }
-                else
-                {
-                    info.IdUtilidad = info_new.IdUtilidad;
-                    if (odata.modificarDB(info))
-                    {
-                        odataDetalle.anularDB(info.IdEmpresa, info_new.IdUtilidad);
-                        info.detalle.ForEach(v => v.IdUtilidad = info_new.IdUtilidad);
-                        return odataDetalle.guardarDB(info.detalle);
-                    }
-
-                }
-                return true;
+            {
+                return odata.guardarDB(info);
             }
             catch (Exception)
             {

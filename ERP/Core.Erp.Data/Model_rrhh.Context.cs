@@ -203,27 +203,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_nomina_calculo_he", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPEriodoParameter, idUsuarioParameter, observacionParameter);
         }
     
-        public virtual ObjectResult<spro_nomina_x_pago_utilidad_Result> spro_nomina_x_pago_utilidad(Nullable<int> idempresa, Nullable<int> idNomina, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
-        {
-            var idempresaParameter = idempresa.HasValue ?
-                new ObjectParameter("Idempresa", idempresa) :
-                new ObjectParameter("Idempresa", typeof(int));
-    
-            var idNominaParameter = idNomina.HasValue ?
-                new ObjectParameter("IdNomina", idNomina) :
-                new ObjectParameter("IdNomina", typeof(int));
-    
-            var fechaInicioParameter = fechaInicio.HasValue ?
-                new ObjectParameter("FechaInicio", fechaInicio) :
-                new ObjectParameter("FechaInicio", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spro_nomina_x_pago_utilidad_Result>("spro_nomina_x_pago_utilidad", idempresaParameter, idNominaParameter, fechaInicioParameter, fechaFinParameter);
-        }
-    
         public virtual int spRo_procesa_Rol(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -605,6 +584,27 @@ namespace Core.Erp.Data
                 new ObjectParameter("Observacion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_procesa_AjusteIR", idEmpresaParameter, idAnioParameter, idAjusteParameter, idEmpleadoParameter, idSucursalParameter, idUsuarioParameter, fechaParameter, fechaCorteParameter, observacionParameter);
+        }
+    
+        public virtual ObjectResult<spro_nomina_x_pago_utilidad_Result> spro_nomina_x_pago_utilidad(Nullable<int> idempresa, Nullable<int> idNomina, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var idempresaParameter = idempresa.HasValue ?
+                new ObjectParameter("Idempresa", idempresa) :
+                new ObjectParameter("Idempresa", typeof(int));
+    
+            var idNominaParameter = idNomina.HasValue ?
+                new ObjectParameter("IdNomina", idNomina) :
+                new ObjectParameter("IdNomina", typeof(int));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spro_nomina_x_pago_utilidad_Result>("spro_nomina_x_pago_utilidad", idempresaParameter, idNominaParameter, fechaInicioParameter, fechaFinParameter);
         }
     }
 }

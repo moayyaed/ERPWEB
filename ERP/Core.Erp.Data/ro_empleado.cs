@@ -120,6 +120,7 @@ namespace Core.Erp.Data
         public string CodCatalogo_Ubicacion { get; set; }
         public string IdCtaCble_x_pagar_empleado { get; set; }
         public Nullable<int> IdSucursalContabilizacion { get; set; }
+        public Nullable<bool> ro_goza_utilidad { get; set; }
     
         public virtual ICollection<ro_Acta_Finiquito> ro_Acta_Finiquito { get; set; }
         public virtual ICollection<ro_archivos_bancos_generacion_x_empleado> ro_archivos_bancos_generacion_x_empleado { get; set; }
