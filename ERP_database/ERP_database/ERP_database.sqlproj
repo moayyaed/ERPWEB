@@ -1140,6 +1140,8 @@
     <Build Include="dbo\Stored Procedures\spRo_procesa_AjusteIR.sql" />
     <Build Include="dbo\Views\vwcp_AnticiposyNCxCruzar.sql" />
     <Build Include="dbo\Tables\fa_factura_tipo.sql" />
+    <Build Include="dbo\Tables\cp_proveedor_microempresa.sql" />
+    <Build Include="web\Views\VWROL_030.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
