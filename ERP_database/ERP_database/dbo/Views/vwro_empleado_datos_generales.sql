@@ -13,7 +13,7 @@ SELECT        dbo.ro_empleado.IdEmpresa, dbo.ro_empleado.IdEmpleado_Supervisor, 
                          dbo.ro_empleado.IdEmpleado, dbo.tb_persona.pe_apellido, dbo.ro_empleado.Tiene_ingresos_compartidos, dbo.ro_empleado.Pago_por_horas, dbo.ro_empleado.Valor_horas_vespertina, 
                          dbo.ro_empleado.Valor_horas_matutino, dbo.ro_empleado.Valor_maximo_horas_vesp, dbo.ro_empleado.Valor_maximo_horas_mat, dbo.ro_empleado.Valor_horas_brigada, dbo.ro_empleado.GozaMasDeQuinceDiasVaciones, 
                          dbo.ro_empleado.DiasVacaciones, dbo.ro_empleado.IdEmpleadoPAdre, dbo.ro_empleado.Valor_hora_adicionales, dbo.ro_empleado.Valor_hora_control_salida, dbo.ro_empleado.CodCatalogo_Ubicacion, 
-                         dbo.ro_empleado.IdCtaCble_x_pagar_empleado, dbo.ro_empleado.IdSucursalContabilizacion
+                         dbo.ro_empleado.IdCtaCble_x_pagar_empleado, dbo.ro_empleado.IdSucursalContabilizacion, dbo.ro_empleado.ro_goza_utilidad
 FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo AND dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND 
@@ -114,7 +114,7 @@ Begin DesignProperties =
                Right = 564
             End
             DisplayFlags = 280
-            TopColumn = 49
+            TopColumn = 50
          End
          Begin Table = "ro_cargo"
             Begin Extent = 
@@ -167,6 +167,8 @@ Begin DesignProperties =
          Width = 284
          Width = 1500
   ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_empleado_datos_generales';
+
+
 
 
 
