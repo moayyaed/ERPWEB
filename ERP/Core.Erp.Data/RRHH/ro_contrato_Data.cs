@@ -121,6 +121,8 @@ namespace Core.Erp.Data.RRHH
                              && cont.IdEmpleado == IdEmpleado
                              && cont.FechaInicio>=FechaInicio
                              && cont.FechaInicio<=FechaFin
+                             && (cont.EstadoContrato== "ECT_ACT" || cont.FechaFin >= FechaInicio && cont.FechaFin <= FechaFin)
+                             && cont.Estado=="A"
                              select new ro_contrato_Info
                              {
                                  IdEmpresa = cont.IdEmpresa,

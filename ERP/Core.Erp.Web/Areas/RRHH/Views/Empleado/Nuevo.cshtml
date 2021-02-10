@@ -540,6 +540,18 @@
                                 @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ro_goza_utilidad"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.ro_goza_utilidad, settings =>
+                            {
+                                settings.Name = "ro_goza_utilidad";
+                                settings.Text = "Goza de utilidad";
+
+                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
                         <div class="col-md-2">
                             <div class="form-group">

@@ -35,5 +35,9 @@ namespace Core.Erp.Data
         public double UtilidadDerechoIndividual { get; set; }
         public double UtilidadCargaFamiliar { get; set; }
         public double Utilidad { get; set; }
+        public double Descuento { get; set; }
+        public double NetoRecibir { get; set; }
+        public string Observacion { get; set; }
+        public int IdSucursal { get; set; }
     }
 }

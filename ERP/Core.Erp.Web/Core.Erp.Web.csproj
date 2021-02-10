@@ -1610,6 +1610,12 @@
     <Compile Include="Reportes\RRHH\ROL_023_Rpt.Designer.cs">
       <DependentUpon>ROL_023_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\RRHH\ROL_030_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_030_Rpt.Designer.cs">
+      <DependentUpon>ROL_030_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\RRHH\ROL_024_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10635,6 +10641,7 @@
     <Content Include="Areas\General\Views\Pais\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Consultar.cshtml" />
     <Content Include="Areas\General\Views\DocumentoPorEmpresa\Index.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_030.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -11296,6 +11303,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_023_Rpt.resx">
       <DependentUpon>ROL_023_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_030_Rpt.resx">
+      <DependentUpon>ROL_030_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_024_Rpt.resx">
       <DependentUpon>ROL_024_Rpt.cs</DependentUpon>

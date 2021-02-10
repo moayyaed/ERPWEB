@@ -34,7 +34,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdTipoCbte_AsientoSueldoXPagar">Tipo comprobante*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_AsientoSueldoXPagar, settings =>
@@ -56,6 +56,20 @@
 
                }).BindList(ViewBag.lst_comprobante_tipo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdTipoCbte_AsientoSueldoXPagar, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="FechaInicio">Nómina general Pago utilidad *</label>
+                    @Html.DropDownListFor(q => q.IdNomina_General, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_General" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_General, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="FechaInicio">Proceso de la nómina pago utilidad*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_TipoLiqui_PagoUtilidad, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui_PagoUtilidad" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui_PagoUtilidad, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -374,3 +388,45 @@
 
 }
 
+
+
+<script>
+
+
+
+    $("#IdNomina_General").change(function () {
+        $("#IdNomina_TipoLiqui_PagoUtilidad").empty();
+        cargar_tipo_liquidacion_nomina();
+
+        });
+
+   
+
+        function cargar_tipo_liquidacion_nomina() {
+            var datos = {
+                IdNomina: $("#IdNomina_General").val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_lst_nomina_tipo_liq","NominaTipoLiquidacion", new { Area = "RRHH" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $.each(data, function (i, row) {
+                        $("#IdNomina_TipoLiqui_PagoUtilidad").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+
+
+</script>

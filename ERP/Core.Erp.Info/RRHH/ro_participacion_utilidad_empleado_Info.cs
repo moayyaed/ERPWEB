@@ -18,12 +18,14 @@ namespace Core.Erp.Info.RRHH
         public double ValorCargaFamiliar { get; set; }
         public double ValorTotal { get; set; }
         public string Observacion { get; set; }
-
+        public double Descuento { get; set; }
+        public double NetoRecibir { get; set; }
         // vista
         public double UtilidadDerechoIndividual { get; set; }
         public double UtilidadCargaFamiliar { get; set; }
         public double FactorA { get; set; }
         public double FactorB { get; set; }
+        public int IdSucursal { get; set; }
 
         public string ca_descripcion { get; set; }
         public string pe_apellido { get; set; }

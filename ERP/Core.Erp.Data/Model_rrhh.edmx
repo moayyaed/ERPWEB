@@ -442,6 +442,7 @@
           <Property Name="CodCatalogo_Ubicacion" Type="varchar" MaxLength="10" />
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
           <Property Name="IdSucursalContabilizacion" Type="int" />
+          <Property Name="ro_goza_utilidad" Type="bit" />
         </EntityType>
         <EntityType Name="ro_empleado_Novedad">
           <Key>
@@ -1066,6 +1067,8 @@
           <Property Name="IdTipo_op_sueldo_por_pagar" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="EstadoCreacionPrestamos" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Porcentaje_anticipo" Type="float" Nullable="false" />
+          <Property Name="IdNomina_General" Type="int" />
+          <Property Name="IdNomina_TipoLiqui_PagoUtilidad" Type="int" />
         </EntityType>
         <EntityType Name="ro_participacion_utilidad">
           <Key>
@@ -1102,6 +1105,8 @@
           <Property Name="ValorCargaFamiliar" Type="float" Nullable="false" />
           <Property Name="ValorTotal" Type="float" Nullable="false" />
           <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Descuento" Type="float" Nullable="false" />
+          <Property Name="NetoRecibir" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_periodo">
           <Key>
@@ -1400,6 +1405,7 @@
           <Property Name="IdRubro_anticipo" Type="varchar" MaxLength="50" />
           <Property Name="IdRubro_novedad_proceso" Type="varchar" MaxLength="50" />
           <Property Name="IdRubro_primaria_vespertina" Type="varchar" MaxLength="50" />
+          <Property Name="IdRubro_utilidad" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ro_SancionesPorMarcaciones">
           <Key>
@@ -2006,6 +2012,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_empleado_datos_generale
           <Property Name="CodCatalogo_Ubicacion" Type="varchar" MaxLength="10" />
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
           <Property Name="IdSucursalContabilizacion" Type="int" />
+          <Property Name="ro_goza_utilidad" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2822,6 +2829,9 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_participacion_utilidad_
             <PropertyRef Name="UtilidadDerechoIndividual" />
             <PropertyRef Name="UtilidadCargaFamiliar" />
             <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdUtilidad" Type="int" Nullable="false" />
@@ -2844,6 +2854,10 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_participacion_utilidad_
           <Property Name="UtilidadDerechoIndividual" Type="float" Nullable="false" />
           <Property Name="UtilidadCargaFamiliar" Type="float" Nullable="false" />
           <Property Name="Utilidad" Type="float" Nullable="false" />
+          <Property Name="Descuento" Type="float" Nullable="false" />
+          <Property Name="NetoRecibir" Type="float" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwRo_periodo_x_ro_Nomina_TipoLiqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5757,7 +5771,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
     [vwro_empleado_datos_generales].[Valor_hora_control_salida] AS [Valor_hora_control_salida], 
     [vwro_empleado_datos_generales].[CodCatalogo_Ubicacion] AS [CodCatalogo_Ubicacion], 
     [vwro_empleado_datos_generales].[IdCtaCble_x_pagar_empleado] AS [IdCtaCble_x_pagar_empleado], 
-    [vwro_empleado_datos_generales].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion]
+    [vwro_empleado_datos_generales].[IdSucursalContabilizacion] AS [IdSucursalContabilizacion], 
+    [vwro_empleado_datos_generales].[ro_goza_utilidad] AS [ro_goza_utilidad]
     FROM [dbo].[vwro_empleado_datos_generales] AS [vwro_empleado_datos_generales]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_empleado_Novedad" EntityType="Self.vwro_empleado_Novedad" store:Type="Views" store:Schema="dbo">
@@ -6257,7 +6272,11 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
     [vwro_participacion_utilidad_empleado].[em_fechaSalida] AS [em_fechaSalida], 
     [vwro_participacion_utilidad_empleado].[UtilidadDerechoIndividual] AS [UtilidadDerechoIndividual], 
     [vwro_participacion_utilidad_empleado].[UtilidadCargaFamiliar] AS [UtilidadCargaFamiliar], 
-    [vwro_participacion_utilidad_empleado].[Utilidad] AS [Utilidad]
+    [vwro_participacion_utilidad_empleado].[Utilidad] AS [Utilidad], 
+    [vwro_participacion_utilidad_empleado].[Descuento] AS [Descuento], 
+    [vwro_participacion_utilidad_empleado].[NetoRecibir] AS [NetoRecibir], 
+    [vwro_participacion_utilidad_empleado].[Observacion] AS [Observacion], 
+    [vwro_participacion_utilidad_empleado].[IdSucursal] AS [IdSucursal]
     FROM [dbo].[vwro_participacion_utilidad_empleado] AS [vwro_participacion_utilidad_empleado]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRo_periodo_x_ro_Nomina_TipoLiqui" EntityType="Self.vwRo_periodo_x_ro_Nomina_TipoLiqui" store:Type="Views" store:Schema="dbo">
@@ -8388,12 +8407,6 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
             <Parameter Name="observacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spro_nomina_x_pago_utilidad" ReturnType="Collection(Model_rrhh.spro_nomina_x_pago_utilidad_Result)">
-            <Parameter Name="Idempresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdNomina" Mode="In" Type="Int32" />
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <EntitySet Name="ro_tabla_Impu_Renta" EntityType="Model_rrhh.ro_tabla_Impu_Renta" />
           <EntitySet Name="vwro_empleado_x_Proyeccion_Gastos_Personales" EntityType="Model_rrhh.vwro_empleado_x_Proyeccion_Gastos_Personales" />
           <EntitySet Name="ro_marcaciones_tipo" EntityType="Model_rrhh.ro_marcaciones_tipo" />
@@ -9053,21 +9066,13 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             <End Role="ro_participacion_utilidad" EntitySet="ro_participacion_utilidad" />
             <End Role="ro_participacion_utilidad_empleado" EntitySet="ro_participacion_utilidad_empleado" />
           </AssociationSet>
+          <FunctionImport Name="spro_nomina_x_pago_utilidad" ReturnType="Collection(Model_rrhh.spro_nomina_x_pago_utilidad_Result)">
+            <Parameter Name="Idempresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
-        <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="ca_descripcion" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="pe_apellido" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="pe_nombre" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="em_status" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="em_fechaIngaRol" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="em_fecha_ingreso" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="em_fechaSalida" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="num_contratos" Nullable="true" />
-          <Property Type="Int32" Name="num_cargas" Nullable="false" />
-        </ComplexType>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
             <PropertyRef Name="AnioFiscal" />
@@ -10482,6 +10487,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="EstadoCreacionPrestamos" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Porcentaje_anticipo" Type="Double" Nullable="false" />
           <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_Parametros_ro_catalogo" FromRole="ro_Parametros" ToRole="ro_catalogo" />
+          <Property Name="IdNomina_General" Type="Int32" />
+          <Property Name="IdNomina_TipoLiqui_PagoUtilidad" Type="Int32" />
         </EntityType>
         <Association Name="FK_ro_Parametros_ro_catalogo">
           <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="1" />
@@ -11070,6 +11077,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_rubro_tipo14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <Property Name="IdRubro_utilidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           </EntityType>
         <EntityType Name="ro_empleado_novedad_det">
           <Key>
@@ -11829,6 +11837,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDet" />
           <NavigationProperty Name="ro_AjusteImpuestoRentaDetOI" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDetOI" />
           <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_participacion_utilidad_empleado" />
+          <Property Name="ro_goza_utilidad" Type="Boolean" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -12352,6 +12361,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdSucursalContabilizacion" Type="Int32" />
+          <Property Name="ro_goza_utilidad" Type="Boolean" />
         </EntityType>
         <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
           <Key>
@@ -13387,6 +13397,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_empleado" />
           <NavigationProperty Name="ro_participacion_utilidad" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_participacion_utilidad" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="vwro_participacion_utilidad">
           <Key>
@@ -13426,6 +13438,9 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             <PropertyRef Name="UtilidadDerechoIndividual" />
             <PropertyRef Name="UtilidadCargaFamiliar" />
             <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
@@ -13448,6 +13463,10 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
           <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
           <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_ro_participacion_utilidad_empleado_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -13477,6 +13496,21 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdEmpleado" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="ca_descripcion" Nullable="false" />
+          <Property Type="String" Name="pe_apellido" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="em_status" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="em_fechaIngaRol" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="em_fecha_ingreso" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="em_fechaSalida" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="num_contratos" Nullable="true" />
+          <Property Type="Int32" Name="num_cargas" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14150,24 +14184,6 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spRo_LiquidarEmpleado" FunctionName="Model_rrhh.Store.spRo_LiquidarEmpleado" />
           <FunctionImportMapping FunctionImportName="spRo_nomina_calculo_he" FunctionName="Model_rrhh.Store.spRo_nomina_calculo_he" />
-          <FunctionImportMapping FunctionImportName="spro_nomina_x_pago_utilidad" FunctionName="Model_rrhh.Store.spro_nomina_x_pago_utilidad">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_rrhh.spro_nomina_x_pago_utilidad_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="em_status" ColumnName="em_status" />
-                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
-                <ScalarProperty Name="em_fecha_ingreso" ColumnName="em_fecha_ingreso" />
-                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
-                <ScalarProperty Name="num_contratos" ColumnName="num_contratos" />
-                <ScalarProperty Name="num_cargas" ColumnName="num_cargas" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="ro_tabla_Impu_Renta">
             <EntityTypeMapping TypeName="Model_rrhh.ro_tabla_Impu_Renta">
               <MappingFragment StoreEntitySet="ro_tabla_Impu_Renta">
@@ -15061,6 +15077,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="ro_Parametros">
             <EntityTypeMapping TypeName="Model_rrhh.ro_Parametros">
               <MappingFragment StoreEntitySet="ro_Parametros">
+                <ScalarProperty Name="IdNomina_TipoLiqui_PagoUtilidad" ColumnName="IdNomina_TipoLiqui_PagoUtilidad" />
+                <ScalarProperty Name="IdNomina_General" ColumnName="IdNomina_General" />
                 <ScalarProperty Name="Porcentaje_anticipo" ColumnName="Porcentaje_anticipo" />
                 <ScalarProperty Name="EstadoCreacionPrestamos" ColumnName="EstadoCreacionPrestamos" />
                 <ScalarProperty Name="IdTipo_op_sueldo_por_pagar" ColumnName="IdTipo_op_sueldo_por_pagar" />
@@ -15333,6 +15351,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="ro_rubros_calculados">
             <EntityTypeMapping TypeName="Model_rrhh.ro_rubros_calculados">
               <MappingFragment StoreEntitySet="ro_rubros_calculados">
+                <ScalarProperty Name="IdRubro_utilidad" ColumnName="IdRubro_utilidad" />
                 <ScalarProperty Name="IdRubro_primaria_vespertina" ColumnName="IdRubro_primaria_vespertina" />
                 <ScalarProperty Name="IdRubro_novedad_proceso" ColumnName="IdRubro_novedad_proceso" />
                 <ScalarProperty Name="IdRubro_anticipo" ColumnName="IdRubro_anticipo" />
@@ -15779,6 +15798,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="ro_empleado">
             <EntityTypeMapping TypeName="Model_rrhh.ro_empleado">
               <MappingFragment StoreEntitySet="ro_empleado">
+                <ScalarProperty Name="ro_goza_utilidad" ColumnName="ro_goza_utilidad" />
                 <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
                 <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
                 <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
@@ -15853,6 +15873,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="vwro_empleado_datos_generales">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_datos_generales">
               <MappingFragment StoreEntitySet="vwro_empleado_datos_generales">
+                <ScalarProperty Name="ro_goza_utilidad" ColumnName="ro_goza_utilidad" />
                 <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
                 <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
                 <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
@@ -16267,6 +16288,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="ro_participacion_utilidad_empleado">
             <EntityTypeMapping TypeName="Model_rrhh.ro_participacion_utilidad_empleado">
               <MappingFragment StoreEntitySet="ro_participacion_utilidad_empleado">
+                <ScalarProperty Name="NetoRecibir" ColumnName="NetoRecibir" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="ValorTotal" ColumnName="ValorTotal" />
                 <ScalarProperty Name="ValorCargaFamiliar" ColumnName="ValorCargaFamiliar" />
@@ -16298,6 +16321,10 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="vwro_participacion_utilidad_empleado">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_participacion_utilidad_empleado">
               <MappingFragment StoreEntitySet="vwro_participacion_utilidad_empleado">
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="NetoRecibir" ColumnName="NetoRecibir" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
                 <ScalarProperty Name="Utilidad" ColumnName="Utilidad" />
                 <ScalarProperty Name="UtilidadCargaFamiliar" ColumnName="UtilidadCargaFamiliar" />
                 <ScalarProperty Name="UtilidadDerechoIndividual" ColumnName="UtilidadDerechoIndividual" />
@@ -16322,6 +16349,25 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spro_nomina_x_pago_utilidad" FunctionName="Model_rrhh.Store.spro_nomina_x_pago_utilidad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_rrhh.spro_nomina_x_pago_utilidad_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="em_status" ColumnName="em_status" />
+                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
+                <ScalarProperty Name="em_fecha_ingreso" ColumnName="em_fecha_ingreso" />
+                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
+                <ScalarProperty Name="num_contratos" ColumnName="num_contratos" />
+                <ScalarProperty Name="num_cargas" ColumnName="num_cargas" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -67,10 +67,13 @@
     [CodCatalogo_Ubicacion]                VARCHAR (10)  NULL,
     [IdCtaCble_x_pagar_empleado]           VARCHAR (20)  NULL,
     [IdSucursalContabilizacion]            INT           NULL,
+    [ro_goza_utilidad]                     BIT           NULL,
     CONSTRAINT [PK_ro_empleado] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEmpleado] ASC),
     CONSTRAINT [FK_ro_empleado_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado_Supervisor]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_ro_empleado_ro_empleado1] FOREIGN KEY ([IdEmpresa], [IdEmpleadoPAdre]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 
 
 

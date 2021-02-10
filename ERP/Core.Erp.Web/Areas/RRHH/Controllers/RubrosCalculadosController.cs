@@ -35,8 +35,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bus_rubro_calculado.guardarDB(info))
                     {
                         cargar_combos();
@@ -48,14 +47,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         return View(info);
 
                     }
-                }
-                else
-                {
-                    cargar_combos();
-
-                    return View(info);
-                }
-
+                
+               
             }
             catch (Exception)
             {

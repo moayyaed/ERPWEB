@@ -25,5 +25,6 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> em_fechaSalida { get; set; }
         public Nullable<int> num_contratos { get; set; }
         public int num_cargas { get; set; }
+        public int IdSucursal { get; set; }
     }
 }

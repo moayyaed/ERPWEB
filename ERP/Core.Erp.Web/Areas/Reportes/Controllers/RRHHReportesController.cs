@@ -1572,6 +1572,28 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return View(model);
         }
+
+        public ActionResult ROL_030(int IdNomina_Tipo = 0, int IdNomina_TipoLiqui = 0, int IdPeriodo = 0, int IdSucursal = 0)
+        {
+            ROL_030_Rpt model = new ROL_030_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_030");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.p_IdNomina.Value = IdNomina_Tipo;
+            model.p_IdNominaTipo.Value = IdNomina_TipoLiqui;
+            model.p_IdNomina.Value = IdPeriodo;
+            model.p_IdSucursal.Value = IdSucursal;
+            model.usuario = SessionFixed.IdUsuario.ToString();
+            model.empresa = SessionFixed.NomEmpresa.ToString();
+            return View(model);
+        }
     }
 
     public class preliquidacion_List

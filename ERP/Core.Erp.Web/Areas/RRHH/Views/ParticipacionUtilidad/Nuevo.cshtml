@@ -12,6 +12,10 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "ParticipacionUtilidad", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdUtilidad)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
     <div class="row">
         <div class="col-md-12">
            
@@ -111,8 +115,8 @@
 
     function calcular_base() {
         var utilidad = $("#Utilidad").val();
-        var individual = utilidad*0.95;
-        var cargas = utilidad * 0.05;
+        var individual =(10* utilidad)/15;
+        var cargas = (5 * utilidad) / 15;
 
         $('#UtilidadDerechoIndividual').val(individual.toFixed(2));
         $('#UtilidadCargaFamiliar').val(cargas.toFixed(2));

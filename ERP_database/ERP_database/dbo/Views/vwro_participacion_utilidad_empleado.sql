@@ -2,9 +2,10 @@
 AS
 SELECT        dbo.ro_participacion_utilidad_empleado.IdEmpresa, dbo.ro_participacion_utilidad_empleado.IdUtilidad, dbo.ro_participacion_utilidad_empleado.IdEmpleado, dbo.ro_participacion_utilidad_empleado.DiasTrabajados, 
                          dbo.ro_participacion_utilidad_empleado.CargasFamiliares, dbo.ro_participacion_utilidad_empleado.ValorIndividual, dbo.ro_participacion_utilidad_empleado.ValorCargaFamiliar, 
-                         dbo.ro_participacion_utilidad_empleado.ValorExedenteIESS, dbo.ro_participacion_utilidad_empleado.ValorTotal, dbo.ro_participacion_utilidad.IdNomina, dbo.ro_participacion_utilidad.IdNominaTipo_liq, 
-                         dbo.ro_participacion_utilidad.IdPeriodo, dbo.ro_participacion_utilidad.Estado, dbo.ro_cargo.ca_descripcion, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, 
-                         dbo.ro_empleado.em_fechaIngaRol, ro_empleado.em_fechaIngaRol em_fecha_ingreso, dbo.ro_empleado.em_fechaSalida, dbo.ro_participacion_utilidad.UtilidadDerechoIndividual, dbo.ro_participacion_utilidad.UtilidadCargaFamiliar
+                         dbo.ro_participacion_utilidad_empleado.ValorTotal, dbo.ro_participacion_utilidad.IdPeriodo, dbo.ro_participacion_utilidad.Estado, dbo.ro_cargo.ca_descripcion, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
+                         dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, dbo.ro_empleado.em_fechaIngaRol, dbo.ro_empleado.em_fechaIngaRol AS em_fecha_ingreso, dbo.ro_empleado.em_fechaSalida, 
+                         dbo.ro_participacion_utilidad.UtilidadDerechoIndividual, dbo.ro_participacion_utilidad.UtilidadCargaFamiliar, dbo.ro_participacion_utilidad.Utilidad, dbo.ro_participacion_utilidad_empleado.Descuento, 
+                         dbo.ro_participacion_utilidad_empleado.NetoRecibir, dbo.ro_participacion_utilidad_empleado.Observacion, dbo.ro_empleado.IdSucursal
 FROM            dbo.ro_participacion_utilidad INNER JOIN
                          dbo.ro_participacion_utilidad_empleado ON dbo.ro_participacion_utilidad.IdEmpresa = dbo.ro_participacion_utilidad_empleado.IdEmpresa AND 
                          dbo.ro_participacion_utilidad.IdUtilidad = dbo.ro_participacion_utilidad_empleado.IdUtilidad INNER JOIN
@@ -18,7 +19,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[83] 4[5] 2[5] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -86,53 +87,53 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "ro_participacion_utilidad"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 211
-               Right = 265
+               Top = 12
+               Left = 281
+               Bottom = 339
+               Right = 508
             End
             DisplayFlags = 280
             TopColumn = 2
          End
          Begin Table = "ro_participacion_utilidad_empleado"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 268
-               Right = 227
+               Top = 45
+               Left = 18
+               Bottom = 401
+               Right = 207
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ro_empleado"
             Begin Extent = 
-               Top = 270
-               Left = 38
-               Bottom = 400
-               Right = 327
+               Top = 23
+               Left = 719
+               Bottom = 297
+               Right = 1008
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "tb_persona"
             Begin Extent = 
-               Top = 402
-               Left = 38
-               Bottom = 532
-               Right = 270
+               Top = 205
+               Left = 897
+               Bottom = 335
+               Right = 1129
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ro_cargo"
             Begin Extent = 
-               Top = 534
-               Left = 38
-               Bottom = 664
-               Right = 255
+               Top = 321
+               Left = 455
+               Bottom = 451
+               Right = 672
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
       End
    End
@@ -155,11 +156,13 @@ Begin DesignProperties =
       End
    End
    Begin CriteriaPane = 
-      Beg', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_participacion_utilidad_empleado';
+      ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_participacion_utilidad_empleado';
+
+
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'in ColumnWidths = 11
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
          Table = 1170
@@ -177,6 +180,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'in ColumnW
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_participacion_utilidad_empleado';
+
+
 
 
 GO

@@ -6,11 +6,14 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
+using Core.Erp.Web.Helps;
+
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
     public class ParticipacionUtilidadController : Controller
     {
         #region variables
+        ro_participacion_utilidad_empleado_Info_lst ro_participacion_utilidad_empleado_Info_lst = new ro_participacion_utilidad_empleado_Info_lst();
         ro_participacion_utilidad_Bus bus_utilidad = new ro_participacion_utilidad_Bus();
         List<ro_nomina_tipo_Info> lista_nomina = new List<ro_nomina_tipo_Info>();
         List<ro_participacion_utilidad_empleado_Info> lst_detalle = new List<ro_participacion_utilidad_empleado_Info>();
@@ -24,7 +27,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_participacion_utilidad_Info info_utilidad = new ro_participacion_utilidad_Info();
         #endregion
 
-        int IdEmpresa = 0;
         public ActionResult Index()
         {
             return View();
@@ -34,8 +36,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
-                List<ro_participacion_utilidad_Info> model = bus_utilidad.get_list(IdEmpresa, true);
+                List<ro_participacion_utilidad_Info> model = bus_utilidad.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), true);
                 return PartialView("_GridViewPartial_utilidades", model);
             }
             catch (Exception)
@@ -49,7 +50,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 ro_participacion_utilidad_Info info = new ro_participacion_utilidad_Info();
-                info.detalle = Session["detalle"] as List<ro_participacion_utilidad_empleado_Info>;
+                info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 if (info == null)
                     info = new ro_participacion_utilidad_Info();
                 return PartialView("_GridViewPartial_utilidades_detalle", info);
@@ -66,23 +67,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                if (info == null)
-                {
-                    info = new ro_participacion_utilidad_Info();
-                    return View(info);
-
-                }
-                else
-                {
-                    IdEmpresa = GetIdEmpresa();
-                    info.IdPeriodo = 20181284;
-                    info.IdEmpresa = IdEmpresa;
-                    info.detalle = Session["detalle"] as List<ro_participacion_utilidad_empleado_Info>;
-                    bus_utilidad.guardarDB(info);
-
+                info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
+                if (!bus_utilidad.modificarDB(info))
+                   return View(info);
                     return RedirectToAction("Index");
-                }
-
             }
             catch (Exception)
             {
@@ -94,11 +85,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
                 ro_participacion_utilidad_Info info = new ro_participacion_utilidad_Info();
-                IdEmpresa = GetIdEmpresa();
-                info= bus_utilidad.get_info(IdEmpresa, IdUtilidad);
-                Session["detalle"] = info.detalle;
-
+                info= bus_utilidad.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdUtilidad);
+                ro_participacion_utilidad_empleado_Info_lst.set_list( info.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 return View(info);
             }
             catch (Exception)
@@ -112,7 +108,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                info.IdEmpresa = GetIdEmpresa();
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 if (!bus_utilidad.anularDB(info))
                     return View(info);
                 else
@@ -130,10 +126,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+
                 ro_participacion_utilidad_Info info = new ro_participacion_utilidad_Info();
-                IdEmpresa = GetIdEmpresa();
-                info = bus_utilidad.get_info(IdEmpresa, IdUtilidad);
-                Session["detalle"] = info.detalle;
+                info = bus_utilidad.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdUtilidad);
+                ro_participacion_utilidad_empleado_Info_lst.set_list(info.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
 
                 return View(info);
             }
@@ -148,22 +151,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-
-                if (info==null)
-                {
-                    info = new ro_participacion_utilidad_Info();
+                    info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    info.UsuarioIngresa = SessionFixed.IdUsuario;
+                    info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
+                if (!bus_utilidad.guardarDB(info))
                     return View(info);
-
-                }
-                else
-                {                   
-                    IdEmpresa = GetIdEmpresa();
-                    info.IdEmpresa = IdEmpresa;
-                    info.detalle = Session["detalle"] as List<ro_participacion_utilidad_empleado_Info>;
-                    bus_utilidad.guardarDB(info);
                     return RedirectToAction("Index");
 
-                }
 
             }
             catch (Exception)
@@ -176,8 +171,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                #region Validar Session
+                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+                #endregion
+                
                 ro_participacion_utilidad_Info info = new ro_participacion_utilidad_Info();
-                cargar_combos(0,0);
+                info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 return View(info);
                 
             }
@@ -187,80 +190,48 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public JsonResult get_lst_nomina_tipo_liq(int IdNomina = 0)
-        {
-            try
-            {
-                List<ro_Nomina_Tipoliqui_Info> lst_tipo_nomina = new List<ro_Nomina_Tipoliqui_Info>();
-                lst_tipo_nomina = bus_nomina_tipo.get_list(GetIdEmpresa(), IdNomina);
-                return Json(lst_tipo_nomina, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
-        public JsonResult get_lst_periodo_x_nomina(int IdNomina = 0, int IdNomina_Tipo = 0)
+        #region funciones del detalle
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ro_participacion_utilidad_empleado_Info info_det)
         {
-            try
-            {
-                List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> lst_tipo_nomina = new List<ro_periodo_x_ro_Nomina_TipoLiqui_Info>();
-                lst_periodos = bus_periodos_x_nomina.get_list(GetIdEmpresa(), IdNomina, IdNomina_Tipo);
-                return Json(lst_periodos, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            if (ModelState.IsValid)
+                ro_participacion_utilidad_empleado_Info_lst.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_participacion_utilidad_Info model = new ro_participacion_utilidad_Info();
+            model.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_utilidades_detalle", model);
         }
 
-        private int GetIdEmpresa()
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_participacion_utilidad_empleado_Info info_det)
         {
-            try
-            {
-                if (Session["IdEmpresa"] != null)
-                    return Convert.ToInt32(Session["IdEmpresa"]);
-                else
-                    return 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            if (ModelState.IsValid)
+                ro_participacion_utilidad_empleado_Info_lst.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_participacion_utilidad_Info model = new ro_participacion_utilidad_Info();
+            model.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_utilidades_detalle", model);
         }
-        private void cargar_combos(int IdNomina_Tipo, int IdNomina_Tipo_Liqui)
+
+        public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_participacion_utilidad_empleado_Info info_det)
         {
-            try
-            {
-                IdEmpresa = GetIdEmpresa();
-                lista_nomina = bus_nomina.get_list(IdEmpresa, false);
-                lst_nomina_tipo = bus_nomina_tipo.get_list(IdEmpresa, IdNomina_Tipo);
-                lst_periodos = bus_periodos_x_nomina.get_list(IdEmpresa, IdNomina_Tipo, IdNomina_Tipo_Liqui);
-                ViewBag.lst_nomina = lista_nomina;
-                ViewBag.lst_nomina_tipo = lst_nomina_tipo;
-                ViewBag.lst_periodos = lst_periodos;
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            ro_participacion_utilidad_empleado_Info_lst.DeleteRow(Convert.ToInt32( info_det.IdEmpleado), Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_participacion_utilidad_Info model = new ro_participacion_utilidad_Info();
+            model.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_utilidades_detalle", model);
         }
+        #endregion
+
 
         public JsonResult calcular( int IdNomina_Tipo = 0,int IdPeriodo = 0, double UtilidadDerechoIndividual = 0, double UtilidadCargaFamiliar=0)
         {
             try
             {
-                IdEmpresa = GetIdEmpresa();
-                info_utilidad.IdPeriodo = info_utilidad.IdPeriodo;
+                
+                info_utilidad.IdPeriodo = IdPeriodo;
                 info_utilidad.UtilidadDerechoIndividual = UtilidadDerechoIndividual;
                 info_utilidad.UtilidadCargaFamiliar = UtilidadCargaFamiliar;
-                info_utilidad.detalle = bus_detalle.calcular(IdEmpresa, IdNomina_Tipo, IdPeriodo, UtilidadDerechoIndividual, UtilidadCargaFamiliar);
-                Session["detalle"] = info_utilidad.detalle as  List < ro_participacion_utilidad_empleado_Info >;
+                info_utilidad.detalle = bus_detalle.calcular(Convert.ToInt32(SessionFixed.IdEmpresa), IdNomina_Tipo, IdPeriodo, UtilidadDerechoIndividual, UtilidadCargaFamiliar);
+                ro_participacion_utilidad_empleado_Info_lst.set_list(info_utilidad.detalle,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -272,5 +243,50 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
 
 
+    }
+
+
+    public class ro_participacion_utilidad_empleado_Info_lst
+    {
+        string Variable = "ro_participacion_utilidad_empleado_Info";
+        public List<ro_participacion_utilidad_empleado_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<ro_participacion_utilidad_empleado_Info> list = new List<ro_participacion_utilidad_empleado_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<ro_participacion_utilidad_empleado_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<ro_participacion_utilidad_empleado_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+
+        public void AddRow(ro_participacion_utilidad_empleado_Info info_det, decimal IdTransaccionSession)
+        {
+            ro_rubro_tipo_Bus bus_rub = new ro_rubro_tipo_Bus();
+            List<ro_participacion_utilidad_empleado_Info> list = get_list(IdTransaccionSession);
+            info_det.IdEmpleado = list.Count == 0 ? 1 : list.Max(q => q.IdEmpleado) + 1;
+
+            list.Add(info_det);
+        }
+
+        public void UpdateRow(ro_participacion_utilidad_empleado_Info info_det, decimal IdTransaccionSession)
+        {
+            ro_participacion_utilidad_empleado_Info edited_info = get_list(IdTransaccionSession).Where(m => m.IdEmpleado == info_det.IdEmpleado).First();
+            edited_info.UtilidadCargaFamiliar = info_det.UtilidadCargaFamiliar;
+            edited_info.UtilidadDerechoIndividual = info_det.UtilidadDerechoIndividual;
+            edited_info.ValorTotal = info_det.ValorTotal;
+            edited_info.Observacion = info_det.Observacion;
+        }
+
+        public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
+        {
+            List<ro_participacion_utilidad_empleado_Info> list = get_list(IdTransaccionSession);
+            list.Remove(list.Where(m => m.IdEmpleado == Secuencia).First());
+        }
     }
 }

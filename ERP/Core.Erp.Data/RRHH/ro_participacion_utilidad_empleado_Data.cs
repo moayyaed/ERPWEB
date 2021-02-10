@@ -25,13 +25,13 @@ namespace Core.Erp.Data.RRHH
                                  em_status=q.em_status,
                                  ca_descripcion=q.ca_descripcion,
                                  pe_nombre=q.pe_nombre,
-                                 pe_apellido=q.pe_apellido,
+                                 pe_apellido=q.pe_apellido+" "+q.pe_nombre,
                                  pe_cedulaRuc=q.pe_cedulaRuc,
                                  CargasFamiliares=q.num_cargas,
                                  num_contratos=q.num_contratos,
                                  em_fechaIngaRol=q.em_fechaIngaRol,
                                  em_fechaSalida=q.em_fechaSalida,
-                                 
+                                 IdSucursal=q.IdSucursal
                                   
 
                              }).ToList();
@@ -63,11 +63,11 @@ namespace Core.Erp.Data.RRHH
                                  IdEmpresa = q.IdEmpresa,
                                  IdUtilidad = q.IdUtilidad,
                                  IdPeriodo=q.IdPeriodo,
+                                 IdSucursal=q.IdSucursal,
                                  IdEmpleado = q.IdEmpleado,
                                  em_status = q.em_status,
                                  ca_descripcion = q.ca_descripcion,
-                                 pe_nombre = q.pe_nombre,
-                                 pe_apellido = q.pe_apellido,
+                                 pe_apellido = q.pe_apellido + " " + q.pe_nombre,
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  CargasFamiliares = q.CargasFamiliares,
                                  ValorCargaFamiliar=q.ValorCargaFamiliar,
@@ -78,7 +78,9 @@ namespace Core.Erp.Data.RRHH
                                  em_fechaSalida=q.em_fechaSalida,
                                  em_fecha_ingreso=q.em_fecha_ingreso,
                                  UtilidadDerechoIndividual=q.UtilidadDerechoIndividual,
-                                 UtilidadCargaFamiliar=q.UtilidadCargaFamiliar
+                                 UtilidadCargaFamiliar=q.UtilidadCargaFamiliar,
+                                 Descuento=q.Descuento,
+                                 NetoRecibir=q.NetoRecibir
 
                              }).ToList();
 
@@ -137,55 +139,6 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public bool guardarDB(List<ro_participacion_utilidad_empleado_Info> lista)
-        {
-            try
-            {
-                using (Entities_rrhh Context = new Entities_rrhh())
-                {
-                    foreach (var info in lista)
-                    {
-                        ro_participacion_utilidad_empleado Entity = new ro_participacion_utilidad_empleado
-                        {
-                            IdEmpresa = info.IdEmpresa,
-                            IdUtilidad = info.IdUtilidad,
-                            IdEmpleado=info.IdEmpleado,
-                            CargasFamiliares=info.CargasFamiliares,
-                            ValorCargaFamiliar=info.ValorCargaFamiliar,
-                            ValorIndividual=info.ValorIndividual,
-                            ValorTotal=info.ValorTotal,
-                            DiasTrabajados=info.DiasTrabajados
-                        };
-                        Context.ro_participacion_utilidad_empleado.Add(Entity);
-                    }
-                    Context.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public bool anularDB( int IdEmpresa, int IdUtilidad)
-        {
-            try
-            {
-                using (Entities_rrhh Contex=new Entities_rrhh())
-                {
-                    string sql = "delete ro_participacion_utilidad_empleado where IdEmpresa='"+IdEmpresa+ "' and IdUtilidad='"+IdUtilidad+"'";
-                    Contex.Database.ExecuteSqlCommand(sql);
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+    
    }
 }
