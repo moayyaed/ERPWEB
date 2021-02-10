@@ -75,14 +75,14 @@ namespace Core.Erp.Data.Banco
                 var banco = db.ba_parametros.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0,banco.ValidarSoloCuentasArchivo)
+                    Lista = (from q in Context.spcp_Get_Data_orden_pago_con_cancelacion_data(IdEmpresa, IdPersona_ini, IdPersona_fin, IdTipo_Persona, IdEntidad_ini, IdEntidad_fin, IdEstado_Aprobacion, IdUsuario, IdSucursal, mostrar_saldo_0, banco.ValidarSoloCuentasArchivo)
                              select new ba_Archivo_Transferencia_Det_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  Secuencia = q.Secuencia_OP,
                                  Secuencia_OP = q.Secuencia_OP,
                                  IdOrdenPago = q.IdOrdenPago,
-                                 Nom_Beneficiario =  q.Nom_Beneficiario,
+                                 Nom_Beneficiario = q.Nom_Beneficiario,
                                  Valor = q.Saldo_x_Pagar_OP,
                                  Referencia = q.Referencia2,
                                  IdTipoPersona = q.IdTipoPersona,
@@ -92,7 +92,8 @@ namespace Core.Erp.Data.Banco
                                  IdPersona = q.IdPersona,
                                  IdEmpresa_cxp = q.IdEmpresa_cxp,
                                  IdTipoCbte_cxp = q.IdTipoCbte_cxp,
-                                 IdCbteCble_cxp = q.IdCbteCble_cxp
+                                 IdCbteCble_cxp = q.IdCbteCble_cxp,
+                                 IdBanco_acreditacion = q.IdBanco
                              }).ToList();
                 }
                 return Lista;
