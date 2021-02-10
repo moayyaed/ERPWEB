@@ -50,16 +50,37 @@
             }
         };
 
-        settings.Columns.Add("IdEmpleado", "ID").Width = Unit.Percentage(4);
-        settings.Columns.Add("pe_cedulaRuc", "Cédula").Width = Unit.Percentage(8);
-        settings.Columns.Add("pe_apellido", "Nombres").Width = Unit.Percentage(15);
-        //settings.Columns.Add("ca_descripcion", "Cargo").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdEmpleado";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_cedulaRuc";
+            column.Caption = "Cédula";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_apellido";
+            column.Caption = "Nombres";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        }); settings.Columns.Add(column =>
         {
             column.FieldName = "em_fechaIngaRol";
             column.Caption = "Fech. ingreso";
             column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
         });
         settings.Columns.Add(column =>
         {
@@ -67,15 +88,33 @@
             column.Caption = "Fech. salida";
             column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
         });
-        settings.Columns.Add("CargasFamiliares", "#cargas").Width = Unit.Percentage(8);
-        settings.Columns.Add("DiasTrabajados", "#Días").Width = Unit.Percentage(8);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CargasFamiliares";
+            column.Caption = "#cargas";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DiasTrabajados";
+            column.Caption = "Días";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "ValorIndividual";
             column.Caption = "$ Individual";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "c2";
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
         });
         settings.Columns.Add(column =>
         {
@@ -83,6 +122,8 @@
             column.Caption = "$ Carga";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "c2";
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
         });
         settings.Columns.Add(column =>
         {
@@ -90,6 +131,8 @@
             column.Caption = "$ Total";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "c2";
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
         });
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorIndividual");

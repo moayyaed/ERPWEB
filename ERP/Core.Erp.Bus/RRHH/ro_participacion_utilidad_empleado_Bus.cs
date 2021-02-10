@@ -175,21 +175,25 @@ namespace Core.Erp.Bus.RRHH
         }
         private int Dias_trabajados_x_n_contrato(List<ro_contrato_Info> lista, DateTime Fi, DateTime Ff)
         {          
-            int totaldias = 0;
+            int TotalDiasContrato = 0;
+            int totalDiasGeneral = 0;
+
             try
             {
                 foreach (var info in lista)
                 {
+                    TotalDiasContrato = 0;
                     int meses = 0;
                     int diaIngresos = 0;
                     int DiasSalida = 0;
+                    int totalDeDias = 0;
                     info.FechaInicio = Convert.ToDateTime(info.FechaInicio).Date;
 
                     if (info.EstadoContrato == cl_enumeradores.eEstadoContratoRRHH.ECT_ACT.ToString())
                     {
                         if (info.FechaInicio <= Fi)
                         {
-                            totaldias = 360;
+                            TotalDiasContrato = 360;
                         }
                         else
                         {
@@ -198,7 +202,7 @@ namespace Core.Erp.Bus.RRHH
                             {
                                 diaIngresos = 31 - Convert.ToDateTime(info.FechaInicio).Day;
                                 meses = (Ff.Month - Convert.ToDateTime(info.FechaInicio).Month);
-                                totaldias = diaIngresos + (meses * 30);
+                                TotalDiasContrato = diaIngresos + (meses * 30);
                             }
                             else
                             {
@@ -213,12 +217,12 @@ namespace Core.Erp.Bus.RRHH
                         if (info.FechaFin >= Ff)
                         {
                             if (info.FechaInicio < Fi)
-                                totaldias = 360;
+                                TotalDiasContrato = 360;
                             else
                             {
                                 diaIngresos = 31 - Convert.ToDateTime(info.FechaInicio).Day;
                                 meses = (Convert.ToDateTime(Ff).Month - Convert.ToDateTime(info.FechaInicio).Month);
-                                totaldias = (diaIngresos + DiasSalida) + (meses * 30);
+                                TotalDiasContrato = (diaIngresos + DiasSalida) + (meses * 30);
                             }
                         }
                         else
@@ -228,7 +232,7 @@ namespace Core.Erp.Bus.RRHH
                             {
                                 DiasSalida = Convert.ToDateTime(info.FechaFin).Day;
                                 meses = (Convert.ToDateTime(info.FechaFin).Month - Fi.Month);
-                                totaldias = (diaIngresos + DiasSalida) + (meses * 30);
+                                TotalDiasContrato = (diaIngresos + DiasSalida) + (meses * 30);
                             }
                             else
                             {
@@ -237,20 +241,20 @@ namespace Core.Erp.Bus.RRHH
                                     diaIngresos = 31 - Convert.ToDateTime(info.FechaInicio).Day;
                                     DiasSalida = Convert.ToDateTime(info.FechaFin).Day;
                                     meses = (Convert.ToDateTime(info.FechaFin).Month - Convert.ToDateTime(info.FechaInicio).Month) - 1;
-                                    totaldias = (diaIngresos + DiasSalida) + (meses * 30);
+                                    TotalDiasContrato = (diaIngresos + DiasSalida) + (meses * 30);
                                 }
                                 else
                                 {
-                                    totaldias = Convert.ToDateTime(info.FechaFin).Day - Convert.ToDateTime(info.FechaInicio).Day + 1;
+                                    TotalDiasContrato = Convert.ToDateTime(info.FechaFin).Day - Convert.ToDateTime(info.FechaInicio).Day + 1;
 
                                 }
                             }
                         }
                     }
-                    totaldias = totaldias + totaldias;
+                    totalDiasGeneral = totalDiasGeneral + TotalDiasContrato;
                 }
 
-                return totaldias;
+                return totalDiasGeneral;
             }
             catch (Exception)
             {

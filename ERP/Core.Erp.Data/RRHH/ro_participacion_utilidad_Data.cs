@@ -271,6 +271,7 @@ namespace Core.Erp.Data.RRHH
                                  "dbo.ro_empleado_novedad_det AS nd ON n.IdEmpresa = nd.IdEmpresa AND n.IdNovedad = nd.IdNovedad " +
                                 "where nd.EstadoCobro = 'PEN' and n.IdEmpresa='" + info.IdEmpresa + "' and IdNomina_Tipo=" + param.IdNomina_General + " and n.IdNomina_TipoLiqui=" + param.IdNomina_TipoLiqui_PagoUtilidad + "" +
                                 "and  nd.FechaPago between '" + fi.ToString("yyyy-MM-dd") + "'  and '" + ff.ToString("yyyy-MM-dd") + "'" +
+                                 " and n.IdEmpleado='" + item.IdEmpleado + "'" +
                                 "GROUP BY n.IdEmpresa, n.IdEmpleado,IdSucursal, nd.IdRubro, nd.Valor " +
                                 "union all " +
                                 "SELECT p.IdEmpresa, p.IdEmpleado,IdSucursal, p.IdRubro, pd.TotalCuota " +
@@ -279,6 +280,7 @@ namespace Core.Erp.Data.RRHH
                                  " dbo.ro_empleado AS e ON p.IdEmpresa = e.IdEmpresa AND p.IdEmpleado = e.IdEmpleado " +
                                  " where pd.EstadoPago = 'PEN' and p.IdEmpresa='" + info.IdEmpresa + "' and descuento_ben_soc='1' and pd.IdNominaTipoLiqui=" + param.IdNomina_TipoLiqui_PagoUtilidad + "" +
                                  " and  pd.FechaPago between '" + fi.ToString("yyyy-MM-dd") + "'  and '" + ff.ToString("yyyy-MM-dd") + "'" +
+                                  " and p.IdEmpleado='" + item.IdEmpleado + "'" +
                                  " GROUP BY p.IdEmpresa, p.IdEmpleado,e.IdSucursal, pd.TotalCuota, p.IdRubro";
                         var lstNovedades = Context.Database.SqlQuery<ro_empleado_novedad_det_Info>(sql).ToList();
                         foreach (var item_ in lstNovedades)
@@ -334,7 +336,7 @@ namespace Core.Erp.Data.RRHH
                             IdEmpresa = info.IdEmpresa,
                             IdRol = rolId,
                             IdEmpleado = item.IdEmpleado,
-                            IdRubro = RubrosCalculados.IdRubro_tot_egr,
+                            IdRubro = RubrosCalculados.IdRubro_tot_pagar,
                             Observacion = " ",
                             IdSucursal = item.IdSucursal,
                             rub_visible_reporte = true,
