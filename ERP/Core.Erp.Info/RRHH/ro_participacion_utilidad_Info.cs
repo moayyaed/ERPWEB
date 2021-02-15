@@ -14,12 +14,14 @@ namespace Core.Erp.Info.RRHH
         public int IdUtilidad { get; set; }
        
         [Required(ErrorMessage = "El campo período es obligatorio")]
-
         public int IdPeriodo { get; set; }
+        [Required(ErrorMessage = "La base de utilidad es obligatoria")]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]
+        public double BaseUtilidad { get; set; }
+
         [Required(ErrorMessage = "El monto de utilidad es obligatorio")]
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]
         public double Utilidad { get; set; }
-
         [Required(ErrorMessage = "El monto individual es obligatorio")]
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Ingrese solo numeros")]
         public double UtilidadDerechoIndividual { get; set; }
@@ -49,5 +51,13 @@ namespace Core.Erp.Info.RRHH
         {
             detalle = new List<ro_participacion_utilidad_empleado_Info>();
         }
+    }
+
+    public class ro_participacion_calculo_Info
+    {
+        public double BaseUtilidad { get; set; }
+        public double Utilidad { get; set; }
+        public double UtilidadDerechoIndividual { get; set; }
+        public double UtilidadCargaFamiliar { get; set; }
     }
 }

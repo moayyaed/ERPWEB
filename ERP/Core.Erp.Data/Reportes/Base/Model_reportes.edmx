@@ -4058,6 +4058,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_004' no tiene definida
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="ca_descripcion" />
             <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="BaseUtilidad" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdUtilidad" Type="int" Nullable="false" />
@@ -4077,6 +4078,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_004' no tiene definida
           <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
           <Property Name="NetoRecibir" Type="float" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_005' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -7972,7 +7974,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
     [VWROL_004].[pe_cedulaRuc] AS [pe_cedulaRuc], 
     [VWROL_004].[ca_descripcion] AS [ca_descripcion], 
     [VWROL_004].[em_codigo] AS [em_codigo], 
-    [VWROL_004].[NetoRecibir] AS [NetoRecibir]
+    [VWROL_004].[NetoRecibir] AS [NetoRecibir], 
+    [VWROL_004].[BaseUtilidad] AS [BaseUtilidad]
     FROM [web].[VWROL_004] AS [VWROL_004]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWROL_005" EntityType="Self.VWROL_005" store:Type="Views" store:Schema="web">
@@ -15118,6 +15121,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="ca_descripcion" />
             <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="BaseUtilidad" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
@@ -15137,6 +15141,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
           <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="NetoRecibir" Type="Double" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="VWROL_030">
           <Key>
@@ -19771,6 +19776,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
           <EntitySetMapping Name="VWROL_004">
             <EntityTypeMapping TypeName="Model_reportes.VWROL_004">
               <MappingFragment StoreEntitySet="VWROL_004">
+                <ScalarProperty Name="BaseUtilidad" ColumnName="BaseUtilidad" />
                 <ScalarProperty Name="NetoRecibir" ColumnName="NetoRecibir" />
                 <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
                 <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />

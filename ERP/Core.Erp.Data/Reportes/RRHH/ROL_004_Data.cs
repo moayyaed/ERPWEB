@@ -38,7 +38,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  ca_descripcion = q.ca_descripcion,
                                  em_codigo = q.em_codigo,
-                                 IdUtilidad = q.IdUtilidad
+                                 IdUtilidad = q.IdUtilidad,
+                                 BaseUtilidad=q.BaseUtilidad
                              }).ToList();
                 }
                 return Lista;

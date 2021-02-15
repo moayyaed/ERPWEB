@@ -15,36 +15,45 @@
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdUtilidad)
     @Html.HiddenFor(q => q.IdTransaccionSession)
-
+    @Html.HiddenFor(q => q.Utilidad, new { @id = "Utilidad" })
+    @Html.HiddenFor(q => q.UtilidadDerechoIndividual, new { @id = "UtilidadDerechoIndividual" })
+    @Html.HiddenFor(q => q.UtilidadCargaFamiliar, new { @id = "UtilidadCargaFamiliar" })
     <div class="row">
         <div class="col-md-12">
 
 
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="FechaFin">Año*</label>
-                    @Html.TextBoxFor(q => q.IdPeriodo, new { @class = "form-control", @id = "IdPeriodo" })
-                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                   @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaFin">Base imponible*</label>
+                    @Html.TextBoxFor(q => q.BaseUtilidad, new { @class = "form-control", @id = "BaseUtilidad" })
+                    @Html.ValidationMessageFor(q => q.BaseUtilidad, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="FechaFin">Utilidad*</label>
-                    @Html.TextBoxFor(q => q.Utilidad, new { @class = "form-control", @id = "Utilidad" })
+                    @Html.TextBoxFor(q => q.Utilidad, new { @class = "form-control", @id = "UtilidadR", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Utilidad, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="FechaFin">10% Individual*</label>
-                    @Html.TextBoxFor(q => q.UtilidadDerechoIndividual, new { @class = "form-control", @id = "UtilidadDerechoIndividual" })
+                    @Html.TextBoxFor(q => q.UtilidadDerechoIndividual, new { @class = "form-control", @id = "UtilidadDerechoIndividualR", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.UtilidadDerechoIndividual, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="FechaFin">5% Por cargas*</label>
-                    @Html.TextBoxFor(q => q.UtilidadCargaFamiliar, new { @class = "form-control", @id = "UtilidadCargaFamiliar" })
+                    @Html.TextBoxFor(q => q.UtilidadCargaFamiliar, new { @class = "form-control", @id = "UtilidadCargaFamiliarR", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.UtilidadCargaFamiliar, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -85,15 +94,12 @@
 
 <script>
 
-    $("#Utilidad").change(function () {
-        calcular_base();
-    });
+  
 
-        function calcular_utilidades() {
+  function calcular_utilidades() {
             var datos = {
                 IdPeriodo: $("#IdPeriodo").val(),
-                UtilidadDerechoIndividual: $("#UtilidadDerechoIndividual").val(),
-                UtilidadCargaFamiliar: $("#UtilidadCargaFamiliar").val()
+                BaseUtilidad: $("#BaseUtilidad").val()
             }
 
             $.ajax({
@@ -106,21 +112,18 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
+                    $("#UtilidadR").val(data.Utilidad);
+                    $("#UtilidadDerechoIndividualR").val(data.UtilidadDerechoIndividual);
+                    $("#UtilidadCargaFamiliarR").val(data.UtilidadCargaFamiliar);
+
+                    $("#Utilidad").val(data.Utilidad);
+                    $("#UtilidadDerechoIndividual").val(data.UtilidadDerechoIndividual);
+                    $("#UtilidadCargaFamiliar").val(data.UtilidadCargaFamiliar);
+
                     GridViewPartial_utilidades_detalle.PerformCallback();
                 },
                 error: function (error) {
                 }
             });
         };
-
-    function calcular_base() {
-        var utilidad = $("#Utilidad").val();
-        var individual =(10* utilidad)/15;
-        var cargas = (5 * utilidad) / 15;
-
-        $('#UtilidadDerechoIndividual').val(individual.toFixed(2));
-        $('#UtilidadCargaFamiliar').val(cargas.toFixed(2));
-
-
-    }
 </script>

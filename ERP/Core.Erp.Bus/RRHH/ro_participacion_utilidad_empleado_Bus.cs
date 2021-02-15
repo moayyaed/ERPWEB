@@ -38,14 +38,14 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public List<ro_participacion_utilidad_empleado_Info> calcular(int IdEmpresa, int IdNomina, int IdPeriodo, double valorIndividual, double valorCarga)
+        public List<ro_participacion_utilidad_empleado_Info> calcular(int IdEmpresa, int IdPeriodo, double valorIndividual, double valorCarga)
         {
             try
             {
                 DateTime FechaInicio = new DateTime(IdPeriodo, 1,1);
                 DateTime FechaFin = new DateTime(IdPeriodo, 12, 31);
                 double factorB = 0;
-                lista= odata.get_list(IdEmpresa, IdNomina, FechaInicio, FechaFin);
+                lista= odata.get_list(IdEmpresa,  FechaInicio, FechaFin);
                 int DiasTrabajados = 0;
                 foreach (var item in lista)// calculando dias trabajados
                 {

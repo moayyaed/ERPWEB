@@ -33,6 +33,7 @@ namespace Core.Erp.Data
         public string IdUsuario_anula { get; set; }
         public Nullable<System.DateTime> Fecha_anulacion { get; set; }
         public string Estado { get; set; }
+        public double BaseUtilidad { get; set; }
     
         public virtual ICollection<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
     }

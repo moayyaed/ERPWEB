@@ -8,7 +8,7 @@ namespace Core.Erp.Data.RRHH
 {
   public  class ro_participacion_utilidad_empleado_Data
     {
-        public List<ro_participacion_utilidad_empleado_Info> get_list(int IdEmpresa, int IdNomina, DateTime FechaInicio, DateTime FechaFin)
+        public List<ro_participacion_utilidad_empleado_Info> get_list(int IdEmpresa, DateTime FechaInicio, DateTime FechaFin)
         {
             try
             {
@@ -16,7 +16,7 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Lista = (from q in Context.spro_nomina_x_pago_utilidad(IdEmpresa, IdNomina, FechaInicio, FechaFin)
+                    Lista = (from q in Context.spro_nomina_x_pago_utilidad(IdEmpresa, 1, FechaInicio, FechaFin)
                              where q.IdEmpresa == IdEmpresa
                              select new ro_participacion_utilidad_empleado_Info
                              {

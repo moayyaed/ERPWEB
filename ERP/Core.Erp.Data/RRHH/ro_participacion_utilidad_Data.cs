@@ -24,6 +24,7 @@ namespace Core.Erp.Data.RRHH
                                      IdEmpresa = q.IdEmpresa,
                                      IdUtilidad=q.IdUtilidad,
                                      IdPeriodo = q.IdPeriodo,
+                                     BaseUtilidad=q.BaseUtilidad,
                                      UtilidadDerechoIndividual=q.UtilidadDerechoIndividual,
                                      UtilidadCargaFamiliar=q.UtilidadCargaFamiliar,
                                      pe_FechaIni=q.pe_FechaIni,
@@ -39,9 +40,14 @@ namespace Core.Erp.Data.RRHH
                                  select new ro_participacion_utilidad_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
+                                     IdUtilidad = q.IdUtilidad,
                                      IdPeriodo = q.IdPeriodo,
+                                     BaseUtilidad = q.BaseUtilidad,
+                                     UtilidadDerechoIndividual = q.UtilidadDerechoIndividual,
+                                     UtilidadCargaFamiliar = q.UtilidadCargaFamiliar,
                                      pe_FechaIni = q.pe_FechaIni,
                                      pe_FechaFin = q.pe_FechaFin,
+                                     Estado = q.Estado,
 
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
@@ -71,6 +77,7 @@ namespace Core.Erp.Data.RRHH
                         IdEmpresa = Entity.IdEmpresa,
                         IdUtilidad = Entity.IdUtilidad,
                         IdPeriodo=Entity.IdPeriodo,
+                        BaseUtilidad=Entity.BaseUtilidad,
                         UtilidadCargaFamiliar=Entity.UtilidadCargaFamiliar,
                         UtilidadDerechoIndividual=Entity.UtilidadDerechoIndividual,
                         Utilidad=Entity.Utilidad,
@@ -169,6 +176,7 @@ namespace Core.Erp.Data.RRHH
                     {
                         IdEmpresa = info.IdEmpresa,
                         IdUtilidad = info.IdUtilidad = get_id(info.IdEmpresa),
+                        BaseUtilidad=info.BaseUtilidad,
                         Utilidad = info.Utilidad,
                         UtilidadCargaFamiliar = info.UtilidadCargaFamiliar,
                         UtilidadDerechoIndividual = info.UtilidadDerechoIndividual,
@@ -443,6 +451,7 @@ namespace Core.Erp.Data.RRHH
                     if (Entity == null)
                         return false;
                     Entity.IdUsuarioModifica = info.IdUsuarioModifica;
+                    Entity.BaseUtilidad = info.BaseUtilidad;
                     Entity.UtilidadDerechoIndividual = info.UtilidadDerechoIndividual;
                     Entity.UtilidadCargaFamiliar = info.UtilidadCargaFamiliar;
                     Entity.Utilidad = info.Utilidad;

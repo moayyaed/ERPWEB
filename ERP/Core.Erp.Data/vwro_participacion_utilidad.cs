@@ -24,5 +24,6 @@ namespace Core.Erp.Data
         public double Utilidad { get; set; }
         public string Observacion { get; set; }
         public int IdEmpresa { get; set; }
+        public double BaseUtilidad { get; set; }
     }
 }

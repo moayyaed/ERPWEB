@@ -280,6 +280,14 @@
             MULTI_CASH,
             PAGOPROVBB
         }
-        
+
+        public enum eTipoPorcentajeUtilidad
+        {
+            PORCENTAJE_BASE = 85,
+            PORCENTAJE_UTILIDAD = 15,
+            PORCENTAJE_INDIVIDUAL = 10,
+            PORCENTAJE_CARGAS = 5
+        }
+
     }
 }

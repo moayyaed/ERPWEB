@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vwro_participacion_utilidad
 AS
 SELECT        dbo.ro_periodo.pe_FechaIni, dbo.ro_periodo.pe_FechaFin, dbo.ro_participacion_utilidad.UtilidadDerechoIndividual, dbo.ro_participacion_utilidad.UtilidadCargaFamiliar, dbo.ro_participacion_utilidad.IdPeriodo, 
-                         dbo.ro_participacion_utilidad.IdUtilidad, dbo.ro_participacion_utilidad.Estado, dbo.ro_participacion_utilidad.Utilidad, dbo.ro_participacion_utilidad.Observacion, dbo.ro_participacion_utilidad.IdEmpresa
+                         dbo.ro_participacion_utilidad.IdUtilidad, dbo.ro_participacion_utilidad.Estado, dbo.ro_participacion_utilidad.Utilidad, dbo.ro_participacion_utilidad.Observacion, dbo.ro_participacion_utilidad.IdEmpresa, 
+                         dbo.ro_participacion_utilidad.BaseUtilidad
 FROM            dbo.ro_participacion_utilidad INNER JOIN
                          dbo.ro_periodo ON dbo.ro_participacion_utilidad.IdEmpresa = dbo.ro_periodo.IdEmpresa AND dbo.ro_participacion_utilidad.IdPeriodo = dbo.ro_periodo.IdPeriodo
 
@@ -15,7 +16,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[31] 4[5] 2[47] 3) )"
+         Configuration = "(H (1[70] 4[5] 2[11] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -139,4 +140,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_participacion_utilidad';
+
+
 

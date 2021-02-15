@@ -1078,6 +1078,7 @@
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdUtilidad" Type="int" Nullable="false" />
           <Property Name="IdPeriodo" Type="int" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="float" Nullable="false" />
           <Property Name="Utilidad" Type="float" Nullable="false" />
           <Property Name="UtilidadDerechoIndividual" Type="float" Nullable="false" />
           <Property Name="UtilidadCargaFamiliar" Type="float" Nullable="false" />
@@ -2799,6 +2800,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_participacion_utilidad'
             <PropertyRef Name="IdUtilidad" />
             <PropertyRef Name="Utilidad" />
             <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="BaseUtilidad" />
           </Key>
           <Property Name="pe_FechaIni" Type="smalldatetime" Nullable="false" />
           <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
@@ -2810,6 +2812,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_participacion_utilidad'
           <Property Name="Utilidad" Type="float" Nullable="false" />
           <Property Name="Observacion" Type="varchar" MaxLength="100" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6247,7 +6250,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
     [vwro_participacion_utilidad].[Estado] AS [Estado], 
     [vwro_participacion_utilidad].[Utilidad] AS [Utilidad], 
     [vwro_participacion_utilidad].[Observacion] AS [Observacion], 
-    [vwro_participacion_utilidad].[IdEmpresa] AS [IdEmpresa]
+    [vwro_participacion_utilidad].[IdEmpresa] AS [IdEmpresa], 
+    [vwro_participacion_utilidad].[BaseUtilidad] AS [BaseUtilidad]
     FROM [dbo].[vwro_participacion_utilidad] AS [vwro_participacion_utilidad]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Self.vwro_participacion_utilidad_empleado" store:Type="Views" store:Schema="dbo">
@@ -13379,6 +13383,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="Fecha_anulacion" Type="DateTime" Precision="3" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad" ToRole="ro_participacion_utilidad_empleado" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_participacion_utilidad_empleado">
           <Key>
@@ -13410,6 +13415,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             <PropertyRef Name="IdUtilidad" />
             <PropertyRef Name="Utilidad" />
             <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="BaseUtilidad" />
           </Key>
           <Property Name="pe_FechaIni" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
@@ -13421,6 +13427,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <Property Name="Utilidad" Type="Double" Nullable="false" />
           <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="vwro_participacion_utilidad_empleado">
           <Key>
@@ -16268,6 +16275,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="ro_participacion_utilidad">
             <EntityTypeMapping TypeName="Model_rrhh.ro_participacion_utilidad">
               <MappingFragment StoreEntitySet="ro_participacion_utilidad">
+                <ScalarProperty Name="BaseUtilidad" ColumnName="BaseUtilidad" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Fecha_anulacion" ColumnName="Fecha_anulacion" />
                 <ScalarProperty Name="IdUsuario_anula" ColumnName="IdUsuario_anula" />
@@ -16305,6 +16313,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySetMapping Name="vwro_participacion_utilidad">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_participacion_utilidad">
               <MappingFragment StoreEntitySet="vwro_participacion_utilidad">
+                <ScalarProperty Name="BaseUtilidad" ColumnName="BaseUtilidad" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="Utilidad" ColumnName="Utilidad" />

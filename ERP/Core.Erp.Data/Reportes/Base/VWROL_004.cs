@@ -32,5 +32,6 @@ namespace Core.Erp.Data.Reportes.Base
         public string ca_descripcion { get; set; }
         public string em_codigo { get; set; }
         public double NetoRecibir { get; set; }
+        public double BaseUtilidad { get; set; }
     }
 }

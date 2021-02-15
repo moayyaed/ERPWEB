@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Web.Helps;
+using Core.Erp.Info.Helps;
+using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -18,13 +21,13 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         List<ro_nomina_tipo_Info> lista_nomina = new List<ro_nomina_tipo_Info>();
         List<ro_participacion_utilidad_empleado_Info> lst_detalle = new List<ro_participacion_utilidad_empleado_Info>();
         ro_participacion_utilidad_empleado_Bus bus_detalle = new ro_participacion_utilidad_empleado_Bus();
-        ro_periodo_Bus bus_periodo = new ro_periodo_Bus();
         ro_nomina_tipo_Bus bus_nomina = new ro_nomina_tipo_Bus();
         ro_Nomina_Tipoliquiliqui_Bus bus_nomina_tipo = new ro_Nomina_Tipoliquiliqui_Bus();
         List<ro_Nomina_Tipoliqui_Info> lst_nomina_tipo = new List<ro_Nomina_Tipoliqui_Info>();
         ro_periodo_x_ro_Nomina_TipoLiqui_Bus bus_periodos_x_nomina = new ro_periodo_x_ro_Nomina_TipoLiqui_Bus();
         List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> lst_periodos = new List<ro_periodo_x_ro_Nomina_TipoLiqui_Info>();
         ro_participacion_utilidad_Info info_utilidad = new ro_participacion_utilidad_Info();
+        ct_periodo_Bus bus_anio_fiscal = new ct_periodo_Bus();
         #endregion
 
         public ActionResult Index()
@@ -72,8 +75,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
                 if (!bus_utilidad.modificarDB(info))
-                   return View(info);
-                    return RedirectToAction("Index");
+                {
+                    cargar_combo();
+                    return View(info);
+
+                }
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
@@ -95,6 +102,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info= bus_utilidad.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdUtilidad);
                 ro_participacion_utilidad_empleado_Info_lst.set_list( info.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+                cargar_combo();
                 return View(info);
             }
             catch (Exception)
@@ -110,7 +118,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 if (!bus_utilidad.anularDB(info))
+                {
+                    cargar_combo();
                     return View(info);
+                }
                 else
                     return RedirectToAction("Index");
 
@@ -156,7 +167,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
                 if (!bus_utilidad.guardarDB(info))
+                {
+                    cargar_combo();
                     return View(info);
+                }
                     return RedirectToAction("Index");
 
 
@@ -181,8 +195,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ro_participacion_utilidad_Info info = new ro_participacion_utilidad_Info();
                 info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                cargar_combo();
                 return View(info);
-                
+
             }
             catch (Exception)
             {
@@ -222,17 +237,24 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #endregion
 
 
-        public JsonResult calcular( int IdNomina_Tipo = 0,int IdPeriodo = 0, double UtilidadDerechoIndividual = 0, double UtilidadCargaFamiliar=0)
+        public JsonResult calcular(int IdPeriodo = 0, double BaseUtilidad = 0)
         {
             try
             {
-                
+
+                ro_participacion_calculo_Info calculo = new ro_participacion_calculo_Info();
+                calculo.BaseUtilidad = BaseUtilidad;
+                calculo.Utilidad =Math.Round( (BaseUtilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_BASE)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD),2);
+                calculo.UtilidadDerechoIndividual =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_INDIVIDUAL),2);
+                calculo.UtilidadCargaFamiliar =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_CARGAS),2);
+
+
                 info_utilidad.IdPeriodo = IdPeriodo;
-                info_utilidad.UtilidadDerechoIndividual = UtilidadDerechoIndividual;
-                info_utilidad.UtilidadCargaFamiliar = UtilidadCargaFamiliar;
-                info_utilidad.detalle = bus_detalle.calcular(Convert.ToInt32(SessionFixed.IdEmpresa), IdNomina_Tipo, IdPeriodo, UtilidadDerechoIndividual, UtilidadCargaFamiliar);
+                info_utilidad.UtilidadDerechoIndividual = calculo.UtilidadDerechoIndividual;
+                info_utilidad.UtilidadCargaFamiliar = calculo.UtilidadCargaFamiliar;
+                info_utilidad.detalle = bus_detalle.calcular(Convert.ToInt32(SessionFixed.IdEmpresa),  IdPeriodo, calculo.UtilidadDerechoIndividual, calculo.UtilidadCargaFamiliar);
                 ro_participacion_utilidad_empleado_Info_lst.set_list(info_utilidad.detalle,Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-                return Json("", JsonRequestBehavior.AllowGet);
+                return Json(calculo, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -241,6 +263,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
+        private void cargar_combo()
+        {
+            ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
+            var lst_anio = bus_anio.get_list(false);
+            ViewBag.lst_anio = lst_anio;
+        }
 
 
     }

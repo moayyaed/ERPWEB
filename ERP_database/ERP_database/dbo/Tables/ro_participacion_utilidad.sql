@@ -2,6 +2,7 @@
     [IdEmpresa]                 INT           NOT NULL,
     [IdUtilidad]                INT           NOT NULL,
     [IdPeriodo]                 INT           NOT NULL,
+    [BaseUtilidad]              FLOAT (53)    NOT NULL,
     [Utilidad]                  FLOAT (53)    NOT NULL,
     [UtilidadDerechoIndividual] FLOAT (53)    NOT NULL,
     [UtilidadCargaFamiliar]     FLOAT (53)    NOT NULL,
@@ -15,6 +16,8 @@
     [Estado]                    VARCHAR (1)   NULL,
     CONSTRAINT [PK_ro_participacion_utilidad] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdUtilidad] ASC)
 );
+
+
 
 
 
