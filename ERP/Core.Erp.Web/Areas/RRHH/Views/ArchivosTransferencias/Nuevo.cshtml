@@ -115,7 +115,9 @@
     $("#IdPeriodo").change(function () {
         cargar_empleados();
     });
-
+    $("#IdNomina_Tipo").change(function () {
+        cargar_tipo_liquidacion_nomina();
+    });
     function cargar_procesos() {
         $("#IdProceso").empty();
 

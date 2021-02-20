@@ -236,9 +236,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             ro_empleado_novedad_Info model = bus_novedad.get_info(IdEmpresa, IdEmpleado, IdNovedad);
-            model.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             if (model == null)
                 return RedirectToAction("Index");
+            model.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             model.lst_novedad_det = bus_novedad_detalle_bus.get_list(IdEmpresa, IdEmpleado, IdNovedad);
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
             cargar_combos_detalle();
