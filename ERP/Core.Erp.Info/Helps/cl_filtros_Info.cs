@@ -24,6 +24,7 @@ namespace Core.Erp.Info.Helps
         public int IdPunto_cargo_grupo { get; set; }
         public int IdPunto_cargo { get; set; }
         public int IdClaseProveedor { get; set; }
+        public decimal IdCliente { get; set; }
 
         #region Filtros activo
         public int IdActivoFijoTipo { get; set; }

@@ -8,6 +8,7 @@ using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Core.Erp.Data.CuentasPorCobrar
@@ -1129,6 +1130,75 @@ namespace Core.Erp.Data.CuentasPorCobrar
                 }
 
                 return Retorno;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<cxc_cobro_Info> get_Saldo(int IdEmpresa, decimal IdCliente)
+        {
+            try
+            {
+                cxc_cobro_Info info = new cxc_cobro_Info();
+                List<cxc_cobro_Info> Lista = new List<cxc_cobro_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "SELECT cabfac.IdEmpresa, cabfac.IdSucursal, cabfac.IdBodega, cabfac.vt_tipoDoc, cabfac.vt_serie1 + '-' + cabfac.vt_serie2 + '-' + cabfac.vt_NumFactura AS vt_NunDocumento, cabfac.vt_Observacion AS Referencia, "
+                    + " cabfac.IdCbteVta AS IdComprobante, cabfac.CodCbteVta AS CodComprobante, Sucu.Su_Descripcion, cabfac.IdCliente, cabfac.vt_fecha, CAST(detfac.Total AS FLOAT) AS vt_total, "
+                    + " ROUND(detfac.Total - ROUND(ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0), 2), 2) AS Saldo, ISNULL(vwcxc_total_cobros_x_Docu.dc_ValorPago, 0) AS TotalxCobrado, Bod.bo_Descripcion AS Bodega, "
+                    + " CAST(detfac.SubtotalConDscto AS FLOAT) AS vt_Subtotal, CAST(detfac.ValorIVA AS FLOAT) AS vt_iva, cabfac.vt_fech_venc, Cli.Codigo AS CodCliente, tb_persona.pe_nombreCompleto AS NomCliente, tb_empresa.em_nombre, "
+                    + " cabfac.Estado "
+                    + " FROM     fa_factura_resumen AS detfac INNER JOIN "
+                    + " fa_factura AS cabfac ON detfac.IdBodega = cabfac.IdBodega AND detfac.IdSucursal = cabfac.IdSucursal AND detfac.IdEmpresa = cabfac.IdEmpresa AND detfac.IdCbteVta = cabfac.IdCbteVta INNER JOIN "
+                    + " tb_sucursal AS Sucu ON cabfac.IdEmpresa = Sucu.IdEmpresa AND cabfac.IdSucursal = Sucu.IdSucursal INNER JOIN "
+                    + " tb_bodega AS Bod ON cabfac.IdEmpresa = Bod.IdEmpresa AND cabfac.IdSucursal = Bod.IdSucursal AND cabfac.IdBodega = Bod.IdBodega AND Sucu.IdEmpresa = Bod.IdEmpresa AND Sucu.IdSucursal = Bod.IdSucursal INNER JOIN "
+                    + " fa_cliente AS Cli ON cabfac.IdEmpresa = Cli.IdEmpresa AND cabfac.IdCliente = Cli.IdCliente INNER JOIN "
+                    + " tb_persona ON Cli.IdPersona = tb_persona.IdPersona INNER JOIN "
+                    + " tb_empresa ON cabfac.IdEmpresa = tb_empresa.IdEmpresa LEFT OUTER JOIN "
+                    + " vwcxc_total_cobros_x_Docu ON cabfac.IdEmpresa = vwcxc_total_cobros_x_Docu.IdEmpresa AND cabfac.IdSucursal = vwcxc_total_cobros_x_Docu.IdSucursal AND cabfac.IdBodega = vwcxc_total_cobros_x_Docu.IdBodega_Cbte AND "
+                    + " cabfac.vt_tipoDoc = vwcxc_total_cobros_x_Docu.dc_TipoDocumento AND cabfac.IdCbteVta = vwcxc_total_cobros_x_Docu.IdCbte_vta_nota "
+                    + " WHERE cabfac.IdEmpresa = " + IdEmpresa.ToString() + " and cabfac.IdCliente = " + IdCliente.ToString() + " and cabfac.Estado = 'A' "
+                    + " UNION "
+                    + " SELECT A.IdEmpresa, A.IdSucursal, A.IdBodega, 'NTDB' AS CreDeb, CASE WHEN A.NaturalezaNota = 'SRI' THEN A.Serie1 + '-' + A.Serie2 + '-' + A.NumNota_Impresa ELSE ISNULL(A.CodNota, cast(a.IdNota AS varchar(20))) END AS Documento, "
+                    + " A.sc_observacion, A.IdNota, A.CodNota, su.Su_Descripcion, A.IdCliente, A.no_fecha, ROUND(B.Total, 2) AS sc_total, ROUND(B.Total - ISNULL(CB.dc_ValorPago, 0), 2) AS Saldo, ISNULL(CB.dc_ValorPago, 0) AS totalCobrado, "
+                    + " Bo.bo_Descripcion, ROUND(B.Total, 2) AS sc_subtotal, ROUND(B.ValorIVA, 2) AS sc_iva, A.no_fecha_venc, Cli.Codigo AS CodCliente, tb_persona.pe_nombreCompleto, tb_empresa.em_nombre, A.Estado "
+                    + " FROM     fa_notaCreDeb AS A INNER JOIN "
+                    + " fa_notaCreDeb_resumen AS B ON A.IdEmpresa = B.IdEmpresa AND A.IdSucursal = B.IdSucursal AND A.IdBodega = B.IdBodega AND A.IdNota = B.IdNota INNER JOIN "
+                    + " tb_bodega AS Bo ON A.IdEmpresa = Bo.IdEmpresa AND A.IdSucursal = Bo.IdSucursal AND A.IdBodega = Bo.IdBodega INNER JOIN "
+                    + " tb_sucursal AS su ON Bo.IdEmpresa = su.IdEmpresa AND Bo.IdSucursal = su.IdSucursal INNER JOIN "
+                    + " fa_cliente AS Cli ON A.IdEmpresa = Cli.IdEmpresa AND A.IdCliente = Cli.IdCliente INNER JOIN "
+                    + " tb_persona ON Cli.IdPersona = tb_persona.IdPersona INNER JOIN "
+                    + " tb_empresa ON A.IdEmpresa = tb_empresa.IdEmpresa LEFT OUTER JOIN "
+                    + " vwcxc_total_cobros_x_Docu AS CB ON A.IdEmpresa = CB.IdEmpresa AND A.IdSucursal = CB.IdSucursal AND A.IdBodega = CB.IdBodega_Cbte AND A.IdNota = CB.IdCbte_vta_nota AND "
+                    + " A.CodDocumentoTipo = CB.dc_TipoDocumento "
+                    + " WHERE A.IdEmpresa = " + IdEmpresa.ToString() + " and A.IdCliente = " + IdCliente.ToString() + " and A.Estado = 'A' AND A.CreDeb = 'D' AND NOT EXISTS "
+                          + " (SELECT * "
+                          + " FROM      fa_notaCreDeb_x_fa_factura_NotaDeb Cruce "
+                          + " WHERE   Cruce.IdEmpresa_nt = A.IdEmpresa AND Cruce.IdSucursal_nt = A.IdSucursal AND Cruce.IdBodega_nt = A.IdBodega AND Cruce.IdNota_nt = A.IdNota AND Cruce.Valor_Aplicado <> 0)";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new cxc_cobro_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdCliente = Convert.ToDecimal(reader["IdCliente"]),
+                            Saldo = Convert.ToDouble(reader["Saldo"]),
+                            vt_Total = Convert.ToDecimal(reader["vt_Total"])
+                        });
+                    }
+                    reader.Close();
+                    return Lista;
+                }
             }
             catch (Exception)
             {

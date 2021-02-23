@@ -44,6 +44,7 @@ namespace Core.Erp.Info.Facturacion
         public List<fa_cliente_contactos_Info> lst_fa_cliente_contactos { get; set; }
         public List<fa_cliente_x_fa_Vendedor_x_sucursal_Info> Lst_fa_cliente_x_fa_Vendedor_x_sucursal { get; set; }
         public int IdVendedor { get; set; }
+        public double Saldo { get; set; }
 
         //datos de contacto
         public int IdContacto { get; set; }

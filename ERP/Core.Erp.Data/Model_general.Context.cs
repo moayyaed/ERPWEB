@@ -70,5 +70,7 @@ namespace Core.Erp.Data
         public DbSet<tb_LogError> tb_LogError { get; set; }
         public DbSet<tb_bodega> tb_bodega { get; set; }
         public DbSet<vwtb_sis_Documento_Tipo_Talonario> vwtb_sis_Documento_Tipo_Talonario { get; set; }
+        public DbSet<tb_ColaCorreo> tb_ColaCorreo { get; set; }
+        public DbSet<tb_ColaCorreoParametros> tb_ColaCorreoParametros { get; set; }
     }
 }

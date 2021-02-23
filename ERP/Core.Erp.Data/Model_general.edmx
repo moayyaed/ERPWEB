@@ -35,6 +35,7 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
           <Property Name="NombreProceso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipoFiltro" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tb_bodega">
           <Key>
@@ -108,6 +109,39 @@
           <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
           <Property Name="nom_pc" Type="varchar" MaxLength="50" />
           <Property Name="ip" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="tb_ColaCorreo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCorreo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCorreo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destinatarios" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Asunto" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Cuerpo" Type="varchar(max)" Nullable="false" />
+          <Property Name="Parametros" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaCreacion" Type="date" Nullable="false" />
+          <Property Name="FechaEnvio" Type="datetime" />
+          <Property Name="Error" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tb_ColaCorreoParametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Puerto" Type="int" Nullable="false" />
+          <Property Name="Host" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PermitirSSL" Type="bit" Nullable="false" />
+          <Property Name="CorreoCopia" Type="varchar" MaxLength="200" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
         </EntityType>
         <EntityType Name="tb_ColaImpresionDirecta">
           <Key>
@@ -535,7 +569,7 @@
           <Property Name="FechaTransaccion" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_banco_procesos_bancarios_x_empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -561,7 +595,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_banco_procesos_ban
           <Property Name="Expr1" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_Ciudad">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -579,7 +613,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_Ciudad' no tiene d
           <Property Name="IdProvincia" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_ciudad_id">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -587,7 +621,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_ciudad_id' no tien
           <Property Name="IdCiudad" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_pais">
           <Key>
             <PropertyRef Name="Nombre" />
@@ -596,7 +630,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_pais' no tiene def
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_parroquia">
           <Key>
             <PropertyRef Name="IdParroquia" />
@@ -604,7 +638,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_parroquia' no tien
           <Property Name="IdParroquia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_provincia">
           <Key>
             <PropertyRef Name="IdProvincia" />
@@ -612,7 +646,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_provincia' no tien
           <Property Name="IdProvincia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_sis_Documento_Tipo_Talonario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_sis_Documento_Tipo_Talonario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_sis_Documento_Tipo_Talonario">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -636,7 +670,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_sis_Documento_Tipo
           <Property Name="es_Documento_Electronico" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_TarjetaCredito_x_cp_proveedor">
           <Key>
             <PropertyRef Name="IdTarjeta" />
@@ -661,7 +695,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwtb_TarjetaCredito_x_c
           <Property Name="IdTransaccion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_comprobantes_no_autorizados">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1044,6 +1078,8 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
           <EntitySet Name="tb_Catalogo" EntityType="Self.tb_Catalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_CatalogoTipo" EntityType="Self.tb_CatalogoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_ciudad" EntityType="Self.tb_ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ColaCorreo" EntityType="Self.tb_ColaCorreo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ColaCorreoParametros" EntityType="Self.tb_ColaCorreoParametros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_ColaImpresionDirecta" EntityType="Self.tb_ColaImpresionDirecta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_dia" EntityType="Self.tb_dia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_empresa" EntityType="Self.tb_empresa" Schema="dbo" store:Type="Tables" />
@@ -1450,6 +1486,8 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
             <End Role="tb_bodega" EntitySet="tb_bodega" />
           </AssociationSet>
           <EntitySet Name="vwtb_sis_Documento_Tipo_Talonario" EntityType="Model_general.vwtb_sis_Documento_Tipo_Talonario" />
+          <EntitySet Name="tb_ColaCorreo" EntityType="Model_general.tb_ColaCorreo" />
+          <EntitySet Name="tb_ColaCorreoParametros" EntityType="Model_general.tb_ColaCorreoParametros" />
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -1484,6 +1522,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
           <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NombreProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tb_banco" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco_procesos_bancarios_x_empresa" ToRole="tb_banco" />
+          <Property Name="TipoFiltro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tb_Catalogo">
           <Key>
@@ -2523,6 +2562,39 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
           <Property Name="NumAutorizacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="es_Documento_Electronico" Type="Boolean" />
         </EntityType>
+        <EntityType Name="tb_ColaCorreo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCorreo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCorreo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Destinatarios" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Asunto" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Cuerpo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parametros" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_ColaCorreoParametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasenia" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Puerto" Type="Int32" Nullable="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PermitirSSL" Type="Boolean" Nullable="false" />
+          <Property Name="CorreoCopia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2543,6 +2615,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
           <EntitySetMapping Name="tb_banco_procesos_bancarios_x_empresa">
             <EntityTypeMapping TypeName="Model_general.tb_banco_procesos_bancarios_x_empresa">
               <MappingFragment StoreEntitySet="tb_banco_procesos_bancarios_x_empresa">
+                <ScalarProperty Name="TipoFiltro" ColumnName="TipoFiltro" />
                 <ScalarProperty Name="NombreProceso" ColumnName="NombreProceso" />
                 <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
                 <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
@@ -3181,6 +3254,40 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwtb_comprobantes_no_au
                 <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
                 <ScalarProperty Name="CodDocumentoTipo" ColumnName="CodDocumentoTipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ColaCorreo">
+            <EntityTypeMapping TypeName="Model_general.tb_ColaCorreo">
+              <MappingFragment StoreEntitySet="tb_ColaCorreo">
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Parametros" ColumnName="Parametros" />
+                <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
+                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+                <ScalarProperty Name="Destinatarios" ColumnName="Destinatarios" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCorreo" ColumnName="IdCorreo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ColaCorreoParametros">
+            <EntityTypeMapping TypeName="Model_general.tb_ColaCorreoParametros">
+              <MappingFragment StoreEntitySet="tb_ColaCorreoParametros">
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="CorreoCopia" ColumnName="CorreoCopia" />
+                <ScalarProperty Name="PermitirSSL" ColumnName="PermitirSSL" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

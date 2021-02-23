@@ -322,6 +322,7 @@
     <Compile Include="Areas\CuentasPorCobrar\Controllers\LiquidacionTarjetaCreditoController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\MotivoLiquidacionController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\ParametroCXCController.cs" />
+    <Compile Include="Areas\CuentasPorCobrar\Controllers\SeguimientoCarteraController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\Controllers\TipoCobroController.cs" />
     <Compile Include="Areas\CuentasPorCobrar\CuentasPorCobrarAreaRegistration.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\AprobacionOPController.cs" />
@@ -10642,6 +10643,15 @@
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Consultar.cshtml" />
     <Content Include="Areas\General\Views\DocumentoPorEmpresa\Index.cshtml" />
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_030.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\_CmbCliente.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\_CmbClienteReadOnly.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\_CmbClienteSeguimiento.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Index.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\_GridViewPartial_SeguimientoCartera.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\_GridViewPartial_SeguimientoCarteraDet.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Nuevo.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Consultar.cshtml" />
+    <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10760,7 +10770,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

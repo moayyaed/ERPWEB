@@ -298,8 +298,28 @@
           <Property Name="IdPunto_cargo_Iva" Type="int" />
           <Property Name="IdTipoCbte_LiquidacionRet" Type="int" />
         </EntityType>
+        <EntityType Name="cxc_SeguimientoCartera">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSeguimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSeguimiento" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CorreoEnviado" Type="bit" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_cartera_x_cobrar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_cartera_x_cobrar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_cartera_x_cobrar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -341,7 +361,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_cartera_x_cobrar'
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetProvDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_LiquidacionRetProvDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_LiquidacionRetProvDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -367,7 +387,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetPro
           <Property Name="dc_ValorPago" Type="float" Nullable="false" />
           <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cr_fecha" Type="date" Nullable="false" />
-          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="cr_EsProvision" Type="bit" />
           <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
@@ -381,7 +401,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetPro
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetProvDet_PorCruzar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_LiquidacionRetProvDet_PorCruzar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_LiquidacionRetProvDet_PorCruzar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -405,7 +425,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetPro
           <Property Name="dc_ValorPago" Type="float" Nullable="false" />
           <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cr_fecha" Type="date" Nullable="false" />
-          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="cr_EsProvision" Type="bit" />
           <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
@@ -418,7 +438,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionRetPro
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionTarjeta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_LiquidacionTarjeta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_LiquidacionTarjeta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -447,7 +467,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionTarjet
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionTarjeta_x_cxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_LiquidacionTarjeta_x_cxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -464,11 +484,11 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_LiquidacionTarjet
           <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" />
           <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
           <Property Name="cr_fecha" Type="date" Nullable="false" />
-          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.dbo.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -486,7 +506,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.dbo.vwcxc_MotivoLiquidacion
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.web.vwcxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_cobro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -509,12 +529,12 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro' no tiene d
           <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
           <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
           <Property Name="nom_Motivo_tipo_cobro" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.web.vwcxc_cobro_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_cobro_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -555,7 +575,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_det' no tie
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_det_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.web.vwcxc_cobro_det_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_cobro_det_retencion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -588,7 +608,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_det_retenci
           <Property Name="cr_fecha" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_GRAF.web.vwcxc_cobro_para_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcxc_cobro_para_retencion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -863,6 +883,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <EntitySet Name="cxc_MotivoLiquidacionTarjeta" EntityType="Self.cxc_MotivoLiquidacionTarjeta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Self.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cxc_Parametro" EntityType="Self.cxc_Parametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_SeguimientoCartera" EntityType="Self.cxc_SeguimientoCartera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwcxc_cartera_x_cobrar" EntityType="Self.vwcxc_cartera_x_cobrar" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwcxc_cartera_x_cobrar].[IdEmpresa] AS [IdEmpresa], 
@@ -1242,7 +1263,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
           <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cr_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="nom_Motivo_tipo_cobro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -1374,6 +1395,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
             <End Role="cxc_cobro" EntitySet="cxc_cobro" />
             <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
           </AssociationSet>
+          <EntitySet Name="cxc_SeguimientoCartera" EntityType="Model_cuentas_por_cobrar.cxc_SeguimientoCartera" />
           </EntityContainer>
         <EntityType Name="cxc_cobro_tipo">
           <Key>
@@ -1566,7 +1588,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="IdLiquidacion" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
           <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="cxc_LiquidacionTarjeta">
@@ -1857,7 +1879,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
           <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cr_EsProvision" Type="Boolean" />
           <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -1893,7 +1915,7 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
           <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
           <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cr_EsProvision" Type="Boolean" />
           <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -2065,6 +2087,26 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="cxc_SeguimientoCartera">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSeguimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSeguimiento" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CorreoEnviado" Type="Boolean" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2568,6 +2610,26 @@ advertencia 6002: La tabla o vista 'DBERP_GRAFINPREN.web.vwcxc_cobro_para_retenc
                 <ScalarProperty Name="IdCobro_a_aplicar" ColumnName="IdCobro_a_aplicar" />
                 <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_SeguimientoCartera">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_SeguimientoCartera">
+              <MappingFragment StoreEntitySet="cxc_SeguimientoCartera">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CorreoEnviado" ColumnName="CorreoEnviado" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdSeguimiento" ColumnName="IdSeguimiento" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

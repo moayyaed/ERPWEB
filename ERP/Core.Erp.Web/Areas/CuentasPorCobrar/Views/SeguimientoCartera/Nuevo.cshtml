@@ -1,0 +1,301 @@
+﻿@using System.Web.UI.WebControls;
+@model Core.Erp.Info.CuentasPorCobrar.cxc_SeguimientoCartera_Info
+@{
+    ViewBag.Title = "Nuevo seguimiento";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    function GetInfoCliente() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCliente: IdCliente.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoCliente", "SeguimientoCartera", new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Cedula").val(data.Cedula);
+                $("#Telefono").val(data.Telefono);
+                $("#Celular").val(data.Celular);
+                $("#Direccion").val(data.Direccion);
+                $("#Correo").val(data.Correo);
+                $("#Saldo").val(data.Saldo);
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function GetList_x_Cliente() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCliente: IdCliente.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetList_x_Cliente", "SeguimientoCartera", new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_SeguimientoCarteraDet.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function nombre_imagen() {
+        var datos = {
+            IdSeguimiento: $("#IdSeguimiento").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("nombre_imagen", "SeguimientoCartera", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function actualizar_div() {
+        var datos = {
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("actualizar_div", "SeguimientoCartera", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+
+                //$("#uploadedImage").load();
+                //  $("#uploadedImage").attr("src",Url.Content(Core.Erp.Web.Helps.SessionFixed.NombreImagen));
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        console.log(location);
+        var win = window.open(location +"/Reportes/CuentasPorCobrarReportes/CXC_011?IdAlumno="+IdAlumno.GetValue(), '_blank');
+        win.focus();
+    }
+</script>
+
+@using (Html.BeginForm("Nuevo", "SeguimientoCartera", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdSeguimiento, new { @id = "IdSeguimiento" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCliente">Cliente*</label>
+                    @Html.Partial("_CmbClienteSeguimiento", Model)
+                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="pf_fecha">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                            {
+                                settings.Name = "Fecha";
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Properties.EditFormat = EditFormat.Date;
+                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente">Saldo</label>
+                    @Html.TextBoxFor(q => q.Saldo, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdCliente">Dirección</label>
+                    @Html.TextBoxFor(q => q.Direccion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente">Teléfono</label>
+                    @Html.TextBoxFor(q => q.Telefono, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdCliente">Celular</label>
+                    @Html.TextBoxFor(q => q.Celular, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdCliente">Correo</label>
+                    @Html.TextBoxFor(q => q.Correo, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="sc_observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <script type="text/javascript">
+                    function onUploadControlFileUploadComplete(s, e) {
+                        if (e.isValid)
+                            // $("#uploadedImage").attr("src", e.callbackData);
+                            //actualizar_div();
+                            setElementVisible("uploadedImage", e.isValid);
+                    }
+                    function onImageLoad() {
+                        var externalDropZone = $("#externalDropZone");
+                        var uploadedImage = $("#uploadedImage");
+                        uploadedImage.css({
+                            left: (externalDropZone.width() - uploadedImage.width()) / 4,
+                            top: (externalDropZone.height() - uploadedImage.height()) / 4
+                        });
+                        setElementVisible("dragZone", false);
+                    }
+                    function setElementVisible(elementId, visible) {
+                        var el = $("#" + elementId);
+                        if (visible)
+                            el.show();
+                        else
+                            el.hide();
+                    }
+                </script>
+                <div class="uploadContainer">
+                    @Html.DevExpress().BinaryImage(
+                               settings =>
+                               {
+                                   settings.Name = "seguimiento_foto";
+                                   settings.CallbackRouteValues = new { Controller = "SeguimientoCartera", Action = "get_imagen_general" };
+                               }).Bind((Model.seguimiento_foto).ToArray()).GetHtml()
+
+                    @Html.DevExpress().UploadControl(settings =>
+                               {
+                                   settings.ShowProgressPanel = true;
+                                   settings.CallbackRouteValues = new { Controller = "SeguimientoCartera", Action = "DragAndDropImageUpload" };
+                                   settings.Name = "ucDragAndDrop";
+                                   settings.UploadMode = UploadControlUploadMode.Auto;
+                                   settings.AutoStartUpload = true;
+                                   settings.Width = Unit.Percentage(100);
+                                   settings.DialogTriggerID = "externalDropZone";
+                                   settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                                   settings.AdvancedModeSettings.EnableFileList = false;
+                                   settings.AdvancedModeSettings.EnableMultiSelect = false;
+                                   settings.AdvancedModeSettings.ExternalDropZoneID = "externalDropZone";
+                                   settings.AdvancedModeSettings.DropZoneText = "";
+                                   settings.ValidationSettings.MaxFileSize = 4194304;
+                                   settings.ValidationSettings.AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png" };
+                                   settings.ValidationSettings.ErrorStyle.CssClass = "validationMessage";
+                                   settings.ClientSideEvents.FilesUploadStart = "function(s,e){nombre_imagen();}";
+
+                                   settings.Styles.DropZone.CssClass = "uploadControlDropZone";
+                                   settings.ClientSideEvents.DropZoneEnter = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', true); }";
+                                   settings.ClientSideEvents.DropZoneLeave = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', false); }";
+                                   settings.ClientSideEvents.FileUploadComplete = "onUploadControlFileUploadComplete";
+                               }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_SeguimientoCarteraDet")
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","SeguimientoCartera",new { Area = "CuentasPorCobrar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
