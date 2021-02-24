@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Core.Erp.Data.Facturacion
 {
@@ -1133,6 +1134,34 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 db_f.Dispose();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                return false;
+            }
+        }
+
+        public bool modificarDBEspecial(fa_factura_Info info)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "UPDATE [dbo].[fa_factura]"
+                                        + " SET[IdFacturaTipo] = "+info.IdFacturaTipo.ToString()
+                                        + " ,[vt_Observacion] = '"+info.vt_Observacion+"'"
+                                        + " ,[IdUsuarioUltModi] = '"+info.IdUsuario+"'"
+                                        + " ,[Fecha_UltMod] = GETDATE()"
+                                        + " WHERE IdEmpresa = "+info.IdEmpresa.ToString()+" AND IdSucursal = "+info.IdSucursal.ToString()+" AND IdBodega = "+info.IdBodega.ToString()+" AND IdCbteVta = "+info.IdCbteVta.ToString();
+                    command.ExecuteNonQuery();
+                }
 
                 return true;
             }

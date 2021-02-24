@@ -85,10 +85,15 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
         public bool modificarDB(fa_factura_Info info)
         {
             try
             {
+                if (!string.IsNullOrEmpty(info.vt_autorizacion))
+                {
+                    return odata.modificarDBEspecial(info);
+                }
                 return odata.modificarDB(info);
             }
             catch (Exception ex)

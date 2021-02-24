@@ -97,6 +97,8 @@
     @Html.HiddenFor(q => q.IdCbteVta, new { @id = "IdCbteVta" })
     @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.Modificar, new { @id = "IdPuntoVta" })
+    @Html.HiddenFor(q => q.vt_autorizacion, new { @id = "vt_autorizacion" })
     if (ViewBag.mensaje != null)
     {
         <div class="row">
@@ -110,7 +112,6 @@
                 </div>
             </div>
         </div>
-
     }
     if (ViewBag.MensajeSuccess != null)
     {
@@ -125,7 +126,19 @@
         </div>
     }
 
-  
+    if (!string.IsNullOrEmpty(Model.vt_autorizacion))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-info"></i> La factura se encuentra autorizada por el SRI por lo que solo puede modificar la observación y el tipo de documento para el ATS
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+
 
     <div class="row">
         <div class="col-md-12">

@@ -86,6 +86,7 @@ namespace Core.Erp.Info.Facturacion
 
         public int Nuevo { get; set; }
         public int Modificar { get; set; }
+        public int ModificarEspecial { get; set; }
         public int Anular { get; set; }
         #endregion
 

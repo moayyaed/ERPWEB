@@ -15,6 +15,7 @@ namespace Core.Erp.Info.SeguridadAcceso
         public string DescripcionMenu { get; set; }
         public bool Nuevo { get; set; }
         public bool Modificar { get; set; }
+        public bool ModificarEspecial { get; set; }
         public bool Anular { get; set; }
 
         //Campos que no existen en la tabla

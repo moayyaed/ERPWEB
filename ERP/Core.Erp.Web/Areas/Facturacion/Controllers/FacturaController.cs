@@ -959,17 +959,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             #region Permisos
             seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Facturacion", "Factura", "Index");
-            if (model.Estado == "A" && string.IsNullOrEmpty(model.vt_autorizacion))
-            {
-
-            }
-            else
-            {
-                info.Modificar = false;
-            }
-
+            
             if (model.Estado == "I")
             {
+                info.Modificar = false;
                 info.Anular = false;
             }
 
@@ -1014,10 +1007,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             fa_factura_Info model = bus_factura.get_info(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
             if(model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta});
             if (model.esta_impresa == null ? false : Convert.ToBoolean(model.esta_impresa))
-                return RedirectToAction("Index");
-            
+                return RedirectToAction("Consultar", new { IdEmpresa = model.IdEmpresa, IdSucursal = model.IdSucursal, IdBodega = model.IdBodega, IdCbteVta = model.IdCbteVta });
+
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             model.lst_cuota = bus_cuotas.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
             model.lst_det = bus_det.get_list(IdEmpresa, IdSucursal, IdBodega, IdCbteVta);
@@ -1035,6 +1028,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
+
+            if (model.Estado == "A" && !string.IsNullOrEmpty(model.vt_autorizacion))
+            {
+                info.ModificarEspecial = true;
+            }
 
             return View(model);
         }
