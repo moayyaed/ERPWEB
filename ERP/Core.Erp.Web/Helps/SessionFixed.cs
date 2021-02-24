@@ -29,6 +29,7 @@ namespace Core.Erp.Web.Helps
         string IdCiudad { get; set; }
         string IdNomina_Tipo { get; set; }
         string IdNomina_TipoLiqui { get; set; }
+        string NombreImagenSeguimiento { get; set; }
     }
 
     public static class SessionFixed
@@ -177,6 +178,13 @@ namespace Core.Erp.Web.Helps
             get { return _sessionValueProvider.IdNomina_TipoLiqui; }
             set { _sessionValueProvider.IdNomina_TipoLiqui = value; }
         }
+
+        public static string NombreImagenSeguimiento
+        {
+            get { return _sessionValueProvider.NombreImagenSeguimiento; }
+            set { _sessionValueProvider.NombreImagenSeguimiento = value; }
+        }
+        
     }
 
     public class WebSessionValueProvider : ISessionValueProvider
@@ -206,6 +214,8 @@ namespace Core.Erp.Web.Helps
         private const string _IdCiudad = "Fx_IdCiudad";
         private const string _IdNomina_Tipo = "Fx_IdNomina_Tipo";
         private const string _IdNomina_TipoLiqui = "Fx_IdNomina_TipoLiqui";
+        private const string _NombreImagenSeguimiento = "Fx_NombreImagenSeguimiento";
+        
 
         public string TipoPersona
         {
@@ -342,6 +352,12 @@ namespace Core.Erp.Web.Helps
         {
             get { return (string)HttpContext.Current.Session[_IdNomina_TipoLiqui]; }
             set { HttpContext.Current.Session[_IdNomina_TipoLiqui] = value; }
+        }
+        
+        public string NombreImagenSeguimiento
+        {
+            get { return (string)HttpContext.Current.Session[_NombreImagenSeguimiento]; }
+            set { HttpContext.Current.Session[_NombreImagenSeguimiento] = value; }
         }
     }
 }

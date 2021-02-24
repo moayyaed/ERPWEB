@@ -140,6 +140,7 @@
     <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Bus.cs" />
     <Compile Include="CuentasPorCobrar\cxc_Parametro_Bus.cs" />
     <Compile Include="CuentasPorCobrar\cxc_LiquidacionRetProv_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_SeguimientoCartera_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Bus.cs" />
@@ -211,6 +212,8 @@
     <Compile Include="General\tb_CatalogoTipo_Bus.cs" />
     <Compile Include="General\tb_Catalogo_Bus.cs" />
     <Compile Include="General\tb_ciudad_Bus.cs" />
+    <Compile Include="General\tb_ColaCorreoParametros_Bus.cs" />
+    <Compile Include="General\tb_ColaCorreo_Bus.cs" />
     <Compile Include="General\tb_ColaImpresionDirecta_Bus.cs" />
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Bus.cs" />
     <Compile Include="General\tb_empresa_Bus.cs" />

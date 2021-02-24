@@ -1142,6 +1142,9 @@
     <Build Include="dbo\Tables\fa_factura_tipo.sql" />
     <Build Include="dbo\Tables\cp_proveedor_microempresa.sql" />
     <Build Include="web\Views\VWROL_030.sql" />
+    <Build Include="dbo\Tables\tb_ColaCorreoParametros.sql" />
+    <Build Include="dbo\Tables\tb_ColaCorreo.sql" />
+    <Build Include="dbo\Tables\cxc_SeguimientoCartera.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

@@ -79,6 +79,8 @@
         <EntityTypeShape EntityType="Model_general.tb_bodega" Width="1.5" PointX="15.25" PointY="24" />
         <AssociationConnector Association="Model_general.FK_tb_bodega_tb_sucursal" />
         <EntityTypeShape EntityType="Model_general.vwtb_sis_Documento_Tipo_Talonario" Width="1.5" PointX="21.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_general.tb_ColaCorreo" Width="1.5" PointX="21.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Model_general.tb_ColaCorreoParametros" Width="1.5" PointX="22.375" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

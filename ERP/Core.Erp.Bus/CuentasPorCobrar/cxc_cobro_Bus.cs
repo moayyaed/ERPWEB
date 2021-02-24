@@ -112,5 +112,17 @@ namespace Core.Erp.Bus.CuentasPorCobrar
                 throw;
             }
         }
+
+        public List<cxc_cobro_Info> get_Saldo(int IdEmpresa, decimal IdCliente)
+        {
+            try
+            {
+                return odata.get_Saldo(IdEmpresa, IdCliente);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
