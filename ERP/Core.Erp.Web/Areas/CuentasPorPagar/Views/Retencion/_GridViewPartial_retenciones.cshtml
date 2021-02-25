@@ -50,16 +50,13 @@
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToString(e.GetValue("Estado")) == "I")
-            {
-                e.Row.ForeColor = System.Drawing.Color.Red;
-            }
-        };
-        settings.HtmlRowPrepared = (s, e) =>
-        {
             if (!string.IsNullOrEmpty(Convert.ToString(e.GetValue("NAutorizacion"))))
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+            if (!Convert.ToBoolean(e.GetValue("EstadoBool")))
+            {
+                e.Row.ForeColor = System.Drawing.Color.Red;
             }
         };
         settings.Columns.Add(c =>

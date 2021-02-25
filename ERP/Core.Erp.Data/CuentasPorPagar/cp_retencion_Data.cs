@@ -9,6 +9,7 @@ using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Data.Contabilidad;
 using Core.Erp.Data.Facturacion;
+using System.Data.SqlClient;
 
 namespace Core.Erp.Data.CuentasPorPagar
 {
@@ -28,38 +29,53 @@ namespace Core.Erp.Data.CuentasPorPagar
 
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
-                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    lista = (from item in Context.vwcp_retencion
-                             where item.IdEmpresa == IdEmpresa
-                             && IdSucursalIni <= item.IdSucursal
-                             && item.IdSucursal <= IdSucursalFin
-                             && fecha_ini <= item.fecha
-                             && item.fecha <= fecha_fin
-                             orderby item.IdRetencion descending
-                             select new cp_retencion_Info
-                             {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT dbo.cp_retencion.IdEmpresa, dbo.cp_retencion.IdRetencion, dbo.cp_retencion.CodDocumentoTipo, dbo.cp_retencion.serie1, dbo.cp_retencion.serie2, dbo.cp_retencion.NumRetencion, dbo.cp_retencion.NAutorizacion, "
+                  +" dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.fecha, dbo.cp_retencion.observacion, dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, "
+                  +" dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_valoriva, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, dbo.cp_retencion_x_ct_cbtecble.ct_IdTipoCbte, "
+                  +" dbo.cp_retencion_x_ct_cbtecble.ct_IdCbteCble, dbo.cp_proveedor.IdProveedor, dbo.cp_retencion.Estado, dbo.tb_persona.pe_nombreCompleto, dbo.cp_retencion.IdEmpresa_Ogiro, dbo.cp_retencion.IdCbteCble_Ogiro, "
+                  +" dbo.cp_retencion.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.IdSucursal_cxp, dbo.cp_retencion.IdSucursal AS Expr1, dbo.cp_retencion.IdPuntoVta, dbo.cp_retencion.Generado, "
+                  + " dbo.cp_retencion.aprobada_enviar_sri, case when dbo.cp_retencion.Estado = 'A' then cast(1 as bit) else cast(0 as bit) end as EstadoBool"
++ " FROM     dbo.cp_proveedor LEFT OUTER JOIN"
+                  +" dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona RIGHT OUTER JOIN"
+                  +" dbo.cp_orden_giro ON dbo.cp_proveedor.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_proveedor.IdProveedor = dbo.cp_orden_giro.IdProveedor RIGHT OUTER JOIN"
+                  +" dbo.cp_retencion ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_retencion.IdEmpresa_Ogiro AND dbo.cp_orden_giro.IdCbteCble_Ogiro = dbo.cp_retencion.IdCbteCble_Ogiro AND"
+                  +" dbo.cp_orden_giro.IdTipoCbte_Ogiro = dbo.cp_retencion.IdTipoCbte_Ogiro LEFT OUTER JOIN"
+                  +" dbo.cp_retencion_x_ct_cbtecble ON dbo.cp_retencion.IdEmpresa = dbo.cp_retencion_x_ct_cbtecble.rt_IdEmpresa AND dbo.cp_retencion.IdRetencion = dbo.cp_retencion_x_ct_cbtecble.rt_IdRetencion"
+                  +" where dbo.cp_retencion.IdEmpresa = "+IdEmpresa.ToString()
+                  +" and dbo.cp_retencion.IdSucursal between "+IdSucursalIni.ToString()+" and "+IdSucursalFin.ToString()
+                  +" and dbo.cp_retencion.fecha between datefromparts("+fecha_ini.Year.ToString()+","+fecha_ini.Month.ToString()+","+fecha_ini.Day.ToString()+") and datefromparts("+fecha_fin.Year.ToString()+","+fecha_fin.Month.ToString()+","+fecha_fin.Day.ToString()+")";
 
-                                 IdEmpresa = item.IdEmpresa,
-                                 IdRetencion = item.IdRetencion,
-                                 pe_apellido = item.pe_apellido,
-                                 pe_nombre = item.pe_nombre,
-                                 pe_razonSocial = item.pe_razonSocial,
-                                 NumRetencion = item.NumRetencion,
-                                 serie1 = item.serie1,
-                                 serie2 = item.serie2,
-                                 co_serie = item.co_serie,
-                                 co_factura = item.co_factura,
-                                 co_baseImponible = item.co_baseImponible,
-                                 Estado = item.Estado,
-                                 pe_nombreCompleto=item.pe_nombreCompleto,
-                                 fecha = item.fecha,
-                                 NAutorizacion = item.NAutorizacion,
-                                 EstadoBool = item.Estado == "A" ? true : false
-
-                             }).ToList();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lista.Add(new cp_retencion_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdRetencion = Convert.ToDecimal(reader["IdRetencion"]),
+                            pe_apellido = Convert.ToString(reader["pe_apellido"]),
+                            pe_nombre = Convert.ToString(reader["pe_nombre"]),
+                            pe_razonSocial = Convert.ToString(reader["pe_razonSocial"]),
+                            NumRetencion = Convert.ToString(reader["NumRetencion"]),
+                            serie1 = Convert.ToString(reader["serie1"]),
+                            serie2 = Convert.ToString(reader["serie2"]),
+                            co_serie = Convert.ToString(reader["co_serie"]),
+                            co_factura = Convert.ToString(reader["co_factura"]),
+                            co_baseImponible = reader["co_baseImponible"] == DBNull.Value ? 0 : Convert.ToDouble(reader["co_baseImponible"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            pe_nombreCompleto = Convert.ToString(reader["pe_nombreCompleto"]),
+                            fecha = Convert.ToDateTime(reader["fecha"]),
+                            NAutorizacion = Convert.ToString(reader["NAutorizacion"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"])
+                        });
+                    }
+                    reader.Close();
                 }
-
                 return lista;
             }
             catch (Exception )
@@ -73,38 +89,55 @@ namespace Core.Erp.Data.CuentasPorPagar
             try
             {
                 cp_retencion_Info info = new cp_retencion_Info();
-                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
-                    vwcp_retencion Entity = Context.vwcp_retencion.FirstOrDefault(q => q.IdEmpresa == IdEmpresa & q.IdRetencion==IdRetencion);
-                    if (Entity == null) return null;
-                    info = new cp_retencion_Info
-                    {
-                        IdEmpresa = Entity.IdEmpresa,
-                        IdProveedor = Entity.IdProveedor,
-                        ct_IdTipoCbte = Entity.ct_IdTipoCbte,
-                        ct_IdCbteCble = Entity.ct_IdCbteCble,
-                        IdRetencion = Entity.IdRetencion,
-                        CodDocumentoTipo = Entity.CodDocumentoTipo,
-                        serie1 = Entity.serie1,
-                        serie2 = Entity.serie2,
-                        NumRetencion = Entity.NumRetencion,
-                        NAutorizacion = Entity.NAutorizacion,
-                        observacion = Entity.observacion,
-                        fecha = Convert.ToDateTime(Entity.fecha.ToShortDateString()),
-                        co_baseImponible = Entity.co_baseImponible,
-                        co_serie = Entity.co_serie,
-                        co_factura = Entity.co_factura,
-                        co_subtotal_iva = Entity.co_subtotal_iva,
-                        co_subtotal_siniva = Entity.co_subtotal_siniva,
-                        co_valoriva = Entity.co_valoriva,
-                        pe_razonSocial = Entity.pe_razonSocial,
-                        IdTipoCbte_Ogiro = Entity.IdTipoCbte_Ogiro,
-                        IdCbteCble_Ogiro = Entity.IdCbteCble_Ogiro,
-                        IdSucursal_cxp = Entity.IdSucursal_cxp,
-                        IdSucursal = Entity.IdSucursal,
-                        IdPuntoVta = Entity.IdPuntoVta,
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT dbo.cp_retencion.IdEmpresa, dbo.cp_retencion.IdRetencion, dbo.cp_retencion.CodDocumentoTipo, dbo.cp_retencion.serie1, dbo.cp_retencion.serie2, dbo.cp_retencion.NumRetencion, dbo.cp_retencion.NAutorizacion, "
+                  + " dbo.cp_retencion.Fecha_Autorizacion, dbo.cp_retencion.fecha, dbo.cp_retencion.observacion, dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_subtotal_iva, dbo.cp_orden_giro.co_subtotal_siniva, "
+                  + " dbo.cp_orden_giro.co_baseImponible, dbo.cp_orden_giro.co_valoriva, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, dbo.cp_retencion_x_ct_cbtecble.ct_IdTipoCbte, "
+                  + " dbo.cp_retencion_x_ct_cbtecble.ct_IdCbteCble, dbo.cp_proveedor.IdProveedor, dbo.cp_retencion.Estado, dbo.tb_persona.pe_nombreCompleto, dbo.cp_retencion.IdEmpresa_Ogiro, dbo.cp_retencion.IdCbteCble_Ogiro, "
+                  + " dbo.cp_retencion.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdSucursal, dbo.cp_orden_giro.IdSucursal_cxp, dbo.cp_retencion.IdSucursal AS Expr1, dbo.cp_retencion.IdPuntoVta, dbo.cp_retencion.Generado, "
+                  + " dbo.cp_retencion.aprobada_enviar_sri, case when dbo.cp_retencion.Estado = 'A' then cast(1 as bit) else cast(0 as bit) end as EstadoBool"
+                  + " FROM     dbo.cp_proveedor LEFT OUTER JOIN"
+                  + " dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona RIGHT OUTER JOIN"
+                  + " dbo.cp_orden_giro ON dbo.cp_proveedor.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_proveedor.IdProveedor = dbo.cp_orden_giro.IdProveedor RIGHT OUTER JOIN"
+                  + " dbo.cp_retencion ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_retencion.IdEmpresa_Ogiro AND dbo.cp_orden_giro.IdCbteCble_Ogiro = dbo.cp_retencion.IdCbteCble_Ogiro AND"
+                  + " dbo.cp_orden_giro.IdTipoCbte_Ogiro = dbo.cp_retencion.IdTipoCbte_Ogiro LEFT OUTER JOIN"
+                  + " dbo.cp_retencion_x_ct_cbtecble ON dbo.cp_retencion.IdEmpresa = dbo.cp_retencion_x_ct_cbtecble.rt_IdEmpresa AND dbo.cp_retencion.IdRetencion = dbo.cp_retencion_x_ct_cbtecble.rt_IdRetencion"
+                  + " where dbo.cp_retencion.IdEmpresa = " + IdEmpresa.ToString()+" and dbo.cp_retencion.IdRetencion = "+IdRetencion.ToString();
 
-                    };
+                    var ResultValue = command.ExecuteScalar();
+                    if (ResultValue == null)
+                        return null;
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        info = new cp_retencion_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdRetencion = Convert.ToDecimal(reader["IdRetencion"]),
+                            pe_apellido = Convert.ToString(reader["pe_apellido"]),
+                            pe_nombre = Convert.ToString(reader["pe_nombre"]),
+                            pe_razonSocial = Convert.ToString(reader["pe_razonSocial"]),
+                            NumRetencion = Convert.ToString(reader["NumRetencion"]),
+                            serie1 = Convert.ToString(reader["serie1"]),
+                            serie2 = Convert.ToString(reader["serie2"]),
+                            co_serie = Convert.ToString(reader["co_serie"]),
+                            co_factura = Convert.ToString(reader["co_factura"]),
+                            co_baseImponible = reader["co_baseImponible"] == DBNull.Value ? 0 : Convert.ToDouble(reader["co_baseImponible"]),
+                            Estado = Convert.ToString(reader["Estado"]),
+                            pe_nombreCompleto = Convert.ToString(reader["pe_nombreCompleto"]),
+                            fecha = Convert.ToDateTime(reader["fecha"]),
+                            NAutorizacion = Convert.ToString(reader["NAutorizacion"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                            ct_IdTipoCbte = reader["ct_IdTipoCbte"] == DBNull.Value ? null : (int?)(reader["ct_IdTipoCbte"]),
+                            ct_IdCbteCble = reader["ct_IdCbteCble"] == DBNull.Value ? null : (decimal?)(reader["ct_IdCbteCble"]),
+                        };
+                    }
+                    reader.Close();
                 }
                 return info;
             }
