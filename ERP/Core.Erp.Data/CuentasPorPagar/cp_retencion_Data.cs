@@ -133,6 +133,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                             fecha = Convert.ToDateTime(reader["fecha"]),
                             NAutorizacion = Convert.ToString(reader["NAutorizacion"]),
                             EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdPuntoVta = Convert.ToInt32(reader["IdPuntoVta"]),
                             ct_IdTipoCbte = reader["ct_IdTipoCbte"] == DBNull.Value ? null : (int?)(reader["ct_IdTipoCbte"]),
                             ct_IdCbteCble = reader["ct_IdCbteCble"] == DBNull.Value ? null : (decimal?)(reader["ct_IdCbteCble"]),
                         };
@@ -315,7 +317,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                             contact.NumRetencion = info.NumRetencion = info_documento == null ? null : info_documento.NumDocumento;
                             
                         }
-                        //contact.IdPuntoVta = info.IdPuntoVta;
+                        contact.IdPuntoVta = info.IdPuntoVta;
                         contact.IdSucursal = info.IdSucursal;
                         contact.fecha = info.fecha;
                         contact.observacion = info.observacion= info.observacion+ info.serie1+"-"+ info.serie2+"-"+info.NumRetencion;

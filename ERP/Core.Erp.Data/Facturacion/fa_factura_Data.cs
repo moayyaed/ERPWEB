@@ -883,7 +883,7 @@ namespace Core.Erp.Data.Facturacion
                 info.vt_NumFactura = Entity.vt_NumFactura;
                 info.vt_serie1 = Entity.vt_serie1;
                 info.vt_serie2 = Entity.vt_serie2;
-                info.IdFacturaTipo = info.IdFacturaTipo;
+                Entity.IdFacturaTipo = info.IdFacturaTipo;
 
                 #endregion
                 var cliente = db_f.fa_cliente.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).FirstOrDefault();
