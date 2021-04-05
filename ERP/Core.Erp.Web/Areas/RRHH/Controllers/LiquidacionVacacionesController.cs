@@ -403,7 +403,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_Historico_Liquidacion_Vacaciones_Det_Info>)HttpContext.Current.Session[variable];
+            return (List<ro_Historico_Liquidacion_Vacaciones_Det_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
         }
 
         public void set_list(List<ro_Historico_Liquidacion_Vacaciones_Det_Info> list, decimal IdTransaccionSession)
