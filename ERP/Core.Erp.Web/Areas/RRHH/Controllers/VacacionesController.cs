@@ -215,7 +215,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     string mensaje = "";
                     ro_historico_vacaciones_x_empleado_Info info_historico = null;
                     lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(info.IdTransaccionSession);
-                    info_historico = lst_vacaciones.Where(v => v.IdVacacion == info.IdVacacion).FirstOrDefault();
+                    info_historico = lst_vacaciones.FirstOrDefault();
                     info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta - info.Fecha_Desde).TotalDays)+1;
                     info.Dias_q_Corresponde = info_historico.DiasGanado;
                     info.Dias_pendiente = info_historico.DiasGanado - info.Dias_a_disfrutar;
@@ -267,9 +267,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 #endregion
 
                 cargar_combo();
-                ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+                ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
+                lst_vacaciones = bus_vacaciones.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones, model.IdTransaccionSession);
 
                 if (Exito)
@@ -314,7 +314,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
 
-                var model = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+                var model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
                 ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones, model.IdTransaccionSession);

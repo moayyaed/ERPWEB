@@ -116,7 +116,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-                lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
                 return PartialView("_GridViewPartial_vacaciones_liquidadas_det", lst_detalle);
             }
             catch (Exception)
@@ -189,7 +189,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                   
                 };
                 
-                var  info_solicitud = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
+                var  info_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 model = bus_liquidacion.obtener_valores(info_solicitud);
                 model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
