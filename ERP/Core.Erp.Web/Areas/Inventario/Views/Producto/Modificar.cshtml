@@ -161,6 +161,9 @@
             <li>
                 <a href="#tab_precios" aria-controls="Precios" role="tab" data-toggle="tab" id="link_precios">Precios</a>
             </li>
+            <li hidden>
+                <a href="#tab_composicion" aria-controls="Composicion" role="tab" data-toggle="tab" id="link_composicion">Composición</a>
+            </li>
             <li>
                 <a href="#tab_imagen" aria-controls="Imágen" role="tab" data-toggle="tab" id="link_imagen">Imágen</a>
             </li>
@@ -289,6 +292,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         @Html.Action("GridViewPartial_producto_x_niveldescuento")
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_composicion">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_producto_composicion")
                     </div>
                 </div>
             </div>
@@ -486,9 +496,19 @@
             success: function (data) {
                 if (data == '') {
                     //No hago nada
-                } else
-                {
+                } else {
                     $("#link_general").click();
+                    if (data.tp_EsCombo == "S" || data.Aparece_fabricacion == true) {
+                        $("#link_composicion").show();
+                    }
+                    else {
+                        $("#link_composicion").hide();
+                    }
+                    if (data.tp_es_lote) {
+                        $("#link_lote").show();
+                    } else {
+                        $("#link_lote").hide();
+                    }
                 }
             },
             error: function (error) {
