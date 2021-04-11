@@ -2883,6 +2883,9 @@
     <Compile Include="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwro_participacion_utilidad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwro_participacion_utilidad_empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>

@@ -8994,7 +8994,6 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <EntitySet Name="ro_participacion_utilidad" EntityType="Model_rrhh.ro_participacion_utilidad" />
           <EntitySet Name="ro_participacion_utilidad_empleado" EntityType="Model_rrhh.ro_participacion_utilidad_empleado" />
           <EntitySet Name="ro_rubros_calculados" EntityType="Model_rrhh.ro_rubros_calculados" />
-          <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" />
           <AssociationSet Name="FK_ro_Parametros_ro_catalogo" Association="Model_rrhh.FK_ro_Parametros_ro_catalogo">
             <End Role="ro_catalogo" EntitySet="ro_catalogo" />
             <End Role="ro_Parametros" EntitySet="ro_Parametros" />
@@ -9075,6 +9074,8 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
           </AssociationSet>
+          <EntitySet Name="vwro_participacion_utilidad" EntityType="Model_rrhh.vwro_participacion_utilidad" />
+          <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" />
           </EntityContainer>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
@@ -13169,52 +13170,6 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_rubro_tipo15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
           <NavigationProperty Name="ro_rubro_tipo16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
         </EntityType>
-        <EntityType Name="vwro_participacion_utilidad_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdUtilidad" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="DiasTrabajados" />
-            <PropertyRef Name="CargasFamiliares" />
-            <PropertyRef Name="ValorIndividual" />
-            <PropertyRef Name="ValorCargaFamiliar" />
-            <PropertyRef Name="ValorTotal" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="ca_descripcion" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="UtilidadDerechoIndividual" />
-            <PropertyRef Name="UtilidadCargaFamiliar" />
-            <PropertyRef Name="Utilidad" />
-            <PropertyRef Name="Descuento" />
-            <PropertyRef Name="NetoRecibir" />
-            <PropertyRef Name="IdSucursal" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
-          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
-          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
-          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="ValorTotal" Type="Double" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
-          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
-          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
-          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="Utilidad" Type="Double" Nullable="false" />
-          <Property Name="Descuento" Type="Double" Nullable="false" />
-          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-        </EntityType>
         <Association Name="FK_ro_Parametros_ro_catalogo">
           <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="1" />
           <End Type="Model_rrhh.ro_Parametros" Role="ro_Parametros" Multiplicity="*" />
@@ -13493,6 +13448,76 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwro_participacion_utilidad">
+          <Key>
+            <PropertyRef Name="pe_FechaIni" />
+            <PropertyRef Name="pe_FechaFin" />
+            <PropertyRef Name="UtilidadDerechoIndividual" />
+            <PropertyRef Name="UtilidadCargaFamiliar" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="IdUtilidad" />
+            <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="BaseUtilidad" />
+          </Key>
+          <Property Name="pe_FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
+          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwro_participacion_utilidad_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUtilidad" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="DiasTrabajados" />
+            <PropertyRef Name="CargasFamiliares" />
+            <PropertyRef Name="ValorIndividual" />
+            <PropertyRef Name="ValorCargaFamiliar" />
+            <PropertyRef Name="ValorTotal" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="ca_descripcion" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="UtilidadDerechoIndividual" />
+            <PropertyRef Name="UtilidadCargaFamiliar" />
+            <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
+          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
+          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
+          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="ValorTotal" Type="Double" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
+          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
+          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
+          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
+          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16301,6 +16326,23 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.vwro_empleado_x_Proyeccion_G
                 <ScalarProperty Name="IdRubro_tot_ing" ColumnName="IdRubro_tot_ing" />
                 <ScalarProperty Name="IdRubro_dias_trabajados" ColumnName="IdRubro_dias_trabajados" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwro_participacion_utilidad">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_participacion_utilidad">
+              <MappingFragment StoreEntitySet="vwro_participacion_utilidad">
+                <ScalarProperty Name="BaseUtilidad" ColumnName="BaseUtilidad" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Utilidad" ColumnName="Utilidad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUtilidad" ColumnName="IdUtilidad" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="UtilidadCargaFamiliar" ColumnName="UtilidadCargaFamiliar" />
+                <ScalarProperty Name="UtilidadDerechoIndividual" ColumnName="UtilidadDerechoIndividual" />
+                <ScalarProperty Name="pe_FechaFin" ColumnName="pe_FechaFin" />
+                <ScalarProperty Name="pe_FechaIni" ColumnName="pe_FechaIni" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

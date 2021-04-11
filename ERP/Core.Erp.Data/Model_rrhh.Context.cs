@@ -159,6 +159,7 @@ namespace Core.Erp.Data
         public DbSet<ro_participacion_utilidad> ro_participacion_utilidad { get; set; }
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
         public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
+        public DbSet<vwro_participacion_utilidad> vwro_participacion_utilidad { get; set; }
         public DbSet<vwro_participacion_utilidad_empleado> vwro_participacion_utilidad_empleado { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
