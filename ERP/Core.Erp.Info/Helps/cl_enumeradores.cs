@@ -106,6 +106,12 @@
             HORAS_RECARGO
 
         }
+        public enum eTipoRubrosAcumulados
+        {
+            PROV_D14,
+            PROV_D13,
+            PROV_FR
+        }
         public enum eTipoCuentaRRHH
         {
             AHO,

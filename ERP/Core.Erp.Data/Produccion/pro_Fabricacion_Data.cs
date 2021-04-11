@@ -182,6 +182,7 @@ namespace Core.Erp.Data.Produccion
                     Context.SaveChanges();
                     #endregion
                     #endregion
+
                     #region MOV
                   
                     if(info.Cerrar)

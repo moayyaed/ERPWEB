@@ -1271,17 +1271,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                                 Lista_Empleado.Add(info);
 
                             #region RubrosAcumulados    
-                            //ro_rubros_calculados_Bus bus_rubros_acumulados = new ro_rubros_calculados_Bus();
-                            //var info_rubros = bus_rubros_acumulados.get_info(IdEmpresa);
 
                             //DIII
                             var xiii = Convert.ToString(reader.GetValue(32));
                             var xiv = Convert.ToString(reader.GetValue(33));
                             var fdr = Convert.ToString(reader.GetValue(34));
 
+                            
+
                             if (!string.IsNullOrEmpty(xiii))
                             {
-                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.ru_descripcion == xiii).FirstOrDefault().IdRubro;
+                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.rub_codigo == cl_enumeradores.eTipoRubrosAcumulados.PROV_D13.ToString()).FirstOrDefault().IdRubro;
                                 if(!string.IsNullOrEmpty(idrubro))
                                 {
                                     ro_empleado_x_rubro_acumulado_Info info_rubro_acumulado = new ro_empleado_x_rubro_acumulado_Info
@@ -1302,7 +1302,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             //DIV
                             if (!string.IsNullOrEmpty(xiv))
                             {
-                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.ru_descripcion == xiv).FirstOrDefault().IdRubro;
+                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.rub_codigo == cl_enumeradores.eTipoRubrosAcumulados.PROV_D14.ToString()).FirstOrDefault().IdRubro;
                                 if (!string.IsNullOrEmpty(idrubro))
                                 {
                                     ro_empleado_x_rubro_acumulado_Info info_rubro_acumulado = new ro_empleado_x_rubro_acumulado_Info
@@ -1321,7 +1321,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             //FDR
                             if (!string.IsNullOrEmpty( fdr))
                             {
-                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.ru_descripcion == fdr).FirstOrDefault().IdRubro;
+                                string idrubro = ListaRubro.get_list(IdTransaccionSession).Where(s => s.rub_codigo == cl_enumeradores.eTipoRubrosAcumulados.PROV_FR.ToString()).FirstOrDefault().IdRubro;
                                 if (!string.IsNullOrEmpty(idrubro))
                                 {
                                     ro_empleado_x_rubro_acumulado_Info info_rubro_acumulado = new ro_empleado_x_rubro_acumulado_Info
@@ -1579,6 +1579,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     var cedula_carga = Convert.ToString(reader.GetValue(1)).Trim();
                     var cedula_empleado = Convert.ToString(reader.GetValue(0)).Trim();
                     var tipo_familiar = Convert.ToString(reader.GetValue(5)).Trim();
+                    var tipo_SEXO = Convert.ToString(reader.GetValue(6)).Trim();
+
                     var InfoEmpleado = Lista_Empleado.Where(v => v.pe_cedulaRuc == cedula_empleado).FirstOrDefault();
                     var lst_ro_catalogo = bus_catalogorrhh.get_list_x_tipo(3);
 
@@ -1591,7 +1593,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             IdCargaFamiliar = IdCargaFamiliar++,
                             IdEmpleado = InfoEmpleado.IdEmpleado,
                             Cedula = cedula_carga,
-                            Sexo = "SEXO_MAS",
+                            Sexo = tipo_SEXO,
                             TipoFamiliar = lst_ro_catalogo.Where(q => q.ca_descripcion == tipo_familiar).FirstOrDefault().CodCatalogo,
                             Nombres = Convert.ToString(reader.GetValue(2)) + " " + Convert.ToString(reader.GetValue(3)),
                             FechaNacimiento = Convert.ToDateTime(reader.GetValue(4)),
