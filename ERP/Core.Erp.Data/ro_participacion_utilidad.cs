@@ -22,6 +22,7 @@ namespace Core.Erp.Data
         public int IdEmpresa { get; set; }
         public int IdUtilidad { get; set; }
         public int IdPeriodo { get; set; }
+        public double BaseUtilidad { get; set; }
         public double Utilidad { get; set; }
         public double UtilidadDerechoIndividual { get; set; }
         public double UtilidadCargaFamiliar { get; set; }
@@ -33,7 +34,6 @@ namespace Core.Erp.Data
         public string IdUsuario_anula { get; set; }
         public Nullable<System.DateTime> Fecha_anulacion { get; set; }
         public string Estado { get; set; }
-        public double BaseUtilidad { get; set; }
     
         public virtual ICollection<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
     }

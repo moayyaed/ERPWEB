@@ -11,10 +11,11 @@ namespace Core.Erp.Data
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
     using System.Linq;
-
+    
     public partial class Entities_rrhh : DbContext
     {
         public Entities_rrhh()
@@ -106,7 +107,6 @@ namespace Core.Erp.Data
         public DbSet<vwro_nomina_x_horas_extras_aprobadas> vwro_nomina_x_horas_extras_aprobadas { get; set; }
         public DbSet<vwro_nomina_x_horas_extras_det> vwro_nomina_x_horas_extras_det { get; set; }
         public DbSet<vwro_empleados_consulta> vwro_empleados_consulta { get; set; }
-        public DbSet<ro_Parametros> ro_Parametros { get; set; }
         public DbSet<vwro_archivos_bancos_generacion> vwro_archivos_bancos_generacion { get; set; }
         public DbSet<ro_archivos_bancos_generacion> ro_archivos_bancos_generacion { get; set; }
         public DbSet<ro_empleado_x_jornada> ro_empleado_x_jornada { get; set; }
@@ -120,7 +120,6 @@ namespace Core.Erp.Data
         public DbSet<vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar> vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar { get; set; }
         public DbSet<ro_rol> ro_rol { get; set; }
         public DbSet<vwro_rol> vwro_rol { get; set; }
-        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<ro_empleado_novedad_det> ro_empleado_novedad_det { get; set; }
         public DbSet<vwro_empleado_novedad_det> vwro_empleado_novedad_det { get; set; }
         public DbSet<vwRo_rol_detalle_saldo_por_pagar> vwRo_rol_detalle_saldo_por_pagar { get; set; }
@@ -137,8 +136,6 @@ namespace Core.Erp.Data
         public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
         public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
         public DbSet<ro_prestamo> ro_prestamo { get; set; }
-        public DbSet<ro_empleado> ro_empleado { get; set; }
-        public DbSet<vwro_empleado_datos_generales> vwro_empleado_datos_generales { get; set; }
         public DbSet<vwro_empleado_x_rubro_acumulado_detalle> vwro_empleado_x_rubro_acumulado_detalle { get; set; }
         public DbSet<ro_rubro_tipo_x_jornada> ro_rubro_tipo_x_jornada { get; set; }
         public DbSet<ro_rol_detalle> ro_rol_detalle { get; set; }
@@ -156,9 +153,12 @@ namespace Core.Erp.Data
         public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
         public DbSet<vwro_AjusteImpuestoRentaDet> vwro_AjusteImpuestoRentaDet { get; set; }
+        public DbSet<ro_empleado> ro_empleado { get; set; }
+        public DbSet<vwro_empleado_datos_generales> vwro_empleado_datos_generales { get; set; }
+        public DbSet<ro_Parametros> ro_Parametros { get; set; }
         public DbSet<ro_participacion_utilidad> ro_participacion_utilidad { get; set; }
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
-        public DbSet<vwro_participacion_utilidad> vwro_participacion_utilidad { get; set; }
+        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<vwro_participacion_utilidad_empleado> vwro_participacion_utilidad_empleado { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
