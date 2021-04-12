@@ -347,6 +347,7 @@
     <Compile Include="Areas\Facturacion\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\FacturaPuntoVentaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaTipoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FormaPagoController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\GuiaRemisionController.cs" />
@@ -10652,6 +10653,10 @@
     <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Consultar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\SeguimientoCartera\Anular.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\Index.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Familia.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Producto.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Pedido.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10770,7 +10775,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>

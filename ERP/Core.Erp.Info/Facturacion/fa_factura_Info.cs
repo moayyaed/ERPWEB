@@ -88,6 +88,7 @@ namespace Core.Erp.Info.Facturacion
         public int Modificar { get; set; }
         public int ModificarEspecial { get; set; }
         public int Anular { get; set; }
+        public int SecuenciaModificar { get; set; }
         #endregion
 
         #region Campos super admin

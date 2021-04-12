@@ -42,6 +42,7 @@ namespace Core.Erp.Data.Inventario
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
+                Lista.ForEach(q=>q.IdString=q.IdEmpresa.ToString("0000") +q.IdMarca.ToString("0000"));
                 return Lista;
             }
             catch (Exception)

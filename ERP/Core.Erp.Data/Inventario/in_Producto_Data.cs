@@ -62,6 +62,47 @@ namespace Core.Erp.Data.Inventario
                 throw;
             }
         }
+        public List<in_Producto_Info> get_list_x_marca(int IdEmpresa, int IdMarca, bool mostrar_anulados)
+        {
+            try
+            {
+                List<in_Producto_Info> Lista = new List<in_Producto_Info>();
+
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    string query = "select a.IdEmpresa, a.IdProducto, a.pr_codigo, a.pr_descripcion, a.precio_1, case when a.Estado = 'A' then cast(1 as bit) else cast(0 as bit) end as EstadoBool, A.Estado"
+                                + " from in_Producto as a "
+                                + " where A.IdEmpresa = " + IdEmpresa.ToString() + " and A.Estado = " + (mostrar_anulados ? "A.Estado" : "'A'")
+                                + " ORDER BY A.IdEmpresa, A.pr_descripcion";
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new in_Producto_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdProducto = Convert.ToDecimal(reader["IdProducto"]),
+                            pr_codigo = Convert.ToString(reader["pr_codigo"]),
+                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
+                            precio_1 = Convert.ToDouble(reader["precio_1"]),
+                            EstadoBool = Convert.ToBoolean(reader["EstadoBool"]),
+                            Estado = Convert.ToString(reader["Estado"])
+                        });
+                    }
+                    reader.Close();
+                }
+                Lista.ForEach(q=>q.IdString=q.IdEmpresa.ToString("0000")+q.IdProducto.ToString("000000"));
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public List<in_Producto_Info> get_list_para_composicion(int IdEmpresa, bool mostrar_anulados)
         {
             try

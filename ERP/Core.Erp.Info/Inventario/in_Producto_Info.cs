@@ -99,6 +99,7 @@ namespace Core.Erp.Info.Inventario
         public int Nuevo { get; set; }
         public int Modificar { get; set; }
         public int Anular { get; set; }
+        public string IdString { get; set; }
         #endregion
     }
 

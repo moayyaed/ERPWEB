@@ -1461,4 +1461,23 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         }
     }
 
+    public class in_ProductoListado_List
+    {
+        string Variable = "in_producto_Listado_Info";
+        public List<in_Producto_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<in_Producto_Info> list = new List<in_Producto_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<in_Producto_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<in_Producto_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
+    }
 }

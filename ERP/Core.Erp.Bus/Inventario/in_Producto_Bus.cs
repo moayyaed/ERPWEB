@@ -23,6 +23,18 @@ namespace Core.Erp.Bus.Inventario
                 throw;
             }
         }
+        public List<in_Producto_Info> get_list_x_marca(int IdEmpresa, int IdMarca, bool mostrar_anulados)
+        {
+            try
+            {
+                return odata.get_list_x_marca(IdEmpresa, IdMarca, mostrar_anulados);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public double GetPrecioCompraPromedio(int IdEmpresa, decimal IdProducto)
         {
             try
