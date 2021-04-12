@@ -189,6 +189,12 @@
         $("#link_cliente").show();
         $("#link_cliente").click();
     }
+
+    function RegresarCliente() {
+        $("#link_cliente").hide();
+        $("#link_factura").show();
+        $("#link_factura").click();
+    }
 </script>
 
 <div class="modal fade" id="modal-default-Cantidad" role="dialog">
@@ -381,24 +387,24 @@
         <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cliente">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <div class="form-group">
                             <label>&nbsp;</label>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <label for="IdCliente"></label>
                             <button type="button" class="btn btn-default form-control" title="Regresar a Factura" onclick="RegresarCliente();">
-                                Cliente &nbsp;<i class="fa fa-chevron-left"></i>
+                                <i class="fa fa-chevron-left"></i>&nbsp; Volver 
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <label for="IdCliente"></label>
                             <button type="button" class="btn btn-success form-control" title="Ver detalle de factura" onclick="Pagar();">
-                                Cliente &nbsp;<i class="fa fa-chevron-right"></i>
+                                Pagar &nbsp;<i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>

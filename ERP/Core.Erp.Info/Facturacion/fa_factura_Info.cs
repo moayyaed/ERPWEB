@@ -96,6 +96,10 @@ namespace Core.Erp.Info.Facturacion
         public string contrasena_admin { get; set; }
         public bool PedirDesbloqueo { get; set; }
         #endregion
+
+        #region CamposCliente_PuntoVenta
+
+        #endregion
     }
 
     public class fa_factura_consulta_Info
