@@ -696,7 +696,9 @@ namespace Core.Erp.Data.RRHH
                 }
 
                 foreach (var item in Lista_Rubro)
-                {                    
+                {
+                    if (item.rub_ctacon == "" || item.rub_ctacon == "NULL")
+                        item.rub_ctacon = null;        
                     ro_rubro_tipo Entity_rubro = new ro_rubro_tipo
                     {
                         IdEmpresa = item.IdEmpresa,
