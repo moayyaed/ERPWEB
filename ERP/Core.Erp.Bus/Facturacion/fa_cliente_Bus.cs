@@ -76,7 +76,7 @@ namespace Core.Erp.Bus.Facturacion
                 else
                 {
                     grabar = true;
-                    //grabar = odata_per.modificarDB(info.info_persona);
+                    //grabar = odata_per.modificarPersonaPV(info.info_persona);
                 }                   
 
 
@@ -85,6 +85,39 @@ namespace Core.Erp.Bus.Facturacion
                     return odata.guardarDB(info);
                 }
                    
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool guardarClientePV(fa_cliente_Info info)
+        {
+            tb_persona_Bus bus_persona = new tb_persona_Bus();
+            var grabar = false;
+            try
+            {
+                if (bus_persona.validar_existe_cedula(info.info_persona.pe_cedulaRuc) == 0)
+                {
+                    info.info_persona = odata_per.armar_info(info.info_persona);
+                    if (odata_per.guardarDB(info.info_persona))
+                    {
+                        info.IdPersona = info.info_persona.IdPersona;
+                        grabar = true;
+                    }
+                }
+                else
+                {
+                    grabar = odata_per.modificarPersonaPV(info.info_persona);
+                }
+
+
+                if (grabar == true)
+                {
+                    return odata.guardarDB(info);
+                }
+
                 return false;
             }
             catch (Exception)
@@ -131,6 +164,36 @@ namespace Core.Erp.Bus.Facturacion
             try
             {
                 return odata.modificarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool modificarClientePV(fa_cliente_Info info)
+        {
+            try
+            {
+                if (info.IdPersona == 0)
+                {
+                    info.info_persona = odata_per.armar_info(info.info_persona);
+
+                    if (odata_per.guardarDB(info.info_persona))
+                    {
+                        info.IdPersona = info.info_persona.IdPersona;
+                        return odata.guardarDB(info);
+                    }
+                }
+                else
+                {
+                    if (odata_per.modificarPersonaPV(info.info_persona))
+                    {
+                        return odata.modificarClientePV(info);
+                    }
+                }
+
+                return false;
             }
             catch (Exception)
             {
