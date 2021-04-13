@@ -54,14 +54,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            empleado_info_list.set_list(bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa)), Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            var lst_empleado = bus_empleado.get_list_combo(Convert.ToInt32(SessionFixed.IdEmpresa));
+            empleado_info_list.set_list(lst_empleado, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
-            #region Validar Session
-            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
-                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
-            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
-            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
-            #endregion
+          
             ro_marcaciones_x_empleado_Info model = new ro_marcaciones_x_empleado_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
@@ -125,7 +121,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     {
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
         {
-            AllowedFileExtensions = new string[] { ".xlsx" },
+            AllowedFileExtensions = new string[] { ".xls" },
             MaxFileSize = 40000000
         };
         public static void FileUploadComplete_marcaciones(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
@@ -134,7 +130,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_empleado_info_list empleado_info_list = new ro_empleado_info_list();
             ro_marcaciones_x_empleado_detLis_Info EmpleadoNovedadCargaMasiva_detLis_Info = new ro_marcaciones_x_empleado_detLis_Info();
             List<ro_marcaciones_x_empleado_Info> lista_novedades = new List<ro_marcaciones_x_empleado_Info>();
-            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
+            decimal IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
 
             Stream stream = new MemoryStream(e.UploadedFile.FileBytes);
             if (stream.Length > 0)
@@ -151,6 +147,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         {
                             string cedua = reader.GetString(0);
                             var empleado = empleado_info_list.get_list(IdTransaccionSession).Where(v => v.pe_cedulaRuc == cedua).FirstOrDefault();
+                            var empleado_ = empleado_info_list.get_list(IdTransaccionSession);
+                            var s = empleado_.Where(v => v.pe_cedulaRuc == cedua);
                             if (empleado != null)
                             {
                                 if (!reader.IsDBNull(2))// si tiene fehca de marcacion
