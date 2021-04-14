@@ -740,6 +740,9 @@
     <Compile Include="Facturacion\Base\fa_PuntoVta.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\fa_PuntoVta_x_seg_usuario.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\fa_TerminoPago.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -864,6 +867,7 @@
     <Compile Include="Facturacion\fa_proforma_Data.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Data.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Data.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_x_seg_usuario_Data.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Data.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Data.cs" />
     <Compile Include="Facturacion\fa_TipoNota_Data.cs" />

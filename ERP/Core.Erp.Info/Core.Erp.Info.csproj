@@ -229,6 +229,7 @@
     <Compile Include="Facturacion\fa_proforma_det_Info.cs" />
     <Compile Include="Facturacion\fa_proforma_Info.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Info.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_x_seg_usuario_Info.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Info.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Info.cs" />
     <Compile Include="Facturacion\fa_TipoNota_Info.cs" />

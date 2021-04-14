@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.Facturacion;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.Facturacion;
@@ -28,7 +29,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
         fa_catalogo_Bus bus_facatalogo = new fa_catalogo_Bus();
         string mensajeValidar = string.Empty;
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        fa_factura_Bus bus_factura = new fa_factura_Bus();
+        fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
+        tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
+        fa_parametro_Bus bus_param = new fa_parametro_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        string mensaje = string.Empty;
         #endregion
 
         #region Index
@@ -86,6 +93,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             var MostrarBoton = (ConsumidorFinal == model.IdCliente ? 0 : 1);
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Index(fa_factura_Info model)
+        {
+            //if (!validar_factura(model, ref mensaje))
+            //{
+            //    List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
+            //    ViewBag.mensaje = mensaje;
+            //    cargar_combos(model);
+            //    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            //    return View(model);
+            //}
+            //model.IdUsuario = SessionFixed.IdUsuario.ToString();
+            //if (!bus_factura.guardarDB(model))
+            //{
+            //    List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
+            //    ViewBag.mensaje = "No se ha podido guardar el registro";
+            //    cargar_combos(model);
+            //    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+            //    return View(model);
+            //};
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -150,7 +180,168 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
             return true;
         }
+        private bool validar_factura(fa_factura_Info i_validar, ref string msg)
+        {
+            string MsgValidaciones = string.Empty;
+            i_validar.PedirDesbloqueo = false;
+
+            //if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
+            //{
+            //    return false;
+            //}
+
+            //if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
+            //{
+            //    return false;
+            //}
+
+            i_validar.lst_det = List_det.get_list(i_validar.IdTransaccionSession);
+            if (i_validar.lst_det.Count == 0)
+            {
+                msg = "No ha ingresado registros en el detalle de la factura";
+                return false;
+            }
+            if (i_validar.lst_det.Where(q => q.vt_cantidad == 0).Count() > 0)
+            {
+                msg = "Existen registros con cantidad 0 en el detalle de la factura";
+                return false;
+            }
+            if (i_validar.lst_det.Where(q => q.IdProducto == 0).Count() > 0)
+            {
+                msg = "Existen registros sin producto en el detalle de la factura";
+                return false;
+            }
+            if (i_validar.lst_det.Sum(q => q.vt_total) == 0)
+            {
+                msg = "La factura no tiene valor, por favor revise";
+                return false;
+            }
+
+            #region Talonario
+
+            var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
+            if (pto_vta != null && pto_vta.EsElectronico)
+            {
+                var info_documento = bus_talonario.GetUltimoNoUsado(i_validar.IdEmpresa, cl_enumeradores.eTipoDocumento.FACT.ToString(), pto_vta.Su_CodigoEstablecimiento, pto_vta.cod_PuntoVta, pto_vta.EsElectronico, false);
+                i_validar.vt_NumFactura = info_documento.NumDocumento;
+            }
+            i_validar.IdBodega = pto_vta.IdBodega;
+            i_validar.vt_serie1 = pto_vta.Su_CodigoEstablecimiento;
+            i_validar.vt_serie2 = pto_vta.cod_PuntoVta;
+            i_validar.IdCaja = pto_vta.IdCaja;
+            #endregion
+
+            #region Validar cliente final
+            var param = bus_param.get_info(i_validar.IdEmpresa);
+            if (param != null && param.IdClienteConsumidorFinal != null && param.MontoMaximoConsumidorFinal > 0 && i_validar.IdCliente == param.IdClienteConsumidorFinal)
+            {
+                if (i_validar.info_resumen.Total > Convert.ToDecimal(param.MontoMaximoConsumidorFinal ?? 0))
+                {
+                    msg = "El límite de venta para consumidor final es de $ " + param.MontoMaximoConsumidorFinal.ToString() + ", por favor revise.";
+                    return false;
+                }
+            }
+            #endregion
+
+            #region Resumen
+            i_validar.info_resumen = new fa_factura_resumen_Info
+            {
+                SubtotalIVASinDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero),
+                SubtotalSinIVASinDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_cantidad * q.vt_Precio), 2, MidpointRounding.AwayFromZero),
+
+                Descuento = (decimal)Math.Round(i_validar.lst_det.Sum(q => q.vt_DescUnitario * q.vt_cantidad), 2, MidpointRounding.AwayFromZero),
+
+                SubtotalIVAConDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva != 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero),
+                SubtotalSinIVAConDscto = (decimal)Math.Round(i_validar.lst_det.Where(q => q.vt_por_iva == 0).Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero),
+
+                ValorIVA = (decimal)Math.Round(i_validar.lst_det.Sum(q => q.vt_iva), 2, MidpointRounding.AwayFromZero)
+            };
+            i_validar.info_resumen.SubtotalSinDscto = i_validar.info_resumen.SubtotalIVASinDscto + i_validar.info_resumen.SubtotalSinIVASinDscto;
+            i_validar.info_resumen.SubtotalConDscto = i_validar.info_resumen.SubtotalIVAConDscto + i_validar.info_resumen.SubtotalSinIVAConDscto;
+            i_validar.info_resumen.Total = i_validar.info_resumen.SubtotalConDscto + i_validar.info_resumen.ValorIVA;
+            #endregion
+
+
+            i_validar.IdUsuario = SessionFixed.IdUsuario;
+            i_validar.IdUsuarioUltModi = SessionFixed.IdUsuario;
+
+            #region ValidacionDeTalonario
+
+            if (i_validar.IdCbteVta == 0 && !pto_vta.EsElectronico)
+            {
+                var talonario = bus_talonario.get_info(i_validar.IdEmpresa, i_validar.vt_tipoDoc, i_validar.vt_serie1, i_validar.vt_serie2, i_validar.vt_NumFactura);
+                if (talonario == null)
+                {
+                    msg = "No existe un talonario creado con la numeración: " + i_validar.vt_serie1 + "-" + i_validar.vt_serie2 + "-" + i_validar.vt_NumFactura;
+                    return false;
+                }
+                if (talonario.Usado == true)
+                {
+                    msg = "El talonario: " + i_validar.vt_serie1 + "-" + i_validar.vt_serie2 + "-" + i_validar.vt_NumFactura + " se encuentra utilizado.";
+                    return false;
+                }
+                if (bus_factura.factura_existe(i_validar.IdEmpresa, i_validar.vt_serie1, i_validar.vt_serie2, i_validar.vt_NumFactura))
+                {
+                    msg = "Existe una factura registrada con el número: " + i_validar.vt_serie1 + "-" + i_validar.vt_serie2 + "-" + i_validar.vt_NumFactura + ".";
+                    return false;
+                }
+            }
+
+            #endregion
+
+            #region ValidarStock
+            if (i_validar.lst_det.Where(q => q.tp_manejaInven == "S").Count() > 0)
+            {
+                if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
+                {
+                    return false;
+                }
+                var lst_validar = i_validar.lst_det.GroupBy(q => new { q.IdProducto, q.pr_descripcion, q.tp_manejaInven, q.se_distribuye }).Select(q => new in_Producto_Stock_Info
+                {
+                    IdEmpresa = i_validar.IdEmpresa,
+                    IdSucursal = i_validar.IdSucursal,
+                    IdBodega = i_validar.IdBodega,
+                    IdProducto = q.Key.IdProducto,
+                    pr_descripcion = q.Key.pr_descripcion,
+                    tp_manejaInven = q.Key.tp_manejaInven,
+                    SeDestribuye = q.Key.se_distribuye ?? false,
+
+                    Cantidad = q.Sum(v => v.vt_cantidad),
+                    CantidadAnterior = q.Sum(v => v.CantidadAnterior),
+                }).ToList();
+
+                if (!bus_producto.validar_stock(lst_validar, ref msg))
+                {
+                    return false;
+                }
+            }
+            #endregion
+
+            #region ValidarCentroCosto
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            ct_parametro_Bus bus_parametro = new ct_parametro_Bus();
+            var info_ct_parametro = bus_parametro.get_info(IdEmpresa);
+
+            if (i_validar.lst_det.Count > 0)
+            {
+                if (info_ct_parametro.EsCentroCostoObligatorio == true)
+                {
+                    foreach (var item in i_validar.lst_det)
+                    {
+                        if (item.IdCentroCosto == "" || item.IdCentroCosto == null)
+                        {
+                            mensaje = "Debe seleccionar el centro de costo para los items del detalle";
+                            return false;
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            return true;
+        }
         #endregion
+
         #region JSON
         public JsonResult VerProductos(string SecuencialID = "", decimal IdTransaccionSession=0)
         {
