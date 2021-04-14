@@ -109,7 +109,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 List<ro_periodo_x_ro_Nomina_TipoLiqui_Info> lst_periodos_x_nominas = new List<ro_periodo_x_ro_Nomina_TipoLiqui_Info>();
-                lst_periodos_x_nominas = bus_periodo_por_nomina.get_list_peridos(IdEmpresa, IdNomina, IdNomina_Tipo);
+                lst_periodos_x_nominas = bus_periodo_por_nomina.get_list_peridos(Convert.ToInt32( SessionFixed.IdEmpresa), IdNomina, IdNomina_Tipo);
                 return Json(lst_periodos_x_nominas, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
