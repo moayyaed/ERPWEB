@@ -43,7 +43,7 @@
         };
         settings.Columns.Add(column =>
         {
-            column.Caption = "";
+            column.Caption = " ";
             column.FieldName = "";
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.False;
@@ -52,8 +52,16 @@
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\" onclick=\"AbrirModalCantidad('" + c.KeyValue + "');\"></span>");
+                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\"></span>");
             });
         });
+        //settings.HtmlDataCellPrepared = (sender, e) =>
+        //{
+        //    e.Cell.Attributes.Add(
+        //        "onclick",
+        //        string.Format("AbrirModalCantidad('{0}');", e.KeyValue)
+        //    );
+        //};
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdEmpresa";
@@ -124,7 +132,7 @@
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(10);
-            column.Visible = false;
+            column.Visible = true;
             column.VisibleIndex = 10;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -145,7 +153,7 @@
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(10);
             column.VisibleIndex = 12;
-            column.Visible = true;
+            column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -162,12 +170,6 @@
                 ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\" onclick=\"EliminarProducto('" + c.KeyValue + "');\"></span>");
             });
         });
-
-        //settings.Settings.ShowFooter = true;
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal0").DisplayFormat = "{0:n2}";
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
-
         settings.ClientSideEvents.BeginCallback = "function(s,e){ e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ }";
     });

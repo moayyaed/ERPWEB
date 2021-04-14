@@ -400,18 +400,29 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 vt_por_iva = iva_porc
             };
             
-            var existe_producto = lst_actual.Where(q=>q.IdEmpresa==IdEmpresa && q.IdProducto==IdProducto).Count();
-            if (existe_producto==0)
-            {                
+            var existe_producto = lst_actual.Where(q=>q.IdEmpresa==IdEmpresa && q.IdProducto==IdProducto).FirstOrDefault();
+            if (existe_producto==null)
+            {
                 lst_actual.Add(info_det);
-                List_det.set_list(lst_actual, IdTransaccionSession);
+            }
+            else
+            {
+                var cantidad = existe_producto.vt_cantidad + 1;
+                subtotal = cantidad * producto.precio_1;
+                iva = Math.Round((subtotal * (iva_porc / 100)), 2);
+                total = Math.Round((subtotal + iva), 2);
+
+                //lst_actual.ForEach(q=> q.vt_cantidad = (q.Secuencia== existe_producto.Secuencia ? cantidad : q.vt_cantidad));
+                lst_actual.Where(q => q.Secuencia == existe_producto.Secuencia).ToList().ForEach(q => { q.vt_cantidad = cantidad; q.vt_iva = iva; q.vt_Subtotal = subtotal; q.vt_total = total; });
             }
 
+            List_det.set_list(lst_actual, IdTransaccionSession);
             Subtotal_Detalle = (double)Math.Round(lst_actual.Sum(q => q.vt_Subtotal), 2, MidpointRounding.AwayFromZero);
             Iva_Detalle = (double)Math.Round(lst_actual.Sum(q => q.vt_iva), 2, MidpointRounding.AwayFromZero);
             Total_Detalle = (double)Math.Round(lst_actual.Sum(q => q.vt_total), 2, MidpointRounding.AwayFromZero);
-            var x = Subtotal_Detalle.ToString("C2");
-            return Json(new { subtotal= Subtotal_Detalle.ToString("C2"), iva= Iva_Detalle.ToString("C2"), total= Total_Detalle.ToString("C2") }, JsonRequestBehavior.AllowGet);
+
+            var NombreProducto = producto.pr_descripcion;
+            return Json(new { Producto = NombreProducto, subtotal = Subtotal_Detalle.ToString("C2"), iva= Iva_Detalle.ToString("C2"), total= Total_Detalle.ToString("C2") }, JsonRequestBehavior.AllowGet);
         }
         
         public JsonResult SetearCantidad(int SecuencialID = 0, decimal IdTransaccionSession = 0)
@@ -492,11 +503,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
 
             return Json(info_cliente, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GuardarCliente(int IdEmpresa = 0, decimal IdCliente = 0, int IdPersona = 0, string pe_cedulaRuc = "", string pe_Naturaleza = "", string IdTipoDocumento = "", string pe_nombreCompleto = "", string pe_razonSocial = "", string pe_apellido = "", string pe_nombre = "", string pe_direccion = "", string pe_telfono_Contacto = "", string pe_celular = "", string pe_correo = "", decimal IdTransaccionSession=0)
+        public JsonResult GuardarCliente(int IdEmpresa = 0, decimal IdCliente = 0, int IdPersona = 0, string pe_cedulaRuc = "", string pe_Naturaleza = "", string IdTipoDocumento = "", string pe_nombreCompleto = "", string pe_razonSocial = "", string pe_apellido = "", string pe_nombre = "", string pe_direccion = "", string pe_telfono_Contacto = "", string pe_celular = "", string pe_correo = "", decimal IdTransaccionSession = 0)
         {
             var mensaje = string.Empty;
             var pe_NaturalezaCliente = string.Empty;
-            
+
 
             var info_cliente = new fa_cliente_Info
             {
@@ -525,7 +536,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 Telefono = pe_telfono_Contacto,
                 info_persona = new Info.General.tb_persona_Info
                 {
-                    IdPersona =IdPersona,
+                    IdPersona = IdPersona,
                     pe_nombre = pe_nombre,
                     pe_apellido = pe_apellido,
                     pe_nombreCompleto = pe_nombreCompleto,
@@ -601,7 +612,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             //    mensaje = "No se pudo guardar el registro";
             //}
 
-            return Json(new { mensaje = mensaje, boton = MostrarBoton }, JsonRequestBehavior.AllowGet);
+            return Json(new { mensaje = mensaje, boton = MostrarBoton, IdCliente = info_cliente.IdCliente, IdPersona= info_cliente.IdPersona }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ResumenFactura(decimal IdTransaccionSession = 0)
@@ -626,6 +637,11 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             
 
             return Json(Cambio.ToString("C2") , JsonRequestBehavior.AllowGet);
+        }        
+        public JsonResult ValidarListaPedido(decimal IdTransaccionSession = 0)
+        {
+            var lst_actual = List_det.get_list(IdTransaccionSession);
+            return Json(lst_actual.Count, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

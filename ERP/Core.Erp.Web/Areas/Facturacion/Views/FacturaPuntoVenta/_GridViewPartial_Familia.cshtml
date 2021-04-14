@@ -52,16 +52,23 @@
         settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(95);
         settings.Columns.Add(column =>
         {
-            column.Caption = "";
-            column.FieldName = "";
+            column.Caption = " ";
+            column.FieldName = "IdString";
             column.Width = Unit.Percentage(5);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-chevron-right\" onclick=\"VerProductos('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-chevron-right\"></span>");
             });
         });
+        settings.HtmlDataCellPrepared = (sender, e) =>
+        {
+            e.Cell.Attributes.Add(
+                "onclick",
+                string.Format("VerProductos('{0}');", e.KeyValue)
+            );
+        };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });
