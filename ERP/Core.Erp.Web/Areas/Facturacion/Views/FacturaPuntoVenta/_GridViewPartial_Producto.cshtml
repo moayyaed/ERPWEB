@@ -76,7 +76,7 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Caption = " ";            
+            column.Caption = " ";
             column.FieldName = "IdString";
             column.Width = Unit.Percentage(5);
             column.VisibleIndex = 3;
@@ -90,10 +90,13 @@
 
         settings.HtmlDataCellPrepared = (sender, e) =>
         {
-            e.Cell.Attributes.Add(
+            if (e.DataColumn.FieldName == "IdString")
+            {
+                e.Cell.Attributes.Add(
                 "onclick",
                 string.Format("AgregarPedido('{0}');", e.KeyValue)
-            );
+                );
+            }
         };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";

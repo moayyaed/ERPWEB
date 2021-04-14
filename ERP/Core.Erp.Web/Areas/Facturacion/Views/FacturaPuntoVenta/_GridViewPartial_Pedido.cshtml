@@ -44,24 +44,17 @@
         settings.Columns.Add(column =>
         {
             column.Caption = " ";
-            column.FieldName = "";
+            column.FieldName = "Recibido";
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.VisibleIndex = 1;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\" onclick=\"AbrirModalCantidad('" + c.KeyValue + "');\"></span>");
-                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\"></span>");
+                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\" onclick=\"AbrirModalCantidad('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\"></span>");
             });
         });
-        //settings.HtmlDataCellPrepared = (sender, e) =>
-        //{
-        //    e.Cell.Attributes.Add(
-        //        "onclick",
-        //        string.Format("AbrirModalCantidad('{0}');", e.KeyValue)
-        //    );
-        //};
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdEmpresa";
@@ -160,16 +153,36 @@
         settings.Columns.Add(column =>
         {
             column.Caption = "";
-            column.FieldName = "";
+            column.FieldName = "Cambio";
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.VisibleIndex = 17;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\" onclick=\"EliminarProducto('" + c.KeyValue + "');\"></span>");
+                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\" onclick=\"EliminarProducto('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\"></span>");
             });
         });
+
+        settings.HtmlDataCellPrepared = (sender, e) =>
+        {
+            if (e.DataColumn.FieldName == "Recibido")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("AbrirModalCantidad('{0}');", e.KeyValue)
+                );
+            }
+
+            if (e.DataColumn.FieldName == "Cambio")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("EliminarProducto('{0}');", e.KeyValue)
+                );
+            }
+        };
         settings.ClientSideEvents.BeginCallback = "function(s,e){ e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ }";
     });

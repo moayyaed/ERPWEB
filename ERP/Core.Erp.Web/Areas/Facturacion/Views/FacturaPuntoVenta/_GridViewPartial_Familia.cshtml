@@ -64,10 +64,13 @@
         });
         settings.HtmlDataCellPrepared = (sender, e) =>
         {
-            e.Cell.Attributes.Add(
-                "onclick",
-                string.Format("VerProductos('{0}');", e.KeyValue)
-            );
+            if (e.DataColumn.FieldName == "IdString")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("VerProductos('{0}');", e.KeyValue)
+                );
+            }
         };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
