@@ -3,7 +3,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridViewPartial_FinalizarPedido";
+        settings.Name = "gv_FinalizarPedido";
         settings.CallbackRouteValues = new { Controller = "FacturaPuntoVenta", Action = "GridViewPartial_FinalizarPedido", Area = "Facturacion"};
         settings.KeyFieldName = "Secuencia";
         settings.Width = Unit.Percentage(100);
@@ -20,31 +20,22 @@
 
         //Configuración scrolling y pager
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
-        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
-        settings.Settings.VerticalScrollableHeight = 300;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+        //settings.Settings.VerticalScrollableHeight = 300;
         settings.SettingsPager.Visible = true;
-        settings.SettingsPager.PageSize = 8;
+        settings.SettingsPager.PageSize = 10;
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.AlwaysShowPager = true;
         //Configuración filtro por columna
-        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-        settings.Settings.ShowFilterRow = true;
-        settings.Settings.ShowHeaderFilterButton = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-
-        //Funcion para inicializar fila al presionar nuevo
-        settings.InitNewRow = (s, e) =>
-        {
-            e.NewValues["IdProducto"] = 0;
-            e.NewValues["vt_cantidad"] = "1";
-            e.NewValues["vt_Precio"] = "";
-            e.NewValues["vt_PorDescUnitario"] = "0";
-        };
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Default;
+        settings.Settings.ShowFilterRow = false;
+        settings.Settings.ShowHeaderFilterButton = false;
+        
         settings.Columns.Add(column =>
         {
             column.FieldName = "pr_descripcion";
             column.Caption = "Producto";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(50);
             column.VisibleIndex = 1;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -77,7 +68,6 @@
         });
 
         settings.ClientSideEvents.BeginCallback = "function(s,e){ e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
-        settings.ClientSideEvents.EndCallback = "function(s,e){ }";
     });
 }
 @grid.Bind(Model).GetHtml()
