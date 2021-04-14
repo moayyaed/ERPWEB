@@ -10657,6 +10657,7 @@
     <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Familia.cshtml" />
     <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Producto.cshtml" />
     <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Pedido.cshtml" />
+    <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_FinalizarPedido.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

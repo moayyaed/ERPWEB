@@ -350,6 +350,51 @@ namespace Core.Erp.Data.Facturacion
                 throw;
             }
         }
+        
+        public bool modificarClientePV(fa_cliente_Info info)
+        {
+            try
+            {
+                using (Entities_facturacion Context = new Entities_facturacion())
+                {
+                    fa_cliente Entity = Context.fa_cliente.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente);
+                    if (Entity == null) return false;
+
+                    Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
+                    Entity.Fecha_UltMod = DateTime.Now;
+
+                    var lst = Context.fa_cliente_contactos.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).ToList();
+                    Context.fa_cliente_contactos.RemoveRange(lst);
+
+                    var Secuencia = 1;
+                    foreach (var item in info.lst_fa_cliente_contactos)
+                    {
+                        fa_cliente_contactos det = new fa_cliente_contactos
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdCliente = info.IdCliente,
+                            IdContacto = Secuencia++,
+                            IdCiudad = item.IdCiudad,
+                            IdParroquia = item.IdParroquia,
+                            Celular = item.Celular,
+                            Correo = item.Correo,
+                            Direccion = item.Direccion,
+                            Nombres = item.Nombres,
+                            Telefono = item.Telefono
+                        };
+                        Context.fa_cliente_contactos.Add(det);
+                    }
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         public bool anularDB(fa_cliente_Info info)
         {
             try

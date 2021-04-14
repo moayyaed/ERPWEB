@@ -13,8 +13,10 @@
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdCliente, new { @id = "IdCliente" })
+    @Html.HiddenFor(q => q.IdPersona, new { @id = "IdPersona" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
+    @Html.HiddenFor(q => q.pe_Naturaleza, new { @id = "pe_Naturaleza" })
+    @Html.HiddenFor(q => q.pe_nombreCompleto, new { @id = "pe_nombreCompleto" })
 }
 
 <script type="text/javascript">
@@ -22,7 +24,55 @@
         $("#RegresarFamilia").hide();
         $("#link_factura").click();
         $("#link_cliente").hide();
+
+        $("#pe_cedulaRuc").change(function () {
+            Validar_cedula_ruc();
+        });
+
+        $("#pe_cedulaRuc").change(function () {
+            get_info_x_num_cedula();
+        });
+
+        $("#pe_apellido").change(function () {
+            actualizar_nombre_completo();
+        });
+        $("#pe_nombre").change(function () {
+            actualizar_nombre_completo();
+        });
+        $("#pe_razonSocial").change(function () {
+            actualizar_nombre_completo();
+        });
+
+        $("#Recibido").change(function () {
+            CalcularCambio();
+        });
     });
+
+    function actualizar_nombre_completo() {
+        var apellido = $("#pe_apellido").val();
+        var nombre = $("#pe_nombre").val();
+        var razon_social = $("#pe_razonSocial").val();
+        var TipoDocumento = $("#IdTipoDocumento").val();
+
+        if (TipoDocumento == "RUC") {
+            if (razon_social == "")
+            {
+                alert("Ingrese razón social del cliente");
+            }
+            else {
+                $("#pe_nombreCompleto").val(razon_social)
+            }
+        }
+        else {
+            if (nombre=="" && apellido=="") {
+                alert("Ingrese apellidos y nombres del cliente");
+            }
+            else {
+                var nombre_completo = apellido + ' ' + nombre;
+                $("#pe_nombreCompleto").val(nombre_completo)
+            }
+        }
+    }
 
     function Regresar()
     {
@@ -47,7 +97,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#CantidadItem").val(data);                
+                $("#CantidadItem").val(data);
                 $("#modal-default-Cantidad").modal('show');
             },
             error: function (error) {
@@ -58,48 +108,52 @@
     function EscribirCantidad(Valor) {
         var Cantidad = $("#CantidadItem").val()
         var CantidadString = Cantidad + Valor;
-        var CantidadItem = 0;
 
-        if (Number.isNaN(Number.parseFloat(CantidadString))) {
-            CantidadItem = 0;
-        }
-        else {
-            CantidadItem = parseFloat(CantidadString)
-        }
-
-        $("#CantidadItem").val(CantidadItem);
+        $("#CantidadItem").val(CantidadString);
     }
-    
+
     function Borrar() {
         $("#CantidadItem").val("");
     }
 
     function ModificarCantidad() {
-        var datos = {
-            SecuenciaModificar: $("#SecuenciaModificar").val(),
-            Cantidad: $("#CantidadItem").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("ModificarCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#modal-default-Cantidad").modal('hide');
-                $("#Subtotal").html(data.subtotal);
-                $("#Iva").html(data.iva);
-                $("#Total").html(data.total);
+        var CantidadItem = $("#CantidadItem").val();
 
-                GridViewPartial_Pedido.PerformCallback();
-            },
-            error: function (error) {
+        if (Number.isNaN(Number.parseFloat(CantidadItem))) {
+            CantidadItem = 0;
+        }
+        else {
+            CantidadItem = parseFloat(CantidadItem)
+        }
+        
+        if (CantidadItem>0) {
+            var datos = {
+                SecuenciaModificar: $("#SecuenciaModificar").val(),
+                Cantidad: CantidadItem,
+                IdTransaccionSession: $("#IdTransaccionSession").val()
             }
-        });
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("ModificarCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#modal-default-Cantidad").modal('hide');
+                    $("#Subtotal").val(data.subtotal);
+                    $("#Iva").val(data.iva);
+                    $("#Total").val(data.total);
+
+                    GridViewPartial_Pedido.PerformCallback();
+                },
+                error: function (error) {
+                }
+            });
+        }
+
     }
 
     function EliminarProducto(SecuencialID) {
@@ -118,6 +172,10 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
+                    $("#Subtotal").val(data.subtotal);
+                    $("#Iva").val(data.iva);
+                    $("#Total").val(data.total);
+
                     GridViewPartial_Pedido.PerformCallback();
                 },
                 error: function (error) {
@@ -174,9 +232,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $("#Subtotal").html(data.subtotal);
-                $("#Iva").html(data.iva);
-                $("#Total").html(data.total);
+                $("#Subtotal").val(data.subtotal);
+                $("#Iva").val(data.iva);
+                $("#Total").val(data.total);
                 GridViewPartial_Pedido.PerformCallback();
             },
             error: function (error) {
@@ -195,14 +253,252 @@
         $("#link_factura").show();
         $("#link_factura").click();
     }
+
+    function get_info_x_num_cedula() {
+        var cedula = $("#pe_cedulaRuc").val();
+        var tipo_doc = $("#IdTipoDocumento").val();
+
+        if (cedula == null) {
+            vaciar_campos_persona();
+            return;
+        }
+
+        if (tipo_doc == "RUC") {
+            if (cedula.length != 13) {
+                alert("El documento de tipo RUC, debe tener una longitud de 13 caracteres");
+                $("#pe_cedulaRuc").val("");
+                vaciar_campos_persona();
+                return;
+            }
+        } else
+            if (tipo_doc == "CED") {
+                if (cedula.length != 10) {
+                    alert("El documento de tipo cédula, debe tener una longitud de 10 caracteres");
+                    $("#pe_cedulaRuc").val("");
+                    vaciar_campos_persona();
+                    return;
+                }
+            }
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            pe_cedulaRuc: cedula
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_x_num_cedula", "FacturaPuntoVenta",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.IdPersona != 0 && data.IdCliente != 0) {
+                    $("#IdPersona").val(data.info.IdPersona);
+                    $("#IdCliente").val(data.info.IdCliente);
+                    $("#pe_nombre").val(data.info.info_persona.pe_nombre);
+                    $("#pe_apellido").val(data.info.info_persona.pe_apellido);
+                    $("#pe_nombreCompleto").val(data.info.info_persona.pe_nombreCompleto);
+                    $("#pe_razonSocial").val(data.info.info_persona.pe_razonSocial);
+                    $("#pe_correo").val(data.info.info_persona.pe_correo);
+                    $("#pe_celular").val(data.info.info_persona.pe_celular);
+                    $("#pe_telfono_Contacto").val(data.info.info_persona.pe_telfono_Contacto);
+                    $("#pe_direccion").val(data.info.info_persona.pe_direccion);
+                }
+
+                if (data.boton == 0) {
+                    $("#BtnGuardar").hide();
+                }
+                else {
+                    $("#BtnGuardar").show();
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    }
+
+    function vaciar_campos_persona() {
+        $("#pe_nombre").val("");
+        $("#pe_apellido").val("");
+        $("#pe_nombreCompleto").val("");
+        $("#pe_razonSocial").val("");
+        $("#IdPersona").val("0");
+        $("#pe_correo").val("");
+        $("#pe_celular").val("");
+        $("#pe_telfono_Contacto").val("");
+        $("#pe_direccion").val("");
+    }
+
+
+    function Validar_cedula_ruc() {
+        var datos = {
+            naturaleza: $("#pe_Naturaleza").val(),
+            tipo_documento: $("#IdTipoDocumento").val(),
+            cedula_ruc: $("#pe_cedulaRuc").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.isValid == true) {
+                    $("#error_documento").hide();
+                    $("#pe_Naturaleza").val(data.return_naturaleza);
+                }
+                else {
+                    $("#error_documento").show();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function SetConsumidorFinal() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetConsumidorFinal", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdPersona").val(data.IdPersona);
+                $("#IdCliente").val(data.IdCliente);
+                $("#pe_cedulaRuc").val(data.info_persona.pe_cedulaRuc);
+                $("#pe_Naturaleza").val(data.info_persona.pe_Naturaleza);
+                $("#IdTipoDocumento").val(data.info_persona.IdTipoDocumento);
+                $("#pe_nombreCompleto").val(data.info_persona.pe_nombreCompleto);
+                $("#pe_razonSocial").val(data.info_persona.pe_razonSocial);
+                $("#pe_apellido").val(data.info_persona.pe_apellido);
+                $("#pe_nombre").val(data.info_persona.pe_nombre);
+                $("#pe_direccion").val(data.Direccion);
+                $("#pe_telfono_Contacto").val(data.Telefono);
+                $("#pe_celular").val(data.Celular);
+                $("#pe_correo").val(data.Correo);
+
+                if(data.MostrarBoton==0){
+                    $("#BtnGuardar").hide();
+                }
+                else {
+                    $("#BtnGuardar").show();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GuardarCliente() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCliente: $("#IdCliente").val(),
+            IdPersona: $("#IdPersona").val(),
+            pe_cedulaRuc: $("#pe_cedulaRuc").val(),
+            pe_Naturaleza: $("#pe_Naturaleza").val(),
+            IdTipoDocumento: $("#IdTipoDocumento").val(),
+            pe_nombreCompleto: $("#pe_nombreCompleto").val(),
+            pe_razonSocial: $("#pe_razonSocial").val(),
+            pe_apellido: $("#pe_apellido").val(),
+            pe_nombre: $("#pe_nombre").val(),
+            pe_direccion: $("#pe_direccion").val(),
+            pe_telfono_Contacto: $("#pe_telfono_Contacto").val(),
+            pe_celular: $("#pe_celular").val(),
+            pe_correo: $("#pe_correo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GuardarCliente", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.boton==0) {
+                    $("#BtnGuardar").hide();
+                }
+                else {
+                    $("#BtnGuardar").show();
+                }
+
+                if (data.mensaje != "") {
+                    alert(data.mensaje);
+                }
+                else {
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function ResumenFactura() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ResumenFactura", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#SubtotalFactura").val(data.subtotal);
+                $("#IvaFactura").val(data.iva);
+                $("#TotalFactura").val(data.total);
+
+                $("#modal-default-ResumenFactura").modal('show');
+                GridViewPartial_FinalizarPedido.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function CalcularCambio() {
+        var datos = {
+            Recibido: $("#Recibido").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CalcularCambio", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Cambio").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
 </script>
 
 <div class="modal fade" id="modal-default-Cantidad" role="dialog">
     <div class="modal-dialog modal-sm">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                
+            <div class="modal-header">                
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modificar</h4>
                 @Html.HiddenFor(q => q.SecuenciaModificar, new { @id = "SecuenciaModificar" })
@@ -211,7 +507,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Cantidad">Cantidad</label>
-                                @Html.TextBoxFor(q => q.IdCaja, new { @class = "form-control", @readonly = "readonly", @id="CantidadItem" })
+                                @Html.TextBoxFor(q => q.CantidadItem, new { @class = "form-control", @readonly = "readonly", @id="CantidadItem" })
                             </div>
                         </div>
                     </div>
@@ -251,6 +547,106 @@
 
     </div>
 </div>
+<div class="modal fade" id="modal-default-ResumenFactura" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Finalizar Factura</h4>                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdCliente"></label>
+                                @Html.Action("GridViewPartial_FinalizarPedido")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-offset-9 col-md-3">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                <b>SubTotal</b>
+                                </div>
+                                @Html.TextBoxFor(q => q.SubtotalFactura, new { @class = "form-control", @readonly = "readonly", @id = "SubtotalFactura" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-offset-9 col-md-3">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IVA</b>
+                                </div>
+                                @Html.TextBoxFor(q => q.IvaFactura, new { @class = "form-control", @readonly = "readonly", @id = "IvaFactura" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-offset-9 col-md-3">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total</b>                                    
+                                </div>
+                                @Html.TextBoxFor(q => q.TotalFactura, new { @class = "form-control", @readonly = "readonly", @id = "TotalFactura" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Forma de pago*</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lst_formapago, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_FormaPago" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago"></label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Recibido</label>
+                                @Html.TextBoxFor(q => q.Recibido, new { @class = "form-control", @id = "Recibido" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Cambio*</label>
+                                @Html.TextBoxFor(q => q.Cambio, new { @class = "form-control", @readonly = "readonly", @id = "Cambio" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-chevron-left"></i>&nbsp; Volver</button>
+                <button type="button" class="btn btn-primary">Finalizar&nbsp;<i class="fa fa-chevron-right"></i></button>                
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <div id="Tabs" role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
@@ -280,6 +676,51 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-offset-8 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <b>SubTotal</b>
+                                        </div>
+                                        @Html.TextBoxFor(q => q.Subtotal, new { @class = "form-control", @readonly = "readonly", @id = "Subtotal", @style="text-align:right" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-offset-8 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IVA</b>
+                                        </div>
+                                        @Html.TextBoxFor(q => q.Iva, new { @class = "form-control", @readonly = "readonly", @id = "Iva", @style = "text-align:right" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-offset-8 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total</b>
+                                        </div>
+                                        @Html.TextBoxFor(q => q.Total, new { @class = "form-control", @readonly = "readonly", @id = "Total", @style = "text-align:right" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-10">
                                     <div class="form-group" style="text-align:right">
@@ -320,7 +761,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -387,6 +828,134 @@
         <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cliente">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label></label>
+                                        <button type="button" class="btn btn-info form-control" title="Consumidor final" id="RegresarFamilia" onclick="SetConsumidorFinal();">
+                                            <i class="fa fa-user">&nbsp;</i> Consumidor Final
+                                        </button>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-9">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="info_persona.IdTipoDocumento">Tipo documento*</label>
+                                        @Html.DropDownListFor(q => q.IdTipoDocumento, new SelectList(ViewBag.lst_tipo_doc, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "IdTipoDocumento" })
+                                        @Html.ValidationMessageFor(q => q.IdTipoDocumento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="info_persona.pe_cedulaRuc">Número documento*</label>
+                                        @Html.TextBoxFor(q => q.pe_cedulaRuc, new { @class = "form-control", @id = "pe_cedulaRuc" })
+                                        @Html.ValidationMessageFor(q => q.pe_cedulaRuc, "", new { @class = "text-danger" })
+                                        <label hidden id="error_documento" style="color:red"> <i class="icon fa fa-warning"></i> Número de identificación inválida</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="info_persona.pe_apellido">Apellidos</label>
+                                        @Html.TextBoxFor(q => q.pe_apellido, new { @class = "form-control", @id = "pe_apellido" })
+                                        @Html.ValidationMessageFor(q => q.pe_apellido, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="info_persona.pe_nombre">Nombres</label>
+                                        @Html.TextBoxFor(q => q.pe_nombre, new { @class = "form-control", @id = "pe_nombre" })
+                                        @Html.ValidationMessageFor(q => q.pe_nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="info_persona.pe_razonSocial">Razón social</label>
+                                        @Html.TextBoxFor(q => q.pe_razonSocial, new { @class = "form-control", @id = "pe_razonSocial" })
+                                        @Html.ValidationMessageFor(q => q.pe_razonSocial, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Dirección*</label>
+                                        @Html.TextBoxFor(q => q.pe_direccion, new { @class = "form-control", @id = "pe_direccion" })
+                                        @Html.ValidationMessageFor(q => q.pe_direccion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="info_persona.pe_cedulaRuc">Correo*</label>
+                                        @Html.TextBoxFor(q => q.pe_correo, new { @class = "form-control", @id = "pe_correo" })
+                                        @Html.ValidationMessageFor(q => q.pe_correo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Teléfono</label>
+                                        @Html.TextBoxFor(q => q.pe_telfono_Contacto, new { @class = "form-control", @id = "pe_telfono_Contacto" })
+                                        @Html.ValidationMessageFor(q => q.pe_telfono_Contacto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Celular</label>
+                                        @Html.TextBoxFor(q => q.pe_celular, new { @class = "form-control", @id = "pe_celular" })
+                                        @Html.ValidationMessageFor(q => q.pe_celular, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="BtnGuardar" hidden>
+                            <div class="col-md-12">
+                                <div class="col-md-11">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label for="IdCliente"></label>
+                                        <button id="GuardarCliente" type="button" class="btn btn-success form-control" title="Ver detalle de factura" onclick="GuardarCliente();">
+                                            Guardar &nbsp;<i class="fa fa-save"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-md-10">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -395,7 +964,7 @@
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="IdCliente"></label>
-                            <button type="button" class="btn btn-default form-control" title="Regresar a Factura" onclick="RegresarCliente();">
+                            <button type="button" class="btn btn-default form-control" title="Regresar a pedido" onclick="RegresarCliente();">
                                 <i class="fa fa-chevron-left"></i>&nbsp; Volver 
                             </button>
                         </div>
@@ -403,7 +972,7 @@
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="IdCliente"></label>
-                            <button type="button" class="btn btn-success form-control" title="Ver detalle de factura" onclick="Pagar();">
+                            <button type="button" class="btn btn-success form-control" title="Ver resumen de factura" onclick="ResumenFactura();">
                                 Pagar &nbsp;<i class="fa fa-chevron-right"></i>
                             </button>
                         </div>

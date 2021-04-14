@@ -409,6 +409,39 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+        public bool modificarPersonaPV(tb_persona_Info info)
+        {
+            try
+            {
+                using (Entities_general Context = new Entities_general())
+                {
+                    tb_persona Entity = Context.tb_persona.FirstOrDefault(q => q.IdPersona == info.IdPersona);
+                    if (Entity == null) return false;
+                    Entity.pe_Naturaleza = info.pe_Naturaleza;
+                    Entity.pe_nombreCompleto = info.pe_nombreCompleto;
+                    Entity.pe_razonSocial = info.pe_razonSocial;
+                    Entity.pe_apellido = info.pe_apellido;
+                    Entity.pe_nombre = info.pe_nombre;
+                    Entity.IdTipoDocumento = info.IdTipoDocumento;
+                    Entity.pe_cedulaRuc = info.pe_cedulaRuc;
+                    Entity.pe_direccion = info.pe_direccion;
+                    Entity.pe_telfono_Contacto = info.pe_telfono_Contacto;
+                    Entity.pe_celular = info.pe_celular;
+                    Entity.pe_correo = info.pe_correo;                    
+
+                    Entity.pe_fechaModificacion = DateTime.Now;
+                    Entity.pe_UltUsuarioModi = info.pe_UltUsuarioModi;
+                    Context.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool anularDB(tb_persona_Info info)
         {
             try
