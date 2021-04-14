@@ -121,7 +121,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     {
         public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
         {
-            AllowedFileExtensions = new string[] { ".xls" },
+            AllowedFileExtensions = new string[] { ".xls" , ".xlsx" },
             MaxFileSize = 40000000
         };
         public static void FileUploadComplete_marcaciones(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
