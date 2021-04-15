@@ -271,6 +271,7 @@
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Info.cs" />
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Info.cs" />
     <Compile Include="General\tb_sucursal_Info.cs" />
+    <Compile Include="General\tb_TarjetaCredito_Info.cs" />
     <Compile Include="General\tb_transportista_Info.cs" />
     <Compile Include="General\tb_visor_video_Info.cs" />
     <Compile Include="Helps\cl_enumeradores.cs" />

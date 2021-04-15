@@ -98,6 +98,8 @@ namespace Core.Erp.Info.Facturacion
         #endregion
 
         #region CamposFactura_PuntoVenta
+        public Nullable<int> IdTarjeta { get; set; }
+        public string cr_Tarjeta { get; set; }
         public double CantidadItem { get; set; }
         public double Recibido { get; set; }
         public double Cambio { get; set; }

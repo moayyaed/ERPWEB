@@ -300,7 +300,7 @@ namespace Core.Erp.Data.Facturacion
                 using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
                     connection.Open();
-                    string query = "select IdEmpresa, IdSucursal, IdBodega, IdPuntoVta, cod_PuntoVta, nom_PuntoVta, estado, CobroAutomatico from fa_PuntoVta where IdEmpresa = "+IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and CodDocumentoTipo = '"+codDocumentoTipo+"'";
+                    string query = "select IdEmpresa, IdSucursal, IdBodega, IdPuntoVta, IdCaja, cod_PuntoVta, nom_PuntoVta, estado, CobroAutomatico from fa_PuntoVta where IdEmpresa = "+IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and CodDocumentoTipo = '"+codDocumentoTipo+"'";
                     SqlCommand command = new SqlCommand(query,connection);
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
@@ -311,6 +311,7 @@ namespace Core.Erp.Data.Facturacion
                             IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
                             IdBodega = Convert.ToInt32(reader["IdBodega"]),
                             IdPuntoVta = Convert.ToInt32(reader["IdPuntoVta"]),
+                            IdCaja = Convert.ToInt32(reader["IdCaja"]),
                             cod_PuntoVta = Convert.ToString(reader["cod_PuntoVta"]),
                             nom_PuntoVta = Convert.ToString(reader["nom_PuntoVta"]),
                             estado = Convert.ToBoolean(reader["estado"]),

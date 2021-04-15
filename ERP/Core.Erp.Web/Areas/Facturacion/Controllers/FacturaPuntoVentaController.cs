@@ -1,4 +1,6 @@
-﻿using Core.Erp.Bus.Contabilidad;
+﻿using Core.Bus.Facturacion;
+using Core.Bus.General;
+using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
@@ -32,8 +34,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         fa_factura_Bus bus_factura = new fa_factura_Bus();
         fa_PuntoVta_Bus bus_punto_venta = new fa_PuntoVta_Bus();
+        fa_PuntoVta_x_seg_usuario_Bus bus_punto_venta_usuario = new fa_PuntoVta_x_seg_usuario_Bus();
         tb_sis_Documento_Tipo_Talonario_Bus bus_talonario = new tb_sis_Documento_Tipo_Talonario_Bus();
         fa_parametro_Bus bus_param = new fa_parametro_Bus();
+        tb_TarjetaCredito_Bus bus_tarjeta = new tb_TarjetaCredito_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
         #endregion
@@ -47,6 +51,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            var IdUsuario = SessionFixed.IdUsuario;
+            var PuntoVenta = bus_punto_venta.get_list_x_tipo_doc(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(SessionFixed.IdSucursal), cl_enumeradores.eTipoDocumento.FACT.ToString()).FirstOrDefault();
+            var PuntoVentaUsuario = bus_punto_venta_usuario.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), (PuntoVenta==null ? 0 :PuntoVenta.IdPuntoVta)).FirstOrDefault();
 
             var info_parametro = bus_parametro.get_info(Convert.ToInt32(SessionFixed.IdEmpresa));
             decimal ConsumidorFinal = info_parametro == null ? 0 : Convert.ToDecimal(info_parametro.IdClienteConsumidorFinal);
@@ -69,7 +76,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 pe_telfono_Contacto = info_cliente.Telefono,
                 pe_correo = info_cliente.Correo,
                 pe_direccion = info_cliente.Direccion,
-
                 vt_fecha = DateTime.Now,
                 vt_plazo = 1,
                 vt_fech_venc = DateTime.Now.AddDays(1),
@@ -85,6 +91,13 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 IvaFactura = 0,
                 Total = 0,
                 TotalFactura = 0,
+
+                IdBodega = PuntoVenta.IdBodega,
+                vt_tipo_venta="CON",
+                vt_Observacion=" ",
+                IdCaja = PuntoVenta.IdCaja,
+                IdFacturaTipo=1
+                                
         };
             cargar_combos(model);
             var lst = bus_marca.get_list(model.IdEmpresa, false);
@@ -98,23 +111,23 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Index(fa_factura_Info model)
         {
-            //if (!validar_factura(model, ref mensaje))
-            //{
-            //    List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
-            //    ViewBag.mensaje = mensaje;
-            //    cargar_combos(model);
-            //    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-            //    return View(model);
-            //}
-            //model.IdUsuario = SessionFixed.IdUsuario.ToString();
-            //if (!bus_factura.guardarDB(model))
-            //{
-            //    List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
-            //    ViewBag.mensaje = "No se ha podido guardar el registro";
-            //    cargar_combos(model);
-            //    SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-            //    return View(model);
-            //};
+            if (!validar_factura(model, ref mensaje))
+            {
+                List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
+                ViewBag.mensaje = mensaje;
+                cargar_combos(model);
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                return View(model);
+            }
+            model.IdUsuario = SessionFixed.IdUsuario.ToString();
+            if (!bus_factura.guardarDB(model))
+            {
+                List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
+                ViewBag.mensaje = "No se ha podido guardar el registro";
+                cargar_combos(model);
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                return View(model);
+            };
             return RedirectToAction("Index");
         }
         #endregion
@@ -128,6 +141,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             tb_Catalogo_Bus bus_catalogo = new tb_Catalogo_Bus();
             var lst_tipo_doc = bus_catalogo.get_list(Convert.ToInt32(cl_enumeradores.eTipoCatalogoGeneral.TIPODOC), false);
             ViewBag.lst_tipo_doc = lst_tipo_doc;
+
+            var lst_tarjeta = bus_tarjeta.GetList(info.IdEmpresa, false);
+            ViewBag.lst_tarjeta = lst_tarjeta;
         }
 
         private bool validar(fa_cliente_Info i_validar, ref string msg)
@@ -183,17 +199,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         private bool validar_factura(fa_factura_Info i_validar, ref string msg)
         {
             string MsgValidaciones = string.Empty;
-            i_validar.PedirDesbloqueo = false;
-
-            //if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.FAC, i_validar.IdSucursal, ref msg))
-            //{
-            //    return false;
-            //}
-
-            //if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.vt_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
-            //{
-            //    return false;
-            //}
 
             i_validar.lst_det = List_det.get_list(i_validar.IdTransaccionSession);
             if (i_validar.lst_det.Count == 0)
@@ -218,7 +223,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             }
 
             #region Talonario
-
             var pto_vta = bus_punto_venta.get_info(i_validar.IdEmpresa, i_validar.IdSucursal, Convert.ToInt32(i_validar.IdPuntoVta));
             if (pto_vta != null && pto_vta.EsElectronico)
             {
@@ -266,7 +270,6 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             i_validar.IdUsuarioUltModi = SessionFixed.IdUsuario;
 
             #region ValidacionDeTalonario
-
             if (i_validar.IdCbteVta == 0 && !pto_vta.EsElectronico)
             {
                 var talonario = bus_talonario.get_info(i_validar.IdEmpresa, i_validar.vt_tipoDoc, i_validar.vt_serie1, i_validar.vt_serie2, i_validar.vt_NumFactura);

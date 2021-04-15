@@ -9,7 +9,7 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Index", "FacturaPuntoVenta", FormMethod.Post, new { @role = "form", @class = "form" }))
+@using (Html.BeginForm("Index", "FacturaPuntoVenta", FormMethod.Post, new { @role = "form", @class = "form", @id="Form_FacturaPuntoVenta"}))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdCliente, new { @id = "IdCliente" })
@@ -17,11 +17,25 @@
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.pe_Naturaleza, new { @id = "pe_Naturaleza" })
     @Html.HiddenFor(q => q.pe_nombreCompleto, new { @id = "pe_nombreCompleto" })
+
+    @Html.HiddenFor(q => q.vt_fecha, new { @id = "vt_fecha" })
+    @Html.HiddenFor(q => q.vt_plazo, new { @id = "vt_plazo" })
+    @Html.HiddenFor(q => q.vt_fech_venc, new { @id = "vt_fech_venc" })
+    @Html.HiddenFor(q => q.vt_tipoDoc, new { @id = "vt_tipoDoc" })
+    @Html.HiddenFor(q => q.IdVendedor, new { @id = "IdVendedor" })
+    @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
+    @Html.HiddenFor(q => q.vt_tipo_venta, new { @id = "vt_tipo_venta" })
+    @Html.HiddenFor(q => q.vt_Observacion, new { @id = "vt_Observacion" })
+    @Html.HiddenFor(q => q.IdCaja, new { @id = "IdCaja" })
+    @Html.HiddenFor(q => q.IdFacturaTipo, new { @id = "IdFacturaTipo" })
 }
 
 <script type="text/javascript">
     $(function () {
         MostrarTxtPorTipoDocumento();
+        MostarTxtCambio();
+        //MostrarDatosTarjeta()
+
         $("#RegresarFamilia").hide();
         $("#link_factura").click();
         $("#link_cliente").hide();
@@ -53,7 +67,49 @@
         $("#IdCatalogo_FormaPago").change(function () {
             MostarTxtCambio();
         });
+        //$("#IdCatalogo_FormaPago").change(function () {
+        //    MostrarDatosTarjeta();
+        //});
     });
+    function GuardarFactura() {
+        $("#Form_FacturaPuntoVenta").submit();
+    }
+    function MostarTxtCambio() {
+        var IdCatalogo_FormaPago = $("#IdCatalogo_FormaPago").val();
+        if (IdCatalogo_FormaPago == "EFEC") {
+            $("#TxtRecibido").show();
+            $("#TxtCambio").show();
+
+            $("#DatoIdTarjeta").hide();
+            $("#DatoTarjeta").hide();
+        }
+        else if (IdCatalogo_FormaPago == "TARCRE") {
+            $("#DatoIdTarjeta").show();
+            $("#DatoTarjeta").show();
+
+            $("#TxtRecibido").hide();
+            $("#TxtCambio").hide();
+        }
+        else {
+            $("#DatoIdTarjeta").hide();
+            $("#DatoTarjeta").hide();
+
+            $("#TxtRecibido").hide();
+            $("#TxtCambio").hide();
+        }
+
+    }
+    //function MostrarDatosTarjeta() {
+    //    var TipoCobro = $("#IdCatalogo_FormaPago").val();
+    //    if (TipoCobro == "TARCRE") {
+    //        $("#DatoIdTarjeta").show();
+    //        $("#DatoTarjeta").show();
+    //    }
+    //    else {
+    //        $("#DatoIdTarjeta").hide();
+    //        $("#DatoTarjeta").hide();
+    //    }
+    //}
 
     function MostrarTxtPorTipoDocumento() {
         var TipoDocumento = $("#IdTipoDocumento").val();
@@ -64,19 +120,6 @@
         else {
             $("#RazonSocial_Cliente").hide();
             $("#NombresApellidos_Cliente").show();
-        }
-
-    }
-
-    function MostarTxtCambio() {
-        var IdCatalogo_FormaPago = $("#IdCatalogo_FormaPago").val();
-        if (IdCatalogo_FormaPago == "EFEC") {
-            $("#TxtRecibido").show();
-            $("#TxtCambio").show();
-        }
-        else {
-            $("#TxtRecibido").hide();
-            $("#TxtCambio").hide();
         }
 
     }
@@ -697,22 +740,30 @@
                                 @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2" id="TxtRecibido" hidden>
                             <div class="form-group">
-                                <label for="IdCatalogo_FormaPago"></label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group" id="TxtRecibido">
                                 <label for="IdCatalogo_FormaPago">Recibido</label>
                                 @Html.TextBoxFor(q => q.Recibido, new { @class = "form-control", @id = "Recibido" })
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group" id="TxtCambio">
+                        <div class="col-md-2"  id="TxtCambio" hidden>
+                            <div class="form-group">
                                 <label for="IdCatalogo_FormaPago">Cambio*</label>
                                 @Html.TextBoxFor(q => q.Cambio, new { @class = "form-control", @readonly = "readonly", @id = "Cambio" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="DatoIdTarjeta" hidden>
+                            <div class="form-group">
+                                <label for="cr_TotalCobro">Tarjeta de Crédito</label>
+                                @Html.DropDownListFor(q => q.IdTarjeta, new SelectList(ViewBag.lst_tarjeta, "IdTarjeta", "NombreTarjeta"), new { @class = "form-control", @id = "IdTarjeta" })
+                                @Html.ValidationMessageFor(q => q.IdTarjeta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="DatoTarjeta" hidden>
+                            <div class="form-group">
+                                <label for="cr_saldo">Numero</label>
+                                @Html.TextBoxFor(q => q.cr_Tarjeta, new { @id = "cr_Tarjeta", @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.cr_Tarjeta, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -720,7 +771,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-chevron-left"></i>&nbsp; Volver</button>
-                <button type="button" class="btn btn-primary">Finalizar&nbsp;<i class="fa fa-chevron-right"></i></button>                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                @*<button type="submit" class="btn btn-primary">Finalizar&nbsp;<i class="fa fa-chevron-right"></i></button>*@                
             </div>
         </div>
 
