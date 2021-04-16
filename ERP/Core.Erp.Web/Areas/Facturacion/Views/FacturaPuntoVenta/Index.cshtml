@@ -9,604 +9,41 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Index", "FacturaPuntoVenta", FormMethod.Post, new { @role = "form", @class = "form", @id="Form_FacturaPuntoVenta"}))
+@using (Html.BeginForm("Index", "FacturaPuntoVenta", FormMethod.Post, new { @role = "form", @class = "form" } ))
 {
-    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
-    @Html.HiddenFor(q => q.IdCliente, new { @id = "IdCliente" })
-    @Html.HiddenFor(q => q.IdPersona, new { @id = "IdPersona" })
-    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    @Html.HiddenFor(q => q.pe_Naturaleza, new { @id = "pe_Naturaleza" })
-    @Html.HiddenFor(q => q.pe_nombreCompleto, new { @id = "pe_nombreCompleto" })
+@Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+@Html.HiddenFor(q => q.IdSucursal, new { @id = "IdSucursal" })
+@Html.HiddenFor(q => q.IdCliente, new { @id = "IdCliente" })
+@Html.HiddenFor(q => q.IdPersona, new { @id = "IdPersona" })
+@Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+@Html.HiddenFor(q => q.pe_Naturaleza, new { @id = "pe_Naturaleza" })
+@Html.HiddenFor(q => q.pe_nombreCompleto, new { @id = "pe_nombreCompleto" })
 
-    @Html.HiddenFor(q => q.vt_fecha, new { @id = "vt_fecha" })
-    @Html.HiddenFor(q => q.vt_plazo, new { @id = "vt_plazo" })
-    @Html.HiddenFor(q => q.vt_fech_venc, new { @id = "vt_fech_venc" })
-    @Html.HiddenFor(q => q.vt_tipoDoc, new { @id = "vt_tipoDoc" })
-    @Html.HiddenFor(q => q.IdVendedor, new { @id = "IdVendedor" })
-    @Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
-    @Html.HiddenFor(q => q.vt_tipo_venta, new { @id = "vt_tipo_venta" })
-    @Html.HiddenFor(q => q.vt_Observacion, new { @id = "vt_Observacion" })
-    @Html.HiddenFor(q => q.IdCaja, new { @id = "IdCaja" })
-    @Html.HiddenFor(q => q.IdFacturaTipo, new { @id = "IdFacturaTipo" })
-}
+@Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
+@Html.HiddenFor(q => q.IdNivel, new { @id = "IdNivel" })
+@Html.HiddenFor(q => q.vt_fecha, new { @id = "vt_fecha" })
+@Html.HiddenFor(q => q.vt_plazo, new { @id = "vt_plazo" })
+@Html.HiddenFor(q => q.vt_fech_venc, new { @id = "vt_fech_venc" })
+@Html.HiddenFor(q => q.vt_tipoDoc, new { @id = "vt_tipoDoc" })
+@Html.HiddenFor(q => q.IdVendedor, new { @id = "IdVendedor" })
+@Html.HiddenFor(q => q.IdBodega, new { @id = "IdBodega" })
+@Html.HiddenFor(q => q.vt_tipo_venta, new { @id = "vt_tipo_venta" })
+@Html.HiddenFor(q => q.vt_Observacion, new { @id = "vt_Observacion" })
+@Html.HiddenFor(q => q.IdCaja, new { @id = "IdCaja" })
+@Html.HiddenFor(q => q.IdFacturaTipo, new { @id = "IdFacturaTipo" })
 
-<script type="text/javascript">
-    $(function () {
-        MostrarTxtPorTipoDocumento();
-        MostarTxtCambio();
-        //MostrarDatosTarjeta()
-
-        $("#RegresarFamilia").hide();
-        $("#link_factura").click();
-        $("#link_cliente").hide();
-
-        $("#pe_cedulaRuc").change(function () {
-            Validar_cedula_ruc();
-        });
-
-        $("#pe_cedulaRuc").change(function () {
-            get_info_x_num_cedula();
-        });
-
-        $("#pe_apellido").change(function () {
-            actualizar_nombre_completo();
-        });
-        $("#pe_nombre").change(function () {
-            actualizar_nombre_completo();
-        });
-        $("#pe_razonSocial").change(function () {
-            actualizar_nombre_completo();
-        });
-
-        $("#Recibido").change(function () {
-            CalcularCambio();
-        });
-        $("#IdTipoDocumento").change(function () {
-            MostrarTxtPorTipoDocumento();
-        });
-        $("#IdCatalogo_FormaPago").change(function () {
-            MostarTxtCambio();
-        });
-        //$("#IdCatalogo_FormaPago").change(function () {
-        //    MostrarDatosTarjeta();
-        //});
-    });
-    function GuardarFactura() {
-        $("#Form_FacturaPuntoVenta").submit();
+if (ViewBag.mensaje != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissible">
+                <h4>
+                    <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                </h4>
+            </div>
+        </div>
+    </div>
     }
-    function MostarTxtCambio() {
-        var IdCatalogo_FormaPago = $("#IdCatalogo_FormaPago").val();
-        if (IdCatalogo_FormaPago == "EFEC") {
-            $("#TxtRecibido").show();
-            $("#TxtCambio").show();
-
-            $("#DatoIdTarjeta").hide();
-            $("#DatoTarjeta").hide();
-        }
-        else if (IdCatalogo_FormaPago == "TARCRE") {
-            $("#DatoIdTarjeta").show();
-            $("#DatoTarjeta").show();
-
-            $("#TxtRecibido").hide();
-            $("#TxtCambio").hide();
-        }
-        else {
-            $("#DatoIdTarjeta").hide();
-            $("#DatoTarjeta").hide();
-
-            $("#TxtRecibido").hide();
-            $("#TxtCambio").hide();
-        }
-
-    }
-    //function MostrarDatosTarjeta() {
-    //    var TipoCobro = $("#IdCatalogo_FormaPago").val();
-    //    if (TipoCobro == "TARCRE") {
-    //        $("#DatoIdTarjeta").show();
-    //        $("#DatoTarjeta").show();
-    //    }
-    //    else {
-    //        $("#DatoIdTarjeta").hide();
-    //        $("#DatoTarjeta").hide();
-    //    }
-    //}
-
-    function MostrarTxtPorTipoDocumento() {
-        var TipoDocumento = $("#IdTipoDocumento").val();
-        if (TipoDocumento == "RUC") {            
-            $("#RazonSocial_Cliente").show();
-            $("#NombresApellidos_Cliente").hide();
-        }
-        else {
-            $("#RazonSocial_Cliente").hide();
-            $("#NombresApellidos_Cliente").show();
-        }
-
-    }
-
-    function actualizar_nombre_completo() {
-        var apellido = $("#pe_apellido").val();
-        var nombre = $("#pe_nombre").val();
-        var razon_social = $("#pe_razonSocial").val();
-        var TipoDocumento = $("#IdTipoDocumento").val();
-
-        if (TipoDocumento == "RUC") {
-            if (razon_social == "")
-            {
-                alert("Ingrese razón social del cliente");
-            }
-            else {
-                $("#pe_nombreCompleto").val(razon_social)
-            }
-        }
-        else {
-            if (nombre=="" && apellido=="") {
-                alert("Ingrese apellidos y nombres del cliente");
-            }
-            else {
-                var nombre_completo = apellido + ' ' + nombre;
-                $("#pe_nombreCompleto").val(nombre_completo)
-            }
-        }
-    }
-
-    function Regresar()
-    {
-        $("#DivProducto").hide();
-        $("#DivFamilia").show();
-        $("#RegresarFamilia").hide();
-    }
-
-    function AbrirModalCantidad(SecuencialID) {
-        $("#SecuenciaModificar").val(SecuencialID);
-        var datos = {
-            SecuencialID: SecuencialID,
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("SetearCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#CantidadItem").val("");
-                $("#modal-default-Cantidad").modal('show');
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function EscribirCantidad(Valor) {
-        var Cantidad = $("#CantidadItem").val()
-        var CantidadString = Cantidad + Valor;
-
-        $("#CantidadItem").val(CantidadString);
-    }
-
-    function Borrar() {
-        $("#CantidadItem").val("");
-    }
-
-    function ModificarCantidad() {
-        var CantidadItem = $("#CantidadItem").val();
-
-        if (Number.isNaN(Number.parseFloat(CantidadItem))) {
-            CantidadItem = 0;
-        }
-        else {
-            CantidadItem = parseFloat(CantidadItem)
-        }
-
-        if (CantidadItem>0) {
-            var datos = {
-                SecuenciaModificar: $("#SecuenciaModificar").val(),
-                Cantidad: CantidadItem,
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ModificarCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#modal-default-Cantidad").modal('hide');
-                    $("#Subtotal").val(data.subtotal);
-                    $("#Iva").val(data.iva);
-                    $("#Total").val(data.total);
-
-                    GridViewPartial_Pedido.PerformCallback();
-                },
-                error: function (error) {
-                }
-            });
-        }
-
-    }
-
-    function EliminarProducto(SecuencialID) {
-        if (confirm('¿Estas seguro de eliminar este registro?')) {
-            var datos = {
-                SecuencialID: SecuencialID,
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("EliminarProducto", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#Subtotal").val(data.subtotal);
-                    $("#Iva").val(data.iva);
-                    $("#Total").val(data.total);
-
-                    GridViewPartial_Pedido.PerformCallback();
-                },
-                error: function (error) {
-                }
-            });
-        }
-    }
-    function VerProductos(SecuencialID)
-    {
-        var IdEmpresa = SecuencialID.substring(0, 4);
-        var IdMarca = SecuencialID.substring(4, 8);
-
-        var datos = {
-            SecuencialID: SecuencialID,
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("VerProductos", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#DivFamilia").hide();
-                $("#DivProducto").show();
-                $("#RegresarFamilia").show();
-
-
-                GridViewPartial_Producto.PerformCallback();
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function AgregarPedido(SecuencialID) {
-        var IdEmpresa = SecuencialID.substring(0, 4);
-        var IdProducto = SecuencialID.substring(4, 10);
-
-        var datos = {
-            SecuencialID: SecuencialID,
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("AgregarPedido", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#Subtotal").val(data.subtotal);
-                $("#Iva").val(data.iva);
-                $("#Total").val(data.total);
-                GridViewPartial_Pedido.PerformCallback();
-
-                $('#TxtNotificacion').html(data.Producto);
-                $('#DivNotificacion').fadeIn();
-                setTimeout(function () {
-                    $("#DivNotificacion").fadeOut();
-                }, 1000);
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function IrTabCliente() {
-            var datos = {
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ValidarListaPedido", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    if(data>0){
-                        $("#link_factura").hide();
-                        $("#link_cliente").show();
-                        $("#link_cliente").click();
-                    }
-                    else{
-                        alert("No tiene productos en la lista de pedido");
-                    }
-                },
-                error: function (error) {
-                }
-            });
-    }
-
-    function RegresarCliente() {
-        $("#link_cliente").hide();
-        $("#link_factura").show();
-        $("#link_factura").click();
-    }
-
-    function get_info_x_num_cedula() {
-        var cedula = $("#pe_cedulaRuc").val();
-        var tipo_doc = $("#IdTipoDocumento").val();
-
-        if (cedula == null) {
-            vaciar_campos_persona();
-            return;
-        }
-
-        if (tipo_doc == "RUC") {
-            if (cedula.length != 13) {
-                alert("El documento de tipo RUC, debe tener una longitud de 13 caracteres");
-                $("#pe_cedulaRuc").val("");
-                vaciar_campos_persona();
-                return;
-            }
-        } else
-            if (tipo_doc == "CED") {
-                if (cedula.length != 10) {
-                    alert("El documento de tipo cédula, debe tener una longitud de 10 caracteres");
-                    $("#pe_cedulaRuc").val("");
-                    vaciar_campos_persona();
-                    return;
-                }
-            }
-
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            pe_cedulaRuc: cedula
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("get_info_x_num_cedula", "FacturaPuntoVenta",new { Area = "Facturacion"})',
-            async: false,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.IdPersona != 0 && data.IdCliente != 0) {
-                    $("#IdPersona").val(data.info.IdPersona);
-                    $("#IdCliente").val(data.info.IdCliente);
-                    $("#pe_nombre").val(data.info.info_persona.pe_nombre);
-                    $("#pe_apellido").val(data.info.info_persona.pe_apellido);
-                    $("#pe_nombreCompleto").val(data.info.info_persona.pe_nombreCompleto);
-                    $("#pe_razonSocial").val(data.info.info_persona.pe_razonSocial);
-                    $("#pe_correo").val(data.info.info_persona.pe_correo);
-                    $("#pe_celular").val(data.info.info_persona.pe_celular);
-                    $("#pe_telfono_Contacto").val(data.info.info_persona.pe_telfono_Contacto);
-                    $("#pe_direccion").val(data.info.info_persona.pe_direccion);
-                }
-
-                if (data.boton == 0) {
-                    $("#BtnGuardar").hide();
-                }
-                else {
-                    $("#BtnGuardar").show();
-                }
-            },
-            error: function (error) {
-                alert(error);
-            }
-        });
-    }
-
-    function vaciar_campos_persona() {
-        $("#pe_nombre").val("");
-        $("#pe_apellido").val("");
-        $("#pe_nombreCompleto").val("");
-        $("#pe_razonSocial").val("");
-        $("#IdPersona").val("0");
-        $("#pe_correo").val("");
-        $("#pe_celular").val("");
-        $("#pe_telfono_Contacto").val("");
-        $("#pe_direccion").val("");
-    }
-
-
-    function Validar_cedula_ruc() {
-        var datos = {
-            naturaleza: $("#pe_Naturaleza").val(),
-            tipo_documento: $("#IdTipoDocumento").val(),
-            cedula_ruc: $("#pe_cedulaRuc").val(),
-        }
-
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.isValid == true) {
-                    $("#error_documento").hide();
-                    $("#pe_Naturaleza").val(data.return_naturaleza);
-                }
-                else {
-                    $("#error_documento").show();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    };
-
-    function SetConsumidorFinal() {
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GetConsumidorFinal", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#IdPersona").val(data.IdPersona);
-                $("#IdCliente").val(data.IdCliente);
-                $("#pe_cedulaRuc").val(data.info_persona.pe_cedulaRuc);
-                $("#pe_Naturaleza").val(data.info_persona.pe_Naturaleza);
-                $("#IdTipoDocumento").val(data.info_persona.IdTipoDocumento);
-                $("#pe_nombreCompleto").val(data.info_persona.pe_nombreCompleto);
-                $("#pe_razonSocial").val(data.info_persona.pe_razonSocial);
-                $("#pe_apellido").val(data.info_persona.pe_apellido);
-                $("#pe_nombre").val(data.info_persona.pe_nombre);
-                $("#pe_direccion").val(data.Direccion);
-                $("#pe_telfono_Contacto").val(data.Telefono);
-                $("#pe_celular").val(data.Celular);
-                $("#pe_correo").val(data.Correo);
-
-                if(data.MostrarBoton==0){
-                    $("#BtnGuardar").hide();
-                }
-                else {
-                    $("#BtnGuardar").show();
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function GuardarCliente() {
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdCliente: $("#IdCliente").val(),
-            IdPersona: $("#IdPersona").val(),
-            pe_cedulaRuc: $("#pe_cedulaRuc").val(),
-            pe_Naturaleza: $("#pe_Naturaleza").val(),
-            IdTipoDocumento: $("#IdTipoDocumento").val(),
-            pe_nombreCompleto: $("#pe_nombreCompleto").val(),
-            pe_razonSocial: $("#pe_razonSocial").val(),
-            pe_apellido: $("#pe_apellido").val(),
-            pe_nombre: $("#pe_nombre").val(),
-            pe_direccion: $("#pe_direccion").val(),
-            pe_telfono_Contacto: $("#pe_telfono_Contacto").val(),
-            pe_celular: $("#pe_celular").val(),
-            pe_correo: $("#pe_correo").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("GuardarCliente", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#IdCliente").val(data.IdCliente);
-                $("#IdPersona").val(data.IdPersona);
-                if (data.boton==0) {
-                    $("#BtnGuardar").hide();
-                }
-                else {
-                    $("#BtnGuardar").show();
-                }
-                
-                if (data.mensaje != "") {
-                    alert(data.mensaje);
-                }
-                else {
-                }
-            },
-            error: function (error) {
-            }
-        });
-    }
-
-    function ResumenFactura() {
-        var IdCliente = $("#IdCliente").val();
-        if (IdCliente > 0) {
-            var datos = {
-                IdTransaccionSession: $("#IdTransaccionSession").val()
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("ResumenFactura", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#SubtotalFactura").val(data.subtotal);
-                    $("#IvaFactura").val(data.iva);
-                    $("#TotalFactura").val(data.total);
-
-                    $("#modal-default-ResumenFactura").modal('show');
-                    gv_FinalizarPedido.PerformCallback();
-                },
-                error: function (error) {
-                }
-        });
-        }
-        else {
-            alert("Seleccione cliente");
-        }
-    }
-    function CalcularCambio() {
-        var datos = {
-            Recibido: $("#Recibido").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("CalcularCambio", "FacturaPuntoVenta", new { Area = "Facturacion"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#Cambio").val(data);
-            },
-            error: function (error) {
-            }
-        });
-    }
-</script>
-
 <div class="modal fade" id="modal-default-Cantidad" role="dialog">
     <div class="modal-dialog modal-sm">
         <!-- Modal content-->
@@ -677,7 +114,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Finalizar Factura</h4>                
+                <h4 class="modal-title">Finalizar Factura</h4>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-12">
@@ -771,8 +208,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-chevron-left"></i>&nbsp; Volver</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                @*<button type="submit" class="btn btn-primary">Finalizar&nbsp;<i class="fa fa-chevron-right"></i></button>*@                
+                <button type="submit" class="btn btn-primary">Finalizar&nbsp;<i class="fa fa-chevron-right"></i></button>            
             </div>
         </div>
 
@@ -849,7 +285,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="IdCliente"></label>
-                                        <button type="button" class="btn btn-default form-control" title="Cliente" onclick="IrTabCliente();">
+                                        <button type="button" class="btn btn-success form-control" title="Cliente" onclick="IrTabCliente();">
                                             Cliente &nbsp;<i class="fa fa-chevron-right"></i>
                                         </button>
                                     </div>
@@ -1121,5 +557,573 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+}
+<script type="text/javascript">
+$(function () {
+    MostrarTxtPorTipoDocumento();
+    MostarTxtCambio();
 
+    $("#RegresarFamilia").hide();
+    $("#link_factura").click();
+    $("#link_cliente").hide();
+
+    $("#pe_cedulaRuc").change(function () {
+        Validar_cedula_ruc();
+    });
+
+    $("#pe_cedulaRuc").change(function () {
+        get_info_x_num_cedula();
+    });
+
+    $("#pe_apellido").change(function () {
+        actualizar_nombre_completo();
+    });
+
+    $("#pe_nombre").change(function () {
+        actualizar_nombre_completo();
+    });
+
+    $("#pe_razonSocial").change(function () {
+        actualizar_nombre_completo();
+    });
+
+    $("#Recibido").change(function () {
+        CalcularCambio();
+    });
+
+    $("#IdTipoDocumento").change(function () {
+        MostrarTxtPorTipoDocumento();
+    });
+
+    $("#IdCatalogo_FormaPago").change(function () {
+        MostarTxtCambio();
+    });
+});
+
+function GuardarFactura() {
+    $("#modal-default-ResumenFactura").modal('hide');
+    setTimeout(function () {
+        $(".form").submit();
+    }, 1000); 
+}
+
+function MostarTxtCambio() {
+    var IdCatalogo_FormaPago = $("#IdCatalogo_FormaPago").val();
+    if (IdCatalogo_FormaPago == "EFEC") {
+        $("#TxtRecibido").show();
+        $("#TxtCambio").show();
+
+        $("#DatoIdTarjeta").hide();
+        $("#DatoTarjeta").hide();
+    }
+    else if (IdCatalogo_FormaPago == "TARCRE") {
+        $("#DatoIdTarjeta").show();
+        $("#DatoTarjeta").show();
+
+        $("#TxtRecibido").hide();
+        $("#TxtCambio").hide();
+    }
+    else {
+        $("#DatoIdTarjeta").hide();
+        $("#DatoTarjeta").hide();
+
+        $("#TxtRecibido").hide();
+        $("#TxtCambio").hide();
+    }
+}
+
+function MostrarTxtPorTipoDocumento() {
+    var TipoDocumento = $("#IdTipoDocumento").val();
+    if (TipoDocumento == "RUC") {
+        $("#RazonSocial_Cliente").show();
+        $("#NombresApellidos_Cliente").hide();
+    }
+    else {
+        $("#RazonSocial_Cliente").hide();
+        $("#NombresApellidos_Cliente").show();
+    }
+
+}
+
+function actualizar_nombre_completo() {
+    var apellido = $("#pe_apellido").val();
+    var nombre = $("#pe_nombre").val();
+    var razon_social = $("#pe_razonSocial").val();
+    var TipoDocumento = $("#IdTipoDocumento").val();
+
+    if (TipoDocumento == "RUC") {
+        if (razon_social == "")
+        {
+            alert("Ingrese razón social del cliente");
+        }
+        else {
+            $("#pe_nombreCompleto").val(razon_social)
+        }
+    }
+    else {
+        if (nombre=="" && apellido=="") {
+            alert("Ingrese apellidos y nombres del cliente");
+        }
+        else {
+            var nombre_completo = apellido + ' ' + nombre;
+            $("#pe_nombreCompleto").val(nombre_completo)
+        }
+    }
+}
+
+function Regresar()
+{
+    $("#DivProducto").hide();
+    $("#DivFamilia").show();
+    $("#RegresarFamilia").hide();
+}
+
+function AbrirModalCantidad(SecuencialID) {
+    $("#SecuenciaModificar").val(SecuencialID);
+    var datos = {
+        SecuencialID: SecuencialID,
+        IdTransaccionSession: $("#IdTransaccionSession").val()
+    }
+    $.ajax({
+            type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("SetearCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#CantidadItem").val("");
+            $("#modal-default-Cantidad").modal('show');
+            },
+        error: function (error) {
+            }
+        });
+}
+
+function EscribirCantidad(Valor) {
+    var Cantidad = $("#CantidadItem").val()
+    var CantidadString = Cantidad + Valor;
+
+    $("#CantidadItem").val(CantidadString);
+}
+
+function Borrar() {
+    $("#CantidadItem").val("");
+}
+
+function ModificarCantidad() {
+    var CantidadItem = $("#CantidadItem").val();
+
+    if (Number.isNaN(Number.parseFloat(CantidadItem))) {
+        CantidadItem = 0;
+    }
+    else {
+        CantidadItem = parseFloat(CantidadItem)
+    }
+
+    if (CantidadItem>0) {
+        var datos = {
+        SecuenciaModificar: $("#SecuenciaModificar").val(),
+        Cantidad: CantidadItem,
+        IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ModificarCantidad", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#modal-default-Cantidad").modal('hide');
+                $("#Subtotal").val(data.subtotal);
+                $("#Iva").val(data.iva);
+                $("#Total").val(data.total);
+
+                GridViewPartial_Pedido.PerformCallback();
+        },
+        error: function (error) {
+        }
+        });
+    }
+}
+
+function EliminarProducto(SecuencialID) {
+    if (confirm('¿Estas seguro de eliminar este registro?')) {
+        var datos = {
+            SecuencialID: SecuencialID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EliminarProducto", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Subtotal").val(data.subtotal);
+                $("#Iva").val(data.iva);
+                $("#Total").val(data.total);
+
+            GridViewPartial_Pedido.PerformCallback();
+        },
+        error: function (error) {
+        }
+        });
+    }
+}
+function VerProductos(SecuencialID)
+{
+    var IdEmpresa = SecuencialID.substring(0, 4);
+    var IdMarca = SecuencialID.substring(4, 8);
+
+    var datos = {
+            SecuencialID: SecuencialID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("VerProductos", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#DivFamilia").hide();
+                $("#DivProducto").show();
+                $("#RegresarFamilia").show();
+                GridViewPartial_Producto.PerformCallback();
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function AgregarPedido(SecuencialID) {
+    var IdEmpresa = SecuencialID.substring(0, 4);
+    var IdProducto = SecuencialID.substring(4, 10);
+
+    var datos = {
+            SecuencialID: SecuencialID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AgregarPedido", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Subtotal").val(data.subtotal);
+                $("#Iva").val(data.iva);
+                $("#Total").val(data.total);
+                GridViewPartial_Pedido.PerformCallback();
+
+                $('#TxtNotificacion').html(data.Producto);
+                $('#DivNotificacion').fadeIn();
+                setTimeout(function () {
+                    $("#DivNotificacion").fadeOut();
+                }, 1000);
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function IrTabCliente() {
+    var datos = {
+                IdTransaccionSession: $("#IdTransaccionSession").val()
+            }
+            $.ajax({
+            type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("ValidarListaPedido", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                if(data>0){
+                    $("#link_factura").hide();
+                    $("#link_cliente").show();
+                    $("#link_cliente").click();
+                }
+                else{
+                    alert("No tiene productos en la lista de pedido");
+                }
+            },
+            error: function (error) {
+            }
+        });
+}
+
+function RegresarCliente() {
+    $("#link_cliente").hide();
+    $("#link_factura").show();
+    $("#link_factura").click();
+}
+
+function get_info_x_num_cedula() {
+    var cedula = $("#pe_cedulaRuc").val();
+    var tipo_doc = $("#IdTipoDocumento").val();
+
+    if (cedula == null) {
+        vaciar_campos_persona();
+        return;
+    }
+
+    if (tipo_doc == "RUC") {
+        if (cedula.length != 13) {
+            alert("El documento de tipo RUC, debe tener una longitud de 13 caracteres");
+                $("#pe_cedulaRuc").val("");
+            vaciar_campos_persona();
+            return;
+        }
+    } else
+        if (tipo_doc == "CED") {
+        if (cedula.length != 10) {
+            alert("El documento de tipo cédula, debe tener una longitud de 10 caracteres");
+                    $("#pe_cedulaRuc").val("");
+            vaciar_campos_persona();
+            return;
+        }
+    }
+
+    var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            pe_cedulaRuc: cedula
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_x_num_cedula", "FacturaPuntoVenta",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            if (data.IdPersona != 0 && data.IdCliente != 0) {
+                        $("#IdPersona").val(data.info.IdPersona);
+                        $("#IdCliente").val(data.info.IdCliente);
+                        $("#pe_nombre").val(data.info.info_persona.pe_nombre);
+                        $("#pe_apellido").val(data.info.info_persona.pe_apellido);
+                        $("#pe_nombreCompleto").val(data.info.info_persona.pe_nombreCompleto);
+                        $("#pe_razonSocial").val(data.info.info_persona.pe_razonSocial);
+                        $("#pe_correo").val(data.info.info_persona.pe_correo);
+                        $("#pe_celular").val(data.info.info_persona.pe_celular);
+                        $("#pe_telfono_Contacto").val(data.info.info_persona.pe_telfono_Contacto);
+                        $("#pe_direccion").val(data.info.info_persona.pe_direccion);
+            }
+
+            if (data.boton == 0) {
+                $("#BtnGuardar").hide();
+            }
+            else {
+                $("#BtnGuardar").show();
+            }
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function vaciar_campos_persona() {
+    $("#pe_nombre").val("");
+    $("#pe_apellido").val("");
+    $("#pe_nombreCompleto").val("");
+    $("#pe_razonSocial").val("");
+    $("#IdPersona").val("0");
+    $("#pe_correo").val("");
+    $("#pe_celular").val("");
+    $("#pe_telfono_Contacto").val("");
+    $("#pe_direccion").val("");
+}
+
+
+function Validar_cedula_ruc() {
+    var datos = {
+            naturaleza: $("#pe_Naturaleza").val(),
+            tipo_documento: $("#IdTipoDocumento").val(),
+            cedula_ruc: $("#pe_cedulaRuc").val(),
+        }
+
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            if (data.isValid == true) {
+                $("#error_documento").hide();
+                $("#pe_Naturaleza").val(data.return_naturaleza);
+            }
+            else {
+                    $("#error_documento").show();
+            }
+        },
+         error: function (error) {
+        }
+    });
+};
+
+function SetConsumidorFinal() {
+    var datos = {
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetConsumidorFinal", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdPersona").val(data.IdPersona);
+                $("#IdCliente").val(data.IdCliente);
+                $("#pe_cedulaRuc").val(data.info_persona.pe_cedulaRuc);
+                $("#pe_Naturaleza").val(data.info_persona.pe_Naturaleza);
+                $("#IdTipoDocumento").val(data.info_persona.IdTipoDocumento);
+                $("#pe_nombreCompleto").val(data.info_persona.pe_nombreCompleto);
+                $("#pe_razonSocial").val(data.info_persona.pe_razonSocial);
+                $("#pe_apellido").val(data.info_persona.pe_apellido);
+                $("#pe_nombre").val(data.info_persona.pe_nombre);
+                $("#pe_direccion").val(data.Direccion);
+                $("#pe_telfono_Contacto").val(data.Telefono);
+                $("#pe_celular").val(data.Celular);
+                $("#pe_correo").val(data.Correo);
+
+        if(data.MostrarBoton==0){
+                    $("#BtnGuardar").hide();
+        }
+        else {
+                    $("#BtnGuardar").show();
+        }
+    },
+            error: function (error) {
+    }
+});
+    }
+
+function GuardarCliente() {
+    var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCliente: $("#IdCliente").val(),
+            IdPersona: $("#IdPersona").val(),
+            pe_cedulaRuc: $("#pe_cedulaRuc").val(),
+            pe_Naturaleza: $("#pe_Naturaleza").val(),
+            IdTipoDocumento: $("#IdTipoDocumento").val(),
+            pe_nombreCompleto: $("#pe_nombreCompleto").val(),
+            pe_razonSocial: $("#pe_razonSocial").val(),
+            pe_apellido: $("#pe_apellido").val(),
+            pe_nombre: $("#pe_nombre").val(),
+            pe_direccion: $("#pe_direccion").val(),
+            pe_telfono_Contacto: $("#pe_telfono_Contacto").val(),
+            pe_celular: $("#pe_celular").val(),
+            pe_correo: $("#pe_correo").val()
+        }
+        $.ajax({
+        type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GuardarCliente", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdCliente").val(data.IdCliente);
+                $("#IdPersona").val(data.IdPersona);
+        if (data.boton==0) {
+                    $("#BtnGuardar").hide();
+        }
+        else {
+                    $("#BtnGuardar").show();
+        }
+
+        if (data.mensaje != "") {
+            alert(data.mensaje);
+        }
+        else {
+        }
+    },
+    error: function (error) {
+    }
+});
+}
+
+function ResumenFactura() {
+    var IdCliente = $("#IdCliente").val();
+    if (IdCliente > 0) {
+        var datos = {
+                IdTransaccionSession: $("#IdTransaccionSession").val()
+            }
+            $.ajax({
+            type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("ResumenFactura", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#SubtotalFactura").val(data.subtotal);
+                    $("#IvaFactura").val(data.iva);
+                    $("#TotalFactura").val(data.total);
+
+                    $("#modal-default-ResumenFactura").modal('show');
+            gv_FinalizarPedido.PerformCallback();
+        },
+        error: function (error) {
+        }
+        });
+    }
+    else {
+        alert("Seleccione cliente");
+    }
+}
+
+function CalcularCambio() {
+var datos = {
+        Recibido: $("#Recibido").val(),
+        IdTransaccionSession: $("#IdTransaccionSession").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CalcularCambio", "FacturaPuntoVenta", new { Area = "Facturacion"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#Cambio").val(data);
+        },
+        error: function (error) {
+        }
+    });
+}
+</script>
 

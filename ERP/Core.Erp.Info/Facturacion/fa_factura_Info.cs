@@ -16,14 +16,14 @@ namespace Core.Erp.Info.Facturacion
         public decimal IdCbteVta { get; set; }
         public string CodCbteVta { get; set; }
         public string vt_tipoDoc { get; set; }
-        [RegularExpression(@"\d{3}", ErrorMessage = "El formato debe ser 000")]
-        [Required(ErrorMessage = "El campo establecimiento es obligatorio")]
+        //[RegularExpression(@"\d{3}", ErrorMessage = "El formato debe ser 000")]
+        //[Required(ErrorMessage = "El campo establecimiento es obligatorio")]
         public string vt_serie1 { get; set; }
-        [RegularExpression(@"\d{3}", ErrorMessage = "El formato debe ser 000")]
-        [Required(ErrorMessage = "El campo punto de emisión es obligatorio")]
+        //[RegularExpression(@"\d{3}", ErrorMessage = "El formato debe ser 000")]
+        //[Required(ErrorMessage = "El campo punto de emisión es obligatorio")]
         public string vt_serie2 { get; set; }
-        [RegularExpression(@"\d{9}", ErrorMessage = "El formato debe ser 000000000")]
-        [Required(ErrorMessage = "El campo # documento es obligatorio")]
+        //[RegularExpression(@"\d{9}", ErrorMessage = "El formato debe ser 000000000")]
+        //[Required(ErrorMessage = "El campo # documento es obligatorio")]
         public string vt_NumFactura { get; set; }
         public Nullable<System.DateTime> Fecha_Autorizacion { get; set; }
         public string vt_autorizacion { get; set; }
@@ -68,7 +68,7 @@ namespace Core.Erp.Info.Facturacion
         public Nullable<System.DateTime> Fecha_UltMod { get; set; }
         public string IdUsuarioUltAnu { get; set; }        
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
-        [Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
+        //[Required(ErrorMessage = "El campo motivo anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
         public bool aprobada_enviar_sri { get; set; }
         #endregion
@@ -103,12 +103,12 @@ namespace Core.Erp.Info.Facturacion
         public double CantidadItem { get; set; }
         public double Recibido { get; set; }
         public double Cambio { get; set; }
-        public double SubtotalFactura { get; set; }
-        public double IvaFactura { get; set; }
-        public double TotalFactura { get; set; }
-        public double Subtotal { get; set; }
-        public double Iva { get; set; }
-        public double Total { get; set; }
+        public string SubtotalFactura { get; set; }
+        public string IvaFactura { get; set; }
+        public string TotalFactura { get; set; }
+        public string Subtotal { get; set; }
+        public string Iva { get; set; }
+        public string Total { get; set; }
         public decimal IdPersona { get; set; }
         [Required(ErrorMessage = "El campo naturaleza es requerido")]
         [StringLength(25, MinimumLength = 1, ErrorMessage = "el campo naturaleza debe tener mínimo 1 caracter y máximo 25 caracteres")]

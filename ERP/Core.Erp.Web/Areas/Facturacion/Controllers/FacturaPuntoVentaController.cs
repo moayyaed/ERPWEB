@@ -85,18 +85,20 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
                 info_resumen = new fa_factura_resumen_Info(),
                 lst_det = new List<fa_factura_det_Info>(),
                 lst_cuota = new List<fa_cuotas_x_doc_Info>(),
-                Subtotal = 0,
-                SubtotalFactura = 0,
-                Iva = 0,
-                IvaFactura = 0,
-                Total = 0,
-                TotalFactura = 0,
+                Subtotal = "$0.00",
+                SubtotalFactura = "$0.00",
+                Iva = "$0.00",
+                IvaFactura = "$0.00",
+                Total = "$0.00",
+                TotalFactura = "$0.00",
 
+                IdPuntoVta = PuntoVenta.IdPuntoVta,
                 IdBodega = PuntoVenta.IdBodega,
                 vt_tipo_venta="CON",
                 vt_Observacion=" ",
                 IdCaja = PuntoVenta.IdCaja,
-                IdFacturaTipo=1
+                IdFacturaTipo=1,
+                IdNivel = 1,
                                 
         };
             cargar_combos(model);
@@ -111,6 +113,15 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         [HttpPost]
         public ActionResult Index(fa_factura_Info model)
         {
+            model.lst_cuota = new List<fa_cuotas_x_doc_Info>();
+            if (!ModelState.IsValid)
+            {
+                List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
+                ViewBag.mensaje = "No se ha podido guardar el registro";
+                cargar_combos(model);
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                return View(model);
+            }
             if (!validar_factura(model, ref mensaje))
             {
                 List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
