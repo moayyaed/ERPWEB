@@ -114,6 +114,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult Index(fa_factura_Info model)
         {
             model.lst_cuota = new List<fa_cuotas_x_doc_Info>();
+            model.IdContacto = 1;
             if (!ModelState.IsValid)
             {
                 List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
