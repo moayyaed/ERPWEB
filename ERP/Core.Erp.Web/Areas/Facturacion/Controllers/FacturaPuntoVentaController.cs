@@ -29,6 +29,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         tb_sis_Impuesto_Bus bus_impuesto = new tb_sis_Impuesto_Bus();
         fa_parametro_Bus bus_parametro = new fa_parametro_Bus();
         fa_cliente_Bus bus_cliente = new fa_cliente_Bus();
+        fa_cliente_contactos_Bus bus_cliente_contacto = new fa_cliente_contactos_Bus();
         fa_catalogo_Bus bus_facatalogo = new fa_catalogo_Bus();
         string mensajeValidar = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
@@ -114,7 +115,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public ActionResult Index(fa_factura_Info model)
         {
             model.lst_cuota = new List<fa_cuotas_x_doc_Info>();
-            model.IdContacto = 1;
+            model.IdContacto = bus_cliente_contacto.get_list(model.IdEmpresa, model.IdCliente).FirstOrDefault().IdContacto;
+
             if (!ModelState.IsValid)
             {
                 List_det.set_list(List_det.get_list(model.IdTransaccionSession), model.IdTransaccionSession);
