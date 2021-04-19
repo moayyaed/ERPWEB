@@ -31,9 +31,9 @@
 @Html.HiddenFor(q => q.vt_Observacion, new { @id = "vt_Observacion" })
 @Html.HiddenFor(q => q.IdCaja, new { @id = "IdCaja" })
 @Html.HiddenFor(q => q.IdFacturaTipo, new { @id = "IdFacturaTipo" })
-
-if (ViewBag.mensaje != null)
-{
+@Html.HiddenFor(q => q.IdContacto, new { @id = "IdContacto" })
+    if (ViewBag.mensaje != null)
+    {
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-warning alert-dismissible">
@@ -354,48 +354,6 @@ if (ViewBag.mensaje != null)
                                 </div>
                             </div>
                         </div>
-                        @*<div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-10">
-                                    <div class="form-group" style="text-align:right">
-                                        <label>Subtotal</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label id="Subtotal">0.00</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-10">
-                                    <div class="form-group" style="text-align:right">
-                                        <label>IVA</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label id="Iva">0.00</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-10">
-                                    <div class="form-group" style="text-align:right">
-                                        <label>Total</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label id="Total">0.00</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*@
                     </div>
                 </div>                
             </div>
@@ -414,11 +372,6 @@ if (ViewBag.mensaje != null)
                                         </button>
                                     </div>
                                 </div>
-                                @*<div class="col-md-9">
-                                    <div class="form-group">
-                                        <label>&nbsp;</label>
-                                    </div>
-                                </div>*@
                             </div>
                         </div>
 
@@ -519,7 +472,7 @@ if (ViewBag.mensaje != null)
                                 <div class="col-md-1">
                                     <div class="form-group">
                                         <label for="IdCliente"></label>
-                                        <button id="GuardarCliente" type="button" class="btn btn-success form-control" title="Ver detalle de factura" onclick="GuardarCliente();">
+                                        <button type="button" class="btn btn-success form-control" title="Ver detalle de factura" onclick="GuardarCliente();">
                                             Guardar &nbsp;<i class="fa fa-save"></i>
                                         </button>
                                     </div>
@@ -920,6 +873,7 @@ function get_info_x_num_cedula() {
             if (data.IdPersona != 0 && data.IdCliente != 0) {
                         $("#IdPersona").val(data.info.IdPersona);
                         $("#IdCliente").val(data.info.IdCliente);
+                        $("#IdContacto").val(data.info.IdContacto);
                         $("#pe_nombre").val(data.info.info_persona.pe_nombre);
                         $("#pe_apellido").val(data.info.info_persona.pe_apellido);
                         $("#pe_nombreCompleto").val(data.info.info_persona.pe_nombreCompleto);
@@ -1013,19 +967,20 @@ function SetConsumidorFinal() {
                 $("#pe_celular").val(data.Celular);
                 $("#pe_correo").val(data.Correo);
 
-        if(data.MostrarBoton==0){
-                    $("#BtnGuardar").hide();
-        }
-        else {
-                    $("#BtnGuardar").show();
-        }
-    },
-            error: function (error) {
-    }
-});
-    }
+                if(data.MostrarBoton==0){
+                            $("#BtnGuardar").hide();
+                }
+                else {
+                            $("#BtnGuardar").show();
+                }
+            },
+                    error: function (error) {
+            }
+        });
+}
 
 function GuardarCliente() {
+    alert("gc");
     var datos = {
             IdEmpresa: $("#IdEmpresa").val(),
             IdCliente: $("#IdCliente").val(),
@@ -1054,6 +1009,7 @@ function GuardarCliente() {
             success: function (data) {
                 $("#IdCliente").val(data.IdCliente);
                 $("#IdPersona").val(data.IdPersona);
+                $("#IdContacto").val(data.IdContacto);
         if (data.boton==0) {
                     $("#BtnGuardar").hide();
         }

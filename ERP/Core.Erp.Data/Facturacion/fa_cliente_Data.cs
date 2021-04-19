@@ -286,6 +286,7 @@ namespace Core.Erp.Data.Facturacion
                         };
                         Context.fa_cliente_x_fa_Vendedor_x_sucursal.Add(det);
                     }
+                    info.IdContacto = Entity_det.IdContacto;
                     Context.SaveChanges();
                 }
                 return true;
@@ -363,27 +364,14 @@ namespace Core.Erp.Data.Facturacion
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;
 
-                    var lst = Context.fa_cliente_contactos.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente).ToList();
-                    Context.fa_cliente_contactos.RemoveRange(lst);
+                    fa_cliente_contactos EntityContacto = Context.fa_cliente_contactos.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdCliente == info.IdCliente);
+                    if (EntityContacto == null) return false; ;
 
-                    var Secuencia = 1;
-                    foreach (var item in info.lst_fa_cliente_contactos)
-                    {
-                        fa_cliente_contactos det = new fa_cliente_contactos
-                        {
-                            IdEmpresa = info.IdEmpresa,
-                            IdCliente = info.IdCliente,
-                            IdContacto = Secuencia++,
-                            IdCiudad = item.IdCiudad,
-                            IdParroquia = item.IdParroquia,
-                            Celular = item.Celular,
-                            Correo = item.Correo,
-                            Direccion = item.Direccion,
-                            Nombres = item.Nombres,
-                            Telefono = item.Telefono
-                        };
-                        Context.fa_cliente_contactos.Add(det);
-                    }
+                    EntityContacto.Celular = info.Celular;
+                    EntityContacto.Correo = info.Correo;
+                    EntityContacto.Direccion = info.Direccion;
+                    EntityContacto.Nombres = info.info_persona.pe_nombreCompleto;
+                    EntityContacto.Telefono = info.Telefono;
 
                     Context.SaveChanges();
                 }
@@ -391,7 +379,6 @@ namespace Core.Erp.Data.Facturacion
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

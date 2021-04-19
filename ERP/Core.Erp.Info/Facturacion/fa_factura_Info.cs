@@ -128,9 +128,7 @@ namespace Core.Erp.Info.Facturacion
         public string pe_cedulaRuc { get; set; }
         [StringLength(150, MinimumLength = 0, ErrorMessage = "el campo dirección debe tener máximo 150 caracteres")]
         public string pe_direccion { get; set; }
-        [StringLength(50, MinimumLength = 0, ErrorMessage = "el campo teléfono de casa debe tener máximo 50 caracteres")]
         public string pe_telfono_Contacto { get; set; }
-        [StringLength(50, MinimumLength = 0, ErrorMessage = "el campo celular debe tener máximo 50 caracteres")]
         public string pe_celular { get; set; }
         [StringLength(100, MinimumLength = 0, ErrorMessage = "el campo correo debe tener máximo 100 caracteres")]
         public string pe_correo { get; set; }

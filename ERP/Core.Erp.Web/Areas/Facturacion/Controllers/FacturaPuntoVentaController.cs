@@ -629,7 +629,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             //    mensaje = "No se pudo guardar el registro";
             //}
 
-            return Json(new { mensaje = mensaje, boton = MostrarBoton, IdCliente = info_cliente.IdCliente, IdPersona= info_cliente.IdPersona }, JsonRequestBehavior.AllowGet);
+            return Json(new { mensaje = mensaje, boton = MostrarBoton, IdCliente = info_cliente.IdCliente, IdPersona= info_cliente.IdPersona, IdContacto= info_cliente.IdContacto }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ResumenFactura(decimal IdTransaccionSession = 0)
@@ -688,6 +688,7 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             return PartialView("_GridViewPartial_Pedido", model);
         }
         #endregion
+
         #region Finalizar Pedido
         [ValidateInput(false)]
         public ActionResult GridViewPartial_FinalizarPedido()
