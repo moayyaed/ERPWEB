@@ -11,7 +11,7 @@
 
 @using (Html.BeginForm("Nuevo", "PuntoVenta", FormMethod.Post, new { @class = "form", @rolw = "form" }))
 {
-
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdPuntoVta)
     <div class="row">
@@ -109,7 +109,15 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_puntoventa_usuario")
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "PuntoVenta", new { Area = "Facturacion" }, null)">Cancelar</a>

@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Core.Info.Facturacion;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Erp.Info.Facturacion
 {
     public class fa_PuntoVta_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         [Required(ErrorMessage = "El campo sucursal es obligatorio")]
         public int IdSucursal { get; set; }
@@ -40,6 +43,7 @@ namespace Core.Erp.Info.Facturacion
         public int Nuevo { get; set; }
         public int Modificar { get; set; }
         public int Anular { get; set; }
+        public List<fa_PuntoVta_x_seg_usuario_Info> lst_usuarios { get; set; }
         #endregion
     }
 }

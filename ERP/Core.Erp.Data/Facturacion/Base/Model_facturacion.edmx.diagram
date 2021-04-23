@@ -122,6 +122,8 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_fa_guia_remision_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_factura_x_in_Ing_Egr_Inven_fa_factura" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_factura" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_PuntoVta_x_seg_usuario" Width="1.5" PointX="6" PointY="51.125" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_PuntoVta_x_seg_usuario_fa_PuntoVta" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

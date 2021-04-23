@@ -184,6 +184,24 @@ namespace Core.Erp.Data.Facturacion
                         FechaCreacion = DateTime.Now
                     };
                     Context.fa_PuntoVta.Add(Entity);
+
+                    if (info.lst_usuarios != null || info.lst_usuarios.Count > 0)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.lst_usuarios)
+                        {
+                            Context.fa_PuntoVta_x_seg_usuario.Add(new fa_PuntoVta_x_seg_usuario
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdPuntoVta = info.IdPuntoVta,
+                                IdSucursal = info.IdSucursal,
+                                Secuencia = Secuencia++,
+                                IdUsuario = item.IdUsuario
+                            });
+
+                        }
+                    }
                     Context.SaveChanges();
                 }
                 return true;
@@ -215,6 +233,27 @@ namespace Core.Erp.Data.Facturacion
 
                     Entity.IdUsuarioModificacion = info.IdUsuarioModificacion;
                     Entity.FechaModificacion = DateTime.Now;
+
+                    var lst_Usuarios = Context.fa_PuntoVta_x_seg_usuario.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdPuntoVta == info.IdPuntoVta).ToList();
+                    Context.fa_PuntoVta_x_seg_usuario.RemoveRange(lst_Usuarios);
+                    if (info.lst_usuarios != null || info.lst_usuarios.Count > 0)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.lst_usuarios)
+                        {
+                            Context.fa_PuntoVta_x_seg_usuario.Add(new fa_PuntoVta_x_seg_usuario
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdPuntoVta = info.IdPuntoVta,
+                                IdSucursal = info.IdSucursal,
+                                Secuencia = Secuencia++,
+                                IdUsuario = item.IdUsuario
+                            });
+
+                        }
+                    }
+
                     Context.SaveChanges();
                 
                 }
@@ -261,7 +300,7 @@ namespace Core.Erp.Data.Facturacion
                 using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
                 {
                     connection.Open();
-                    string query = "select IdEmpresa, IdSucursal, IdBodega, IdPuntoVta, cod_PuntoVta, nom_PuntoVta, estado, CobroAutomatico from fa_PuntoVta where IdEmpresa = "+IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and CodDocumentoTipo = '"+codDocumentoTipo+"'";
+                    string query = "select IdEmpresa, IdSucursal, IdBodega, IdPuntoVta, IdCaja, cod_PuntoVta, nom_PuntoVta, estado, CobroAutomatico from fa_PuntoVta where IdEmpresa = "+IdEmpresa.ToString()+" and IdSucursal = "+IdSucursal.ToString()+" and CodDocumentoTipo = '"+codDocumentoTipo+"'";
                     SqlCommand command = new SqlCommand(query,connection);
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
@@ -272,6 +311,7 @@ namespace Core.Erp.Data.Facturacion
                             IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
                             IdBodega = Convert.ToInt32(reader["IdBodega"]),
                             IdPuntoVta = Convert.ToInt32(reader["IdPuntoVta"]),
+                            IdCaja = Convert.ToInt32(reader["IdCaja"]),
                             cod_PuntoVta = Convert.ToString(reader["cod_PuntoVta"]),
                             nom_PuntoVta = Convert.ToString(reader["nom_PuntoVta"]),
                             estado = Convert.ToBoolean(reader["estado"]),

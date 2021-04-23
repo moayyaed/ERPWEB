@@ -200,6 +200,7 @@
     <Compile Include="Facturacion\fa_proforma_Bus.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Bus.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Bus.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_x_seg_usuario_Bus.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Bus.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Bus.cs" />
     <Compile Include="Facturacion\fa_TipoNota_Bus.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Bus.cs" />
     <Compile Include="General\tb_sucursal_Bus.cs" />
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus.cs" />
+    <Compile Include="General\tb_TarjetaCredito_Bus.cs" />
     <Compile Include="General\tb_transportista_Bus.cs" />
     <Compile Include="General\tb_visor_video_Bus.cs" />
     <Compile Include="Helps\FilesHelper_Bus.cs" />

@@ -20,7 +20,7 @@
 
         //Configuración scrolling y pager
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
-        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
         settings.Settings.VerticalScrollableHeight = 400;
         settings.SettingsPager.Visible = true;
         settings.SettingsPager.PageSize = 10;
@@ -52,16 +52,26 @@
         settings.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(95);
         settings.Columns.Add(column =>
         {
-            column.Caption = "";
-            column.FieldName = "";
+            column.Caption = " ";
+            column.FieldName = "IdString";
             column.Width = Unit.Percentage(5);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-chevron-right\" onclick=\"VerProductos('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-chevron-right\"></span>");
             });
         });
+        settings.HtmlDataCellPrepared = (sender, e) =>
+        {
+            if (e.DataColumn.FieldName == "IdString")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("VerProductos('{0}');", e.KeyValue)
+                );
+            }
+        };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });

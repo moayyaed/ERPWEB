@@ -26,7 +26,6 @@ namespace Core.Erp.Data
         }
     
         public DbSet<tb_banco> tb_banco { get; set; }
-        public DbSet<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
         public DbSet<tb_Catalogo> tb_Catalogo { get; set; }
         public DbSet<tb_CatalogoTipo> tb_CatalogoTipo { get; set; }
         public DbSet<tb_ciudad> tb_ciudad { get; set; }
@@ -72,5 +71,7 @@ namespace Core.Erp.Data
         public DbSet<vwtb_sis_Documento_Tipo_Talonario> vwtb_sis_Documento_Tipo_Talonario { get; set; }
         public DbSet<tb_ColaCorreo> tb_ColaCorreo { get; set; }
         public DbSet<tb_ColaCorreoParametros> tb_ColaCorreoParametros { get; set; }
+        public DbSet<tb_TarjetaCredito> tb_TarjetaCredito { get; set; }
+        public DbSet<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
     }
 }

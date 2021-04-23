@@ -21,7 +21,7 @@
 
         //Configuración scrolling y pager
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
-        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
         settings.Settings.VerticalScrollableHeight = 345;
         settings.SettingsPager.Visible = true;
         settings.SettingsPager.PageSize = 9;
@@ -43,15 +43,16 @@
         };
         settings.Columns.Add(column =>
         {
-            column.Caption = "";
-            column.FieldName = "";
+            column.Caption = " ";
+            column.FieldName = "Recibido";
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.VisibleIndex = 1;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\" onclick=\"AbrirModalCantidad('" + c.KeyValue + "');\"></span>");
+                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\" onclick=\"AbrirModalCantidad('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-edit\"></span>");
             });
         });
         settings.Columns.Add(column =>
@@ -124,7 +125,7 @@
             column.Caption = "Subtotal";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(10);
-            column.Visible = false;
+            column.Visible = true;
             column.VisibleIndex = 10;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -145,29 +146,43 @@
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.Width = Unit.Percentage(10);
             column.VisibleIndex = 12;
-            column.Visible = true;
+            column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.Columns.Add(column =>
         {
             column.Caption = "";
-            column.FieldName = "";
+            column.FieldName = "Cambio";
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.VisibleIndex = 17;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\" onclick=\"EliminarProducto('" + c.KeyValue + "');\"></span>");
+                //ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\" onclick=\"EliminarProducto('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-remove\"></span>");
             });
         });
 
-        //settings.Settings.ShowFooter = true;
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal0").DisplayFormat = "{0:n2}";
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
-        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
+        settings.HtmlDataCellPrepared = (sender, e) =>
+        {
+            if (e.DataColumn.FieldName == "Recibido")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("AbrirModalCantidad('{0}');", e.KeyValue)
+                );
+            }
 
+            if (e.DataColumn.FieldName == "Cambio")
+            {
+                e.Cell.Attributes.Add(
+                    "onclick",
+                    string.Format("EliminarProducto('{0}');", e.KeyValue)
+                );
+            }
+        };
         settings.ClientSideEvents.BeginCallback = "function(s,e){ e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ }";
     });

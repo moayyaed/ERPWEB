@@ -19,10 +19,10 @@
 
         //Configuración scrolling y pager
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
-        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
-        settings.Settings.VerticalScrollableHeight = 400;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollableHeight = 350;
         settings.SettingsPager.Visible = true;
-        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.PageSize = 8;
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.AlwaysShowPager = true;
         //Configuración filtro por columna
@@ -76,17 +76,28 @@
         });
         settings.Columns.Add(column =>
         {
-            column.Caption = "";
-            column.FieldName = "";
+            column.Caption = " ";
+            column.FieldName = "IdString";
             column.Width = Unit.Percentage(5);
             column.VisibleIndex = 3;
             column.EditFormSettings.Visible = DefaultBoolean.False;
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
             column.SetDataItemTemplateContent(c =>
             {
-                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-plus\" onclick=\"AgregarPedido('" + c.KeyValue + "');\"></span>");
+                ViewContext.Writer.Write("<span class=\"glyphicon glyphicon-plus\";\"></span>");
             });
         });
+
+        settings.HtmlDataCellPrepared = (sender, e) =>
+        {
+            if (e.DataColumn.FieldName == "IdString")
+            {
+                e.Cell.Attributes.Add(
+                "onclick",
+                string.Format("AgregarPedido('{0}');", e.KeyValue)
+                );
+            }
+        };
 
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
     });

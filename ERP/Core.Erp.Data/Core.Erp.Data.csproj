@@ -740,6 +740,9 @@
     <Compile Include="Facturacion\Base\fa_PuntoVta.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\Base\fa_PuntoVta_x_seg_usuario.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Base\fa_TerminoPago.cs">
       <DependentUpon>Model_facturacion.tt</DependentUpon>
     </Compile>
@@ -864,6 +867,7 @@
     <Compile Include="Facturacion\fa_proforma_Data.cs" />
     <Compile Include="Facturacion\fa_proforma_det_Data.cs" />
     <Compile Include="Facturacion\fa_PuntoVta_Data.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_x_seg_usuario_Data.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Data.cs" />
     <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Data.cs" />
     <Compile Include="Facturacion\fa_TipoNota_Data.cs" />
@@ -905,6 +909,7 @@
     <Compile Include="General\tb_sis_reporte_x_tb_empresa_Data.cs" />
     <Compile Include="General\tb_sucursal_Data.cs" />
     <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Data.cs" />
+    <Compile Include="General\tb_TarjetaCredito_Data.cs" />
     <Compile Include="General\tb_transportista_Data.cs" />
     <Compile Include="General\tb_visor_video_Data.cs" />
     <Compile Include="GenerarDINARDAP_Result.cs">
@@ -2464,6 +2469,9 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sucursal_FormaPago_x_fa_NivelDescuento.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_TarjetaCredito.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_transportista.cs">

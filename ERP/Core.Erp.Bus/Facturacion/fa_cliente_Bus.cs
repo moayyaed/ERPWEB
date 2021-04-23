@@ -110,6 +110,7 @@ namespace Core.Erp.Bus.Facturacion
                 else
                 {
                     grabar = odata_per.modificarPersonaPV(info.info_persona);
+                    grabar = true;
                 }
 
 

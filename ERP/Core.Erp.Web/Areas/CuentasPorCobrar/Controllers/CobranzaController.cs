@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.Banco;
+﻿using Core.Bus.General;
+using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Caja;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
@@ -40,6 +41,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         cxc_cobro_List Lista_Cobro = new cxc_cobro_List();
+        tb_TarjetaCredito_Bus bus_tarjeta = new tb_TarjetaCredito_Bus();
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -132,6 +134,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
 
             var lst_banco_cuenta = bus_banco_cuenta.get_list(IdEmpresa,IdSucursal, false);
             ViewBag.lst_banco_cuenta = lst_banco_cuenta;
+
+            var lst_tarjeta = bus_tarjeta.GetList(IdEmpresa, false);
+            ViewBag.lst_tarjeta = lst_tarjeta;
         }
 
         private bool validar(cxc_cobro_Info i_validar, ref string msg)
