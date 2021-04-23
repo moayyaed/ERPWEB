@@ -165,7 +165,7 @@ namespace Core.Erp.Data.RRHH
                             Fecha_Transac = item.Fecha_Transac = DateTime.Now
                         };
                         IdRegistro++;
-                       if( !si_existe(item))
+                     //  if( !si_existe(item))
                         Context.ro_marcaciones_x_empleado.Add(Entity);
                     }
                     Context.SaveChanges();
