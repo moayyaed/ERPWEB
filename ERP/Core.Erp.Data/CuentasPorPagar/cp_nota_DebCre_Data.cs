@@ -173,6 +173,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         cn_total = info.cn_total,
                         cn_vaCoa = info.cn_vaCoa,
                         cn_Autorizacion = info.cn_Autorizacion,
+                        cn_valoriva = info.cn_valoriva,
                         cn_num_doc_modificado = info.cn_num_doc_modificado,
                         IdIden_credito = info.IdIden_credito,
                         IdTipoServicio = info.IdTipoServicio,
@@ -231,6 +232,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.cn_Serv_valor = info.cn_Serv_valor;
                         Entity.cn_BaseSeguro = info.cn_BaseSeguro;
                         Entity.cn_total = info.cn_total;
+                        Entity.cn_valoriva = info.cn_valoriva;
                         Entity.cn_Autorizacion = info.cn_Autorizacion;
                         Entity.cn_num_doc_modificado = info.cn_num_doc_modificado;
                         Entity.IdCod_ICE = info.IdCod_ICE;
