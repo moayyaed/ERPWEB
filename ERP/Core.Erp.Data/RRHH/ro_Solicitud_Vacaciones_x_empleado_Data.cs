@@ -135,6 +135,9 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    info.Dias_q_Corresponde = info.lst_vacaciones.FirstOrDefault().DiasGanado;
+                    info.Dias_a_disfrutar = info.lst_vacaciones.FirstOrDefault().DiasTomados;
+                    info.Dias_pendiente = info.Dias_q_Corresponde - info.Dias_a_disfrutar;
                     ro_Solicitud_Vacaciones_x_empleado Entity = new ro_Solicitud_Vacaciones_x_empleado
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -184,18 +187,23 @@ namespace Core.Erp.Data.RRHH
 
                     foreach(var item in info.lst_vacaciones)
                     {
+                        int dias = 0;
                         ro_historico_vacaciones_x_empleado Entity_his = Context.ro_historico_vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa
                        && q.IdEmpleado == info.IdEmpleado
                        && q.IdVacacion == item.IdVacacion);
-                        Entity_his.DiasTomados = item.DiasTomados;
                         if (Entity_his == null)
                             return false;
+                        dias = Entity_his.DiasTomados;
+                        Entity_his.DiasTomados = (item.DiasTomados+dias);
+
+                        Context.SaveChanges();
+
                     }
 
-                   
+
                     #endregion
 
-                    
+
                 }
                 return true;
             }
