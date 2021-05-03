@@ -1016,9 +1016,23 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.Num_Autorizacion= info.Num_Autorizacion;
                     Entity.co_serie = info.co_serie;
                     Entity.co_factura = info.co_factura;
+                    //Cambio de fecha 
+                    Entity.co_FechaFactura = info.co_FechaFactura;
+                    Entity.co_FechaFactura_vct = info.co_FechaFactura_vct;
+                    Entity.co_FechaContabilizacion = info.co_FechaContabilizacion;
+                    Entity.co_plazo = info.co_plazo;
 
                     Context.SaveChanges();
 
+                }
+
+                using (Entities_contabilidad db = new Entities_contabilidad())
+                {
+                    var Entity = db.ct_cbtecble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte == info.IdTipoCbte_Ogiro && q.IdCbteCble == info.IdCbteCble_Ogiro).FirstOrDefault();
+                    if (Entity == null) return false;
+
+                    Entity.cb_Fecha = info.co_FechaContabilizacion ?? Entity.cb_Fecha;
+                    db.SaveChanges();
                 }
                 return true;
             }
