@@ -85,9 +85,6 @@ namespace Core.Erp.Web.Areas.General
         #endregion
         private void cargar_combos()
         {
-
-
-
             var lst_banco = bus_bancos.get_list(false);
             ViewBag.lst_banco = lst_banco;
 
