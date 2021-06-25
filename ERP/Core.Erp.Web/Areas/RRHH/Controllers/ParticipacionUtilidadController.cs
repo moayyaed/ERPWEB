@@ -70,7 +70,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
                 info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
@@ -162,7 +162,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                    info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    info.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
                     info.UsuarioIngresa = SessionFixed.IdUsuario;
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
