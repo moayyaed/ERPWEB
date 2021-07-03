@@ -244,7 +244,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 ro_participacion_calculo_Info calculo = new ro_participacion_calculo_Info();
                 calculo.BaseUtilidad = BaseUtilidad;
-                calculo.Utilidad =Math.Round( (BaseUtilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_BASE)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD),2);
+                calculo.Utilidad =Math.Round(BaseUtilidad *0.15,2);
                 calculo.UtilidadDerechoIndividual =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_INDIVIDUAL),2);
                 calculo.UtilidadCargaFamiliar =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_CARGAS),2);
 
