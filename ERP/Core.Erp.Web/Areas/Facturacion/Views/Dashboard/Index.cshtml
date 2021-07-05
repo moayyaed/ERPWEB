@@ -1,0 +1,280 @@
+﻿@model Core.Erp.Info.Helps.cl_filtros_Info
+@{
+    ViewBag.Title = "Dashboard de facturación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <canvas class="canvas" id="UltimasVentasAnio"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas class="canvas" id="UltimasVentasMeses"></canvas>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function () {
+        UltimasVentasAnio();
+        UltimasVentasMeses();
+    })
+
+    function UltimasVentasAnio() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("UltimasVentasAnio", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var NumRows = data.length;
+                var Etiquetas = [];
+                var Valores = [];
+                var Background = [];
+                var Border = [];
+                var dataset = [];
+                var valorData = [];
+
+                var barChartData = {};
+
+                if (data.length > 0) {
+                    $.each(data, function (index, value) {
+                        if (index < NumRows) {
+                            Background.push(colorRGBFijos(index + 1));
+                            Etiquetas.push(value.Anio);
+                            Valores.push(value.Total);
+                        }
+                    })
+                    console.log(Valores);
+
+                    var miCanvasV = document.getElementById('UltimasVentasAnio').getContext('2d');
+                    var chart = new Chart(miCanvasV, {
+                        type: 'bar',
+                        //labels: Etiquetas,
+                        data: {
+                            labels: Etiquetas,
+                            datasets:
+                                [{
+                                    label: "Ventas por año",
+                                    data: Valores,
+                                    backgroundColor: 'rgba(55, 160, 235, 0.2)', // Color de fondo
+                                    borderColor: 'rgba(55, 160, 235, 1)', // Color del borde
+                                    borderWidth: 1,// Ancho del borde
+                                }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'VENTAS ULTIMOS 3 AÑOS'
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    };
+
+    function UltimasVentasMeses() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("UltimasVentasMeses", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var NumRows = data.length;
+                var Etiquetas = [];
+                var Valores = [];
+                var Background = [];
+                var Border = [];
+                var dataset = [];
+                var valorData = [];
+
+                var barChartData = {};
+
+                if (data.length > 0) {
+                    $.each(data, function (index, value) {
+                        if (index < NumRows) {
+                            Background.push(colorRGBFijos(index + 1));
+                            Etiquetas.push(value.Mes);
+                            Valores.push(value.Total);
+                        }
+                    })
+                    console.log(Valores);
+
+                    var miCanvasV = document.getElementById('UltimasVentasMeses').getContext('2d');
+                    var chart = new Chart(miCanvasV, {
+                        type: 'bar',
+                        //labels: Etiquetas,
+                        data: {
+                            labels: Etiquetas,
+                            datasets:
+                                [{
+                                    label: "Ventas por mes",
+                                    data: Valores,
+                                    backgroundColor: 'rgba(60, 180, 115, 0.2)', // Color de fondo
+                                    borderColor: 'rgba(60, 180, 115, 1)', // Color del borde
+                                    borderWidth: 1,// Ancho del borde
+                                }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'VENTAS ULTIMOS 5 MESES'
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    };
+
+    @*function UltimasVentasAnio() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("UltimasVentasAnio", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var NumRows = data.length;
+                var Etiquetas = [];
+                var Valores = [];
+                var Background = [];
+                var Border = [];
+                var dataset = [];
+                var valorData = {};
+
+                var barChartData = {};
+
+                if (data.length > 0) {
+                    $.each(data, function (index, value) {
+                        if (index < NumRows) {
+                            //valorData = [];
+                            //datos = [];
+                            //Etiquetas.push(value.Anio);
+                            //Valores.push(value.Total);
+                            //Background.push(colorRGBFijos(index + 1));
+                            //valorData.push(value.Total);
+
+                            datos = {
+                                label: value.Anio,
+                                backgroundColor: colorRGBFijos(index + 1),
+                                borderWidth: 1,
+                                data: {[value.Anio]:value.Total}
+                                //data: value.Total
+                            };
+                            dataset.push(datos);
+                        }
+                    })
+                    console.log(dataset);
+
+                    var miCanvasV = document.getElementById('UltimasVentasAnio').getContext('2d');
+                    var chart = new Chart(miCanvasV, {
+                        type: 'bar',
+                        //labels: Etiquetas,
+                        data: {
+                            datasets: dataset
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'VENTAS ULTIMOS 3 AÑOS'
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    };*@
+    //{
+    //    label: 'VENTAS ULTIMOS 3 AÑOS-',                                    
+    //    backgroundColor: Background,
+    //    borderWidth: 1,
+    //    data: Valores
+    //}
+    function colorRGBFijos(Color) {
+        var Color1 = "rgb(146, 43, 33)";
+        var Color2 = "rgb(31, 97, 141)";
+        var Color3 = "rgb(35, 155, 86)";
+        var Color4 = "rgb(241, 196, 15)";
+        var Color5 = "rgb(160, 64, 0 )";
+
+        if (Color == 1) {
+            var Color = Color1;
+        }
+        if (Color == 2) {
+            var Color = Color2;
+        }
+        if (Color == 3) {
+            var Color = Color3;
+        }
+        if (Color == 4) {
+            var Color = Color4;
+        }
+        if (Color == 5) {
+            var Color = Color5;
+        }
+
+        return Color;
+    }
+</script>

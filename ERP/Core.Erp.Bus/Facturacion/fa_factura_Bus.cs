@@ -192,5 +192,31 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public List<fa_Dashboard_Info> get_list_UltimasVentasAnio(int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_list_UltimasVentasAnio(IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_UltimasVentasMeses(int IdEmpresa)
+        {
+            try
+            {
+                return odata.get_list_UltimasVentasMeses(IdEmpresa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

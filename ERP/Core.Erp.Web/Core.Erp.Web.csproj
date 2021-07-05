@@ -347,6 +347,7 @@
     <Compile Include="Areas\Facturacion\Controllers\ClienteContactosController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\ClienteTipoController.cs" />
+    <Compile Include="Areas\Facturacion\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaPuntoVentaController.cs" />
     <Compile Include="Areas\Facturacion\Controllers\FacturaTipoController.cs" />
@@ -10660,6 +10661,7 @@
     <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_Pedido.cshtml" />
     <Content Include="Areas\Facturacion\Views\FacturaPuntoVenta\_GridViewPartial_FinalizarPedido.cshtml" />
     <Content Include="Areas\Facturacion\Views\PuntoVenta\_GridViewPartial_puntoventa_usuario.cshtml" />
+    <Content Include="Areas\Facturacion\Views\Dashboard\Index.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10679,6 +10681,8 @@
     <Content Include="Areas\RRHH\Views\DepartamentoPorArea\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\DepartamentoPorArea\Anular.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\chart.js" />
+    <Content Include="Scripts\chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -10778,7 +10782,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reportes\ActivoFijo\ACTF_001_Rpt.resx">
       <DependentUpon>ACTF_001_Rpt.cs</DependentUpon>
     </EmbeddedResource>
