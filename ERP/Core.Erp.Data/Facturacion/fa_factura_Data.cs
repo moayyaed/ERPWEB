@@ -1551,7 +1551,7 @@ namespace Core.Erp.Data.Facturacion
                     + " round(SUM(fd.vt_total), 2) Total "
                     + " from fa_factura f "
                     + " inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
-                    + " where f.IdEmpresa = 1 AND YEAR(f.vt_fecha) = YEAR(GETDATE()) "
+                    + " where f.IdEmpresa = " + IdEmpresa.ToString() +" AND YEAR(f.vt_fecha) = YEAR(GETDATE()) "
                     + " group by MONTH(f.vt_fecha) "
                     + " order by MONTH(f.vt_fecha) desc ";
                     #endregion
