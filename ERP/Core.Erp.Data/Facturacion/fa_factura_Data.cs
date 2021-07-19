@@ -17,7 +17,7 @@ using System.Data.SqlClient;
 
 namespace Core.Erp.Data.Facturacion
 {
-   public class fa_factura_Data
+    public class fa_factura_Data
     {
         #region Variables
         tb_sis_Documento_Tipo_Talonario_Data odata_tal = new tb_sis_Documento_Tipo_Talonario_Data();
@@ -63,12 +63,12 @@ namespace Core.Erp.Data.Facturacion
 
                                  vt_autorizacion = q.vt_autorizacion,
                                  Fecha_Autorizacion = q.Fecha_Autorizacion,
-                                 
+
                                  EstadoBool = q.Estado == "A" ? true : false
 
                              }).ToList();
                 }
-                
+
                 return Lista;
             }
             catch (Exception ex)
@@ -87,19 +87,19 @@ namespace Core.Erp.Data.Facturacion
                 {
                     Lista = (from q in Context.vwfa_factura_sin_guia
                              where q.IdEmpresa == IdEmpresa
-                             && q.IdCliente==IdCliente
+                             && q.IdCliente == IdCliente
                              select new fa_factura_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdSucursal = q.IdSucursal,
                                  IdBodega = q.IdBodega,
                                  IdCbteVta = q.IdCbteVta,
-                                 vt_serie1=q.vt_serie1,
-                                 vt_serie2=q.vt_serie2,
-                                 vt_NumFactura=q.vt_NumFactura,
-                                 vt_Observacion=q.vt_Observacion,
-                                 vt_fecha=q.vt_fecha
-                               
+                                 vt_serie1 = q.vt_serie1,
+                                 vt_serie2 = q.vt_serie2,
+                                 vt_NumFactura = q.vt_NumFactura,
+                                 vt_Observacion = q.vt_Observacion,
+                                 vt_fecha = q.vt_fecha
+
                              }).ToList();
                 }
                 return Lista;
@@ -130,7 +130,7 @@ namespace Core.Erp.Data.Facturacion
                 }
                 return false;
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 tb_LogError_Data LogData = new tb_LogError_Data();
                 LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "factura_existe" });
@@ -180,7 +180,7 @@ namespace Core.Erp.Data.Facturacion
                         IdFacturaTipo = Entity.IdFacturaTipo
                     };
 
-                    info.info_resumen = Context.fa_factura_resumen.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCbteVta == IdCbteVta).Select(q=> new fa_factura_resumen_Info
+                    info.info_resumen = Context.fa_factura_resumen.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCbteVta == IdCbteVta).Select(q => new fa_factura_resumen_Info
                     {
                         IdEmpresa = q.IdEmpresa,
                         IdSucursal = q.IdSucursal,
@@ -280,7 +280,7 @@ namespace Core.Erp.Data.Facturacion
                     IdUsuario = info.IdUsuario,
                     IdNivel = info.IdNivel,
                     IdFacturaTipo = info.IdFacturaTipo == 0 ? 1 : info.IdFacturaTipo,
-                    IdContacto = (info.IdContacto ==0 ? null : info.IdContacto)
+                    IdContacto = (info.IdContacto == 0 ? null : info.IdContacto)
 
                 };
                 #endregion
@@ -385,13 +385,13 @@ namespace Core.Erp.Data.Facturacion
                 fa_PuntoVta_Info info_puntovta = new fa_PuntoVta_Info();
                 tb_sis_Documento_Tipo_Talonario_Info ultimo_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
                 tb_sis_Documento_Tipo_Talonario_Info info_talonario = new tb_sis_Documento_Tipo_Talonario_Info();
-                info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta??0);
+                info_puntovta = data_puntovta.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
 
                 if (info_puntovta != null)
                 {
                     if (info_puntovta.EsElectronico == true)
                     {
-                        ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.EsElectronico,true);
+                        ultimo_talonario = data_talonario.GetUltimoNoUsado(info.IdEmpresa, info_puntovta.codDocumentoTipo, info_puntovta.Su_CodigoEstablecimiento, info_puntovta.cod_PuntoVta, info_puntovta.EsElectronico, true);
 
                         if (ultimo_talonario != null)
                         {
@@ -421,7 +421,7 @@ namespace Core.Erp.Data.Facturacion
                 #endregion
 
                 db_f.fa_factura.Add(factura);
-                db_f.SaveChanges();                
+                db_f.SaveChanges();
 
                 #region Inventario
                 var parametro = db_f.fa_parametro.Where(q => q.IdEmpresa == info.IdEmpresa).FirstOrDefault();
@@ -550,12 +550,12 @@ namespace Core.Erp.Data.Facturacion
 
                     #region Ventas con IVA
 
-                    var lstVtaIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCble_vta, q.IdCentroCosto,  }).Select(q => new
+                    var lstVtaIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCble_vta, q.IdCentroCosto, }).Select(q => new
                     {
                         q.Key.IdCentroCosto,
                         q.Key.IdCtaCble_vta,
-                        vt_Subtotal =  q.Sum(g=> g.vt_Subtotal),
-                        vt_SubtotalSinDscto = q.Sum(g=> g.vt_SubtotalSinDscto)
+                        vt_Subtotal = q.Sum(g => g.vt_Subtotal),
+                        vt_SubtotalSinDscto = q.Sum(g => g.vt_SubtotalSinDscto)
                     }).ToList();
 
                     foreach (var item in lstVtaIVA)
@@ -569,7 +569,7 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = item.IdCtaCble_vta,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = string.IsNullOrEmpty(IdCtaCble_Dscto) ? Math.Round(item.vt_Subtotal * -1,2,MidpointRounding.AwayFromZero) : Math.Round(item.vt_SubtotalSinDscto * -1, 2, MidpointRounding.AwayFromZero)
+                                dc_Valor = string.IsNullOrEmpty(IdCtaCble_Dscto) ? Math.Round(item.vt_Subtotal * -1, 2, MidpointRounding.AwayFromZero) : Math.Round(item.vt_SubtotalSinDscto * -1, 2, MidpointRounding.AwayFromZero)
                             });
                     }
 
@@ -598,8 +598,8 @@ namespace Core.Erp.Data.Facturacion
                             });
                     }
                     double DiferenciaSubtotal = 0;
-                    if(string.IsNullOrEmpty(IdCtaCble_Dscto))
-                        DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalConDscto,2,MidpointRounding.AwayFromZero);
+                    if (string.IsNullOrEmpty(IdCtaCble_Dscto))
+                        DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalConDscto, 2, MidpointRounding.AwayFromZero);
                     else
                         DiferenciaSubtotal = Math.Round(Math.Round(diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero) + (double)info.info_resumen.SubtotalSinDscto, 2, MidpointRounding.AwayFromZero);
 
@@ -609,13 +609,13 @@ namespace Core.Erp.Data.Facturacion
                     if (DiferenciaSubtotal > 0)
                         diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
                     else
-                        if(DiferenciaSubtotal < 0)
-                            diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
+                        if (DiferenciaSubtotal < 0)
+                        diario.lst_ct_cbtecble_det.FirstOrDefault().dc_Valor += (DiferenciaSubtotal * -1);
 
                     #endregion
 
                     #region IVA
-                    var lstIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCbleIva}).Select(q => new
+                    var lstIVA = lst.Where(q => q.vt_por_iva > 0).GroupBy(q => new { q.IdCtaCbleIva }).Select(q => new
                     {
                         q.Key.IdCtaCbleIva,
                     }).FirstOrDefault();
@@ -661,7 +661,7 @@ namespace Core.Erp.Data.Facturacion
                                 secuencia = secuencia++,
                                 IdCtaCble = IdCtaCble_Dscto,
                                 IdCentroCosto = item.IdCentroCosto,
-                                dc_Valor = Math.Round(item.vt_DescuentoTotal,2,MidpointRounding.AwayFromZero)
+                                dc_Valor = Math.Round(item.vt_DescuentoTotal, 2, MidpointRounding.AwayFromZero)
                             });
                     }
                     if (!string.IsNullOrEmpty(IdCtaCble_Dscto))
@@ -706,8 +706,8 @@ namespace Core.Erp.Data.Facturacion
                     return diario;
                 }
 
-                
-                
+
+
             }
             catch (Exception)
             {
@@ -724,7 +724,7 @@ namespace Core.Erp.Data.Facturacion
                     var motivo = Context.in_Motivo_Inven.Where(q => q.IdEmpresa == info.IdEmpresa && q.Tipo_Ing_Egr == "EGR" && q.Genera_Movi_Inven == "S").FirstOrDefault();
                     if (motivo == null)
                         return null;
-                    
+
                     int secuencia = 1;
 
                     in_Ing_Egr_Inven_Info movimiento = new in_Ing_Egr_Inven_Info
@@ -735,7 +735,7 @@ namespace Core.Erp.Data.Facturacion
                         IdMovi_inven_tipo = IdMoviInven_tipo,
                         IdNumMovi = 0,
                         cm_fecha = info.vt_fecha.Date,
-                        cm_observacion = "FACT# " + info.vt_serie1 + "-" + info.vt_serie2 + "-" + info.vt_NumFactura + " " + "CLIENTE: "+nomContacto+" "+ info.vt_Observacion,
+                        cm_observacion = "FACT# " + info.vt_serie1 + "-" + info.vt_serie2 + "-" + info.vt_NumFactura + " " + "CLIENTE: " + nomContacto + " " + info.vt_Observacion,
                         IdUsuario = info.IdUsuario,
                         IdUsuarioUltModi = info.IdUsuarioUltModi,
                         IdMotivo_Inv = motivo.IdMotivo_Inv,
@@ -744,16 +744,16 @@ namespace Core.Erp.Data.Facturacion
                         lst_in_Ing_Egr_Inven_det = new List<in_Ing_Egr_Inven_det_Info>()
                     };
                     foreach (var item in info.lst_det)
-                    {                        
+                    {
                         var lst = Context.in_Producto_Composicion.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdProductoPadre == item.IdProducto).ToList();
                         if (lst.Count == 0)
                         {
                             var producto = (from p in Context.in_Producto
-                                           join t in Context.in_ProductoTipo
-                                           on new { p.IdEmpresa, p.IdProductoTipo } equals new { t.IdEmpresa, t.IdProductoTipo }
-                                           where p.IdEmpresa == info.IdEmpresa && p.IdProducto == item.IdProducto
-                                           && t.tp_ManejaInven == "S"
-                                           select p).FirstOrDefault();
+                                            join t in Context.in_ProductoTipo
+                                            on new { p.IdEmpresa, p.IdProductoTipo } equals new { t.IdEmpresa, t.IdProductoTipo }
+                                            where p.IdEmpresa == info.IdEmpresa && p.IdProducto == item.IdProducto
+                                            && t.tp_ManejaInven == "S"
+                                            select p).FirstOrDefault();
 
                             if (producto != null)
                             {
@@ -767,7 +767,7 @@ namespace Core.Erp.Data.Facturacion
                                     Secuencia = secuencia++,
                                     IdProducto = item.IdProducto,
                                     dm_cantidad = item.vt_cantidad * -1,
-                                    dm_cantidad_sinConversion = item.vt_cantidad*-1,
+                                    dm_cantidad_sinConversion = item.vt_cantidad * -1,
                                     mv_costo = 0,
                                     mv_costo_sinConversion = 0,
                                     IdUnidadMedida = producto.IdUnidadMedida_Consumo,
@@ -788,7 +788,7 @@ namespace Core.Erp.Data.Facturacion
                                     }
                                 });
                             }
-                        }else
+                        } else
                         {
                             foreach (var comp in lst)
                             {
@@ -838,7 +838,7 @@ namespace Core.Erp.Data.Facturacion
                     if (movimiento.lst_in_Ing_Egr_Inven_det.Count == 0)
                         return null;
                     return movimiento;
-                }                         
+                }
             }
             catch (Exception)
             {
@@ -864,7 +864,7 @@ namespace Core.Erp.Data.Facturacion
                 #region Cabecera
                 fa_factura Entity = db_f.fa_factura.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdCbteVta == info.IdCbteVta);
                 if (Entity == null) return false;
-                
+
                 Entity.vt_fecha = info.vt_fecha.Date;
                 Entity.vt_fech_venc = info.vt_fech_venc.Date;
                 Entity.IdCliente = info.IdCliente;
@@ -891,7 +891,7 @@ namespace Core.Erp.Data.Facturacion
 
                 #region Resumen
                 var resu = db_f.fa_factura_resumen.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdSucursal == info.IdSucursal && q.IdBodega == info.IdBodega && q.IdCbteVta == info.IdCbteVta).FirstOrDefault();
-                if(resu != null)
+                if (resu != null)
                     db_f.fa_factura_resumen.Remove(resu);
 
                 if (info.info_resumen.ValorIVA > 0)
@@ -1043,7 +1043,7 @@ namespace Core.Erp.Data.Facturacion
                     if (movimiento != null)
                     {
                         movimiento.IdNumMovi = egr.IdNumMovi_in_eg_x_inv;
-                        if(data_inv.modificarDB(movimiento))
+                        if (data_inv.modificarDB(movimiento))
                         {
                             var lstegr = db_f.fa_factura_det_x_in_Ing_Egr_Inven_det.Where(q => q.IdEmpresa_fa == info.IdEmpresa && q.IdSucursal_fa == info.IdSucursal && q.IdBodega_fa == info.IdBodega && q.IdCbteVta_fa == info.IdCbteVta).ToList();
                             db_f.fa_factura_det_x_in_Ing_Egr_Inven_det.RemoveRange(lstegr);
@@ -1155,11 +1155,11 @@ namespace Core.Erp.Data.Facturacion
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
                     command.CommandText = "UPDATE [dbo].[fa_factura]"
-                                        + " SET[IdFacturaTipo] = "+info.IdFacturaTipo.ToString()
-                                        + " ,[vt_Observacion] = '"+info.vt_Observacion+"'"
-                                        + " ,[IdUsuarioUltModi] = '"+info.IdUsuario+"'"
+                                        + " SET[IdFacturaTipo] = " + info.IdFacturaTipo.ToString()
+                                        + " ,[vt_Observacion] = '" + info.vt_Observacion + "'"
+                                        + " ,[IdUsuarioUltModi] = '" + info.IdUsuario + "'"
                                         + " ,[Fecha_UltMod] = GETDATE()"
-                                        + " WHERE IdEmpresa = "+info.IdEmpresa.ToString()+" AND IdSucursal = "+info.IdSucursal.ToString()+" AND IdBodega = "+info.IdBodega.ToString()+" AND IdCbteVta = "+info.IdCbteVta.ToString();
+                                        + " WHERE IdEmpresa = " + info.IdEmpresa.ToString() + " AND IdSucursal = " + info.IdSucursal.ToString() + " AND IdBodega = " + info.IdBodega.ToString() + " AND IdCbteVta = " + info.IdCbteVta.ToString();
                     command.ExecuteNonQuery();
                 }
 
@@ -1213,7 +1213,7 @@ namespace Core.Erp.Data.Facturacion
                         Entity.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
                         Entity.Estado = "I";
                     }
-                    
+
                     var conta = Context.fa_factura_x_ct_cbtecble.Where(q => q.vt_IdEmpresa == info.IdEmpresa && q.vt_IdSucursal == info.IdSucursal && q.vt_IdBodega == info.IdBodega && q.vt_IdCbteVta == info.IdCbteVta).FirstOrDefault();
                     if (conta != null)
                         if (!odata_ct.anularDB(new ct_cbtecble_Info { IdEmpresa = conta.ct_IdEmpresa, IdTipoCbte = conta.ct_IdTipoCbte, IdCbteCble = conta.ct_IdCbteCble, IdUsuarioAnu = info.IdUsuarioUltAnu, cb_MotivoAnu = info.MotivoAnulacion }))
@@ -1224,8 +1224,8 @@ namespace Core.Erp.Data.Facturacion
                         }
 
                     var inv = Context.fa_factura_x_in_Ing_Egr_Inven.Where(q => q.IdEmpresa_fa == info.IdEmpresa && q.IdSucursal_fa == info.IdSucursal && q.IdBodega_fa == info.IdBodega && q.IdCbteVta_fa == info.IdCbteVta).FirstOrDefault();
-                    if(inv != null)
-                        if(!odata_inv.anularDB(new in_Ing_Egr_Inven_Info { IdEmpresa = inv.IdEmpresa_in_eg_x_inv, IdSucursal = inv.IdSucursal_in_eg_x_inv, IdMovi_inven_tipo = inv.IdMovi_inven_tipo_in_eg_x_inv, IdNumMovi = inv.IdNumMovi_in_eg_x_inv, IdusuarioUltAnu = info.IdUsuarioUltAnu, MotivoAnulacion = info.MotivoAnulacion }))
+                    if (inv != null)
+                        if (!odata_inv.anularDB(new in_Ing_Egr_Inven_Info { IdEmpresa = inv.IdEmpresa_in_eg_x_inv, IdSucursal = inv.IdSucursal_in_eg_x_inv, IdMovi_inven_tipo = inv.IdMovi_inven_tipo_in_eg_x_inv, IdNumMovi = inv.IdNumMovi_in_eg_x_inv, IdusuarioUltAnu = info.IdUsuarioUltAnu, MotivoAnulacion = info.MotivoAnulacion }))
                         {
                             Entity.MotivoAnulacion = null;
                             Entity.IdUsuarioUltAnu = null;
@@ -1262,17 +1262,17 @@ namespace Core.Erp.Data.Facturacion
                               && f.IdSucursal == IdSucursal
                               && f.IdBodega == IdBodega
                               && f.IdCbteVta == IdCbteVta
-                             join t in Context.fa_TerminoPago
-                             on new { IdTerminoPago = f.vt_tipo_venta } equals new { t.IdTerminoPago }
-                             select new
-                             {
-                                 Num_Coutas = t.Num_Coutas
-                             }).FirstOrDefault();
+                              join t in Context.fa_TerminoPago
+                              on new { IdTerminoPago = f.vt_tipo_venta } equals new { t.IdTerminoPago }
+                              select new
+                              {
+                                  Num_Coutas = t.Num_Coutas
+                              }).FirstOrDefault();
                     if (fa.Num_Coutas > 0)
                         return true;
                 }
                 return false;
-               
+
             }
             catch (Exception)
             {
@@ -1281,7 +1281,7 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
-        public bool ValidarCarteraVencida (int IdEmpresa, decimal IdCliente, ref string mensaje)
+        public bool ValidarCarteraVencida(int IdEmpresa, decimal IdCliente, ref string mensaje)
         {
             try
             {
@@ -1291,7 +1291,7 @@ namespace Core.Erp.Data.Facturacion
                     var cartera = Context.vwcxc_cartera_x_cobrar.Where(q => q.IdEmpresa == IdEmpresa && q.IdCliente == IdCliente && q.vt_fech_venc < FechaCorte && q.Saldo > 0 && q.Estado == "A").ToList();
                     if (cartera.Count > 0)
                     {
-                        mensaje = "El cliente "+cartera.First().NomCliente.Trim()+" adeuda $"+Math.Round((double)cartera.Sum(q=>q.Saldo),2,MidpointRounding.AwayFromZero)+" en cartera vencida";
+                        mensaje = "El cliente " + cartera.First().NomCliente.Trim() + " adeuda $" + Math.Round((double)cartera.Sum(q => q.Saldo), 2, MidpointRounding.AwayFromZero) + " en cartera vencida";
                         return true;
                     }
                 }
@@ -1478,6 +1478,105 @@ namespace Core.Erp.Data.Facturacion
                 tb_LogError_Data LogData = new tb_LogError_Data();
                 LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_fac_sin_guia", IdUsuario = "consulta" });
                 return new List<fa_factura_Info>();
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_UltimasVentasAnio(int IdEmpresa)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "select TOP(3) YEAR(f.vt_fecha) Anio, round( SUM(fd.vt_total),2) Total "
+                    + " from fa_factura f "
+                    + " inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
+                    + " where f.IdEmpresa = " + IdEmpresa.ToString()
+                    + " group by YEAR(f.vt_fecha) "
+                    + " order by YEAR(f.vt_fecha) desc ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["Anio"]),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_UltimasVentasMeses(int IdEmpresa)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "select TOP(5) MONTH(f.vt_fecha) NumMes, "
+                    + " CASE MONTH(f.vt_fecha) "
+                        + " WHEN 1 then 'ENERO' "
+                        + " WHEN 2 THEN 'FEBRERO' "
+                        + " WHEN 3 THEN 'MARZO' "
+                        + " WHEN 4 THEN 'ABRIL' "
+                        + " WHEN 5 THEN 'MAYO' "
+                        + " WHEN 6 THEN 'JUNIO' "
+                        + " WHEN 7 THEN 'JULIO' "
+                        + " WHEN 8 THEN 'AGOSTO' "
+                        + " WHEN 9 THEN 'SEPTIEMBRE' "
+                        + " WHEN 10 THEN 'OCTUBRE' "
+                        + " WHEN 11 THEN 'NOVIEMBRE' "
+                        + " WHEN 12 THEN 'DICIEMBRE' "
+                        + " ELSE '' "
+                    + " END Mes, "
+                    + " round(SUM(fd.vt_total), 2) Total "
+                    + " from fa_factura f "
+                    + " inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
+                    + " where f.IdEmpresa = " + IdEmpresa.ToString() +" AND YEAR(f.vt_fecha) = YEAR(GETDATE()) "
+                    + " group by MONTH(f.vt_fecha) "
+                    + " order by MONTH(f.vt_fecha) desc ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["NumMes"]),
+                            Mes = string.IsNullOrEmpty(reader["Mes"].ToString()) ? null : reader["Mes"].ToString(),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
             }
         }
     }

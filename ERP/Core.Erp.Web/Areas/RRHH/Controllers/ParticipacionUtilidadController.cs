@@ -70,7 +70,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
 
-                info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
                 info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
@@ -162,7 +162,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
-                    info.IdSucursal = Convert.ToInt32(SessionFixed.IdEmpresa);
+                    info.IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
                     info.UsuarioIngresa = SessionFixed.IdUsuario;
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 info.detalle = ro_participacion_utilidad_empleado_Info_lst.get_list(Convert.ToDecimal(info.IdTransaccionSession));
@@ -244,7 +244,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 ro_participacion_calculo_Info calculo = new ro_participacion_calculo_Info();
                 calculo.BaseUtilidad = BaseUtilidad;
-                calculo.Utilidad =Math.Round( (BaseUtilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_BASE)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD),2);
+                calculo.Utilidad =Math.Round(BaseUtilidad *0.15,2);
                 calculo.UtilidadDerechoIndividual =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_INDIVIDUAL),2);
                 calculo.UtilidadCargaFamiliar =Math.Round( (calculo.Utilidad / Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_UTILIDAD)) * Convert.ToInt32(cl_enumeradores.eTipoPorcentajeUtilidad.PORCENTAJE_CARGAS),2);
 
