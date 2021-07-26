@@ -78,7 +78,10 @@ namespace Core.Erp.Bus.Contabilidad
                            comp_det.tpIdProv = comp.tpIdProv;
                            comp_det.idProv = comp.idProv;
                            comp_det.tipoComprobante = comp.tipoComprobante;
+                           if(comp.parteRel=="NO")
                            comp_det.parteRel = parteRelType.NO;
+                           else
+                               comp_det.parteRel = parteRelType.SI;
                            comp_det.fechaRegistro = comp.fechaRegistro.ToString().Substring(0, 10);
                            comp_det.establecimiento = comp.establecimiento;
                            comp_det.puntoEmision = comp.puntoEmision;
