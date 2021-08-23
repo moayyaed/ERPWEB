@@ -1579,5 +1579,218 @@ namespace Core.Erp.Data.Facturacion
                 return new List<fa_Dashboard_Info>();
             }
         }
+
+        public List<fa_Dashboard_Info> get_list_VentasClientes(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    + " @FechaDesde date = DATEFROMPARTS(" + FechaIni.Year + ", " + FechaIni.Month + ", " + FechaIni.Day + "),"
+                    + " @FechaHasta date = DATEFROMPARTS(" + FechaFin.Year + ", " + FechaFin.Month + ", " + FechaFin.Day + ")"
+                    + " select a.pe_nombreCompleto, a.RowNumber, sum(a.Total) Total "
+                    + " from("
+                    + " select a.IdEmpresa, "
+                    + " case when a.RowNumber <= 9 then a.pe_nombreCompleto else 'OTROS' end pe_nombreCompleto, "
+                    + " case when a.RowNumber <= 9 then a.RowNumber else 10 end RowNumber, "
+                    + " a.Total Total "
+                    + " from("
+                    + " select a.IdEmpresa, b.IdCliente, c.pe_nombreCompleto, sum(d.Total) Total, "
+                    + " ROW_NUMBER() over(order by a.IdEmpresa, sum(d.Total) desc) as RowNumber "
+                    + " from fa_factura as a with(nolock) join "
+                    + " fa_cliente as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdCliente = b.IdCliente join "
+                    + " tb_persona as c  with(nolock) on b.IdPersona = c.IdPersona join "
+                    + " fa_factura_resumen as d with(nolock) on a.IdEmpresa = d.IdEmpresa and a.IdSucursal = d.IdSucursal and a.IdBodega = d.IdBodega and a.IdCbteVta = d.IdCbteVta "
+                    + " where a.IdEmpresa = @IdEmpresa and a.vt_fecha between @FechaDesde and @FechaHasta and a.Estado = 'A' "
+                    + " group by a.IdEmpresa, b.IdCliente, c.pe_nombreCompleto "
+                    + " ) a "
+                    + " ) a "
+                    + " group by a.pe_nombreCompleto, a.RowNumber ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["RowNumber"]),
+                            Mes = string.IsNullOrEmpty(reader["pe_nombreCompleto"].ToString()) ? null : reader["pe_nombreCompleto"].ToString(),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_VentasClientesListado(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    + " @FechaDesde date = DATEFROMPARTS(" + FechaIni.Year + ", " + FechaIni.Month + ", " + FechaIni.Day + "),"
+                    + " @FechaHasta date = DATEFROMPARTS(" + FechaFin.Year + ", " + FechaFin.Month + ", " + FechaFin.Day + ")"
+                    + " select a.IdEmpresa, b.IdCliente, c.pe_nombreCompleto, sum(d.Total) Total, "
+                    + " ROW_NUMBER() over(order by a.IdEmpresa, sum(d.Total) desc) as RowNumber "
+                    + " from fa_factura as a with(nolock) join "
+                    + " fa_cliente as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdCliente = b.IdCliente join "
+                    + " tb_persona as c  with(nolock) on b.IdPersona = c.IdPersona join "
+                    + " fa_factura_resumen as d on a.IdEmpresa = d.IdEmpresa and a.IdSucursal = d.IdSucursal and a.IdBodega = d.IdBodega and a.IdCbteVta = d.IdCbteVta "
+                    + " where a.IdEmpresa = @IdEmpresa and a.vt_fecha between @FechaDesde and @FechaHasta and a.Estado = 'A' "
+                    + " group by a.IdEmpresa, b.IdCliente, c.pe_nombreCompleto ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["RowNumber"]),
+                            Mes = string.IsNullOrEmpty(reader["pe_nombreCompleto"].ToString()) ? null : reader["pe_nombreCompleto"].ToString(),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_VentasProductos(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    + " @FechaDesde date = DATEFROMPARTS(" + FechaIni.Year + ", " + FechaIni.Month + ", " + FechaIni.Day + "),"
+                    + " @FechaHasta date = DATEFROMPARTS(" + FechaFin.Year + ", " + FechaFin.Month + ", " + FechaFin.Day + ")"
+                    + " select a.pe_nombreCompleto, a.RowNumber, sum(a.Total) Total "
+                    + " from("
+                    + " select a.IdEmpresa, "
+                    + " case when a.RowNumber <= 9 then a.pr_descripcion else 'OTROS' end pe_nombreCompleto, "
+                    + " case when a.RowNumber <= 9 then a.RowNumber else 10 end RowNumber, "
+                    + " a.Total Total "
+                    + " from("
+                    + " select a.IdEmpresa, f.pr_descripcion, count(e.vt_cantidad) Total, "
+                    + " ROW_NUMBER() over(order by a.IdEmpresa, count(e.vt_cantidad) desc) as RowNumber "
+                    + " from fa_factura as a with(nolock) join "
+                    + " fa_cliente as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdCliente = b.IdCliente join "
+                    + " tb_persona as c  with(nolock) on b.IdPersona = c.IdPersona join "
+                    + " fa_factura_resumen as d with(nolock) on a.IdEmpresa = d.IdEmpresa and a.IdSucursal = d.IdSucursal and a.IdBodega = d.IdBodega and a.IdCbteVta = d.IdCbteVta join "
+                    + " fa_factura_det as e with(nolock) on a.IdEmpresa = e.IdEmpresa and a.IdSucursal = e.IdSucursal and a.IdBodega = e.IdBodega and a.IdCbteVta = e.IdCbteVta join "
+                    + " in_producto as f with(nolock) on e.idempresa = f.idempresa and e.idproducto = f.IdProducto "
+                    + " where a.IdEmpresa = @IdEmpresa and a.vt_fecha between @FechaDesde and @FechaHasta and a.Estado = 'A' "
+                    + " group by a.IdEmpresa, f.pr_descripcion "
+                    + " ) a "
+                    + " ) a "
+                    + " group by a.pe_nombreCompleto, a.RowNumber ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["RowNumber"]),
+                            Mes = string.IsNullOrEmpty(reader["pe_nombreCompleto"].ToString()) ? null : reader["pe_nombreCompleto"].ToString(),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_VentasProductosListado(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                List<fa_Dashboard_Info> Lista = new List<fa_Dashboard_Info>();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+
+                    #region Query
+                    string query = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    + " @FechaDesde date = DATEFROMPARTS(" + FechaIni.Year + ", " + FechaIni.Month + ", " + FechaIni.Day + "),"
+                    + " @FechaHasta date = DATEFROMPARTS(" + FechaFin.Year + ", " + FechaFin.Month + ", " + FechaFin.Day + ")"
+                    + " select a.IdEmpresa, f.pr_descripcion, count(e.vt_cantidad) CantidadTotal, AVG(E.vt_PrecioFinal) PrecioUnitarioPromedio, SUM(E.vt_total) Total, "
+                    + " ROW_NUMBER() over(order by a.IdEmpresa, count(e.vt_cantidad) desc) as RowNumber "
+                    + " from fa_factura as a with(nolock) join "
+                    + " fa_cliente as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdCliente = b.IdCliente join "
+                    + " tb_persona as c  with(nolock) on b.IdPersona = c.IdPersona join "
+                    + " fa_factura_resumen as d with(nolock) on a.IdEmpresa = d.IdEmpresa and a.IdSucursal = d.IdSucursal and a.IdBodega = d.IdBodega and a.IdCbteVta = d.IdCbteVta join "
+                    + " fa_factura_det as e with(nolock) on a.IdEmpresa = e.IdEmpresa and a.IdSucursal = e.IdSucursal and a.IdBodega = e.IdBodega and a.IdCbteVta = e.IdCbteVta join "
+                    + " in_producto as f with(nolock) on e.idempresa = f.idempresa and e.idproducto = f.IdProducto "
+                    + " where a.IdEmpresa = @IdEmpresa and a.vt_fecha between @FechaDesde and @FechaHasta and a.Estado = 'A' "
+                    + " group by a.IdEmpresa, f.pr_descripcion ";
+                    #endregion
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.CommandTimeout = 0;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new fa_Dashboard_Info
+                        {
+                            Anio = Convert.ToInt32(reader["RowNumber"]),
+                            Mes = string.IsNullOrEmpty(reader["pr_descripcion"].ToString()) ? null : reader["pr_descripcion"].ToString(),
+                            Precio = Convert.ToDecimal(reader["PrecioUnitarioPromedio"]),
+                            Total = Convert.ToDecimal(reader["Total"]),
+                        });
+                    }
+                    reader.Close();
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new List<fa_Dashboard_Info>();
+            }
+        }
     }
 }

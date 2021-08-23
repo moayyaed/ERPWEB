@@ -10,6 +10,7 @@ namespace Core.Erp.Info.Facturacion
     {
         public int Anio { get; set; }
         public decimal Total { get; set; }
+        public decimal Precio { get; set; }
         public string Mes { get; set; }
     }
 }

@@ -218,5 +218,55 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public List<fa_Dashboard_Info> get_list_VentasClientes(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.get_list_VentasClientes(IdEmpresa, FechaIni, FechaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<fa_Dashboard_Info> get_list_VentasClientesListado(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.get_list_VentasClientesListado(IdEmpresa, FechaIni, FechaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<fa_Dashboard_Info> get_list_VentasProductos(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.get_list_VentasProductos(IdEmpresa, FechaIni, FechaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<fa_Dashboard_Info> get_list_VentasProductosListado(int IdEmpresa, DateTime FechaIni, DateTime FechaFin)
+        {
+            try
+            {
+                return odata.get_list_VentasProductosListado(IdEmpresa, FechaIni, FechaFin);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

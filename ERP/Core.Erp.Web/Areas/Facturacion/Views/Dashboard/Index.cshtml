@@ -1,6 +1,6 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_Info
 @{
-    ViewBag.Title = "Dashboard de facturación";
+    ViewBag.Title = "Dashboard";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
@@ -8,10 +8,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.fecha_ini, new { @id = "fecha_ini" })
+    @Html.HiddenFor(q => q.fecha_fin, new { @id = "fecha_fin" })
 
     <div class="row">
         <div class="col-md-12">
@@ -23,11 +26,76 @@
             </div>
         </div>
     </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <canvas class="canvas" id="VentasClientes"></canvas>
+            </div>
+            <div class="col-md-4">
+                <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-sort="ascending" >#</th>
+                            <th class="sorting" tabindex="0">Cliente</th>
+                            <th class="sorting" tabindex="0">Total</th>                            
+                        </tr>
+                    </thead>
+                    <tbody id="Detalle_VentasClientes">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <canvas class="canvas" id="VentasProductos" ></canvas>
+            </div>
+            <div class="col-md-4">
+                <table id="Table_VentasProductos" class="table table-responsive dataTable dataTables_paginate">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-sort="ascending">#</th>
+                            <th class="sorting" tabindex="0">Productos</th>
+                            <th class="sorting" tabindex="0">Precio</th>
+                            <th class="sorting" tabindex="0">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Detalle_VentasProductos"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 <script type="text/javascript">
     $(function () {
         UltimasVentasAnio();
         UltimasVentasMeses();
+        VentasClientes();
+        VentasClientesListado();
+        VentasProductos();
+        VentasProductosListado();
+
+        $('#Table_VentasClientes').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+
+        $('#Table_VentasProductos').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
     })
 
     function UltimasVentasAnio() {
@@ -63,7 +131,6 @@
                             Valores.push(value.Total);
                         }
                     })
-                    console.log(Valores);
 
                     var miCanvasV = document.getElementById('UltimasVentasAnio').getContext('2d');
                     var chart = new Chart(miCanvasV, {
@@ -134,7 +201,6 @@
                             Valores.push(value.Total);
                         }
                     })
-                    console.log(Valores);
 
                     var miCanvasV = document.getElementById('UltimasVentasMeses').getContext('2d');
                     var chart = new Chart(miCanvasV, {
@@ -172,15 +238,17 @@
         });
     };
 
-    @*function UltimasVentasAnio() {
+    function VentasClientes() {
         var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
+            FechaIni: $("#fecha_ini").val(),
+            FechaFin: $("#fecha_fin").val(),
+            IdEmpresa: $("#IdEmpresa").val()
         }
 
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("UltimasVentasAnio", "Dashboard")',
+            url: '@Url.Action("VentasClientes", "Dashboard")',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -193,38 +261,34 @@
                 var Background = [];
                 var Border = [];
                 var dataset = [];
-                var valorData = {};
+                var valorData = [];
 
                 var barChartData = {};
 
                 if (data.length > 0) {
                     $.each(data, function (index, value) {
                         if (index < NumRows) {
-                            //valorData = [];
-                            //datos = [];
-                            //Etiquetas.push(value.Anio);
-                            //Valores.push(value.Total);
-                            //Background.push(colorRGBFijos(index + 1));
-                            //valorData.push(value.Total);
-
-                            datos = {
-                                label: value.Anio,
-                                backgroundColor: colorRGBFijos(index + 1),
-                                borderWidth: 1,
-                                data: {[value.Anio]:value.Total}
-                                //data: value.Total
-                            };
-                            dataset.push(datos);
+                            Background.push(colorRGBFijos(index + 1));
+                            Etiquetas.push(value.Mes);
+                            Valores.push(value.Total);
                         }
                     })
-                    console.log(dataset);
 
-                    var miCanvasV = document.getElementById('UltimasVentasAnio').getContext('2d');
+                    var miCanvasV = document.getElementById('VentasClientes').getContext('2d');
                     var chart = new Chart(miCanvasV, {
                         type: 'bar',
                         //labels: Etiquetas,
                         data: {
-                            datasets: dataset
+                            labels: Etiquetas,
+                            datasets:
+                                [{
+                                    label: "Ventas por clientes",
+                                    data: Valores,
+                                    //backgroundColor:Background,
+                                    backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo
+                                    borderColor: 'rgba(231, 76, 60, 1)', // Color del borde
+                                    borderWidth: 1,// Ancho del borde
+                                }]
                         },
                         options: {
                             responsive: true,
@@ -234,7 +298,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'VENTAS ULTIMOS 3 AÑOS'
+                                    text: 'TOP 10 VENTAS POR CLIENTES'
                                 }
                             }
                         }
@@ -245,35 +309,191 @@
 
             }
         });
-    };*@
-    //{
-    //    label: 'VENTAS ULTIMOS 3 AÑOS-',                                    
-    //    backgroundColor: Background,
-    //    borderWidth: 1,
-    //    data: Valores
-    //}
+    };
+
+    function VentasClientesListado() {
+        var datos = {
+            FechaIni: $("#fecha_ini").val(),
+            FechaFin: $("#fecha_fin").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("VentasClientesListado", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var detalle="";
+                $.each(data, function (index, value) {
+                    detalle += "<tr>" +
+                                "<td>"+value.Anio+"</td>"+
+                                "<td>"+value.Mes+"</td>"+
+                                "<td>"+value.Total+"</td>"+
+                               "</tr>";
+                })
+                $("#Table_VentasClientes tbody").append(detalle)
+
+            },
+            error: function (error) {
+
+            }
+        });
+    };
+    function VentasProductos() {
+        var datos = {
+            FechaIni: $("#fecha_ini").val(),
+            FechaFin: $("#fecha_fin").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("VentasProductos", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var NumRows = data.length;
+                var Etiquetas = [];
+                var Valores = [];
+                var Background = [];
+                var Border = [];
+                var dataset = [];
+                var valorData = [];
+
+                var barChartData = {};
+
+                if (data.length > 0) {
+                    $.each(data, function (index, value) {
+                        if (index < NumRows) {
+                            Background.push(colorRGBFijos(index));
+                            Etiquetas.push(value.Mes);
+                            Valores.push(value.Total);
+                        }
+                    })
+                    //doughnut
+                    var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
+                    var chart = new Chart(miCanvasV, {
+                        type: 'pie',
+                        labels: Etiquetas,
+                        data: {
+                            labels: Etiquetas,
+                            datasets:
+                                [{
+                                    label: "Ventas por productos",
+                                    data: Valores,
+                                    backgroundColor: Background, // Color de fondo
+                                    //backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo
+                                    //borderColor: 'rgba(231, 76, 60, 1)', // Color del borde
+                                    borderWidth: 1,// Ancho del borde
+                                }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'TOP 10 VENTAS POR PRODUCTOS'
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    };
+
+    function VentasProductosListado() {
+        var datos = {
+            FechaIni: $("#fecha_ini").val(),
+            FechaFin: $("#fecha_fin").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("VentasProductosListado", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var detalle = "";
+                $.each(data, function (index, value) {
+                    detalle += "<tr>" +
+                                "<td>" + value.Anio + "</td>" +
+                                "<td>" + value.Mes + "</td>" +
+                                "<td>" + value.Precio + "</td>" +
+                                "<td>" + value.Total + "</td>" +
+                               "</tr>";
+                })
+                $("#Table_VentasProductos tbody").append(detalle)
+
+            },
+            error: function (error) {
+
+            }
+        });
+    };
+
     function colorRGBFijos(Color) {
+        var Color0 = "rgb(192, 57, 43)";
+        var Color1 = "rgb(41, 128, 185)";
+        var Color2 = "rgb(39, 174, 96)";
+        var Color3 = "rgb(230, 126, 34)";
+        var Color4 = "rgb(241, 196, 15)";
+        var Color5 = "rgb(142, 68, 173)";
+        var Color6 = "rgb(93, 109, 126)";
+        var Color7 = "rgb(44, 62, 80 )";
+        var Color8 = "rgb(2, 195, 202)";
+        var Color9 = "rgb(11, 83, 69)";
+        var Color10 = "rgb(110, 44, 0)";
+
+        if (Color == 0) var Color = Color0;
+        if (Color == 1) var Color = Color1;
+        if (Color == 2) var Color = Color2;
+        if (Color == 3) var Color = Color3;
+        if (Color == 4) var Color = Color4;
+        if (Color == 5) var Color = Color5;
+        if (Color == 6) var Color = Color6;
+        if (Color == 7) var Color = Color7;
+        if (Color == 8) var Color = Color8;
+        if (Color == 9) var Color = Color9;
+        if (Color == 10) var Color = Color10;
+
+        return Color;
+    }
+
+    function colorRGBFijos_Lineas(Color) {
         var Color1 = "rgb(146, 43, 33)";
         var Color2 = "rgb(31, 97, 141)";
         var Color3 = "rgb(35, 155, 86)";
         var Color4 = "rgb(241, 196, 15)";
         var Color5 = "rgb(160, 64, 0 )";
 
-        if (Color == 1) {
-            var Color = Color1;
-        }
-        if (Color == 2) {
-            var Color = Color2;
-        }
-        if (Color == 3) {
-            var Color = Color3;
-        }
-        if (Color == 4) {
-            var Color = Color4;
-        }
-        if (Color == 5) {
-            var Color = Color5;
-        }
+        if (Color == 1) var Color = Color1;
+        if (Color == 2) var Color = Color2;
+        if (Color == 3) var Color = Color3;
+        if (Color == 4) var Color = Color4;
+        if (Color == 5) var Color = Color5;
 
         return Color;
     }
