@@ -985,26 +985,42 @@ namespace Core.Erp.Data.Inventario
             {
                 List<in_Producto_Info> Lista = new List<in_Producto_Info>();
 
-                Entities_inventario Context = new Entities_inventario();
-
-                Lista = Context.vwin_Producto_PorBodega.Where(p => p.IdEmpresa == IdEmpresa
-                           && p.IdSucursal == IdSucursal
-                           && p.IdBodega == IdBodega
-                            && (p.IdProducto.ToString() + " " + p.pr_codigo + " "+ p.pr_descripcion).Contains(filter)).Select(p => new in_Producto_Info
-                            {
-                                IdEmpresa = p.IdEmpresa,
-                                IdProducto = p.IdProducto,
-                                pr_descripcion = p.pr_descripcion,
-                                nom_categoria = p.nom_categoria,
-                                pr_codigo = p.pr_codigo,
-                                stock = p.Stock ?? 0
-                            })
-                             .OrderByDescending(p => p.stock)
-                             .Skip(skip)
-                             .Take(take)
-                             .ToList();
-                Context.Dispose();
-                Lista = get_list_nombre_combo(Lista);
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "select a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdProducto, b.pr_codigo, b.pr_descripcion, c.ca_Categoria, isnull(d.dm_cantidad,0) as Stock"
+                                        + " from in_producto_x_tb_bodega as a with(nolock) left join"
+                                        + " in_Producto as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdProducto = b.IdProducto left join"
+                                        + " in_categorias as c with(nolock) on b.IdEmpresa = c.IdEmpresa and b.IdCategoria = c.IdCategoria left join"
+                                        + " ("
+                                           + " select a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdProducto, sum(a.dm_cantidad) dm_cantidad"
+                                           + " from in_Ing_Egr_Inven_det as a with(nolock) left join"
+                                           + " in_Ing_Egr_Inven as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdMovi_inven_tipo = b.IdMovi_inven_tipo and a.IdNumMovi = b.IdNumMovi"
+                                           + " where a.IdEmpresa = " + IdEmpresa.ToString() + " and a.IdSucursal = " + IdSucursal.ToString() + " and a.IdBodega = " + IdBodega.ToString() + " and b.Estado = 'A'"
+                                           + " GROUP BY a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdProducto"
+                                        + " ) as d on a.IdEmpresa = d.IdEmpresa and a.IdSucursal = d.IdSucursal and a.IdBodega = d.IdBodega and a.IdProducto = d.IdProducto"
+                                        + " where a.IdEmpresa = " + IdEmpresa.ToString() + " and a.IdSucursal = " + IdSucursal.ToString() + " and a.IdBodega = " + IdBodega.ToString() + " and(cast(a.IdProducto as varchar) + b.pr_codigo + b.pr_descripcion) like '%" + filter + "%'"
+                                        + " ORDER BY A.IdEmpresa, A.IdSucursal, A.IdBodega, a.IdProducto, b.pr_codigo, b.pr_descripcion, c.ca_Categoria, isnull(d.dm_cantidad, 0) desc"
+                                        + " OFFSET " + skip.ToString() + " ROWS FETCH NEXT " + take.ToString() + " ROWS ONLY";
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Lista.Add(new in_Producto_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdProducto = Convert.ToDecimal(reader["IdProducto"]),
+                            pr_descripcion = Convert.ToString(reader["pr_descripcion"]),
+                            pr_descripcion_combo = Convert.ToString(reader["pr_descripcion"]),
+                            pr_descripcion_2 = Convert.ToString(reader["pr_descripcion"]),
+                            nom_categoria = Convert.ToString(reader["ca_Categoria"]),
+                            pr_codigo = Convert.ToString(reader["pr_codigo"]),
+                            stock = Convert.ToInt32(reader["Stock"])
+                        });
+                    }
+                    reader.Close();
+                }
                 return Lista;
             }
             catch (Exception ex)

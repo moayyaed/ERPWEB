@@ -43,8 +43,8 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     connection.Open();
                     string query = "select  A.IdEmpresa, A.IdCtaCble, A.pc_Cuenta, A.IdCtaCblePadre, B.pc_Cuenta "
-                                + " from ct_plancta as a left join"
-                                + " ct_plancta as b on a.IdEmpresa = b.IdEmpresa AND A.IdCtaCblePadre = B.IdCtaCble"
+                                + " from ct_plancta as a with (nolock) left join"
+                                + " ct_plancta as b with (nolock) on a.IdEmpresa = b.IdEmpresa AND A.IdCtaCblePadre = B.IdCtaCble"
                                 + " WHERE A.IdEmpresa = " + IdEmpresa.ToString() + " AND(A.IdCtaCble + A.pc_Cuenta) LIKE '%" + filter + "%'"
                                 + " and a.pc_Estado = 'A' and a.pc_EsMovimiento = " + (!MostrarCtaPadre ? "'S'" : "a.pc_EsMovimiento")
                                 + " ORDER BY A.IdEmpresa, A.IdCtaCble, A.pc_Cuenta"
