@@ -12,5 +12,7 @@ namespace Core.Erp.Info.Facturacion
         public decimal Total { get; set; }
         public decimal Precio { get; set; }
         public string Mes { get; set; }
+        public string Precio_String { get; set; }
+        public string Total_String { get; set; }
     }
 }

@@ -1596,8 +1596,8 @@ namespace Core.Erp.Data.Facturacion
                     + " select a.pe_nombreCompleto, a.RowNumber, sum(a.Total) Total "
                     + " from("
                     + " select a.IdEmpresa, "
-                    + " case when a.RowNumber <= 9 then a.pe_nombreCompleto else 'OTROS' end pe_nombreCompleto, "
-                    + " case when a.RowNumber <= 9 then a.RowNumber else 10 end RowNumber, "
+                    + " case when a.RowNumber <= 4 then a.pe_nombreCompleto else 'OTROS' end pe_nombreCompleto, "
+                    + " case when a.RowNumber <= 4 then a.RowNumber else 10 end RowNumber, "
                     + " a.Total Total "
                     + " from("
                     + " select a.IdEmpresa, b.IdCliente, c.pe_nombreCompleto, sum(d.Total) Total, "
@@ -1627,6 +1627,7 @@ namespace Core.Erp.Data.Facturacion
                     }
                     reader.Close();
                 }
+                Lista.ForEach(q => {q.Total_String = q.Total.ToString("C2"); });
                 return Lista;
             }
             catch (Exception ex)
@@ -1674,6 +1675,7 @@ namespace Core.Erp.Data.Facturacion
                     }
                     reader.Close();
                 }
+                Lista.ForEach(q => { q.Total_String = q.Total.ToString("C2"); });
                 return Lista;
             }
             catch (Exception ex)
@@ -1700,8 +1702,8 @@ namespace Core.Erp.Data.Facturacion
                     + " select a.pe_nombreCompleto, a.RowNumber, sum(a.Total) Total "
                     + " from("
                     + " select a.IdEmpresa, "
-                    + " case when a.RowNumber <= 9 then a.pr_descripcion else 'OTROS' end pe_nombreCompleto, "
-                    + " case when a.RowNumber <= 9 then a.RowNumber else 10 end RowNumber, "
+                    + " case when a.RowNumber <= 4 then a.pr_descripcion else 'OTROS' end pe_nombreCompleto, "
+                    + " case when a.RowNumber <= 4 then a.RowNumber else 10 end RowNumber, "
                     + " a.Total Total "
                     + " from("
                     + " select a.IdEmpresa, f.pr_descripcion, count(e.vt_cantidad) Total, "
@@ -1733,6 +1735,7 @@ namespace Core.Erp.Data.Facturacion
                     }
                     reader.Close();
                 }
+                Lista.ForEach(q => { q.Total_String = q.Total.ToString("C2"); });
                 return Lista;
             }
             catch (Exception ex)
@@ -1783,6 +1786,7 @@ namespace Core.Erp.Data.Facturacion
                     }
                     reader.Close();
                 }
+                Lista.ForEach(q => { q.Precio_String = q.Precio.ToString("C2"); q.Total_String = q.Total.ToString("C2"); });
                 return Lista;
             }
             catch (Exception ex)

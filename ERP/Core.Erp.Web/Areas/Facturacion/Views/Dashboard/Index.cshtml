@@ -60,7 +60,7 @@
                         <tr role="row">
                             <th class="sorting_asc" tabindex="0" aria-sort="ascending">#</th>
                             <th class="sorting" tabindex="0">Productos</th>
-                            <th class="sorting" tabindex="0">Precio</th>
+                            <th class="sorting" tabindex="0">Precio Promedio</th>
                             <th class="sorting" tabindex="0">Total</th>
                         </tr>
                     </thead>
@@ -334,7 +334,7 @@
                     detalle += "<tr>" +
                                 "<td>"+value.Anio+"</td>"+
                                 "<td>"+value.Mes+"</td>"+
-                                "<td>"+value.Total+"</td>"+
+                                "<td>" + value.Total_String + "</td>" +
                                "</tr>";
                 })
                 $("#Table_VentasClientes tbody").append(detalle)
@@ -383,7 +383,7 @@
                     //doughnut
                     var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
                     var chart = new Chart(miCanvasV, {
-                        type: 'pie',
+                        type: 'bar',
                         labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
@@ -391,9 +391,9 @@
                                 [{
                                     label: "Ventas por productos",
                                     data: Valores,
-                                    backgroundColor: Background, // Color de fondo
-                                    //backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo
-                                    //borderColor: 'rgba(231, 76, 60, 1)', // Color del borde
+                                    //backgroundColor: Background, // Color de fondo
+                                    backgroundColor: 'rgba(2, 195, 202, 0.2)', // Color de fondo
+                                    borderColor: 'rgba(2, 195, 202, 1)', // Color del borde
                                     borderWidth: 1,// Ancho del borde
                                 }]
                         },
@@ -441,8 +441,8 @@
                     detalle += "<tr>" +
                                 "<td>" + value.Anio + "</td>" +
                                 "<td>" + value.Mes + "</td>" +
-                                "<td>" + value.Precio + "</td>" +
-                                "<td>" + value.Total + "</td>" +
+                                "<td>" + value.Precio_String + "</td>" +
+                                "<td>" + value.Total_String + "</td>" +
                                "</tr>";
                 })
                 $("#Table_VentasProductos tbody").append(detalle)
