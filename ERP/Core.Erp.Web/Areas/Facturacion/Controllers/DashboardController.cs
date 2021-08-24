@@ -1,5 +1,6 @@
 ﻿using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.SeguridadAcceso;
+using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
@@ -16,8 +17,10 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         #region Variables
         fa_factura_Bus bus_factura = new fa_factura_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
+        fa_VentasClientes_List Lista_VentasClientes = new fa_VentasClientes_List();
         #endregion
 
+        #region Index
         public ActionResult Index()
         {
             #region Validar Session
@@ -37,11 +40,14 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             cl_filtros_Info model = new cl_filtros_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                fecha_ini = Convert.ToDateTime("01-01-" + DateTime.Now.Year),
+                fecha_fin = Convert.ToDateTime("31-12-" + DateTime.Now.Year),
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
             };
 
             return View(model);
         }
+        #endregion
 
         #region JSON
         public JsonResult UltimasVentasAnio(int IdEmpresa=0)
@@ -55,6 +61,48 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             var lst_UltimasVentasAnio = bus_factura.get_list_UltimasVentasMeses(IdEmpresa);
             return Json(lst_UltimasVentasAnio, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult VentasClientes( DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0)
+        {
+            var lst_VentasClientes = bus_factura.get_list_VentasClientes(IdEmpresa, FechaIni, FechaFin);
+            return Json(lst_VentasClientes, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult VentasClientesListado(DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0, decimal IdTransaccionSession=0)
+        {
+            var lst_VentasClientesListado = bus_factura.get_list_VentasClientesListado(IdEmpresa, FechaIni, FechaFin);
+            return Json(lst_VentasClientesListado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult VentasProductos(DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0)
+        {
+            var lst_VentasClientes = bus_factura.get_list_VentasProductos(IdEmpresa, FechaIni, FechaFin);
+            return Json(lst_VentasClientes, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult VentasProductosListado(DateTime FechaIni, DateTime FechaFin, int IdEmpresa = 0, decimal IdTransaccionSession = 0)
+        {
+            var lst_VentasClientesListado = bus_factura.get_list_VentasProductosListado(IdEmpresa, FechaIni, FechaFin);
+            return Json(lst_VentasClientesListado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
+    }
+
+    public class fa_VentasClientes_List
+    {
+        string Variable = "fa_Dashboard_VentasClientes_Info";
+        public List<fa_Dashboard_Info> get_list(decimal IdTransaccionSession)
+        {
+            if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
+            {
+                List<fa_Dashboard_Info> list = new List<fa_Dashboard_Info>();
+
+                HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+            }
+            return (List<fa_Dashboard_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+        }
+
+        public void set_list(List<fa_Dashboard_Info> list, decimal IdTransaccionSession)
+        {
+            HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
+        }
     }
 }
