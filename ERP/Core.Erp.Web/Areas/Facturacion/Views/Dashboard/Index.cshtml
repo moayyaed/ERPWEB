@@ -18,57 +18,68 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-4">
-                <canvas class="canvas" id="UltimasVentasAnio"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas class="canvas" id="UltimasVentasMeses"></canvas>
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
             <div class="col-md-6">
-                <canvas class="canvas" id="VentasClientes"></canvas>
+                <div class="box box-default">
+                    <canvas class="canvas" id="UltimasVentasAnio"></canvas>
+                </div>                        
             </div>
-            <div class="col-md-4">
-                <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting_asc" tabindex="0" aria-sort="ascending" >#</th>
-                            <th class="sorting" tabindex="0">Cliente</th>
-                            <th class="sorting" tabindex="0">Total</th>                            
-                        </tr>
-                    </thead>
-                    <tbody id="Detalle_VentasClientes">
-
-                    </tbody>
-                </table>
+            <div class="col-md-6">
+                <div class="box box-default">
+                    <canvas class="canvas" id="UltimasVentasMeses"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <br />
+
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="box box-default">
+                    <canvas class="canvas" id="VentasClientes"></canvas>
+                </div> 
+            </div>            
             <div class="col-md-4">
-                <canvas class="canvas" id="VentasProductos" ></canvas>
-            </div>
-            <div class="col-md-4">
-                <table id="Table_VentasProductos" class="table table-responsive dataTable dataTables_paginate">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting_asc" tabindex="0" aria-sort="ascending">#</th>
-                            <th class="sorting" tabindex="0">Productos</th>
-                            <th class="sorting" tabindex="0">Precio Promedio</th>
-                            <th class="sorting" tabindex="0">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="Detalle_VentasProductos"></tbody>
-                </table>
+                <div class="box box-default">
+                    <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-sort="ascending">#</th>
+                                <th class="sorting" tabindex="0">Cliente</th>
+                                <th class="sorting" tabindex="0">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Detalle_VentasClientes"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="box box-default">
+                    <canvas class="canvas" id="VentasProductos"></canvas>
+                </div> 
+            </div>
+            <div class="col-md-4">
+                <div class="box box-default">
+                    <table id="Table_VentasProductos" class="table table-responsive dataTable dataTables_paginate">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-sort="ascending">#</th>
+                                <th class="sorting" tabindex="0">Productos</th>
+                                <th class="sorting" tabindex="0">Precio Promedio</th>
+                                <th class="sorting" tabindex="0">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Detalle_VentasProductos"></tbody>
+                    </table>
+                </div> 
+            </div>
+        </div>
+    </div>
+
 }
 <script type="text/javascript">
     $(function () {
