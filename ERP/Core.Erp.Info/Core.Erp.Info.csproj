@@ -127,6 +127,7 @@
     <Compile Include="Contabilidad\ATS\pagoExterior.cs" />
     <Compile Include="Contabilidad\ATS\reembolso.cs" />
     <Compile Include="Contabilidad\ATS\ventaEst.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_014_Info.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_Info.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Info.cs" />
     <Compile Include="Contabilidad\ct_anio_fiscal_x_tb_sucursal_Info.cs" />

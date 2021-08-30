@@ -1004,5 +1004,44 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cargar_combos_CONTA013(model.IdEmpresa, model.IdPunto_cargo_grupo);
             return View(model);
         }
+
+        #region CONTA_014
+        public ActionResult CONTA_014()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) },
+                MostrarSaldoAcumulado = false,
+                MostrarSaldoDetallado = false
+            };
+            
+            CONTA_014_Rpt report = new CONTA_014_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaDesde.Value = model.fecha_ini;
+            report.p_FechaHasta.Value = model.fecha_fin;
+            report.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_014(cl_filtros_contabilidad_Info model)
+        {
+            CONTA_014_Rpt report = new CONTA_014_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaDesde.Value = model.fecha_ini;
+            report.p_FechaHasta.Value = model.fecha_fin;
+            report.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        #endregion
     }
 }
