@@ -111,6 +111,15 @@ namespace Core.Erp.Bus.Contabilidad
                            item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
                            item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;
                            comp_det.pagoExterior = item_pago;
+
+                           if (comp.tpIdProv == "03")
+                           {
+                               comp_det.codSustento = "02";
+                               comp_det.tipoComprobante = "15";
+                               comp_det.denoProv = comp.denopr;
+                               comp_det.tipoProv = "02";
+                           }
+
                            if (!string.IsNullOrEmpty(comp.docModificado))
                            {
                                comp_det.docModificado = comp.docModificado;
@@ -169,14 +178,25 @@ namespace Core.Erp.Bus.Contabilidad
                                        {
                                            if (item.re_tipo_Ret == "RTF")
                                            {
+
+                                                   //if (item.codRetAir == "327")
+                                                   //{
+                                                   //    detalleAirCompras detalleAirCompras = new detalleAirCompras();
+                                                   //    detalleAirCompras.anioUtDiv = item.IdPeriodo.ToString().Substring(0, 4);
+                                                   //    detalleAirCompras.imRentaSoc = Convert.ToDecimal(item.valRetAir.ToString());
+                                                   //    detalleAirCompras.fechaPagoDiv = Convert.ToDateTime(item.fechaEmiRet1).ToString("dd/MM/yyyy");
+
+                                                   //}
+                                                   //else
                                                    comp_det.air.Add(new detalleAir
                                                    {                                                       
                                                        codRetAir = item.codRetAir.ToString(),
                                                        baseImpAir = item.baseImpAir.ToString(),
                                                        porcentajeAir = item.porcentajeAir.ToString(),
-                                                       valRetAir = item.valRetAir.ToString(),
+                                                       valRetAir = item.valRetAir.ToString(), 
                                                         
                                                    });
+
                                                    comp_det.estabRetencion1 = item.estabRetencion1;
                                                    comp_det.ptoEmiRetencion1 = item.ptoEmiRetencion1;
                                                    comp_det.secRetencion1 = item.secRetencion1;
@@ -199,7 +219,9 @@ namespace Core.Erp.Bus.Contabilidad
                                                        comp_det.valRetServ100 = item.valRetAir.ToString();
                                                   
                                                }
-                                           }
+                                          
+                                       }
+
                                        }
                                        else// si no tiene retencion
                                        {
@@ -210,6 +232,7 @@ namespace Core.Erp.Bus.Contabilidad
                                                baseImpAir =Convert.ToDecimal( comp.baseImpGrav+comp.baseImponible).ToString(),
                                                porcentajeAir = "0",
                                                valRetAir = "0.00",
+                                               
                                            });
                                        }
                                    }
