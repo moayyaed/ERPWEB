@@ -44,6 +44,18 @@
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/ScriptsGenerales.js"></script>
+    <!--Chart-->
+    <script src="~/Scripts/chart.js"></script>
+    <script src="~/Scripts/chart.min.js"></script>
+    <!--DATATABLES-->
+    <script src="~/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="~/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="~/AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <link href="~/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
     @RenderSection("scripts", required: false)
     @Html.DevExpress().GetStyleSheets(
            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
