@@ -202,7 +202,7 @@ namespace Core.Erp.Bus.RRHH
                                             if (item.time_salida1 > inicioHora50 && item.time_salida1 < finalHora50)
                                             {
                                                 horaExtra50 = ((TimeSpan)(item.time_salida1 - (TimeSpan)horarioActual.HoraFin)).TotalHours; //TOTAL DE HORAS EXTRAS 50% 
-                                                horaExtra50 = horaExtra50 - minutos_lunch;
+                                                //horaExtra50 = horaExtra50 - minutos_lunch;
                                                 item.hora_extra50 = horaExtra50;
                                             }
                                         }
