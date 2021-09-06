@@ -25,6 +25,7 @@
     @Html.HiddenFor(q => q.IdPeriodo)
     @Html.HiddenFor(q => q.pe_FechaIni)
     @Html.HiddenFor(q => q.pe_FechaFin)
+    @Html.HiddenFor(q => q.IdPeriodoSet);
 
 
 
@@ -47,33 +48,40 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="FechaFin">Período*</label>
-                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodo, "IdPeriodo", "Descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "IdPeriodo", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(q => q.IdPeriodoSet, new { @class = "form-control" , @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.IdPeriodoSet, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Aprobar</button>
-                        <a class="btn btn-default" href="@Url.Action("Index2","HorasExtras",new { Area = "RRHH", @id="grid"},null)">Salir</a>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Aprobar</button>
+                <a class="btn btn-default" href="@Url.Action("Index2","HorasExtras",new { Area = "RRHH", @id="grid"},null)">Salir</a>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="cb_Observacion">Detalle horas extras</label>
-                    @Html.Action("GridViewPartial_aprobacion_horas_extras_det", new { IdNomina_Tipo = Model.IdNomina_Tipo, IdNomina_TipoLiqui = Model.IdNomina_TipoLiqui, IdPeriodo = Model.IdPeriodo, IdHorasExtras = Model.IdHorasExtras })
-                </div>
-            </div>
-          
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="cb_Observacion">Detalle horas extras</label>
+            @Html.Action("GridViewPartial_aprobacion_horas_extras_det", new { IdNomina_Tipo = Model.IdNomina_Tipo, IdNomina_TipoLiqui = Model.IdNomina_TipoLiqui, IdPeriodo = Model.IdPeriodo, IdHorasExtras = Model.IdHorasExtras })
+        </div>
+    </div>
+
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
 
 <script>
+    $(function () {
+        cargar_tipo_liquidacion_nomina();
+        cargar_periodos_x_nomina();
+
+    });
+
+
        $("#IdNomina_Tipo").change(function () {
            $("#IdNomina_TipoLiqui").empty();
              cargar_tipo_liquidacion_nomina();
@@ -84,7 +92,9 @@
             cargar_periodos_x_nomina();
         });
 
-        function cargar_tipo_liquidacion_nomina() {
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+
             var datos = {
                 IdNomina: $("#IdNomina_Tipo").val()
             }
@@ -102,36 +112,42 @@
                     $.each(data, function (i, row) {
                         $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
                     });
+                    $("#IdNomina_TipoLiqui").val(2);
+
                 },
                 error: function (error) {
                 }
             });
         };
-    function cargar_periodos_x_nomina() {
+
+    function calcular_horas() {
         var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
             IdNomina: $("#IdNomina_Tipo").val(),
-            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
+            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val(),
+            IdPeriodo: $("#IdPeriodo").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+
+
+
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
+            url: '@Url.Action("get_horas_extras","HorasExtras", new { Area = "RRHH" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                GridViewPartial_horas_extras_det.PerformCallback();
 
-                $.each(data, function (i, row) {
-                    $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
-                });
             },
             error: function (error) {
             }
         });
     };
-
 
 
 </script>

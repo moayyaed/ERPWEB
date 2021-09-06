@@ -77,6 +77,7 @@ namespace Core.Erp.Data.RRHH
                         IdNomina_Tipo = Entity.IdNominaTipo,
                         IdNomina_TipoLiqui=Entity.IdNominaTipoLiqui,
                         IdPeriodo=Entity.IdPeriodo,
+                        IdPeriodoSet=Entity.IdPeriodo
                         
                     };
                 }
@@ -110,6 +111,7 @@ namespace Core.Erp.Data.RRHH
                         IdNomina_Tipo = Entity.IdNominaTipo,
                         IdNomina_TipoLiqui = Entity.IdNominaTipoLiqui,
                         IdPeriodo = Entity.IdPeriodo,
+                        IdPeriodoSet=Entity.IdPeriodo,
 
                     };
                 }
@@ -274,6 +276,10 @@ namespace Core.Erp.Data.RRHH
                 var  lst_horas_extras_aprobar = odata.get_lst_horas_extras_aprobar(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
                 using (Entities_rrhh content=new Entities_rrhh())
                 {
+                    var ro_rubro_calculados = content.ro_rubros_calculados.FirstOrDefault(s => s.IdEmpresa == info.IdEmpresa);
+                    if (ro_rubro_calculados == null)
+                        return false;
+                    
                     foreach (var item in lst_horas_extras_aprobar)
                     {
                         if (item.Valor25 > 0)
@@ -287,7 +293,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpleado = item.IdEmpleado,
                                 IdNomina_Tipo = info.IdNomina_Tipo,
                                 IdNomina_TipoLiqui = info.IdNomina_TipoLiqui,
-                                Observacion = "Hora extra al 25 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 25 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
                                 Fecha = info_periodo.pe_FechaFin,
@@ -302,7 +308,7 @@ namespace Core.Erp.Data.RRHH
                                 Valor = item.Valor25,
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "7",
-                                Observacion = "Hora extra al 25 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 25 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 EstadoCobro = "PEN"
 
                             };
@@ -322,7 +328,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpleado = item.IdEmpleado,
                                 IdNomina_Tipo = info.IdNomina_Tipo,
                                 IdNomina_TipoLiqui = info.IdNomina_TipoLiqui,
-                                Observacion = "Hora extra al 50 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
                                 Fecha = info_periodo.pe_FechaFin,
@@ -337,7 +343,7 @@ namespace Core.Erp.Data.RRHH
                                 Valor = item.Valor50,
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "8",
-                                Observacion = "Hora extra al 50 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 EstadoCobro = "PEN"
 
                             };
@@ -355,7 +361,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpleado = item.IdEmpleado,
                                 IdNomina_Tipo = info.IdNomina_Tipo,
                                 IdNomina_TipoLiqui = info.IdNomina_TipoLiqui,
-                                Observacion = "Hora extra al 50 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
                                 Fecha = info_periodo.pe_FechaFin,
@@ -370,7 +376,7 @@ namespace Core.Erp.Data.RRHH
                                 Valor = item.Valor100,
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "8",
-                                Observacion = "Hora extra al 100 % corrspondiente al periodo " + info.IdPeriodo.ToString(),
+                                Observacion = "Hora extra al 100 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 EstadoCobro="PEN"
                             };
                             content.ro_empleado_novedad_det.Add(info_det_100);

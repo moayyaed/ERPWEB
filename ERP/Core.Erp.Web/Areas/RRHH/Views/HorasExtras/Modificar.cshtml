@@ -21,6 +21,7 @@
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdHorasExtras)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdPeriodoSet);
 
 
 
@@ -93,7 +94,9 @@
             cargar_periodos_x_nomina();
         });
 
-        function cargar_tipo_liquidacion_nomina() {
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+
             var datos = {
                 IdNomina: $("#IdNomina_Tipo").val()
             }
@@ -118,11 +121,17 @@
                 }
             });
         };
-    function cargar_periodos_x_nomina() {
+function cargar_periodos_x_nomina() {
+        var IdPeriodoSet = $("#IdPeriodoSet").val();
+        console.log(IdPeriodoSet);
+        $("#IdPeriodo").empty();
+
         var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
             IdNomina: $("#IdNomina_Tipo").val(),
             IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
         }
+
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
@@ -133,10 +142,11 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-
                 $.each(data, function (i, row) {
                     $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
                 });
+
+                $("#IdPeriodo").val(IdPeriodoSet);
             },
             error: function (error) {
             }

@@ -18,6 +18,7 @@ namespace Core.Erp.Info.RRHH
         public int IdNomina_TipoLiqui { get; set; }
         [Required(ErrorMessage = "El campo periodo es obligatorio")]
         public int IdPeriodo { get; set; }
+        public int IdPeriodoSet { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string IdUsuario { get; set; }

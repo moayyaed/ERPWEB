@@ -237,6 +237,27 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate_apro([ModelBinder(typeof(DevExpressEditorsBinder))] ro_nomina_x_horas_extras_det_Info info_det)
+        {
+            if (ModelState.IsValid)
+                ro_nomina_x_horas_extras_det_Info_list.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_nomina_x_horas_extras_Info model = new ro_nomina_x_horas_extras_Info();
+            model.lst_nomina_horas_extras = ro_nomina_x_horas_extras_det_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_aprobacion_horas_extras_det", model);
+
+        }
+
+        public ActionResult EditingDelete_apro([ModelBinder(typeof(DevExpressEditorsBinder))] ro_nomina_x_horas_extras_det_Info info_det)
+        {
+            ro_nomina_x_horas_extras_det_Info_list.DeleteRow(Convert.ToInt32(info_det.Secuencia), Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            ro_nomina_x_horas_extras_Info model = new ro_nomina_x_horas_extras_Info();
+            model.lst_nomina_horas_extras = ro_nomina_x_horas_extras_det_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            return PartialView("_GridViewPartial_aprobacion_horas_extras_det", model);
+
+        }
+
+
         [ValidateInput(false)]
         public ActionResult GridViewPartial_horas_extras_det()
         {
