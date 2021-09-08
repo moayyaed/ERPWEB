@@ -85,6 +85,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.IdEmpresa = Convert.ToInt32(Session["IdEmpresa"]);
             model.IdUsuario = Session["IdUsuario"].ToString();
             model.lst_nomina_horas_extras = ro_nomina_x_horas_extras_det_Info_list.get_list(model.IdTransaccionSession);
+            foreach (var item in model.lst_nomina_horas_extras)
+            {
+                item.IdSucursal =Convert.ToInt32( SessionFixed.IdSucursal);
+            }
             if (!bus_horas_extras.aprobacionHE(model))
             {
                 cargar_combos(info.IdNomina_Tipo, info.IdNomina_TipoLiqui);

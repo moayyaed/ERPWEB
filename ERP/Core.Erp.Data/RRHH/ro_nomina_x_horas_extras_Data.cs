@@ -273,13 +273,17 @@ namespace Core.Erp.Data.RRHH
                 ro_periodo_Data bus_periodo = new ro_periodo_Data();
                 ro_periodo_Info info_periodo = new ro_periodo_Info();
                 info_periodo = bus_periodo.get_info(info.IdEmpresa, info.IdPeriodo);
-                var  lst_horas_extras_aprobar = odata.get_lst_horas_extras_aprobar(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
+                //var  lst_horas_extras_aprobar = odata.get_lst_horas_extras_aprobar(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
                 using (Entities_rrhh content=new Entities_rrhh())
                 {
                     var ro_rubro_calculados = content.ro_rubros_calculados.FirstOrDefault(s => s.IdEmpresa == info.IdEmpresa);
                     if (ro_rubro_calculados == null)
                         return false;
-                    
+                    var ro_horas_extras = content.ro_nomina_x_horas_extras.FirstOrDefault(s => s.IdEmpresa == info.IdEmpresa && s.IdHorasExtras==info.IdHorasExtras);
+                    if (ro_horas_extras == null)
+                        return false;
+                    ro_horas_extras.Estado = "P";
+
                     foreach (var item in info.lst_nomina_horas_extras)
                     {
                         if (item.Valor25 > 0)
@@ -353,6 +357,7 @@ namespace Core.Erp.Data.RRHH
 
                         if (item.hora_extra100 > 0)
                         {
+                            IdNovedad++;
                             ro_empleado_Novedad info_novedad_100 = new ro_empleado_Novedad()
                             {
                                 IdNovedad=IdNovedad,

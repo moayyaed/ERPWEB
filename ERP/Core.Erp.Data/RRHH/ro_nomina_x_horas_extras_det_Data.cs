@@ -21,7 +21,6 @@ namespace Core.Erp.Data.RRHH
                         Lista = (from q in Context.vwro_nomina_x_horas_extras_det
                                  where q.IdEmpresa == IdEmpresa
                                  && q.IdHorasExtras == IdHorasExtras
-
                                  select new ro_nomina_x_horas_extras_det_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,
