@@ -12,9 +12,9 @@ namespace Core.Erp.Bus.Reportes.Contabilidad
     public class CONTA_014_Bus
     {
         CONTA_014_Data odata = new CONTA_014_Data();
-        public List<CONTA_014_Info> GetList(int IdEmpresa, DateTime FechaDesde, DateTime FechaHasta, bool MostrarAcumulado)
+        public List<CONTA_014_Info> GetList(int IdEmpresa, DateTime FechaDesde, DateTime FechaHasta, bool MostrarAcumulado, bool ValoresOPorcentaje)
         {
-            return odata.GetList(IdEmpresa, FechaDesde, FechaHasta, MostrarAcumulado);
+            return odata.GetList(IdEmpresa, FechaDesde, FechaHasta, MostrarAcumulado, ValoresOPorcentaje);
         }
     }
 }
