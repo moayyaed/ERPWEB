@@ -280,7 +280,7 @@ namespace Core.Erp.Data.RRHH
                     if (ro_rubro_calculados == null)
                         return false;
                     
-                    foreach (var item in lst_horas_extras_aprobar)
+                    foreach (var item in info.lst_nomina_horas_extras)
                     {
                         if (item.Valor25 > 0)
                         {
@@ -296,7 +296,7 @@ namespace Core.Erp.Data.RRHH
                                 Observacion = "Hora extra al 25 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
-                                Fecha = info_periodo.pe_FechaFin,
+                                Fecha = item.FechaRegistro.Date,
                                 Estado = "A"
                             };
                             content.ro_empleado_Novedad.Add(info_novedad_25);
@@ -305,7 +305,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpresa = info.IdEmpresa,
                                 IdNovedad = IdNovedad,
                                 Secuencia = 1,
-                                Valor = item.Valor25,
+                                Valor = Math.Round(item.Valor25, 2),
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "7",
                                 Observacion = "Hora extra al 25 % correspondiente al periodo " + info.IdPeriodo.ToString(),
@@ -331,7 +331,7 @@ namespace Core.Erp.Data.RRHH
                                 Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
-                                Fecha = info_periodo.pe_FechaFin,
+                                Fecha = item.FechaRegistro.Date,
                                 Estado = "A"
                             };
                             content.ro_empleado_Novedad.Add(info_novedad_50);
@@ -340,7 +340,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpresa = info.IdEmpresa,
                                 IdNovedad = IdNovedad,
                                 Secuencia = 1,
-                                Valor = item.Valor50,
+                                Valor =Math.Round( item.Valor50,2),
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "8",
                                 Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
@@ -351,7 +351,7 @@ namespace Core.Erp.Data.RRHH
 
                         };
 
-                        if (item.Valor50 > 0)
+                        if (item.hora_extra100 > 0)
                         {
                             ro_empleado_Novedad info_novedad_100 = new ro_empleado_Novedad()
                             {
@@ -364,7 +364,7 @@ namespace Core.Erp.Data.RRHH
                                 Observacion = "Hora extra al 50 % correspondiente al periodo " + info.IdPeriodo.ToString(),
                                 Fecha_Transac = DateTime.Now,
                                 IdUsuario = info.IdUsuario,
-                                Fecha = info_periodo.pe_FechaFin,
+                                Fecha = item.FechaRegistro.Date,
                                 Estado = "A"
                             };
                             content.ro_empleado_Novedad.Add(info_novedad_100);
@@ -373,7 +373,7 @@ namespace Core.Erp.Data.RRHH
                                 IdEmpresa = info.IdEmpresa,
                                 IdNovedad = IdNovedad,
                                 Secuencia = 1,
-                                Valor = item.Valor100,
+                                Valor = Math.Round(item.Valor100, 2),
                                 FechaPago = info_periodo.pe_FechaFin,
                                 IdRubro = "8",
                                 Observacion = "Hora extra al 100 % correspondiente al periodo " + info.IdPeriodo.ToString(),

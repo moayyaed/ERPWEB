@@ -26,6 +26,9 @@
     @Html.HiddenFor(q => q.pe_FechaIni)
     @Html.HiddenFor(q => q.pe_FechaFin)
     @Html.HiddenFor(q => q.IdPeriodoSet);
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+
+    
 
 
 
@@ -48,7 +51,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="FechaFin">Período*</label>
-                    @Html.TextBoxFor(q => q.IdPeriodoSet, new { @class = "form-control" , @disabled = "disabled" })
+                    @Html.TextBoxFor(q => q.IdPeriodoSet, new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.IdPeriodoSet, "", new { @class = "text-danger" })
                 </div>
             </div>
