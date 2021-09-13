@@ -41,6 +41,7 @@ namespace Core.Erp.Data
         public string IdRubro_novedad_proceso { get; set; }
         public string IdRubro_primaria_vespertina { get; set; }
         public string IdRubro_utilidad { get; set; }
+        public string IdRubro_vacaciones { get; set; }
     
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo1 { get; set; }

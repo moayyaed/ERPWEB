@@ -272,6 +272,7 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_biometrico" Width="1.5" PointX="32.625" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

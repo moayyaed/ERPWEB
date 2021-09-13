@@ -464,6 +464,7 @@
     <Compile Include="Areas\RRHH\Controllers\ArchivosTransferenciasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AreaController.cs" />
     <Compile Include="Areas\RRHH\Controllers\BaseImpuestoRentaController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\BiometricoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\CargaFamiliarController.cs" />
     <Compile Include="Areas\RRHH\Controllers\CargoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\CatalogoRRHHController.cs" />
@@ -10669,6 +10670,11 @@
     <Content Include="Areas\Facturacion\Views\PuntoVenta\_GridViewPartial_puntoventa_usuario.cshtml" />
     <Content Include="Areas\Facturacion\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_014.cshtml" />
+    <Content Include="Areas\RRHH\Views\Biometrico\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\Biometrico\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\Biometrico\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\Biometrico\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\Biometrico\_GridViewPartial_biometrico.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -1,0 +1,156 @@
+﻿@model Core.Erp.Info.RRHH.ro_biometrico_Info
+@{
+    ViewBag.Title = "Anular biometrico";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Division", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdBiometrico)
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">String conexión*</label>
+                    @Html.TextBoxFor(q => q.StringConexion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.StringConexion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Consulta*</label>
+                    @Html.TextBoxFor(q => q.Consulta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Consulta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="MarcacionIngreso"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.MarcacionIngreso, settings =>
+                           {
+                               settings.Name = "MarcacionIngreso";
+                               settings.Text = "Descarga marcaciones ingreso";
+                           }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CodMarcacionIngreso">Codigo marcacion ingreso*</label>
+                    @Html.TextBoxFor(q => q.CodMarcacionIngreso, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CodMarcacionIngreso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="MarcacionSalida"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.MarcacionSalida, settings =>
+                           {
+                               settings.Name = "MarcacionSalida";
+                               settings.Text = "Descarga marcaciones salida";
+                           }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CodMarcacionSalida">Codigo marcacion salida*</label>
+                    @Html.TextBoxFor(q => q.CodMarcacionSalida, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CodMarcacionSalida, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="SalidaLounch"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.SalidaLounch, settings =>
+                           {
+                               settings.Name = "SalidaLounch";
+                               settings.Text = "Descarga marcaciones salida lountch";
+                           }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CodSalidaLounch">Codigo marcacion salida  lountch*</label>
+                    @Html.TextBoxFor(q => q.CodSalidaLounch, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CodSalidaLounch, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="RegresoLounch"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.RegresoLounch, settings =>
+                           {
+                               settings.Name = "RegresoLounch";
+                               settings.Text = "Descarga marcaciones regreso lountch";
+                           }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="RegresoLounch">Codigo marcacion regreso  lountch*</label>
+                    @Html.TextBoxFor(q => q.RegresoLounch, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RegresoLounch, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Biometrico",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -506,6 +506,7 @@
     <Compile Include="RRHH\ro_archivos_bancos_generacion_x_empleado_Info.cs" />
     <Compile Include="RRHH\ro_area_Info.cs" />
     <Compile Include="RRHH\ro_area_x_departamento_Info.cs" />
+    <Compile Include="RRHH\ro_biometrico_Info.cs" />
     <Compile Include="RRHH\ro_Capacitaciones_x_Empleado_Info.cs" />
     <Compile Include="RRHH\ro_cargaFamiliar_Info.cs" />
     <Compile Include="RRHH\ro_cargo_Info.cs" />
