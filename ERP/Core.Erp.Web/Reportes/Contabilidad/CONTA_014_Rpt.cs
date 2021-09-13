@@ -32,8 +32,11 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             bool MostrarAcumulado = p_MostrarAcumulado.Value == null ? false : Convert.ToBoolean(p_MostrarAcumulado.Value);
 
             CONTA_014_Bus bus_rpt = new CONTA_014_Bus();
-            List<CONTA_014_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, FechaDesde,FechaHasta,MostrarAcumulado);
+            List<CONTA_014_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, FechaDesde,FechaHasta,MostrarAcumulado,true);
             xrCrossTab1.DataSource = lst_rpt;
+
+            lst_rpt = bus_rpt.GetList(IdEmpresa, FechaDesde, FechaHasta, MostrarAcumulado, false);
+            xrCrossTab2.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
             var emp = bus_empresa.get_info(IdEmpresa);
