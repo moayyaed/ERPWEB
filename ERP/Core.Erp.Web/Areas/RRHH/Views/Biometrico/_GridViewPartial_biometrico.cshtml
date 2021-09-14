@@ -55,7 +55,7 @@
         };
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToString(e.GetValue("estado")) == "I")
+            if (Convert.ToBoolean(e.GetValue("Estado")) == false)
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
@@ -84,12 +84,11 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("IdBiometrico", "ID").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
 
-            column.FieldName = "IdEquipo";
-            column.Caption = "Id Equipo";
+            column.FieldName = "IdBiometrico";
+            column.Caption = "ID";
             column.Width = Unit.Percentage(7);
         });
         settings.Columns.Add(column =>
@@ -102,8 +101,8 @@
         settings.Columns.Add(column =>
         {
 
-            column.FieldName = "Descripción ";
-            column.Caption = "Descripcion";
+            column.FieldName = "Descripcion"; 
+            column.Caption = "Descripción";
             column.Width = Unit.Percentage(25);
         });
         settings.Columns.Add(column =>

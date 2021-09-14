@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "División";
+    ViewBag.Title = "Biometricos";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -11,5 +11,5 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_division")
+    @Html.Action("GridViewPartial_biometrico")
 }

@@ -15,11 +15,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label for="ca_descripcion">Descripción*</label>
                     @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdEquipo">ID Biometrico*</label>
+                    @Html.TextBoxFor(q => q.IdEquipo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.IdEquipo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -50,8 +57,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-group">
                         <label for="MarcacionIngreso"></label>
@@ -74,8 +81,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-group">
                         <label for="MarcacionSalida"></label>
@@ -98,8 +105,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-group">
                         <label for="SalidaLounch"></label>
@@ -122,8 +129,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-group">
                         <label for="RegresoLounch"></label>
@@ -138,8 +145,8 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="RegresoLounch">Codigo marcacion regreso  lountch*</label>
-                    @Html.TextBoxFor(q => q.RegresoLounch, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.RegresoLounch, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(q => q.CodRegresoLounch, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CodRegresoLounch, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

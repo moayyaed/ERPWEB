@@ -41,6 +41,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    info.IdUsuario = SessionFixed.IdUsuario;
                     info.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                     if (!bu_biometrico.guardarDB(info))
                         return View(info);

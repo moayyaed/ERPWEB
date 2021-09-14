@@ -35,7 +35,8 @@ namespace Core.Erp.Data.RRHH
                                      CodMarcacionIngreso = q.CodMarcacionIngreso,
                                      CodMarcacionSalida = q.CodMarcacionSalida,
                                      CodSalidaLounch = q.CodSalidaLounch,
-                                     CodRegresoLounch = q.CodRegresoLounch
+                                     CodRegresoLounch = q.CodRegresoLounch,
+                                     Estado=q.Estado
                                  }).ToList();
                     else
                         Lista = (from q in Context.ro_biometrico
@@ -56,7 +57,8 @@ namespace Core.Erp.Data.RRHH
                                      CodMarcacionIngreso = q.CodMarcacionIngreso,
                                      CodMarcacionSalida = q.CodMarcacionSalida,
                                      CodSalidaLounch = q.CodSalidaLounch,
-                                     CodRegresoLounch = q.CodRegresoLounch
+                                     CodRegresoLounch = q.CodRegresoLounch,
+                                     Estado=q.Estado
                                  }).ToList();
                 }
 
@@ -155,6 +157,7 @@ namespace Core.Erp.Data.RRHH
                         CodSalidaLounch = info.CodSalidaLounch,
                         CodRegresoLounch = info.CodRegresoLounch,
                         IdUsuario = info.IdUsuario,
+                        Estado=info.Estado=true,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now
                     };
                     Context.ro_biometrico.Add(Entity);
