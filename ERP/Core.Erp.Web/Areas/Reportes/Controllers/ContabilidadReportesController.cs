@@ -1043,5 +1043,77 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
         #endregion
+
+        #region CONTA_015
+        public ActionResult CONTA_015()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.AddMonths(1),
+                fecha_fin = DateTime.Now,
+            };
+
+            CONTA_015_Rpt report = new CONTA_015_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_015(cl_filtros_contabilidad_Info model)
+        {
+            CONTA_015_Rpt report = new CONTA_015_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        #endregion
+
+        #region CONTA_016
+        public ActionResult CONTA_016()
+        {
+            cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
+            {
+                IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now.AddMonths(1),
+                fecha_fin = DateTime.Now,
+            };
+
+            CONTA_016_Rpt report = new CONTA_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CONTA_016(cl_filtros_contabilidad_Info model)
+        {
+            CONTA_016_Rpt report = new CONTA_016_Rpt();
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            report.RequestParameters = false;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        #endregion
     }
 }

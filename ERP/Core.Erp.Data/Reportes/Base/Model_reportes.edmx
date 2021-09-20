@@ -6,6 +6,94 @@
     <edmx:StorageModels>
     <Schema Namespace="Model_reportes.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_FIXED.dbo.xxxx' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="xxxx">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="c423" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Mes" Type="varchar" MaxLength="2" />
+          <Property Name="Anio" Type="int" />
+          <Property Name="c303" Type="float" />
+          <Property Name="c353" Type="float" />
+          <Property Name="c304" Type="float" />
+          <Property Name="c354" Type="float" />
+          <Property Name="c307" Type="float" />
+          <Property Name="c357" Type="float" />
+          <Property Name="c308" Type="float" />
+          <Property Name="c358" Type="float" />
+          <Property Name="c309" Type="float" />
+          <Property Name="c359" Type="float" />
+          <Property Name="c310" Type="float" />
+          <Property Name="c360" Type="float" />
+          <Property Name="c311" Type="float" />
+          <Property Name="c361" Type="float" />
+          <Property Name="c312" Type="float" />
+          <Property Name="c362" Type="float" />
+          <Property Name="c3120" Type="float" />
+          <Property Name="c3620" Type="float" />
+          <Property Name="c314" Type="float" />
+          <Property Name="c364" Type="float" />
+          <Property Name="c319" Type="float" />
+          <Property Name="c369" Type="float" />
+          <Property Name="c320" Type="float" />
+          <Property Name="c370" Type="float" />
+          <Property Name="c322" Type="float" />
+          <Property Name="c372" Type="float" />
+          <Property Name="c323" Type="float" />
+          <Property Name="c373" Type="float" />
+          <Property Name="c324" Type="float" />
+          <Property Name="c374" Type="float" />
+          <Property Name="c325" Type="float" />
+          <Property Name="c375" Type="float" />
+          <Property Name="c326" Type="float" />
+          <Property Name="c376" Type="float" />
+          <Property Name="c327" Type="float" />
+          <Property Name="c377" Type="float" />
+          <Property Name="c328" Type="float" />
+          <Property Name="c378" Type="float" />
+          <Property Name="c329" Type="float" />
+          <Property Name="c379" Type="float" />
+          <Property Name="c330" Type="float" />
+          <Property Name="c380" Type="float" />
+          <Property Name="c331" Type="float" />
+          <Property Name="c332" Type="float" />
+          <Property Name="c333" Type="float" />
+          <Property Name="c383" Type="float" />
+          <Property Name="c334" Type="float" />
+          <Property Name="c384" Type="float" />
+          <Property Name="c335" Type="float" />
+          <Property Name="c385" Type="float" />
+          <Property Name="c336" Type="float" />
+          <Property Name="c386" Type="float" />
+          <Property Name="c337" Type="float" />
+          <Property Name="c387" Type="float" />
+          <Property Name="c338" Type="float" />
+          <Property Name="c388" Type="float" />
+          <Property Name="c339" Type="float" />
+          <Property Name="c389" Type="float" />
+          <Property Name="c340" Type="float" />
+          <Property Name="c390" Type="float" />
+          <Property Name="c341" Type="float" />
+          <Property Name="c391" Type="float" />
+          <Property Name="c342" Type="float" />
+          <Property Name="c392" Type="float" />
+          <Property Name="c343" Type="float" />
+          <Property Name="c393" Type="float" />
+          <Property Name="c344" Type="float" />
+          <Property Name="c394" Type="float" />
+          <Property Name="c345" Type="float" />
+          <Property Name="c395" Type="float" />
+          <Property Name="c346" Type="float" />
+          <Property Name="c396" Type="float" />
+          <Property Name="c423" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWACTF_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VWACTF_001">
           <Key>
@@ -5513,6 +5601,88 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
           <Parameter Name="FechaFin" Type="date" Mode="In" />
         </Function>
         <EntityContainer Name="Model_reportesStoreContainer">
+          <EntitySet Name="xxxx" EntityType="Self.xxxx" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [xxxx].[IdEmpresa] AS [IdEmpresa], 
+    [xxxx].[em_ruc] AS [em_ruc], 
+    [xxxx].[em_nombre] AS [em_nombre], 
+    [xxxx].[Mes] AS [Mes], 
+    [xxxx].[Anio] AS [Anio], 
+    [xxxx].[c303] AS [c303], 
+    [xxxx].[c353] AS [c353], 
+    [xxxx].[c304] AS [c304], 
+    [xxxx].[c354] AS [c354], 
+    [xxxx].[c307] AS [c307], 
+    [xxxx].[c357] AS [c357], 
+    [xxxx].[c308] AS [c308], 
+    [xxxx].[c358] AS [c358], 
+    [xxxx].[c309] AS [c309], 
+    [xxxx].[c359] AS [c359], 
+    [xxxx].[c310] AS [c310], 
+    [xxxx].[c360] AS [c360], 
+    [xxxx].[c311] AS [c311], 
+    [xxxx].[c361] AS [c361], 
+    [xxxx].[c312] AS [c312], 
+    [xxxx].[c362] AS [c362], 
+    [xxxx].[c3120] AS [c3120], 
+    [xxxx].[c3620] AS [c3620], 
+    [xxxx].[c314] AS [c314], 
+    [xxxx].[c364] AS [c364], 
+    [xxxx].[c319] AS [c319], 
+    [xxxx].[c369] AS [c369], 
+    [xxxx].[c320] AS [c320], 
+    [xxxx].[c370] AS [c370], 
+    [xxxx].[c322] AS [c322], 
+    [xxxx].[c372] AS [c372], 
+    [xxxx].[c323] AS [c323], 
+    [xxxx].[c373] AS [c373], 
+    [xxxx].[c324] AS [c324], 
+    [xxxx].[c374] AS [c374], 
+    [xxxx].[c325] AS [c325], 
+    [xxxx].[c375] AS [c375], 
+    [xxxx].[c326] AS [c326], 
+    [xxxx].[c376] AS [c376], 
+    [xxxx].[c327] AS [c327], 
+    [xxxx].[c377] AS [c377], 
+    [xxxx].[c328] AS [c328], 
+    [xxxx].[c378] AS [c378], 
+    [xxxx].[c329] AS [c329], 
+    [xxxx].[c379] AS [c379], 
+    [xxxx].[c330] AS [c330], 
+    [xxxx].[c380] AS [c380], 
+    [xxxx].[c331] AS [c331], 
+    [xxxx].[c332] AS [c332], 
+    [xxxx].[c333] AS [c333], 
+    [xxxx].[c383] AS [c383], 
+    [xxxx].[c334] AS [c334], 
+    [xxxx].[c384] AS [c384], 
+    [xxxx].[c335] AS [c335], 
+    [xxxx].[c385] AS [c385], 
+    [xxxx].[c336] AS [c336], 
+    [xxxx].[c386] AS [c386], 
+    [xxxx].[c337] AS [c337], 
+    [xxxx].[c387] AS [c387], 
+    [xxxx].[c338] AS [c338], 
+    [xxxx].[c388] AS [c388], 
+    [xxxx].[c339] AS [c339], 
+    [xxxx].[c389] AS [c389], 
+    [xxxx].[c340] AS [c340], 
+    [xxxx].[c390] AS [c390], 
+    [xxxx].[c341] AS [c341], 
+    [xxxx].[c391] AS [c391], 
+    [xxxx].[c342] AS [c342], 
+    [xxxx].[c392] AS [c392], 
+    [xxxx].[c343] AS [c343], 
+    [xxxx].[c393] AS [c393], 
+    [xxxx].[c344] AS [c344], 
+    [xxxx].[c394] AS [c394], 
+    [xxxx].[c345] AS [c345], 
+    [xxxx].[c395] AS [c395], 
+    [xxxx].[c346] AS [c346], 
+    [xxxx].[c396] AS [c396], 
+    [xxxx].[c423] AS [c423]
+    FROM [dbo].[xxxx] AS [xxxx]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VWACTF_001" EntityType="Self.VWACTF_001" store:Type="Views" store:Schema="web">
             <DefiningQuery>SELECT 
     [VWACTF_001].[IdEmpresa] AS [IdEmpresa], 
@@ -12350,6 +12520,7 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
           </FunctionImport>
           <EntitySet Name="VWROL_004" EntityType="Model_reportes.VWROL_004" />
           <EntitySet Name="VWROL_030" EntityType="Model_reportes.VWROL_030" />
+          <EntitySet Name="xxxx" EntityType="Model_reportes.xxxx" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -15168,6 +15339,92 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
           <Property Name="ru_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Orden" Type="Int32" />
           <Property Name="Valor" Type="Double" />
+        </EntityType>
+        <EntityType Name="xxxx">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_ruc" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="c423" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Mes" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Anio" Type="Int32" />
+          <Property Name="c303" Type="Double" />
+          <Property Name="c353" Type="Double" />
+          <Property Name="c304" Type="Double" />
+          <Property Name="c354" Type="Double" />
+          <Property Name="c307" Type="Double" />
+          <Property Name="c357" Type="Double" />
+          <Property Name="c308" Type="Double" />
+          <Property Name="c358" Type="Double" />
+          <Property Name="c309" Type="Double" />
+          <Property Name="c359" Type="Double" />
+          <Property Name="c310" Type="Double" />
+          <Property Name="c360" Type="Double" />
+          <Property Name="c311" Type="Double" />
+          <Property Name="c361" Type="Double" />
+          <Property Name="c312" Type="Double" />
+          <Property Name="c362" Type="Double" />
+          <Property Name="c3120" Type="Double" />
+          <Property Name="c3620" Type="Double" />
+          <Property Name="c314" Type="Double" />
+          <Property Name="c364" Type="Double" />
+          <Property Name="c319" Type="Double" />
+          <Property Name="c369" Type="Double" />
+          <Property Name="c320" Type="Double" />
+          <Property Name="c370" Type="Double" />
+          <Property Name="c322" Type="Double" />
+          <Property Name="c372" Type="Double" />
+          <Property Name="c323" Type="Double" />
+          <Property Name="c373" Type="Double" />
+          <Property Name="c324" Type="Double" />
+          <Property Name="c374" Type="Double" />
+          <Property Name="c325" Type="Double" />
+          <Property Name="c375" Type="Double" />
+          <Property Name="c326" Type="Double" />
+          <Property Name="c376" Type="Double" />
+          <Property Name="c327" Type="Double" />
+          <Property Name="c377" Type="Double" />
+          <Property Name="c328" Type="Double" />
+          <Property Name="c378" Type="Double" />
+          <Property Name="c329" Type="Double" />
+          <Property Name="c379" Type="Double" />
+          <Property Name="c330" Type="Double" />
+          <Property Name="c380" Type="Double" />
+          <Property Name="c331" Type="Double" />
+          <Property Name="c332" Type="Double" />
+          <Property Name="c333" Type="Double" />
+          <Property Name="c383" Type="Double" />
+          <Property Name="c334" Type="Double" />
+          <Property Name="c384" Type="Double" />
+          <Property Name="c335" Type="Double" />
+          <Property Name="c385" Type="Double" />
+          <Property Name="c336" Type="Double" />
+          <Property Name="c386" Type="Double" />
+          <Property Name="c337" Type="Double" />
+          <Property Name="c387" Type="Double" />
+          <Property Name="c338" Type="Double" />
+          <Property Name="c388" Type="Double" />
+          <Property Name="c339" Type="Double" />
+          <Property Name="c389" Type="Double" />
+          <Property Name="c340" Type="Double" />
+          <Property Name="c390" Type="Double" />
+          <Property Name="c341" Type="Double" />
+          <Property Name="c391" Type="Double" />
+          <Property Name="c342" Type="Double" />
+          <Property Name="c392" Type="Double" />
+          <Property Name="c343" Type="Double" />
+          <Property Name="c393" Type="Double" />
+          <Property Name="c344" Type="Double" />
+          <Property Name="c394" Type="Double" />
+          <Property Name="c345" Type="Double" />
+          <Property Name="c395" Type="Double" />
+          <Property Name="c346" Type="Double" />
+          <Property Name="c396" Type="Double" />
+          <Property Name="c423" Type="Double" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -19817,6 +20074,90 @@ advertencia 6002: La tabla o vista 'DBERP_FIXED.web.VWROL_030' no tiene definida
                 <ScalarProperty Name="IdNominaTipo" ColumnName="IdNominaTipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="xxxx">
+            <EntityTypeMapping TypeName="Model_reportes.xxxx">
+              <MappingFragment StoreEntitySet="xxxx">
+                <ScalarProperty Name="c423" ColumnName="c423" />
+                <ScalarProperty Name="c396" ColumnName="c396" />
+                <ScalarProperty Name="c346" ColumnName="c346" />
+                <ScalarProperty Name="c395" ColumnName="c395" />
+                <ScalarProperty Name="c345" ColumnName="c345" />
+                <ScalarProperty Name="c394" ColumnName="c394" />
+                <ScalarProperty Name="c344" ColumnName="c344" />
+                <ScalarProperty Name="c393" ColumnName="c393" />
+                <ScalarProperty Name="c343" ColumnName="c343" />
+                <ScalarProperty Name="c392" ColumnName="c392" />
+                <ScalarProperty Name="c342" ColumnName="c342" />
+                <ScalarProperty Name="c391" ColumnName="c391" />
+                <ScalarProperty Name="c341" ColumnName="c341" />
+                <ScalarProperty Name="c390" ColumnName="c390" />
+                <ScalarProperty Name="c340" ColumnName="c340" />
+                <ScalarProperty Name="c389" ColumnName="c389" />
+                <ScalarProperty Name="c339" ColumnName="c339" />
+                <ScalarProperty Name="c388" ColumnName="c388" />
+                <ScalarProperty Name="c338" ColumnName="c338" />
+                <ScalarProperty Name="c387" ColumnName="c387" />
+                <ScalarProperty Name="c337" ColumnName="c337" />
+                <ScalarProperty Name="c386" ColumnName="c386" />
+                <ScalarProperty Name="c336" ColumnName="c336" />
+                <ScalarProperty Name="c385" ColumnName="c385" />
+                <ScalarProperty Name="c335" ColumnName="c335" />
+                <ScalarProperty Name="c384" ColumnName="c384" />
+                <ScalarProperty Name="c334" ColumnName="c334" />
+                <ScalarProperty Name="c383" ColumnName="c383" />
+                <ScalarProperty Name="c333" ColumnName="c333" />
+                <ScalarProperty Name="c332" ColumnName="c332" />
+                <ScalarProperty Name="c331" ColumnName="c331" />
+                <ScalarProperty Name="c380" ColumnName="c380" />
+                <ScalarProperty Name="c330" ColumnName="c330" />
+                <ScalarProperty Name="c379" ColumnName="c379" />
+                <ScalarProperty Name="c329" ColumnName="c329" />
+                <ScalarProperty Name="c378" ColumnName="c378" />
+                <ScalarProperty Name="c328" ColumnName="c328" />
+                <ScalarProperty Name="c377" ColumnName="c377" />
+                <ScalarProperty Name="c327" ColumnName="c327" />
+                <ScalarProperty Name="c376" ColumnName="c376" />
+                <ScalarProperty Name="c326" ColumnName="c326" />
+                <ScalarProperty Name="c375" ColumnName="c375" />
+                <ScalarProperty Name="c325" ColumnName="c325" />
+                <ScalarProperty Name="c374" ColumnName="c374" />
+                <ScalarProperty Name="c324" ColumnName="c324" />
+                <ScalarProperty Name="c373" ColumnName="c373" />
+                <ScalarProperty Name="c323" ColumnName="c323" />
+                <ScalarProperty Name="c372" ColumnName="c372" />
+                <ScalarProperty Name="c322" ColumnName="c322" />
+                <ScalarProperty Name="c370" ColumnName="c370" />
+                <ScalarProperty Name="c320" ColumnName="c320" />
+                <ScalarProperty Name="c369" ColumnName="c369" />
+                <ScalarProperty Name="c319" ColumnName="c319" />
+                <ScalarProperty Name="c364" ColumnName="c364" />
+                <ScalarProperty Name="c314" ColumnName="c314" />
+                <ScalarProperty Name="c3620" ColumnName="c3620" />
+                <ScalarProperty Name="c3120" ColumnName="c3120" />
+                <ScalarProperty Name="c362" ColumnName="c362" />
+                <ScalarProperty Name="c312" ColumnName="c312" />
+                <ScalarProperty Name="c361" ColumnName="c361" />
+                <ScalarProperty Name="c311" ColumnName="c311" />
+                <ScalarProperty Name="c360" ColumnName="c360" />
+                <ScalarProperty Name="c310" ColumnName="c310" />
+                <ScalarProperty Name="c359" ColumnName="c359" />
+                <ScalarProperty Name="c309" ColumnName="c309" />
+                <ScalarProperty Name="c358" ColumnName="c358" />
+                <ScalarProperty Name="c308" ColumnName="c308" />
+                <ScalarProperty Name="c357" ColumnName="c357" />
+                <ScalarProperty Name="c307" ColumnName="c307" />
+                <ScalarProperty Name="c354" ColumnName="c354" />
+                <ScalarProperty Name="c304" ColumnName="c304" />
+                <ScalarProperty Name="c353" ColumnName="c353" />
+                <ScalarProperty Name="c303" ColumnName="c303" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

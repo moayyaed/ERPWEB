@@ -1848,6 +1848,9 @@
     <Compile Include="Reportes\Base\VWROL_030.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Base\xxxx.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
@@ -1866,6 +1869,8 @@
     <Compile Include="Reportes\Contabilidad\CONTA_013_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_011_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_012_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_016_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_015_Data.cs" />
     <Compile Include="Reportes\Contabilidad\CONTA_014_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
     <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />
