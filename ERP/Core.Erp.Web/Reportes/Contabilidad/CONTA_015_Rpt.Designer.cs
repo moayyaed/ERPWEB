@@ -1401,7 +1401,8 @@
             // xrTableCell13
             // 
             this.xrTableCell13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'01\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'01\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'01\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell13.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell13.Multiline = true;
             this.xrTableCell13.Name = "xrTableCell13";
@@ -1414,7 +1415,8 @@
             // xrTableCell15
             // 
             this.xrTableCell15.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'02\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'02\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'02\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell15.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell15.Multiline = true;
             this.xrTableCell15.Name = "xrTableCell15";
@@ -1427,7 +1429,8 @@
             // xrTableCell16
             // 
             this.xrTableCell16.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'03\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'03\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'03\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell16.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell16.Multiline = true;
             this.xrTableCell16.Name = "xrTableCell16";
@@ -1440,7 +1443,8 @@
             // xrTableCell14
             // 
             this.xrTableCell14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'04\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'04\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'04\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell14.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell14.Multiline = true;
             this.xrTableCell14.Name = "xrTableCell14";
@@ -1453,7 +1457,8 @@
             // xrTableCell17
             // 
             this.xrTableCell17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'05\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'05\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'05\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell17.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell17.Multiline = true;
             this.xrTableCell17.Name = "xrTableCell17";
@@ -1466,7 +1471,8 @@
             // xrTableCell18
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'06\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'06\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'06\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell18.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell18.Multiline = true;
             this.xrTableCell18.Name = "xrTableCell18";
@@ -1479,7 +1485,8 @@
             // xrTableCell19
             // 
             this.xrTableCell19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'07\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'07\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'07\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell19.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell19.Multiline = true;
             this.xrTableCell19.Name = "xrTableCell19";
@@ -1493,7 +1500,8 @@
             // 
             this.xrTableCell20.BackColor = System.Drawing.Color.Transparent;
             this.xrTableCell20.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'08\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'08\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'08\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell20.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell20.Multiline = true;
             this.xrTableCell20.Name = "xrTableCell20";
@@ -1508,7 +1516,8 @@
             // 
             this.xrTableCell21.BackColor = System.Drawing.Color.Transparent;
             this.xrTableCell21.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'09\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'09\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'09\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell21.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell21.Multiline = true;
             this.xrTableCell21.Name = "xrTableCell21";
@@ -1522,7 +1531,8 @@
             // xrTableCell22
             // 
             this.xrTableCell22.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'10\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'10\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'10\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell22.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell22.Multiline = true;
             this.xrTableCell22.Name = "xrTableCell22";
@@ -1535,7 +1545,8 @@
             // xrTableCell23
             // 
             this.xrTableCell23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'11\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'11\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'11\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell23.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell23.Multiline = true;
             this.xrTableCell23.Name = "xrTableCell23";
@@ -1548,7 +1559,8 @@
             // xrTableCell24
             // 
             this.xrTableCell24.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'12\'")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "[Mes]=\'12\'"),
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "Iif([Mes]==\'12\',\'LightGray\' ,\'Transparent\' )")});
             this.xrTableCell24.Font = new System.Drawing.Font("Verdana", 8F);
             this.xrTableCell24.Multiline = true;
             this.xrTableCell24.Name = "xrTableCell24";
