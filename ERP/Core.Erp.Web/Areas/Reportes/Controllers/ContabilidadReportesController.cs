@@ -1051,7 +1051,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                fecha_ini = DateTime.Now.AddMonths(1),
+                fecha_ini = DateTime.Now.AddMonths(-1),
                 fecha_fin = DateTime.Now,
             };
 
@@ -1087,7 +1087,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                fecha_ini = DateTime.Now.AddMonths(1),
+                fecha_ini = DateTime.Now.AddMonths(-1),
                 fecha_fin = DateTime.Now,
             };
 
