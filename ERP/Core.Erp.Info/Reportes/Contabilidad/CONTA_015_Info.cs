@@ -86,5 +86,7 @@ namespace Core.Erp.Info.Reportes.Contabilidad
         public Nullable<double> c346 { get; set; }
         public Nullable<double> c396 { get; set; }
         public double c423 { get; set; }
+        public double? c3940 { get; set; }
+        public double? c3440 { get; set; }
     }
 }

@@ -92,8 +92,10 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                 + " sum(case when c.codigoSRI LIKE '342%' then b.re_valor_retencion else 0 end) c392,"
                 + " sum(case when c.codigoSRI LIKE '343%' then b.re_baseRetencion else 0 end) c343,"
                 + " sum(case when c.codigoSRI LIKE '343%' then b.re_valor_retencion else 0 end) c393,"
-                + " sum(case when c.codigoSRI LIKE '344%' then b.re_baseRetencion else 0 end) c344,"
-                + " sum(case when c.codigoSRI LIKE '344%' then b.re_valor_retencion else 0 end) c394,"
+                + " sum(case when c.codigoSRI = '344' then b.re_baseRetencion else 0 end) c344,"
+                + " sum(case when c.codigoSRI = '344' then b.re_valor_retencion else 0 end) c394,"
+                + " sum(case when c.codigoSRI = '3440' then b.re_baseRetencion else 0 end) c3440,"
+                + " sum(case when c.codigoSRI = '3440' then b.re_valor_retencion else 0 end) c3940,"
                 + " sum(case when c.codigoSRI LIKE '345%' then b.re_baseRetencion else 0 end) c345,"
                 + " sum(case when c.codigoSRI LIKE '345%' then b.re_valor_retencion else 0 end) c395,"
                 + " sum(case when c.codigoSRI LIKE '346%' then b.re_baseRetencion else 0 end) c346,"
@@ -192,6 +194,8 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                         c393 = string.IsNullOrEmpty(reader["c393"].ToString()) ? (double?)null : Convert.ToDouble(reader["c393"]),
                         c344 = string.IsNullOrEmpty(reader["c344"].ToString()) ? (double?)null : Convert.ToDouble(reader["c344"]),
                         c394 = string.IsNullOrEmpty(reader["c394"].ToString()) ? (double?)null : Convert.ToDouble(reader["c394"]),
+                        c3440 = string.IsNullOrEmpty(reader["c3440"].ToString()) ? (double?)null : Convert.ToDouble(reader["c3440"]),
+                        c3940 = string.IsNullOrEmpty(reader["c3940"].ToString()) ? (double?)null : Convert.ToDouble(reader["c3940"]),
                         c345 = string.IsNullOrEmpty(reader["c345"].ToString()) ? (double?)null : Convert.ToDouble(reader["c345"]),
                         c395 = string.IsNullOrEmpty(reader["c395"].ToString()) ? (double?)null : Convert.ToDouble(reader["c395"]),
                         c346 = string.IsNullOrEmpty(reader["c346"].ToString()) ? (double?)null : Convert.ToDouble(reader["c346"]),
