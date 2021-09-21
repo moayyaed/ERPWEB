@@ -125,7 +125,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                         em_ruc = string.IsNullOrEmpty(reader["em_ruc"].ToString()) ? null: reader["em_ruc"].ToString(),
                         em_nombre = string.IsNullOrEmpty(reader["em_nombre"].ToString()) ? null : reader["em_nombre"].ToString(),
                         Mes = string.IsNullOrEmpty(reader["Mes"].ToString()) ? null : reader["Mes"].ToString(),
-                        Anio = string.IsNullOrEmpty(reader["Anio"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdEmpresa"]),
+                        Anio = string.IsNullOrEmpty(reader["Anio"].ToString()) ? (int?)null : Convert.ToInt32(reader["Anio"]),
                         c303 = string.IsNullOrEmpty(reader["c303"].ToString()) ? (double?)null : Convert.ToInt32(reader["c303"]),
                         c353 = string.IsNullOrEmpty(reader["c353"].ToString()) ? (double?)null : Convert.ToDouble(reader["c353"]),
                         c304 = string.IsNullOrEmpty(reader["c304"].ToString()) ? (double?)null : Convert.ToDouble(reader["c304"]),
