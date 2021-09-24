@@ -180,7 +180,8 @@ namespace Core.Erp.Bus.RRHH
                         {
                             if ((dia_semana == 7 | dia_semana == 6) && (info_turno.Domingo == false | info_turno.Sabado == false))
                             {
-                                item.hora_trabajada = ((TimeSpan)(item.time_salida1 - item.time_entrada1)).TotalHours - ((TimeSpan)(horarioActual.RegLunch - horarioActual.SalLunch)).TotalHours;
+                                //item.hora_trabajada = ((TimeSpan)(item.time_salida1 - item.time_entrada1)).TotalHours - ((TimeSpan)(horarioActual.RegLunch - horarioActual.SalLunch)).TotalHours;
+                                item.hora_trabajada = ((TimeSpan)(item.time_salida1 - item.time_entrada1)).TotalHours;
                                 item.hora_extra100 = item.hora_trabajada;
                                 horaExtra100 = item.hora_extra100;
                             }
