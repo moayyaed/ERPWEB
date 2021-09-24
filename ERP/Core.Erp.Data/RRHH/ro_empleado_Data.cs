@@ -429,7 +429,23 @@ namespace Core.Erp.Data.RRHH
                         }
                     }
 
-             
+                    if (info.lst_det.Count() > 0)
+                    {
+                        foreach (var item in info.lst_jefes_inmediatis)
+                        {
+                            Context.ro_empleado_x_jefes_inmediatos.Add(new ro_empleado_x_jefes_inmediatos
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdEmpleado = info.IdEmpleado,
+                                IdEmpleado_aprueba = item.IdEmpleado_aprueba,
+                                Aprueba_vacaciones = item.Aprueba_vacaciones,
+                                Aprueba_prestamo = item.Aprueba_prestamo,
+                                Secuencia = item.Secuencia
+                            });
+                        }
+                    }
+
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -552,6 +568,24 @@ namespace Core.Erp.Data.RRHH
                             });
                         }
                     }
+                    var lst_det_jefes = Context.ro_empleado_x_jefes_inmediatos.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado);
+                    Context.ro_empleado_x_jefes_inmediatos.RemoveRange(lst_det_jefes);
+                    if (info.lst_det.Count() > 0)
+                    {
+                        foreach (var item in info.lst_jefes_inmediatis)
+                        {
+                            Context.ro_empleado_x_jefes_inmediatos.Add(new ro_empleado_x_jefes_inmediatos
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdEmpleado = info.IdEmpleado,
+                                IdEmpleado_aprueba = item.IdEmpleado_aprueba,
+                                Aprueba_vacaciones = item.Aprueba_vacaciones,
+                                Aprueba_prestamo = item.Aprueba_prestamo,
+                                Secuencia = item.Secuencia
+                            });
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
 
