@@ -43,5 +43,9 @@ namespace Core.Erp.Info.RRHH
         public string pe_cedulaRuc { get; set; }
 
         public int Secuencia { get; set; }
+        public System.DateTime time_entrada1_date { get; set; }
+        public System.DateTime time_entrada2_date { get; set; }
+        public System.DateTime time_salida1_date { get; set; }
+        public System.DateTime time_salida2_date { get; set; }
     }
 }

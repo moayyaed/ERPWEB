@@ -10,12 +10,12 @@
 
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "EmpleadoNovedad", Action = "EditingAddNew", Area = "RRHH" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "EmpleadoNovedad", Action = "EditingUpdate", Area = "RRHH" };
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "EmpleadoNovedad", Action = "EditingUpdate", Area = "RRHH" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "EmpleadoNovedad", Action = "EditingDelete", Area = "RRHH" };
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = true;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowEditButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
 
         settings.SettingsContextMenu.Enabled = true;

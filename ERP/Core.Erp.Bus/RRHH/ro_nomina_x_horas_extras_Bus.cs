@@ -81,10 +81,16 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                if (odata.Procesar(info))
-                    return bus_detalle.calcular_horas_extras(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
-                else
-                    return false;
+                //if(odata.guardarDB(info)){
+                    if (odata.Procesar(info))
+                        return bus_detalle.calcular_horas_extras(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo);
+                    else
+                        return false;
+                //}
+                //else
+                //{
+                //    return false;
+                //}                
             }
             catch (Exception)
             {

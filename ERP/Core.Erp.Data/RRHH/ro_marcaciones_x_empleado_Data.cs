@@ -231,6 +231,24 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+
+        public bool eliminarDB(ro_marcaciones_x_empleado_Info info)
+        {
+            try
+            {
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    Context.Database.ExecuteSqlCommand("delete ro_marcaciones_x_empleado where IdEmpresa='" + info.IdEmpresa + "' and IdCalendadrio='" + info.IdCalendadrio + "'");
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool si_existe(ro_marcaciones_x_empleado_Info info)
         {
             try

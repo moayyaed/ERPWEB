@@ -51,7 +51,21 @@ namespace Core.Erp.Data.RRHH
                                  }).ToList();
                    
                 }
-                Lista.ForEach(v => v.Secuencia = secuen++);
+                //foreach (var item in Lista)
+                //{
+                //    item.Secuencia = secuen++;
+                //    var fecha = item.FechaRegistro;
+                //    var hora = Convert.ToDateTime(item.time_entrada1.ToString());
+                //    var Entrada1 = fecha.AddHours(hora.Hour).AddMinutes(hora.Minute).AddSeconds(hora.Second);                    
+                //}
+                Lista.ForEach(v =>
+                {
+                    v.Secuencia = secuen++;
+                    v.time_entrada1_date = v.FechaRegistro.AddHours(Convert.ToDateTime(v.time_entrada1.ToString()).Hour).AddMinutes(Convert.ToDateTime(v.time_entrada1.ToString()).Minute).AddSeconds(Convert.ToDateTime(v.time_entrada1.ToString()).Second);
+                    v.time_entrada2_date = v.FechaRegistro.AddHours(Convert.ToDateTime(v.time_entrada2.ToString()).Hour).AddMinutes(Convert.ToDateTime(v.time_entrada2.ToString()).Minute).AddSeconds(Convert.ToDateTime(v.time_entrada2.ToString()).Second);
+                    v.time_salida1_date = v.FechaRegistro.AddHours(Convert.ToDateTime(v.time_salida1.ToString()).Hour).AddMinutes(Convert.ToDateTime(v.time_salida1.ToString()).Minute).AddSeconds(Convert.ToDateTime(v.time_salida1.ToString()).Second);
+                    v.time_salida2_date = v.FechaRegistro.AddHours(Convert.ToDateTime(v.time_salida2.ToString()).Hour).AddMinutes(Convert.ToDateTime(v.time_salida2.ToString()).Minute).AddSeconds(Convert.ToDateTime(v.time_salida2.ToString()).Second);
+                });
                 return Lista;
             }
             catch (Exception)
@@ -138,7 +152,11 @@ namespace Core.Erp.Data.RRHH
                         hora_atraso = Entity.hora_atraso,
                         hora_temprano = Entity.hora_temprano,
                         hora_trabajada = Entity.hora_trabajada,
-                        IdEmpleado = Entity.IdEmpleado
+                        IdEmpleado = Entity.IdEmpleado,
+                        time_entrada1_date = Convert.ToDateTime(Entity.time_entrada1),
+                        time_entrada2_date = Convert.ToDateTime(Entity.time_entrada2),
+                        time_salida1_date = Convert.ToDateTime(Entity.time_salida1),
+                        time_salida2_date = Convert.ToDateTime(Entity.time_salida2),
                     };
                 }
 

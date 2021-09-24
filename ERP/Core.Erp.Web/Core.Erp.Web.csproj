@@ -10694,6 +10694,7 @@
     <Content Include="Areas\RRHH\Views\Biometrico\_GridViewPartial_biometrico.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_015.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_016.cshtml" />
+    <Content Include="Areas\RRHH\Views\HorasExtras\_CmbEmpleado_HorasExtras.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -53,7 +53,7 @@ namespace Core.Erp.Data.RRHH
 
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -209,9 +209,9 @@ namespace Core.Erp.Data.RRHH
                             IdHorario=item.IdHorario,
                             FechaRegistro=item.FechaRegistro,
                             time_entrada1=item.time_entrada1,
-                            time_entrada2=item.time_entrada2,
-                            time_salida1=item.time_salida1,
-                            time_salida2=item.time_salida2,
+                            time_entrada2= item.time_entrada2,
+                            time_salida1= item.time_salida1,
+                            time_salida2= item.time_salida2,
                             hora_extra25=item.hora_extra25,
                             hora_extra50=item.hora_extra50,
                             hora_extra100=item.hora_extra100,

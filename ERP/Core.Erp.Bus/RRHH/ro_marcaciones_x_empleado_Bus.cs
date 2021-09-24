@@ -89,5 +89,17 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+        public bool eliminarDB(ro_marcaciones_x_empleado_Info info)
+        {
+            try
+            {
+                return odata.eliminarDB(info);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
