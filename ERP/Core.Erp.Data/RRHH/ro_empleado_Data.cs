@@ -228,6 +228,17 @@ namespace Core.Erp.Data.RRHH
                         IdSucursalContabilizacion = info.IdSucursalContabilizacion,
                         ro_goza_utilidad=info.ro_goza_utilidad
                     };
+
+                    info_.lst_jefes_inmediatis = new List<ro_empleado_x_jefes_inmediatos_Info>();
+                    info_.lst_jefes_inmediatis = Context.ro_empleado_x_jefes_inmediatos.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ro_empleado_x_jefes_inmediatos_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdEmpleado_aprueba = q.IdEmpleado_aprueba,
+                        Aprueba_vacaciones = q.Aprueba_vacaciones,
+                        Aprueba_prestamo = q.Aprueba_prestamo,
+                        Secuencia = q.Secuencia
+                    }).ToList();
                 }
 
                 return info_;

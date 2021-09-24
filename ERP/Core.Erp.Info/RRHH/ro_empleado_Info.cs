@@ -160,5 +160,7 @@ namespace Core.Erp.Info.RRHH
             info_persona = new tb_persona_Info();info_foto = new ro_EmpleadoFoto_Info();
         }
         public List<ro_empleado_x_jornada_Info> lst_det { get; set; }
+        public List<ro_empleado_x_jefes_inmediatos_Info> lst_jefes_inmediatis { get; set; }
+       
     }
 }

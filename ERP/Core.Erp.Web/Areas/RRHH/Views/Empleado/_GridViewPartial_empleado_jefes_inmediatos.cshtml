@@ -41,41 +41,35 @@
 
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdJornada";
-            column.Caption = "Jornada";
+            column.FieldName = "IdEmpleado_aprueba";
+            column.Caption = "Jefe inmediato";
             column.Width = Unit.Percentage(50);
             column.EditorProperties().ComboBox(p =>
             {
-                p.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "Descripcion";
-                p.ValueField = "IdJornada";
-                p.ValueType = typeof(int);
+                p.Columns.Add("pe_nombre", "Empleado").Width = Unit.Percentage(100);
+                p.TextField = "pe_nombre";
+                p.ValueField = "IdEmpleado";
+                p.ValueType = typeof(decimal);
                 p.DataSource = ViewBag.lst_jor;
             });
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "ValorHora";
-            column.Caption = "Valor hora";
-            column.Width = Unit.Percentage(15);
-            column.EditorProperties().SpinEdit(sp =>
+            column.FieldName = "Aprueba_vacaciones";
+            column.Caption = "Aprueba vacaciones";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.EditorProperties().CheckBox(sp =>
             {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
 
             });
         });
         settings.Columns.Add(column =>
         {
-            column.FieldName = "MaxNumHoras";
-            column.Caption = "Máximo número de horas";
-            column.Width = Unit.Percentage(15);
-            column.EditorProperties().SpinEdit(sp =>
+            column.FieldName = "Aprueba_prestamo";
+            column.Caption = "Aprueba prestamos";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.EditorProperties().CheckBox(sp =>
             {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
 
             });
         });
