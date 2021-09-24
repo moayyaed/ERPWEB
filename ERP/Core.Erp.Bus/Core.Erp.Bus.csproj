@@ -494,6 +494,7 @@
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jefes_inmediatos_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Bus.cs" />

@@ -2083,6 +2083,9 @@
     <Compile Include="ro_empleado_x_horario.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_empleado_x_jefes_inmediatos.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_empleado_x_jornada.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -2271,6 +2274,7 @@
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Data.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jefes_inmediatos_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Data.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Data.cs" />
