@@ -11,8 +11,9 @@ namespace Core.Erp.Data
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
     using System.Linq;
     
     public partial class Entities_rrhh : DbContext
@@ -152,14 +153,15 @@ namespace Core.Erp.Data
         public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
         public DbSet<vwro_AjusteImpuestoRentaDet> vwro_AjusteImpuestoRentaDet { get; set; }
-        public DbSet<ro_empleado> ro_empleado { get; set; }
         public DbSet<vwro_empleado_datos_generales> vwro_empleado_datos_generales { get; set; }
         public DbSet<ro_Parametros> ro_Parametros { get; set; }
         public DbSet<ro_participacion_utilidad> ro_participacion_utilidad { get; set; }
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
-        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<vwro_participacion_utilidad> vwro_participacion_utilidad { get; set; }
         public DbSet<vwro_participacion_utilidad_empleado> vwro_participacion_utilidad_empleado { get; set; }
+        public DbSet<ro_empleado_x_jefes_inmediatos> ro_empleado_x_jefes_inmediatos { get; set; }
+        public DbSet<ro_empleado> ro_empleado { get; set; }
+        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<ro_biometrico> ro_biometrico { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)

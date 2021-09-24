@@ -26,6 +26,7 @@
     [IdRubro_novedad_proceso]      VARCHAR (50) NULL,
     [IdRubro_primaria_vespertina]  VARCHAR (50) NULL,
     [IdRubro_utilidad]             VARCHAR (50) NULL,
+    [IdRubro_vacaciones]           VARCHAR (50) NULL,
     CONSTRAINT [PK_ro_rubros_calculados] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC),
     CONSTRAINT [FK_ro_rubros_calculados_ro_rubro_tipo] FOREIGN KEY ([IdEmpresa], [IdRubro_horas_recargo]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro]),
     CONSTRAINT [FK_ro_rubros_calculados_ro_rubro_tipo1] FOREIGN KEY ([IdEmpresa], [IdRubro_horas_adicionales]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro]),
@@ -45,6 +46,8 @@
     CONSTRAINT [FK_ro_rubros_calculados_ro_rubro_tipo8] FOREIGN KEY ([IdEmpresa], [IdRubro_DIV]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro]),
     CONSTRAINT [FK_ro_rubros_calculados_ro_rubro_tipo9] FOREIGN KEY ([IdEmpresa], [IdRubro_DIII]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro])
 );
+
+
 
 
 

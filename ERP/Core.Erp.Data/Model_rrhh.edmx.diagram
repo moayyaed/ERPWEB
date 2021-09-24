@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="02d7a85e43b04986baf80f726d8b99fa" Name="Diagram1" ZoomLevel="26">
+      <Diagram DiagramId="02d7a85e43b04986baf80f726d8b99fa" Name="Diagram1" ZoomLevel="16">
         <EntityTypeShape EntityType="Model_rrhh.ro_Acta_Finiquito" Width="1.5" PointX="11.25" PointY="61" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_Acta_Finiquito_Detalle" Width="1.5" PointX="22.5" PointY="63.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_rrhh.ro_area" Width="1.5" PointX="0.75" PointY="57.5" IsExpanded="true" />
@@ -210,8 +210,17 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" />
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" Width="1.5" PointX="27.375" PointY="31.75" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_empleado" Width="1.5" PointX="0.75" PointY="45.125" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleado_datos_generales" Width="1.5" PointX="3" PointY="27.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_Parametros" Width="1.5" PointX="9.375" PointY="55.625" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad" Width="1.5" PointX="32.75" PointY="1" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad_empleado" Width="1.5" PointX="36" PointY="31" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_Parametros_ro_catalogo" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_empleado_x_jefes_inmediatos" Width="1.5" PointX="19.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_empleado" Width="1.5" PointX="0.75" PointY="45.125" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_rubros_calculados" Width="1.5" PointX="13.875" PointY="81.375" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" />
@@ -237,6 +246,7 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_marcaciones_x_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_NominasPagosCheques_det_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" />
         <AssociationConnector Association="Model_rrhh.FK_ro_prestamo_ro_empleado" />
@@ -246,13 +256,6 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_Parametros" Width="1.5" PointX="9.375" PointY="55.625" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad" Width="1.5" PointX="32.75" PointY="1" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_participacion_utilidad_empleado" Width="1.5" PointX="36" PointY="31" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_rubros_calculados" Width="1.5" PointX="11.625" PointY="81.5" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_Parametros_ro_catalogo" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" />
@@ -270,9 +273,7 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" />
         <AssociationConnector Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" Width="1.5" PointX="2.75" PointY="14.75" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_biometrico" Width="1.5" PointX="32.625" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_biometrico" Width="1.5" PointX="32.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
