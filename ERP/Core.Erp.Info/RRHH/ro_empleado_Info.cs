@@ -163,4 +163,15 @@ namespace Core.Erp.Info.RRHH
         public List<ro_empleado_x_jefes_inmediatos_Info> lst_jefes_inmediatis { get; set; }
        
     }
+
+    public class ro_empleado_combo_Info
+    {
+        public int IdEmpresa { get; set; }
+        public decimal IdEmpleado { get; set; }
+        public string Empleado { get; set; }
+        public string pe_cedulaRuc { get; set; }
+        public Nullable<int> IdTipoNomina { get; set; }
+        public int IdSucursal { get; set; }
+
+        }
 }

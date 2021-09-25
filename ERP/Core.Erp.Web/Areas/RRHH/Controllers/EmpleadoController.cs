@@ -261,6 +261,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             int IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             var lst_areas = bus_area.get_list(IdEmpresa, false);
             ViewBag.lst_areas = lst_areas;
+
+            var lst_empleado = bus_empleado.get_list_combo(IdEmpresa);
+            ViewBag.lst_empleado = lst_empleado;
+
+
         }
 
         [HttpPost]
@@ -957,7 +962,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var model = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            carga_combo();
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
 
@@ -968,7 +973,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (ModelState.IsValid)
                 ro_empleado_x_jefes_inmediatos_Info_Lis.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            carga_combo();
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
 
@@ -979,14 +984,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (ModelState.IsValid)
                 ro_empleado_x_jefes_inmediatos_Info_Lis.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            carga_combo();
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
         public ActionResult EditingDeleteJefeInmediato(int Secuencia)
         {
             ro_empleado_x_jefes_inmediatos_Info_Lis.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            carga_combo();
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jornada_det", model);
         }
         #endregion
