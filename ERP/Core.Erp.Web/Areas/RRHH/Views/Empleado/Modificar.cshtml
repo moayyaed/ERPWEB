@@ -172,6 +172,9 @@
             <li>
                 <a href="#tb_info_contable" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Contabilidad</a>
             </li>
+            <li>
+                <a href="#tb_info_jefes_inmediatos" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Jefes inmediatos</a>
+            </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top: 20px">
@@ -442,397 +445,397 @@
 
                     </div>
 
-                 
+
                 </div>
 
 
-                    </div>
+            </div>
 
-                    <div role="tabpanel" class="tab-pane" id="tb_info_nomina">
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="IdTipoEmpleado">Tipo empleado</label>
-                                        @Html.DropDownListFor(q => q.IdTipoEmpleado, new SelectList(ViewBag.lst_tipo_empleado, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(q => q.IdTipoEmpleado, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="IdHorario">Horario*</label>
-                                        @Html.DevExpress().ComboBoxFor(q => q.IdHorario, settings =>
-                               {
-                                   settings.Name = "IdHorario";
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                   settings.Properties.DisplayFormatString = "[{0}]";
-                                   settings.Properties.Columns.Add("Descripcion", "Horario").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                                   //Campo ID
-                                   settings.Properties.ValueField = "IdHorario";
-                                   settings.Properties.ValueType = typeof(int);
-                                   settings.Properties.TextField = "HoraIni";
-                                   //Boton para seleccionar ningun registro
-                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                               }).BindList(ViewBag.lst_horario).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.IdHorario, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="CodigoSectorial">Código sectorial</label>
-                                        @Html.TextBoxFor(q => q.CodigoSectorial, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(q => q.CodigoSectorial, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="em_fechaIngaRol">Fecha ingreso*</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            @Html.DevExpress().DateEditFor(q => q.em_fechaIngaRol, settings =>
-                           {
-                               settings.Name = "em_fechaIngaRol";
-                               settings.Properties.UseMaskBehavior = true;
-                               settings.Properties.EditFormat = EditFormat.Date;
-                               settings.Properties.EditFormatString = "dd/MM/yyyy";
-                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                           }).GetHtml()
-                                            @Html.ValidationMessageFor(q => q.em_fechaIngaRol, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+            <div role="tabpanel" class="tab-pane" id="tb_info_nomina">
 
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="Anticipo_Sueldo">% Anticipo Sueldo</label>
-                                        @Html.TextBoxFor(q => q.em_AnticipoSueldo, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(q => q.em_AnticipoSueldo, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="es_AcreditaHorasExtras"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.es_AcreditaHorasExtras, settings =>
-                           {
-                               settings.Name = "es_AcreditaHorasExtras";
-                               settings.Text = "Goza horas extras";
-
-                           }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.es_AcreditaHorasExtras, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="Marca_Biometrico"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.Marca_Biometrico, settings =>
-                            {
-                                settings.Name = "Marca_Biometrico";
-                                settings.Text = "Marca biometrico";
-
-                            }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="ro_goza_utilidad"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.ro_goza_utilidad, settings =>
-                            {
-                                settings.Name = "ro_goza_utilidad";
-                                settings.Text = "Goza de utilidad";
-
-                            }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="GozaMasDeQuinceDiasVaciones"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.GozaMasDeQuinceDiasVaciones, settings =>
-                           {
-                               settings.Name = "GozaMasDeQuinceDiasVaciones";
-                               settings.Text = "Goza más de 15 días de vacaciones";
-                               settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){dias_vacaciones();}";
-                           }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.GozaMasDeQuinceDiasVaciones, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div id="Divdias">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="DiasVacaciones">Días vacaciones</label>
-                                            @Html.TextBoxFor(q => q.DiasVacaciones, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.DiasVacaciones, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="tb_info_adicional">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="IdCondicionDiscapacidadSRI">Condición de empleado conrespecto a discapacidad</label>
-                                    @Html.DevExpress().ComboBoxFor(q => q.IdCondicionDiscapacidadSRI, settings =>
-                               {
-                                   settings.Name = "IdCondicionDiscapacidadSRI";
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                   settings.Properties.Columns.Add("CodCatalogo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                                   settings.Properties.Columns.Add("ca_descripcion", "Desripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                                   //Campo ID
-                                   settings.Properties.ValueField = "CodCatalogo";
-                                   settings.Properties.ValueType = typeof(string);
-                                   settings.Properties.TextField = "ca_descripcion";
-                                   //Boton para seleccionar ningun registro
-                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                               }).BindList(ViewBag.lst_tipo_discapacidad).GetHtml()
-                                    @Html.ValidationMessageFor(q => q.IdCondicionDiscapacidadSRI, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="por_discapacidad">Porcentaje discapacidad</label>
-                                    @Html.TextBoxFor(q => q.por_discapacidad, new { @class = "form-control", @id = "pe_apellido" })
-                                    @Html.ValidationMessageFor(q => q.por_discapacidad, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="carnet_conadis">Número conadis</label>
-                                    @Html.TextBoxFor(q => q.carnet_conadis, new { @class = "form-control", @id = "pe_apellido" })
-                                    @Html.ValidationMessageFor(q => q.carnet_conadis, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="IdCiudad">Tipo documento persona sustituida</label>
-                                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoIdentDiscapacitadoSustitutoSRI, settings =>
-                               {
-                                   settings.Name = "IdTipoIdentDiscapacitadoSustitutoSRI";
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                                   settings.Properties.Columns.Add("CodCatalogo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                                   settings.Properties.Columns.Add("ca_descripcion", "Desripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
-                                   //Campo ID
-                                   settings.Properties.ValueField = "CodCatalogo";
-                                   settings.Properties.ValueType = typeof(string);
-                                   settings.Properties.TextField = "ca_descripcion";
-                                   //Boton para seleccionar ningun registro
-                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-
-                               }).BindList(ViewBag.lst_tipo_doc_sustutuido).GetHtml()
-                                    @Html.ValidationMessageFor(q => q.IdTipoIdentDiscapacitadoSustitutoSRI, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="IdTipoIdentDiscapacitadoSustitutoSRI">Número identificación</label>
-                                    @Html.TextBoxFor(q => q.IdentDiscapacitadoSustitutoSRI, new { @class = "form-control", @id = "pe_apellido" })
-                                    @Html.ValidationMessageFor(q => q.IdentDiscapacitadoSustitutoSRI, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="IdTipoSangre">Tipo sangre</label>
-                                    @Html.DropDownListFor(q => q.IdTipoSangre, new SelectList(ViewBag.lst_tipo_sangre, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(q => q.IdTipoSangre, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IdTipoLicencia">Tipo licencia</label>
-                                    @Html.DropDownListFor(q => q.IdTipoLicencia, new SelectList(ViewBag.lst_tipo_licencia, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(q => q.IdTipoLicencia, "", new { @class = "text-danger" })
-                                </div>
+                                <label for="IdTipoEmpleado">Tipo empleado</label>
+                                @Html.DropDownListFor(q => q.IdTipoEmpleado, new SelectList(ViewBag.lst_tipo_empleado, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdTipoEmpleado, "", new { @class = "text-danger" })
                             </div>
-
+                        </div>
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="em_cedulaMil">Número libreta militar</label>
-                                    @Html.TextBoxFor(q => q.em_cedulaMil, new { @class = "form-control", @id = "pe_apellido" })
-                                    @Html.ValidationMessageFor(q => q.em_cedulaMil, "", new { @class = "text-danger" })
+                                <label for="IdHorario">Horario*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdHorario, settings =>
+                       {
+                           settings.Name = "IdHorario";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.DisplayFormatString = "[{0}]";
+                           settings.Properties.Columns.Add("Descripcion", "Horario").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                           //Campo ID
+                           settings.Properties.ValueField = "IdHorario";
+                           settings.Properties.ValueType = typeof(int);
+                           settings.Properties.TextField = "HoraIni";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                       }).BindList(ViewBag.lst_horario).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdHorario, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="CodigoSectorial">Código sectorial</label>
+                                @Html.TextBoxFor(q => q.CodigoSectorial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.CodigoSectorial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="em_fechaIngaRol">Fecha ingreso*</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.em_fechaIngaRol, settings =>
+                   {
+                       settings.Name = "em_fechaIngaRol";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.em_fechaIngaRol, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Anticipo_Sueldo">% Anticipo Sueldo</label>
+                                @Html.TextBoxFor(q => q.em_AnticipoSueldo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_AnticipoSueldo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="es_AcreditaHorasExtras"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.es_AcreditaHorasExtras, settings =>
+                   {
+                       settings.Name = "es_AcreditaHorasExtras";
+                       settings.Text = "Goza horas extras";
+
+                   }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.es_AcreditaHorasExtras, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Marca_Biometrico"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.Marca_Biometrico, settings =>
+                    {
+                        settings.Name = "Marca_Biometrico";
+                        settings.Text = "Marca biometrico";
+
+                    }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ro_goza_utilidad"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.ro_goza_utilidad, settings =>
+                    {
+                        settings.Name = "ro_goza_utilidad";
+                        settings.Text = "Goza de utilidad";
+
+                    }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Marca_Biometrico, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="GozaMasDeQuinceDiasVaciones"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.GozaMasDeQuinceDiasVaciones, settings =>
+                   {
+                       settings.Name = "GozaMasDeQuinceDiasVaciones";
+                       settings.Text = "Goza más de 15 días de vacaciones";
+                       settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){dias_vacaciones();}";
+                   }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.GozaMasDeQuinceDiasVaciones, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="Divdias">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="talla_pant">Talla pantalón</label>
-                                    @Html.TextBoxFor(q => q.talla_pant, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(q => q.talla_pant, "", new { @class = "text-danger" })
+                                    <label for="DiasVacaciones">Días vacaciones</label>
+                                    @Html.TextBoxFor(q => q.DiasVacaciones, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.DiasVacaciones, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                        </div>
 
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tb_info_adicional">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdCondicionDiscapacidadSRI">Condición de empleado conrespecto a discapacidad</label>
+                            @Html.DevExpress().ComboBoxFor(q => q.IdCondicionDiscapacidadSRI, settings =>
+                       {
+                           settings.Name = "IdCondicionDiscapacidadSRI";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.Columns.Add("CodCatalogo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                           settings.Properties.Columns.Add("ca_descripcion", "Desripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                           //Campo ID
+                           settings.Properties.ValueField = "CodCatalogo";
+                           settings.Properties.ValueType = typeof(string);
+                           settings.Properties.TextField = "ca_descripcion";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                       }).BindList(ViewBag.lst_tipo_discapacidad).GetHtml()
+                            @Html.ValidationMessageFor(q => q.IdCondicionDiscapacidadSRI, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="por_discapacidad">Porcentaje discapacidad</label>
+                            @Html.TextBoxFor(q => q.por_discapacidad, new { @class = "form-control", @id = "pe_apellido" })
+                            @Html.ValidationMessageFor(q => q.por_discapacidad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="carnet_conadis">Número conadis</label>
+                            @Html.TextBoxFor(q => q.carnet_conadis, new { @class = "form-control", @id = "pe_apellido" })
+                            @Html.ValidationMessageFor(q => q.carnet_conadis, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="IdCiudad">Tipo documento persona sustituida</label>
+                            @Html.DevExpress().ComboBoxFor(q => q.IdTipoIdentDiscapacitadoSustitutoSRI, settings =>
+                       {
+                           settings.Name = "IdTipoIdentDiscapacitadoSustitutoSRI";
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                           settings.Properties.Columns.Add("CodCatalogo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                           settings.Properties.Columns.Add("ca_descripcion", "Desripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                           //Campo ID
+                           settings.Properties.ValueField = "CodCatalogo";
+                           settings.Properties.ValueType = typeof(string);
+                           settings.Properties.TextField = "ca_descripcion";
+                           //Boton para seleccionar ningun registro
+                           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                       }).BindList(ViewBag.lst_tipo_doc_sustutuido).GetHtml()
+                            @Html.ValidationMessageFor(q => q.IdTipoIdentDiscapacitadoSustitutoSRI, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdTipoIdentDiscapacitadoSustitutoSRI">Número identificación</label>
+                            @Html.TextBoxFor(q => q.IdentDiscapacitadoSustitutoSRI, new { @class = "form-control", @id = "pe_apellido" })
+                            @Html.ValidationMessageFor(q => q.IdentDiscapacitadoSustitutoSRI, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="IdTipoSangre">Tipo sangre</label>
+                            @Html.DropDownListFor(q => q.IdTipoSangre, new SelectList(ViewBag.lst_tipo_sangre, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdTipoSangre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="IdTipoLicencia">Tipo licencia</label>
+                            @Html.DropDownListFor(q => q.IdTipoLicencia, new SelectList(ViewBag.lst_tipo_licencia, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdTipoLicencia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="em_cedulaMil">Número libreta militar</label>
+                            @Html.TextBoxFor(q => q.em_cedulaMil, new { @class = "form-control", @id = "pe_apellido" })
+                            @Html.ValidationMessageFor(q => q.em_cedulaMil, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="talla_pant">Talla pantalón</label>
+                            @Html.TextBoxFor(q => q.talla_pant, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.talla_pant, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="talla_camisa">Tala camisa</label>
+                            @Html.TextBoxFor(q => q.talla_camisa, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.talla_camisa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="talla_zapato">Talla zapato</label>
+                            @Html.TextBoxFor(q => q.talla_zapato, new { @class = "form-control", @id = "pe_apellido" })
+                            @Html.ValidationMessageFor(q => q.talla_zapato, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="tb_info_pago_hora">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="talla_camisa">Tala camisa</label>
-                                    @Html.TextBoxFor(q => q.talla_camisa, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(q => q.talla_camisa, "", new { @class = "text-danger" })
+                                <label for="Pago_por_horas"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.Pago_por_horas, settings =>
+                   {
+                       settings.Name = "Pago_por_horas";
+                       settings.Text = "Pago por horas";
+                       settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_horas();}";
+                   }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Pago_por_horas, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="DivPagoHoras">
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_horas">Valor hora vespertina</label>
+                                    @Html.TextBoxFor(q => q.Valor_horas_vespertina, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_horas_vespertina, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_maximo_horas">Horas máxima vespertina</label>
+                                    @Html.TextBoxFor(q => q.Valor_maximo_horas_vesp, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_maximo_horas_vesp, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_horas">Valor hora matutina</label>
+                                    @Html.TextBoxFor(q => q.Valor_horas_matutino, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_horas_matutino, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_maximo_horas">Horas máxima matutina</label>
+                                    @Html.TextBoxFor(q => q.Valor_maximo_horas_mat, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_maximo_horas_mat, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_horas">Valor hora brigada</label>
+                                    @Html.TextBoxFor(q => q.Valor_horas_brigada, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_horas_brigada, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_horas">Valor hora adicionales</label>
+                                    @Html.TextBoxFor(q => q.Valor_hora_adicionales, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_hora_adicionales, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Valor_horas">Valor hora control salida</label>
+                                    @Html.TextBoxFor(q => q.Valor_hora_control_salida, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.Valor_hora_control_salida, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tb_info_ingresos_compartidos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="talla_zapato">Talla zapato</label>
-                                    @Html.TextBoxFor(q => q.talla_zapato, new { @class = "form-control", @id = "pe_apellido" })
-                                    @Html.ValidationMessageFor(q => q.talla_zapato, "", new { @class = "text-danger" })
-                                </div>
+                                <label for="es_AcreditaHorasExtras"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.Tiene_ingresos_compartidos, settings =>
+                       {
+                           settings.Name = "Tiene_ingresos_compartidos";
+                           settings.Text = "Tiene ingresos compartidos";
+                           settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_ingreso_compartido();}";
+
+                       }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.Tiene_ingresos_compartidos, "", new { @class = "text-danger", @id = "" })
                             </div>
                         </div>
                     </div>
-
-
-                    <div role="tabpanel" class="tab-pane" id="tb_info_pago_hora">
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="Pago_por_horas"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.Pago_por_horas, settings =>
-                           {
-                               settings.Name = "Pago_por_horas";
-                               settings.Text = "Pago por horas";
-                               settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_horas();}";
-                           }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.Pago_por_horas, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div id="DivPagoHoras">
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_horas">Valor hora vespertina</label>
-                                            @Html.TextBoxFor(q => q.Valor_horas_vespertina, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_horas_vespertina, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_maximo_horas">Horas máxima vespertina</label>
-                                            @Html.TextBoxFor(q => q.Valor_maximo_horas_vesp, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_maximo_horas_vesp, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_horas">Valor hora matutina</label>
-                                            @Html.TextBoxFor(q => q.Valor_horas_matutino, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_horas_matutino, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_maximo_horas">Horas máxima matutina</label>
-                                            @Html.TextBoxFor(q => q.Valor_maximo_horas_mat, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_maximo_horas_mat, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_horas">Valor hora brigada</label>
-                                            @Html.TextBoxFor(q => q.Valor_horas_brigada, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_horas_brigada, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_horas">Valor hora adicionales</label>
-                                            @Html.TextBoxFor(q => q.Valor_hora_adicionales, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_hora_adicionales, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Valor_horas">Valor hora control salida</label>
-                                            @Html.TextBoxFor(q => q.Valor_hora_control_salida, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(q => q.Valor_hora_control_salida, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-
-                        </div>
+                </div>
+                <div class="row" id="ingreso_compartido">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_IngresoCompartido")
                     </div>
-
-                    <div role="tabpanel" class="tab-pane" id="tb_info_ingresos_compartidos">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="es_AcreditaHorasExtras"></label>
-                                        @Html.DevExpress().CheckBoxFor(q => q.Tiene_ingresos_compartidos, settings =>
-                               {
-                                   settings.Name = "Tiene_ingresos_compartidos";
-                                   settings.Text = "Tiene ingresos compartidos";
-                                   settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_ingreso_compartido();}";
-
-                               }).GetHtml()
-                                        @Html.ValidationMessageFor(q => q.Tiene_ingresos_compartidos, "", new { @class = "text-danger", @id = "" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="ingreso_compartido">
-                            <div class="col-md-12">
-                                @Html.Action("GridViewPartial_IngresoCompartido")
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tb_info_jornada">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Detalle</label>
+                                @Html.Action("GridViewPartial_empleado_jornada_det")
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="tb_info_jornada">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Detalle</label>
-                                        @Html.Action("GridViewPartial_empleado_jornada_det")
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" id="tb_info_contable">
                 <div class="row">
                     <div class="col-md-12">
@@ -876,8 +879,19 @@
                     </div>
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane" id="tb_info_jefes_inmediatos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Detalle</label>
+                                @Html.Action("GridViewPartial_empleado_jefes_inmediatos")
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
     </div>
 
     <div class="box-footer">
