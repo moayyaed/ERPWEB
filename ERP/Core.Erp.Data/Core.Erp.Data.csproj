@@ -2321,6 +2321,7 @@
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Data.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Data.cs" />
     <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Data.cs" />
     <Compile Include="RRHH\ro_tabla_Impu_Renta_Data.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_Data.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Data.cs" />

@@ -16,16 +16,12 @@ namespace Core.Erp.Data
     {
         public ro_Solicitud_Vacaciones_x_empleado()
         {
-            this.ro_Historico_Liquidacion_Vacaciones = new HashSet<ro_Historico_Liquidacion_Vacaciones>();
             this.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado = new HashSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado>();
         }
     
         public int IdEmpresa { get; set; }
-        public decimal IdEmpleado { get; set; }
         public int IdSolicitud { get; set; }
-        public int IdVacacion { get; set; }
-        public decimal IdEmpleado_aprue { get; set; }
-        public Nullable<decimal> IdEmpleado_remp { get; set; }
+        public decimal IdEmpleado { get; set; }
         public string IdEstadoAprobacion { get; set; }
         public System.DateTime Fecha { get; set; }
         public int AnioServicio { get; set; }
@@ -46,13 +42,9 @@ namespace Core.Erp.Data
         public string IdUsuarioUltMod { get; set; }
         public string Estado { get; set; }
         public string MotivoAnulacion { get; set; }
-        public string ip { get; set; }
-        public string nom_pc { get; set; }
-        public bool Gozadas_Pgadas { get; set; }
-        public bool Canceladas { get; set; }
+        public bool Gozadas { get; set; }
     
-        public virtual ICollection<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
-        public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
         public virtual ro_empleado ro_empleado { get; set; }
+        public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
     }
 }

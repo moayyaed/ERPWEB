@@ -540,6 +540,7 @@
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Bus.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Bus.cs" />
     <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Bus.cs" />
     <Compile Include="RRHH\ro_tabla_Impu_Renta_Bus.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_Bus.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Bus.cs" />
