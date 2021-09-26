@@ -18,7 +18,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
     {
         #region variables
         ro_historico_vacaciones_x_empleado_Bus bus_vacaciones = new ro_historico_vacaciones_x_empleado_Bus();
-        List<ro_historico_vacaciones_x_empleado_Info> lst_vacaciones = new List<ro_historico_vacaciones_x_empleado_Info>();
+        List<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Info> lst_vacaciones = new List<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Info>();
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
         ro_historico_vacaciones_x_empleado_Info_list ro_historico_vacaciones_x_empleado_Info_list = new ro_historico_vacaciones_x_empleado_Info_list();
@@ -135,12 +135,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                
                     string mensaje = "";
                     ro_historico_vacaciones_x_empleado_Info info_historico = null;
-                    info.lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(info.IdTransaccionSession);
                     info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta.AddDays(1) - info.Fecha_Desde).TotalDays);
                     info.Dias_q_Corresponde = info.Dias_a_disfrutar;
                     info.Dias_pendiente = 0;
-                    info.Anio_Desde = info.lst_vacaciones.FirstOrDefault().FechaIni.Date;
-                    info.Anio_Hasta = info.lst_vacaciones.FirstOrDefault().FechaFin.Date;
                     info.Fecha_Desde = info.Fecha_Desde.Date;
                     info.Fecha_Hasta = info.Fecha_Hasta.Date;
                     mensaje = bus_solicitud.validar(info);
@@ -203,23 +200,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                string mensaje = "";
+
                 bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
                 if (ModelState.IsValid)
                 {
-                    string mensaje = "";
-                    ro_historico_vacaciones_x_empleado_Info info_historico = null;
-                    lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(info.IdTransaccionSession);
-                    info_historico = lst_vacaciones.FirstOrDefault();
-                    info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta - info.Fecha_Desde).TotalDays)+1;
-                    info.Dias_q_Corresponde = info_historico.DiasGanado;
-                    info.Dias_pendiente = info_historico.DiasGanado - info.Dias_a_disfrutar;
-                    info.Anio_Desde = info_historico.FechaIni.Date;
-                    info.Anio_Hasta = info_historico.FechaFin.Date;
-                    info.IdVacacion = info_historico.IdVacacion;
-                    info.Fecha_Desde = info.Fecha_Desde.Date;
-                    info.Fecha_Hasta = info.Fecha_Hasta.Date;
-                    mensaje = bus_solicitud.validar(info);
-                    info.lst_vacaciones = lst_vacaciones;
+                    
 
                     if (mensaje != "")
                     {
@@ -263,9 +249,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combo();
                 ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                lst_vacaciones = bus_vacaciones.get_list(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
-                ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones, model.IdTransaccionSession);
-
+                
                 if (Exito)
                     ViewBag.MensajeSuccess = MensajeSuccess;
 
@@ -310,8 +294,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 var model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                lst_vacaciones = bus_vacaciones.get_list(IdEmpresa, IdEmpleado, IdSolicitud);
-                ro_historico_vacaciones_x_empleado_Info_list.set_list(lst_vacaciones, model.IdTransaccionSession);
+               
 
                 cargar_combo();
                 return View(model);
@@ -369,7 +352,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
-            lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_vaciones_periodos", lst_vacaciones);
         }
 
@@ -378,7 +361,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
     public class ro_Solicitud_Vacaciones_x_empleado_List
     {
-        string Variable = "ro_Solicitud_Vacaciones_x_empleado_Info";
+        string Variable = "ro_Solicitud_Vacaciones_x_empleado_List";
         public List<ro_Solicitud_Vacaciones_x_empleado_Info> get_list(decimal IdTransaccionSession)
         {
             if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)

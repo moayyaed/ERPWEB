@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[ro_biometrico] (
+    [IdEmpresa]           INT           NOT NULL,
+    [IdBiometrico]        INT           NOT NULL,
+    [IdEquipo]            INT           NOT NULL,
+    [Descripcion]         VARCHAR (100) NOT NULL,
+    [StringConexion]      VARCHAR (500) NOT NULL,
+    [Consulta]            VARCHAR (MAX) NOT NULL,
+    [MarcacionIngreso]    BIT           NOT NULL,
+    [MarcacionSalida]     BIT           NOT NULL,
+    [SalidaLounch]        BIT           NOT NULL,
+    [RegresoLounch]       BIT           NOT NULL,
+    [CodMarcacionIngreso] VARCHAR (50)  NOT NULL,
+    [CodMarcacionSalida]  VARCHAR (50)  NOT NULL,
+    [CodSalidaLounch]     VARCHAR (50)  NOT NULL,
+    [CodRegresoLounch]    VARCHAR (50)  NULL,
+    [Estado]              BIT           NULL,
+    [IdUsuario]           VARCHAR (100) NOT NULL,
+    [Fecha_Transac]       DATETIME      NOT NULL,
+    [IdUsuarioUltMod]     VARCHAR (20)  NULL,
+    [Fecha_UltMod]        DATETIME      NULL,
+    [IdUsuarioUltAnu]     VARCHAR (20)  NULL,
+    [Fecha_UltAnu]        DATETIME      NULL,
+    CONSTRAINT [PK_ro_biometrico] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdBiometrico] ASC)
+);
+

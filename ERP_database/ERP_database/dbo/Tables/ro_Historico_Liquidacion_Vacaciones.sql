@@ -22,8 +22,9 @@
     [IdSolicitud]     INT           NOT NULL,
     CONSTRAINT [PK_ro_Historico_Liquidacion_Vacaciones] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEmpleado] ASC, [IdLiquidacion] ASC),
     CONSTRAINT [FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
-    CONSTRAINT [FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado], [IdSolicitud]) REFERENCES [dbo].[ro_Solicitud_Vacaciones_x_empleado] ([IdEmpresa], [IdEmpleado], [IdSolicitud]),
     CONSTRAINT [FK_ro_Historico_Liquidacion_Vacaciones_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa]),
     CONSTRAINT [FK_ro_Historico_Liquidacion_Vacaciones_tb_empresa1] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa])
 );
+
+
 
