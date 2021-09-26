@@ -440,7 +440,7 @@ namespace Core.Erp.Data.RRHH
                         }
                     }
 
-                    if (info.lst_det.Count() > 0)
+                    if (info.lst_jefes_inmediatis.Count() > 0)
                     {
                         foreach (var item in info.lst_jefes_inmediatis)
                         {
@@ -581,7 +581,7 @@ namespace Core.Erp.Data.RRHH
                     }
                     var lst_det_jefes = Context.ro_empleado_x_jefes_inmediatos.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado);
                     Context.ro_empleado_x_jefes_inmediatos.RemoveRange(lst_det_jefes);
-                    if (info.lst_det.Count() > 0)
+                    if (info.lst_jefes_inmediatis.Count() > 0)
                     {
                         foreach (var item in info.lst_jefes_inmediatis)
                         {

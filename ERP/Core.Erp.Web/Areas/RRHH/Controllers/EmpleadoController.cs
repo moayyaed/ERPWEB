@@ -276,6 +276,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 string mensaje = "";
                 info.lst_empleado_area = ListaEmpleadoXDivisionXArea.get_list(info.IdTransaccionSession);
                 info.lst_det = List_jornada_emp.get_list(info.IdTransaccionSession);
+                info.lst_jefes_inmediatis = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(info.IdTransaccionSession);
+
                 mensaje = Validar(info);
                 if (mensaje != "")
                 {
@@ -360,6 +362,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 string mensaje = "";
                 info.lst_empleado_area = ListaEmpleadoXDivisionXArea.get_list(info.IdTransaccionSession);
                 info.lst_det = List_jornada_emp.get_list(info.IdTransaccionSession);
+                info.lst_jefes_inmediatis = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(info.IdTransaccionSession);
 
                 mensaje = Validar(info);
                 if (mensaje != "")
@@ -423,6 +426,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 ListaEmpleadoXDivisionXArea.set_list(info.lst_empleado_area, info.IdTransaccionSession);
                 info.lst_det = bus_jornada_det.GetList(info.IdEmpresa, info.IdEmpleado);
                 List_jornada_emp.set_list(info.lst_det, info.IdTransaccionSession);
+                ro_empleado_x_jefes_inmediatos_Info_Lis.set_list(info.lst_jefes_inmediatis, info.IdTransaccionSession);
                 if (info.em_foto == null)
                     info.em_foto = new byte[0];
 
@@ -972,7 +976,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             if (ModelState.IsValid)
                 ro_empleado_x_jefes_inmediatos_Info_Lis.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
@@ -983,16 +987,16 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             if (ModelState.IsValid)
                 ro_empleado_x_jefes_inmediatos_Info_Lis.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
         public ActionResult EditingDeleteJefeInmediato(int Secuencia)
         {
             ro_empleado_x_jefes_inmediatos_Info_Lis.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            var model = List_jornada_emp.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model = ro_empleado_x_jefes_inmediatos_Info_Lis.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_detalle();
-            return PartialView("_GridViewPartial_empleado_jornada_det", model);
+            return PartialView("_GridViewPartial_empleado_jefes_inmediatos", model);
         }
         #endregion
 
