@@ -22,6 +22,7 @@ namespace Core.Erp.Info.RRHH
 
 
         public string Descripcion { get; set; }
-
+        public int Adicionales { get; set; }
+        public int Pendiente { get; set; }
     }
 }

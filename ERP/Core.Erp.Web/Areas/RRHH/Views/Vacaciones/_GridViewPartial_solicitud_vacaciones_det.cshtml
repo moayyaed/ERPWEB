@@ -10,11 +10,11 @@
 
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
-        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsContextMenu.Enabled = false;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
 
         settings.SettingsPager.Visible = true;
@@ -30,12 +30,10 @@
 
         //Funcion para inicializar fila al presionar nuevo
 
-        settings.Columns.Add("IdPeriodo_Inicio", "Periodo inicio").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("IdPeriodo_Fin", "Periodo hasta").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaIni";
-            column.Caption = "Fecha inicio";
+            column.Caption = "Fecha desde";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
@@ -58,8 +56,7 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("DiasGanado", "Días ganado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        settings.Columns.Add("DiasTomados", "Días gozado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("Dias_tomados", "Días solicitado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
 
     });
 }

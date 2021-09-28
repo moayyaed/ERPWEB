@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Erp.Bus.RRHH
+namespace Core.Erp.Data.RRHH
 {
-   public class ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Bus
+   public class ro_Solicitud_Vacaciones_x_empleado_det_Data
     {
     }
 }

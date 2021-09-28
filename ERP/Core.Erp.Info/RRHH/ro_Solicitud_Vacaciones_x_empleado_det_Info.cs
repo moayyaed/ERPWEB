@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Erp.Info.RRHH
 {
-   public class ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_Info
+   public class ro_Solicitud_Vacaciones_x_empleado_det_Info
     {
         public int IdEmpresa { get; set; }
         public int IdSolicitud { get; set; }
@@ -16,5 +16,8 @@ namespace Core.Erp.Info.RRHH
         public int IdPeriodo_Fin { get; set; }
         public string Observacion { get; set; }
         public int Dias_tomados { get; set; }
+
+        public System.DateTime FechaIni { get; set; }
+        public System.DateTime FechaFin { get; set; }
     }
 }
