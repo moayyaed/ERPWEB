@@ -56,7 +56,20 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("Dias_tomados", "Días solicitado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("Dias_tomados", "Días solicitado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Tipo_liquidacion";
+            column.Caption = "Tipo solicitud";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.ValueField = "Tipo_liquidacion";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_tipo_liquidacion;
+                p.Width = Unit.Percentage(100);
+            });
+        });
 
     });
 }

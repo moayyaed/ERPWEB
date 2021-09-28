@@ -117,6 +117,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
 
                 var model = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                cargar_combo();
                 return PartialView("_GridViewPartial_solicitud_vacaciones_det", model);
             }
             catch (Exception)
@@ -326,10 +327,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         private void cargar_combo()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ViewBag.lst_empleado = bus_empleado.get_list_combo(IdEmpresa);
-            ViewBag.lst_vacaciones = ro_Solicitud_Vacaciones_x_empleado_det_List;
+            Dictionary<string, string> lst_tipo_liquidacion = new Dictionary<string, string>();
+            lst_tipo_liquidacion.Add("GOZADAS", "GOZADAS");
+            lst_tipo_liquidacion.Add("PAGADAS", "PAGADAS");
+            ViewBag.lst_tipo_liquidacion = lst_tipo_liquidacion;
         }
-        public JsonResult calculat_vacaciones(decimal IdEmpleado, decimal IdTransaccionSession=0)
+        public JsonResult calcular_vacaciones(decimal IdEmpleado, decimal IdTransaccionSession=0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
            var lst_vacaciones_periodos= bus_vacaciones.calcular_vacaciones(IdEmpresa, IdEmpleado);// recalculando vacaciones
@@ -360,7 +363,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     FechaFin=info_periodo_vac.FechaFin,
                     Dias_tomados= dias,
                     };
-                   if( ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s =>s.IdPeriodo_Inicio== info_periodo_vac.IdPeriodo_Inicio).Count()!=0)
+                   if( ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s =>s.IdPeriodo_Inicio== info_periodo_vac.IdPeriodo_Inicio).Count()==0)
                     ro_Solicitud_Vacaciones_x_empleado_det_List.AddRow(info, IdTransaccionSession);
                     if(dias_adicionales >0)
                     {
@@ -372,7 +375,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             FechaFin = info_periodo_vac.FechaFin,
                             Dias_tomados = dias,
                         };
-                        if (ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s => s.IdPeriodo_Inicio == info_periodo_vac.IdPeriodo_Inicio).Count() != 0)
+                        if (ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s => s.IdPeriodo_Inicio == info_periodo_vac.IdPeriodo_Inicio).Count() == 0)
                             ro_Solicitud_Vacaciones_x_empleado_det_List.AddRow(info, IdTransaccionSession);
                     }
 
@@ -407,15 +410,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_historico_vacaciones_x_empleado_Info_list.set_list(lista_tmp, Convert.ToDecimal(IdTransaccionSession));
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        [ValidateInput(false)]
-        public ActionResult GridLookupPartial_vacaciones()
-        {
-            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-
-            //lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            return PartialView("_GridViewPartial_vaciones_periodos", ro_Solicitud_Vacaciones_x_empleado_det_List);
-        }
-
+      
          
     }
 
