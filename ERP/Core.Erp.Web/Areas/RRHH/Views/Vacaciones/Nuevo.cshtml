@@ -21,135 +21,109 @@
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-    <div class="row">
+<div class="row">
+    <div class="col-md-6">
         <div class="col-md-12">
-            <div class="col-md-12">
 
-                <div class="form-group">
-                    <label for="IdProveedor">Empleado*</label>
-                    @Html.Partial("_CmbEmpleado_vacaciones", Model.IdEmpleado)
-                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="IdProveedor">Empleado*</label>
+                @Html.Partial("_CmbEmpleado_vacaciones", Model.IdEmpleado)
+                @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Fecha_Desde">Fecha desde*</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
+               {
+                   settings.Name = "Fecha_Desde";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Fecha_Hasta">Fecha hasta*</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
+               {
+                   settings.Name = "Fecha_Hasta";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-12">
-
-                <div class="form-group">
-                    <label for="IdProveedor">Empleado autoriza*</label>
-                    @Html.Partial("_CmbEmpleado_autoriza_vacaciones", Model.IdEmpleado_aprue)
-                    @Html.ValidationMessageFor(q => q.IdEmpleado_aprue, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-   
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="Fecha_Desde">Fecha desde*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Fecha_Retorno">Fecha retorno*</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha_Retorno, settings =>
                    {
-                       settings.Name = "Fecha_Desde";
+                       settings.Name = "Fecha_Retorno";
                        settings.Properties.UseMaskBehavior = true;
                        settings.Properties.EditFormat = EditFormat.Date;
                        settings.Properties.EditFormatString = "dd/MM/yyyy";
                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
-
                    }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="Fecha_Hasta">Fecha hasta*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
-                   {
-                       settings.Name = "Fecha_Hasta";
-                       settings.Properties.UseMaskBehavior = true;
-                       settings.Properties.EditFormat = EditFormat.Date;
-                       settings.Properties.EditFormatString = "dd/MM/yyyy";
-                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
-
-                   }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="Fecha_Retorno">Fecha retorno*</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        @Html.DevExpress().DateEditFor(q => q.Fecha_Retorno, settings =>
-                       {
-                           settings.Name = "Fecha_Retorno";
-                           settings.Properties.UseMaskBehavior = true;
-                           settings.Properties.EditFormat = EditFormat.Date;
-                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                       }).GetHtml()
-                        @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="Gozadas_Pgadas"></label>
-                        @Html.DevExpress().CheckBoxFor(q => q.Gozadas_Pgadas, settings =>
-                       {
-                           settings.Name = "Gozadas_Pgadas";
-                           settings.Text = "Vacaciones gozadas";
-
-                       }).GetHtml()
-                    </div>
+                    @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="Observacion">Observación*</label>
-                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                <label for="Observacion">Observación*</label>
+                @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
             </div>
         </div>
+       
     </div>
 
+    <div class="col-md-6">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="GridViewPartial_prestamos_det">Periodos de vacaciones</label>
+                @Html.Action("GridViewPartial_vacaciones_periodos")
+
+            </div>
+        </div> 
+    </div>
+
+</div>
+    
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="col-md-12">
 
                 <div class="form-group">
-                    <label for="GridViewPartial_prestamos_det">Detalle vacaciones*</label>
+                    <label for="GridViewPartial_prestamos_det">Detalle periodos a solicitar</label>
                     @Html.Action("GridViewPartial_solicitud_vacaciones_det")
 
                 </div>
@@ -171,15 +145,13 @@
 
 <script>
 
-    $(function () {
-        calcular_vacaciones();
-       
-    });
+   
 
     function calcular_vacaciones()
             {
                  var datos = {
-                     IdEmpleado: IdEmpleado.GetValue()
+                     IdEmpleado: IdEmpleado.GetValue(),
+                     IdTransaccionSession: $("#IdTransaccionSession").val()
                 }
                 $.ajax({
                     type: 'POST',
@@ -192,39 +164,41 @@
                     contentType: 'application/json; charset=utf-8',
                     success: function (data)
                     {
-                        IdVacacion.PerformCallback();
-
                     },
                     error: function (error)
                     {
                     }
-                    });
-    };
-
-    function get_perioos() {
-        var datos = {
-            FechaDesde:Fecha_Desde.GetValue(),
-            FechaHasta:Fecha_Hasta.GetValue(),
-            IdEmpleado: IdEmpleado.GetValue(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("get_list_vacaciones", "Vacaciones", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-               GridViewPartial_solicitud_vacaciones_det.PerformCallback();
-
-            },
-            error: function (error) {
-            }
         });
+        GridViewPartial_vacaciones_periodos.PerformCallback();
     };
+
+    function add_periodo(KeyValue )
+            {
+                 var datos = {
+                     KeyValue: KeyValue,
+                     IdTransaccionSession: $("#IdTransaccionSession").val()
+
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("add_vacaciones", "Vacaciones", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data)
+                    {
+                    },
+                    error: function (error)
+                    {
+                    }
+        });
+        GridViewPartial_solicitud_vacaciones_det.PerformCallback();
+    };
+
+
 </script>
 
 

@@ -26,7 +26,7 @@ namespace Core.Erp.Data
         public double Descuento { get; set; }
         public double NetoRecibir { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_participacion_utilidad ro_participacion_utilidad { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

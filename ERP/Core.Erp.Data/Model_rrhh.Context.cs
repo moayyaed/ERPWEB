@@ -87,7 +87,6 @@ namespace Core.Erp.Data
         public DbSet<vwro_HorasProfesores_det> vwro_HorasProfesores_det { get; set; }
         public DbSet<vwro_nomina_sin_percebir_sueldo> vwro_nomina_sin_percebir_sueldo { get; set; }
         public DbSet<ro_FormulaHorasRecargo> ro_FormulaHorasRecargo { get; set; }
-        public DbSet<vwRo_Solicitud_Vacaciones> vwRo_Solicitud_Vacaciones { get; set; }
         public DbSet<ro_NominasPagosCheques> ro_NominasPagosCheques { get; set; }
         public DbSet<vwro_NominasPagosCheques> vwro_NominasPagosCheques { get; set; }
         public DbSet<ro_NominasPagosCheques_det> ro_NominasPagosCheques_det { get; set; }
@@ -132,8 +131,6 @@ namespace Core.Erp.Data
         public DbSet<ro_Comprobantes_Contables> ro_Comprobantes_Contables { get; set; }
         public DbSet<vwRo_Prestamo> vwRo_Prestamo { get; set; }
         public DbSet<ro_historico_vacaciones_x_empleado> ro_historico_vacaciones_x_empleado { get; set; }
-        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
-        public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
         public DbSet<ro_prestamo> ro_prestamo { get; set; }
         public DbSet<vwro_empleado_x_rubro_acumulado_detalle> vwro_empleado_x_rubro_acumulado_detalle { get; set; }
         public DbSet<ro_rubro_tipo_x_jornada> ro_rubro_tipo_x_jornada { get; set; }
@@ -152,15 +149,19 @@ namespace Core.Erp.Data
         public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
         public DbSet<vwro_AjusteImpuestoRentaDet> vwro_AjusteImpuestoRentaDet { get; set; }
-        public DbSet<ro_empleado> ro_empleado { get; set; }
         public DbSet<vwro_empleado_datos_generales> vwro_empleado_datos_generales { get; set; }
         public DbSet<ro_Parametros> ro_Parametros { get; set; }
         public DbSet<ro_participacion_utilidad> ro_participacion_utilidad { get; set; }
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
-        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<vwro_participacion_utilidad> vwro_participacion_utilidad { get; set; }
         public DbSet<vwro_participacion_utilidad_empleado> vwro_participacion_utilidad_empleado { get; set; }
+        public DbSet<ro_empleado_x_jefes_inmediatos> ro_empleado_x_jefes_inmediatos { get; set; }
+        public DbSet<ro_empleado> ro_empleado { get; set; }
+        public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<ro_biometrico> ro_biometrico { get; set; }
+        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
+        public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
+        public DbSet<vwRo_Solicitud_Vacaciones> vwRo_Solicitud_Vacaciones { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

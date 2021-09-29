@@ -33,14 +33,9 @@ namespace Core.Erp.Data
         public string IdEstadoAprobacion { get; set; }
         public string pe_apellido { get; set; }
         public string pe_nombre { get; set; }
-        public decimal IdEmpleado_aprue { get; set; }
-        public Nullable<decimal> IdEmpleado_remp { get; set; }
-        public bool Gozadas_Pgadas { get; set; }
-        public bool Canceladas { get; set; }
-        public int IdVacacion { get; set; }
+        public bool Gozadas { get; set; }
         public string pe_cedulaRuc { get; set; }
         public string em_codigo { get; set; }
-        public Nullable<int> IdLiquidacion { get; set; }
         public string Estado_liquidacion { get; set; }
     }
 }

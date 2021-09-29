@@ -228,6 +228,17 @@ namespace Core.Erp.Data.RRHH
                         IdSucursalContabilizacion = info.IdSucursalContabilizacion,
                         ro_goza_utilidad=info.ro_goza_utilidad
                     };
+
+                    info_.lst_jefes_inmediatis = new List<ro_empleado_x_jefes_inmediatos_Info>();
+                    info_.lst_jefes_inmediatis = Context.ro_empleado_x_jefes_inmediatos.Where(q => q.IdEmpresa == IdEmpresa).Select(q => new ro_empleado_x_jefes_inmediatos_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdEmpleado_aprueba = q.IdEmpleado_aprueba,
+                        Aprueba_vacaciones = q.Aprueba_vacaciones,
+                        Aprueba_prestamo = q.Aprueba_prestamo,
+                        Secuencia = q.Secuencia
+                    }).ToList();
                 }
 
                 return info_;
@@ -429,7 +440,23 @@ namespace Core.Erp.Data.RRHH
                         }
                     }
 
-             
+                    if (info.lst_jefes_inmediatis.Count() > 0)
+                    {
+                        foreach (var item in info.lst_jefes_inmediatis)
+                        {
+                            Context.ro_empleado_x_jefes_inmediatos.Add(new ro_empleado_x_jefes_inmediatos
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdEmpleado = info.IdEmpleado,
+                                IdEmpleado_aprueba = item.IdEmpleado_aprueba,
+                                Aprueba_vacaciones = item.Aprueba_vacaciones,
+                                Aprueba_prestamo = item.Aprueba_prestamo,
+                                Secuencia = item.Secuencia
+                            });
+                        }
+                    }
+
+
                     Context.SaveChanges();
                 }
                 return true;
@@ -552,6 +579,24 @@ namespace Core.Erp.Data.RRHH
                             });
                         }
                     }
+                    var lst_det_jefes = Context.ro_empleado_x_jefes_inmediatos.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado);
+                    Context.ro_empleado_x_jefes_inmediatos.RemoveRange(lst_det_jefes);
+                    if (info.lst_jefes_inmediatis.Count() > 0)
+                    {
+                        foreach (var item in info.lst_jefes_inmediatis)
+                        {
+                            Context.ro_empleado_x_jefes_inmediatos.Add(new ro_empleado_x_jefes_inmediatos
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdEmpleado = info.IdEmpleado,
+                                IdEmpleado_aprueba = item.IdEmpleado_aprueba,
+                                Aprueba_vacaciones = item.Aprueba_vacaciones,
+                                Aprueba_prestamo = item.Aprueba_prestamo,
+                                Secuencia = item.Secuencia
+                            });
+                        }
+                    }
+
                     Context.SaveChanges();
                 }
 

@@ -1,10 +1,7 @@
 ﻿CREATE TABLE [dbo].[ro_Solicitud_Vacaciones_x_empleado] (
     [IdEmpresa]          INT           NOT NULL,
-    [IdEmpleado]         NUMERIC (18)  NOT NULL,
     [IdSolicitud]        INT           NOT NULL,
-    [IdVacacion]         INT           NOT NULL,
-    [IdEmpleado_aprue]   NUMERIC (9)   NOT NULL,
-    [IdEmpleado_remp]    NUMERIC (9)   NULL,
+    [IdEmpleado]         NUMERIC (18)  NOT NULL,
     [IdEstadoAprobacion] VARCHAR (10)  NOT NULL,
     [Fecha]              DATETIME      NOT NULL,
     [AnioServicio]       INT           NOT NULL,
@@ -25,13 +22,12 @@
     [IdUsuarioUltMod]    VARCHAR (25)  NULL,
     [Estado]             VARCHAR (1)   NULL,
     [MotivoAnulacion]    VARCHAR (250) NULL,
-    [ip]                 VARCHAR (250) NULL,
-    [nom_pc]             VARCHAR (250) NULL,
-    [Gozadas_Pgadas]     BIT           NOT NULL,
-    [Canceladas]         BIT           NOT NULL,
-    CONSTRAINT [PK_ro_Solicitud_Vacaciones_x_empleado_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEmpleado] ASC, [IdSolicitud] ASC),
+    [Gozadas]            BIT           NOT NULL,
+    CONSTRAINT [PK_ro_Solicitud_Vacaciones_x_empleado] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSolicitud] ASC),
     CONSTRAINT [FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 
 
 

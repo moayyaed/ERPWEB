@@ -529,6 +529,7 @@
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Info.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Info.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jefes_inmediatos_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Info.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Info.cs" />
@@ -576,6 +577,7 @@
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_Info.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Info.cs" />
     <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Info.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_det_Info.cs" />
     <Compile Include="RRHH\ro_tabla_Impu_Renta_Info.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_Info.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Info.cs" />

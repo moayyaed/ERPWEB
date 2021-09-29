@@ -14,11 +14,7 @@ namespace Core.Erp.Info.RRHH
         [Required(ErrorMessage = "El campo empleado es obligatorio")]
         public decimal IdEmpleado { get; set; }
         public int IdSolicitud { get; set; }
-        public int IdVacacion { get; set; }
-        [Required(ErrorMessage = "El campo empleado autoriza es obligatorio")]
 
-        public decimal IdEmpleado_aprue { get; set; }
-        public Nullable<decimal> IdEmpleado_remp { get; set; }
         public string IdEstadoAprobacion { get; set; }
         public System.DateTime Fecha { get; set; }
         public int AnioServicio { get; set; }
@@ -42,20 +38,17 @@ namespace Core.Erp.Info.RRHH
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
         public string MotivoAnulacion { get; set; }
-        public string ip { get; set; }
-        public string nom_pc { get; set; }
-        public bool Gozadas_Pgadas { get; set; }
+        public bool Gozadas { get; set; }
         public bool Canceladas { get; set; }
 
         public string pe_cedulaRuc { get; set; }
         public string em_codigo { get; set; }
         public string pe_nombre_completo { get; set; }
-        public Nullable<int> IdLiquidacion { get; set; }
         public string Estado_liquidacion { get; set; }
-        public List<ro_historico_vacaciones_x_empleado_Info> lst_vacaciones { get; set; }
+        public List<ro_Solicitud_Vacaciones_x_empleado_det_Info> lst_vacaciones { get; set; }
         public  ro_Solicitud_Vacaciones_x_empleado_Info()
         {
-            lst_vacaciones = new List<ro_historico_vacaciones_x_empleado_Info>();
+            lst_vacaciones = new List<ro_Solicitud_Vacaciones_x_empleado_det_Info>();
 
         }
     }

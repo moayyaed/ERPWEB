@@ -195,14 +195,14 @@ namespace Core.Erp.Data.RRHH
                 {
                     lst = (from q in contex.ro_historico_vacaciones_x_empleado
                              join c in contex.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
-                             on q.IdEmpresa equals c.IdEmpresa_sol
+                             on q.IdEmpresa equals c.IdEmpresa
                              where q.IdEmpresa == IdEmpresa
                              && q.IdEmpleado == IdEmpleado
                              && c.IdSolicitud==IdSolicitud
-
-                             && c.IdEmpresa_sol==q.IdEmpresa
-                             && c.IdEmpleado_sol==q.IdEmpleado
-                             && c.IdVacacion==q.IdVacacion
+                             && c.IdEmpresa==q.IdEmpresa
+                             && c.IdEmpleado==q.IdEmpleado
+                             && c.IdPeriodo_Inicio==q.IdPeriodo_Inicio
+                             && c.IdPeriodo_Fin==q.IdPeriodo_Fin
                              select new ro_historico_vacaciones_x_empleado_Info
                                     {
 

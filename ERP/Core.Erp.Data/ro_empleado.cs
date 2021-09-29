@@ -40,6 +40,7 @@ namespace Core.Erp.Data
             this.ro_marcaciones_x_empleado = new HashSet<ro_marcaciones_x_empleado>();
             this.ro_nomina_x_horas_extras_det = new HashSet<ro_nomina_x_horas_extras_det>();
             this.ro_NominasPagosCheques_det = new HashSet<ro_NominasPagosCheques_det>();
+            this.ro_participacion_utilidad_empleado = new HashSet<ro_participacion_utilidad_empleado>();
             this.ro_permiso_x_empleado = new HashSet<ro_permiso_x_empleado>();
             this.ro_permiso_x_empleado1 = new HashSet<ro_permiso_x_empleado>();
             this.ro_prestamo = new HashSet<ro_prestamo>();
@@ -49,7 +50,6 @@ namespace Core.Erp.Data
             this.ro_rol_detalle_x_rubro_acumulado = new HashSet<ro_rol_detalle_x_rubro_acumulado>();
             this.ro_SancionesPorMarcaciones_det = new HashSet<ro_SancionesPorMarcaciones_det>();
             this.ro_Solicitud_Vacaciones_x_empleado = new HashSet<ro_Solicitud_Vacaciones_x_empleado>();
-            this.ro_participacion_utilidad_empleado = new HashSet<ro_participacion_utilidad_empleado>();
         }
     
         public int IdEmpresa { get; set; }
@@ -121,7 +121,6 @@ namespace Core.Erp.Data
         public string IdCtaCble_x_pagar_empleado { get; set; }
         public Nullable<int> IdSucursalContabilizacion { get; set; }
         public Nullable<bool> ro_goza_utilidad { get; set; }
-        public Nullable<bool> ro_goza_utilida { get; set; }
     
         public virtual ICollection<ro_Acta_Finiquito> ro_Acta_Finiquito { get; set; }
         public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
@@ -150,6 +149,7 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_marcaciones_x_empleado> ro_marcaciones_x_empleado { get; set; }
         public virtual ICollection<ro_nomina_x_horas_extras_det> ro_nomina_x_horas_extras_det { get; set; }
         public virtual ICollection<ro_NominasPagosCheques_det> ro_NominasPagosCheques_det { get; set; }
+        public virtual ICollection<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
         public virtual ICollection<ro_permiso_x_empleado> ro_permiso_x_empleado { get; set; }
         public virtual ICollection<ro_permiso_x_empleado> ro_permiso_x_empleado1 { get; set; }
         public virtual ICollection<ro_prestamo> ro_prestamo { get; set; }
@@ -159,6 +159,5 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_rol_detalle_x_rubro_acumulado> ro_rol_detalle_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_SancionesPorMarcaciones_det> ro_SancionesPorMarcaciones_det { get; set; }
         public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
-        public virtual ICollection<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
     }
 }

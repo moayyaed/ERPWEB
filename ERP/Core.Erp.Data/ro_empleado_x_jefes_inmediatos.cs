@@ -12,17 +12,13 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado
+    public partial class ro_empleado_x_jefes_inmediatos
     {
         public int IdEmpresa { get; set; }
-        public int IdSolicitud { get; set; }
-        public int Secuencia { get; set; }
         public decimal IdEmpleado { get; set; }
-        public int IdPeriodo_Inicio { get; set; }
-        public int IdPeriodo_Fin { get; set; }
-        public string Observacion { get; set; }
-        public int Dias_tomados { get; set; }
-    
-        public virtual ro_Solicitud_Vacaciones_x_empleado ro_Solicitud_Vacaciones_x_empleado { get; set; }
+        public int Secuencia { get; set; }
+        public decimal IdEmpleado_aprueba { get; set; }
+        public bool Aprueba_vacaciones { get; set; }
+        public bool Aprueba_prestamo { get; set; }
     }
 }

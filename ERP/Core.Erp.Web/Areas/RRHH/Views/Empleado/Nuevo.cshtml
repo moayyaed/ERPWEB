@@ -167,6 +167,9 @@
             <li>
                 <a href="#tb_info_contable" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Contabilidad</a>
             </li>
+            <li>
+                <a href="#tb_info_jefes_inmediatos" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Jefes inmediatos</a>
+            </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top: 20px">
@@ -438,7 +441,7 @@
                     </div>
                 </div>
 
-             
+
             </div>
 
             <div role="tabpanel" class="tab-pane" id="tb_info_nomina">
@@ -803,7 +806,7 @@
                                    settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_ingreso_compartido();}";
 
                                }).GetHtml()
-                                @Html.ValidationMessageFor(q => q.Tiene_ingresos_compartidos, "", new { @class = "text-danger", @id= "" })
+                                @Html.ValidationMessageFor(q => q.Tiene_ingresos_compartidos, "", new { @class = "text-danger", @id = "" })
                             </div>
                         </div>
                     </div>
@@ -874,7 +877,20 @@
                 </div>
             </div>
 
+            <div role="tabpanel" class="tab-pane" id="tb_info_jefes_inmediatos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Detalle</label>
+                                @Html.Action("GridViewPartial_empleado_jefes_inmediatos")
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+        </div>
 
         </div>
                 <div class="box-footer">

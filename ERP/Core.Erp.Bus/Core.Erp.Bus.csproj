@@ -494,6 +494,7 @@
     <Compile Include="RRHH\ro_empleado_x_division_x_area_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_horario_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jefes_inmediatos_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_jornada_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_ro_rubro_Bus.cs" />
     <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Bus.cs" />
@@ -539,6 +540,7 @@
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Bus.cs" />
     <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Bus.cs" />
     <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_det_Bus.cs" />
     <Compile Include="RRHH\ro_tabla_Impu_Renta_Bus.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_Bus.cs" />
     <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Bus.cs" />

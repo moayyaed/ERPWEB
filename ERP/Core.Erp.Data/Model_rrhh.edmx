@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model_rrhh.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model_rrhh.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ro_Acta_Finiquito">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -470,7 +470,6 @@
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
           <Property Name="IdSucursalContabilizacion" Type="int" />
           <Property Name="ro_goza_utilidad" Type="bit" />
-          <Property Name="ro_goza_utilida" Type="bit" />
         </EntityType>
         <EntityType Name="ro_empleado_Novedad">
           <Key>
@@ -570,6 +569,19 @@
           <Property Name="EsPredeterminado" Type="bit" Nullable="false" />
           <Property Name="FechaIngresa" Type="datetime" Nullable="false" />
           <Property Name="UsuarioIngresa" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ro_empleado_x_jefes_inmediatos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado_aprueba" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Aprueba_vacaciones" Type="bit" Nullable="false" />
+          <Property Name="Aprueba_prestamo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_empleado_x_jornada">
           <Key>
@@ -1497,15 +1509,11 @@
         <EntityType Name="ro_Solicitud_Vacaciones_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
             <PropertyRef Name="IdSolicitud" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdSolicitud" Type="int" Nullable="false" />
-          <Property Name="IdVacacion" Type="int" Nullable="false" />
-          <Property Name="IdEmpleado_aprue" Type="numeric" Precision="9" Scale="0" Nullable="false" />
-          <Property Name="IdEmpleado_remp" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdEstadoAprobacion" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="AnioServicio" Type="int" Nullable="false" />
@@ -1526,27 +1534,22 @@
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="25" />
           <Property Name="Estado" Type="varchar" MaxLength="1" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="250" />
-          <Property Name="ip" Type="varchar" MaxLength="250" />
-          <Property Name="nom_pc" Type="varchar" MaxLength="250" />
-          <Property Name="Gozadas_Pgadas" Type="bit" Nullable="false" />
-          <Property Name="Canceladas" Type="bit" Nullable="false" />
+          <Property Name="Gozadas" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
           <Key>
-            <PropertyRef Name="IdEmpresa_sol" />
-            <PropertyRef Name="IdEmpleado_sol" />
+            <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdSolicitud" />
-            <PropertyRef Name="IdEmpresa_vaca" />
-            <PropertyRef Name="IdEmpleado_vaca" />
-            <PropertyRef Name="IdVacacion" />
+            <PropertyRef Name="Secuencia" />
           </Key>
-          <Property Name="IdEmpresa_sol" Type="int" Nullable="false" />
-          <Property Name="IdEmpleado_sol" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSolicitud" Type="int" Nullable="false" />
-          <Property Name="IdEmpresa_vaca" Type="int" Nullable="false" />
-          <Property Name="IdEmpleado_vaca" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdVacacion" Type="int" Nullable="false" />
-          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdPeriodo_Inicio" Type="int" Nullable="false" />
+          <Property Name="IdPeriodo_Fin" Type="int" Nullable="false" />
+          <Property Name="Dias_tomados" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
@@ -1700,7 +1703,7 @@
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_ActaFiniquito">
           <Key>
             <PropertyRef Name="NombreCompleto" />
@@ -1753,7 +1756,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_ActaFiniquito' 
           <Property Name="EstadoContrato" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_AjusteImpuestoRentaDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_AjusteImpuestoRentaDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_AjusteImpuestoRentaDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1795,7 +1798,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_AjusteImpuestoR
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1831,7 +1834,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_archivos_bancos
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1867,7 +1870,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_archivos_bancos
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_area">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1885,7 +1888,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_area' no tiene 
           <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_area_x_departamento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_area_x_departamento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_area_x_departamento">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1907,7 +1910,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_area_x_departam
           <Property Name="DepartamentoDescripcion" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_combo">
           <Key>
             <PropertyRef Name="pe_cedulaRuc" />
@@ -1939,7 +1942,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_combo'
           <Property Name="Valor_hora_control_salida" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2045,7 +2048,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_datos_
           <Property Name="ro_goza_utilidad" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_Novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2077,7 +2080,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_Noveda
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_novedad_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2102,7 +2105,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_noveda
           <Property Name="CantidadHoras" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Empleado_Novedades">
           <Key>
             <PropertyRef Name="IdEmpleado" />
@@ -2144,7 +2147,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Empleado_Noveda
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_division_x_area">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2168,7 +2171,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_divi
           <Property Name="CargaGasto" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2192,7 +2195,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_jorn
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_ro_rubro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2228,7 +2231,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_ro_r
           <Property Name="es_indifinido" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2251,7 +2254,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_rubr
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2271,7 +2274,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_rubr
           <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_titulos">
           <Key>
             <PropertyRef Name="CodCatalogo" />
@@ -2305,7 +2308,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleado_x_titu
           <Property Name="estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2335,7 +2338,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_EmpleadoNovedad
           <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2361,7 +2364,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_EmpleadoNovedad
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleados_consulta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2387,7 +2390,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_empleados_consu
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2424,7 +2427,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Historico_Liqui
           <Property Name="Fecha_Retorno" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_horario_planificacion_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2466,7 +2469,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_horario_planifi
           <Property Name="IdCalendario" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2491,7 +2494,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_HorasProfesores
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2533,7 +2536,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_HorasProfesores
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2569,7 +2572,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_marcaciones_x_e
           <Property Name="ma_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_planificacion_horario">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2604,7 +2607,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_marcaciones_x_p
           <Property Name="HoraFin" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_sin_percebir_sueldo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2628,7 +2631,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_sin_perc
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Nomina_Tipoliqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Nomina_Tipoliqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Nomina_Tipoliqui">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2646,7 +2649,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_Nomina_Tipoliqu
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_aprobadas">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2672,7 +2675,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_x_horas_
           <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2730,7 +2733,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_nomina_x_horas_
           <Property Name="Sueldo_base" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2757,7 +2760,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_NominasPagosChe
           <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2798,7 +2801,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_NominasPagosChe
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2818,7 +2821,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_parametro_conta
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad">
           <Key>
             <PropertyRef Name="pe_FechaIni" />
@@ -2844,7 +2847,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_participacion_u
           <Property Name="BaseUtilidad" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2892,7 +2895,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_participacion_u
           <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_periodo_x_ro_Nomina_TipoLiqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_periodo_x_ro_Nomina_TipoLiqui' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_periodo_x_ro_Nomina_TipoLiqui">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2925,7 +2928,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_periodo_x_ro_No
           <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Prestamo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2991,7 +2994,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_Prestamo' no ti
           <Property Name="EstadoCancelacion" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_PrestamoMasivo_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_PrestamoMasivo_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_PrestamoMasivo_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3020,7 +3023,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_PrestamoMasivo_
           <Property Name="NumCuotas" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3058,7 +3061,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol' no tiene d
           <Property Name="EstadoRol" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3101,7 +3104,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol_detalle' no
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_rol_detalle_saldo_por_pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3142,7 +3145,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_rol_detalle_sal
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3166,7 +3169,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rol_detalle_x_r
           <Property Name="IdNominaTipo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo">
           <Key>
             <PropertyRef Name="ru_descripcion" />
@@ -3177,7 +3180,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rubro_tipo' no 
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3197,7 +3200,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_rubro_tipo_x_jo
           <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3224,7 +3227,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMar
           <Property Name="FechaNovedades" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3262,7 +3265,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMar
           <Property Name="HoraSalio" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_x_novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3295,7 +3298,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwro_SancionesPorMar
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Solicitud_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3313,10 +3316,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_Solicitud_Vacac
             <PropertyRef Name="Fecha_Retorno" />
             <PropertyRef Name="Observacion" />
             <PropertyRef Name="IdEstadoAprobacion" />
-            <PropertyRef Name="IdEmpleado_aprue" />
-            <PropertyRef Name="Gozadas_Pgadas" />
-            <PropertyRef Name="Canceladas" />
-            <PropertyRef Name="IdVacacion" />
+            <PropertyRef Name="Gozadas" />
             <PropertyRef Name="pe_cedulaRuc" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
@@ -3338,18 +3338,13 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.dbo.vwRo_Solicitud_Vacac
           <Property Name="IdEstadoAprobacion" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
-          <Property Name="IdEmpleado_aprue" Type="numeric" Precision="9" Scale="0" Nullable="false" />
-          <Property Name="IdEmpleado_remp" Type="numeric" Precision="9" Scale="0" />
-          <Property Name="Gozadas_Pgadas" Type="bit" Nullable="false" />
-          <Property Name="Canceladas" Type="bit" Nullable="false" />
-          <Property Name="IdVacacion" Type="int" Nullable="false" />
+          <Property Name="Gozadas" Type="bit" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
-          <Property Name="IdLiquidacion" Type="int" />
           <Property Name="Estado_liquidacion" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwrdep_IngrEgr_x_Empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3401,7 +3396,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwrde
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_ArchivosIess">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3436,7 +3431,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwro_
           <Property Name="Sueldo" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rdep">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3459,7 +3454,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.EntidadRegulatoria.vwro_
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_Proyeccion_Gastos_Personales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4253,22 +4248,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <Dependent Role="ro_Historico_Liquidacion_Vacaciones">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-          <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
-          <End Role="ro_Historico_Liquidacion_Vacaciones" Type="Self.ro_Historico_Liquidacion_Vacaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Principal>
-            <Dependent Role="ro_Historico_Liquidacion_Vacaciones">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5338,34 +5317,16 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-          <End Role="ro_historico_vacaciones_x_empleado" Type="Self.ro_historico_vacaciones_x_empleado" Multiplicity="1" />
-          <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdVacacion" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa_vaca" />
-              <PropertyRef Name="IdEmpleado_vaca" />
-              <PropertyRef Name="IdVacacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
           <End Role="ro_Solicitud_Vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
           <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Type="Self.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
               <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
               <PropertyRef Name="IdSolicitud" />
             </Principal>
             <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa_sol" />
-              <PropertyRef Name="IdEmpleado_vaca" />
+              <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdSolicitud" />
             </Dependent>
           </ReferentialConstraint>
@@ -5532,6 +5493,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <EntitySet Name="ro_empleado_proyeccion_gastos_det" EntityType="Self.ro_empleado_proyeccion_gastos_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_division_x_area" EntityType="Self.ro_empleado_x_division_x_area" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_horario" EntityType="Self.ro_empleado_x_horario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ro_empleado_x_jefes_inmediatos" EntityType="Self.ro_empleado_x_jefes_inmediatos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_jornada" EntityType="Self.ro_empleado_x_jornada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_ro_rubro" EntityType="Self.ro_empleado_x_ro_rubro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_rubro_acumulado" EntityType="Self.ro_empleado_x_rubro_acumulado" Schema="dbo" store:Type="Tables" />
@@ -6573,14 +6535,9 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
     [vwRo_Solicitud_Vacaciones].[IdEstadoAprobacion] AS [IdEstadoAprobacion], 
     [vwRo_Solicitud_Vacaciones].[pe_apellido] AS [pe_apellido], 
     [vwRo_Solicitud_Vacaciones].[pe_nombre] AS [pe_nombre], 
-    [vwRo_Solicitud_Vacaciones].[IdEmpleado_aprue] AS [IdEmpleado_aprue], 
-    [vwRo_Solicitud_Vacaciones].[IdEmpleado_remp] AS [IdEmpleado_remp], 
-    [vwRo_Solicitud_Vacaciones].[Gozadas_Pgadas] AS [Gozadas_Pgadas], 
-    [vwRo_Solicitud_Vacaciones].[Canceladas] AS [Canceladas], 
-    [vwRo_Solicitud_Vacaciones].[IdVacacion] AS [IdVacacion], 
+    [vwRo_Solicitud_Vacaciones].[Gozadas] AS [Gozadas], 
     [vwRo_Solicitud_Vacaciones].[pe_cedulaRuc] AS [pe_cedulaRuc], 
     [vwRo_Solicitud_Vacaciones].[em_codigo] AS [em_codigo], 
-    [vwRo_Solicitud_Vacaciones].[IdLiquidacion] AS [IdLiquidacion], 
     [vwRo_Solicitud_Vacaciones].[Estado_liquidacion] AS [Estado_liquidacion]
     FROM [dbo].[vwRo_Solicitud_Vacaciones] AS [vwRo_Solicitud_Vacaciones]</DefiningQuery>
           </EntitySet>
@@ -6892,10 +6849,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
           </AssociationSet>
-          <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" Association="Self.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-            <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
-          </AssociationSet>
           <AssociationSet Name="FK_ro_historico_vacaciones_x_empleado_ro_empleado" Association="Self.FK_ro_historico_vacaciones_x_empleado_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
@@ -7195,10 +7148,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" Association="Self.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
             <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
@@ -7532,7 +7481,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Name="Gozadas_Pagadas" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones_Det" Relationship="Self.FK_ro_Historico_Liquidacion_Vacaciones_Det_ro_Historico_Liquidacion_Vacaciones" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_Historico_Liquidacion_Vacaciones_Det" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" FromRole="ro_Historico_Liquidacion_Vacaciones" ToRole="ro_empleado" />
         </EntityType>
         <EntityType Name="ro_Historico_Liquidacion_Vacaciones_Det">
@@ -8514,7 +8462,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <EntitySet Name="vwro_HorasProfesores_det" EntityType="Model_rrhh.vwro_HorasProfesores_det" />
           <EntitySet Name="vwro_nomina_sin_percebir_sueldo" EntityType="Model_rrhh.vwro_nomina_sin_percebir_sueldo" />
           <EntitySet Name="ro_FormulaHorasRecargo" EntityType="Model_rrhh.ro_FormulaHorasRecargo" />
-          <EntitySet Name="vwRo_Solicitud_Vacaciones" EntityType="Model_rrhh.vwRo_Solicitud_Vacaciones" />
           <FunctionImport Name="spRo_procesa_Rol_bono">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdNomina" Mode="In" Type="Decimal" />
@@ -8749,20 +8696,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           </AssociationSet>
           <EntitySet Name="vwRo_Prestamo" EntityType="Model_rrhh.vwRo_Prestamo" />
           <EntitySet Name="ro_historico_vacaciones_x_empleado" EntityType="Model_rrhh.ro_historico_vacaciones_x_empleado" />
-          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" />
-          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
-          <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-            <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-            <End Role="ro_historico_vacaciones_x_empleado" EntitySet="ro_historico_vacaciones_x_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
-          </AssociationSet>
           <EntitySet Name="ro_prestamo" EntityType="Model_rrhh.ro_prestamo" />
           <AssociationSet Name="FK_ro_prestamo_ro_catalogo" Association="Model_rrhh.FK_ro_prestamo_ro_catalogo">
             <End Role="ro_catalogo" EntitySet="ro_catalogo" />
@@ -8882,8 +8815,23 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <EntitySet Name="ro_empleado" EntityType="Model_rrhh.ro_empleado" />
           <EntitySet Name="vwro_empleado_datos_generales" EntityType="Model_rrhh.vwro_empleado_datos_generales" />
+          <EntitySet Name="ro_Parametros" EntityType="Model_rrhh.ro_Parametros" />
+          <EntitySet Name="ro_participacion_utilidad" EntityType="Model_rrhh.ro_participacion_utilidad" />
+          <EntitySet Name="ro_participacion_utilidad_empleado" EntityType="Model_rrhh.ro_participacion_utilidad_empleado" />
+          <AssociationSet Name="FK_ro_Parametros_ro_catalogo" Association="Model_rrhh.FK_ro_Parametros_ro_catalogo">
+            <End Role="ro_catalogo" EntitySet="ro_catalogo" />
+            <End Role="ro_Parametros" EntitySet="ro_Parametros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad">
+            <End Role="ro_participacion_utilidad" EntitySet="ro_participacion_utilidad" />
+            <End Role="ro_participacion_utilidad_empleado" EntitySet="ro_participacion_utilidad_empleado" />
+          </AssociationSet>
+          <EntitySet Name="vwro_participacion_utilidad" EntityType="Model_rrhh.vwro_participacion_utilidad" />
+          <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" />
+          <EntitySet Name="ro_empleado_x_jefes_inmediatos" EntityType="Model_rrhh.ro_empleado_x_jefes_inmediatos" />
+          <EntitySet Name="ro_empleado" EntityType="Model_rrhh.ro_empleado" />
+          <EntitySet Name="ro_rubros_calculados" EntityType="Model_rrhh.ro_rubros_calculados" />
           <AssociationSet Name="FK_ro_Acta_Finiquito_ro_empleado" Association="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Acta_Finiquito" EntitySet="ro_Acta_Finiquito" />
@@ -8984,6 +8932,10 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_NominasPagosCheques_det" EntitySet="ro_NominasPagosCheques_det" />
           </AssociationSet>
+          <AssociationSet Name="FK_ro_participacion_utilidad_empleado_ro_empleado" Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_participacion_utilidad_empleado" EntitySet="ro_participacion_utilidad_empleado" />
+          </AssociationSet>
           <AssociationSet Name="FK_ro_permiso_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_permiso_x_empleado" EntitySet="ro_permiso_x_empleado" />
@@ -9015,26 +8967,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <AssociationSet Name="FK_ro_SancionesPorMarcaciones_det_ro_empleado" Association="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_SancionesPorMarcaciones_det" EntitySet="ro_SancionesPorMarcaciones_det" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
-          </AssociationSet>
-          <EntitySet Name="ro_Parametros" EntityType="Model_rrhh.ro_Parametros" />
-          <EntitySet Name="ro_participacion_utilidad" EntityType="Model_rrhh.ro_participacion_utilidad" />
-          <EntitySet Name="ro_participacion_utilidad_empleado" EntityType="Model_rrhh.ro_participacion_utilidad_empleado" />
-          <EntitySet Name="ro_rubros_calculados" EntityType="Model_rrhh.ro_rubros_calculados" />
-          <AssociationSet Name="FK_ro_Parametros_ro_catalogo" Association="Model_rrhh.FK_ro_Parametros_ro_catalogo">
-            <End Role="ro_catalogo" EntitySet="ro_catalogo" />
-            <End Role="ro_Parametros" EntitySet="ro_Parametros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_participacion_utilidad_empleado_ro_empleado" Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_participacion_utilidad_empleado" EntitySet="ro_participacion_utilidad_empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" Association="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad">
-            <End Role="ro_participacion_utilidad" EntitySet="ro_participacion_utilidad" />
-            <End Role="ro_participacion_utilidad_empleado" EntitySet="ro_participacion_utilidad_empleado" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_rubros_calculados_ro_rubro_tipo" Association="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo">
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
@@ -9104,9 +9036,18 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_rubros_calculados" EntitySet="ro_rubros_calculados" />
           </AssociationSet>
-          <EntitySet Name="vwro_participacion_utilidad" EntityType="Model_rrhh.vwro_participacion_utilidad" />
-          <EntitySet Name="vwro_participacion_utilidad_empleado" EntityType="Model_rrhh.vwro_participacion_utilidad_empleado" />
           <EntitySet Name="ro_biometrico" EntityType="Model_rrhh.ro_biometrico" />
+          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" />
+          <EntitySet Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntityType="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" Association="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
+            <End Role="ro_Solicitud_Vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado" />
+            <End Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" EntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+          </AssociationSet>
+          <EntitySet Name="vwRo_Solicitud_Vacaciones" EntityType="Model_rrhh.vwRo_Solicitud_Vacaciones" />
           </EntityContainer>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
@@ -9831,58 +9772,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Name="Dividendo" Type="Double" Nullable="false" />
           <Property Name="Divisor" Type="Double" Nullable="false" />
           <Property Name="PorcentajeRecargo" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vwRo_Solicitud_Vacaciones">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSolicitud" />
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="AnioServicio" />
-            <PropertyRef Name="Dias_q_Corresponde" />
-            <PropertyRef Name="Dias_a_disfrutar" />
-            <PropertyRef Name="Dias_pendiente" />
-            <PropertyRef Name="Anio_Desde" />
-            <PropertyRef Name="Anio_Hasta" />
-            <PropertyRef Name="Fecha_Desde" />
-            <PropertyRef Name="Fecha_Hasta" />
-            <PropertyRef Name="Fecha_Retorno" />
-            <PropertyRef Name="Observacion" />
-            <PropertyRef Name="IdEstadoAprobacion" />
-            <PropertyRef Name="IdEmpleado_aprue" />
-            <PropertyRef Name="Gozadas_Pgadas" />
-            <PropertyRef Name="Canceladas" />
-            <PropertyRef Name="IdVacacion" />
-            <PropertyRef Name="pe_cedulaRuc" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
-          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
-          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
-          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
-          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpleado_aprue" Type="Decimal" Nullable="false" Precision="9" Scale="0" />
-          <Property Name="IdEmpleado_remp" Type="Decimal" Precision="9" Scale="0" />
-          <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
-          <Property Name="Canceladas" Type="Boolean" Nullable="false" />
-          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdLiquidacion" Type="Int32" />
-          <Property Name="Estado_liquidacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ro_NominasPagosCheques">
           <Key>
@@ -11496,116 +11385,8 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DiasGanado" Type="Int32" Nullable="false" />
           <Property Name="DiasTomados" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_historico_vacaciones_x_empleado" ToRole="ro_empleado" />
         </EntityType>
-        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdSolicitud" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
-          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado_aprue" Type="Decimal" Nullable="false" Precision="9" Scale="0" />
-          <Property Name="IdEmpleado_remp" Type="Decimal" Precision="9" Scale="0" />
-          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
-          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
-          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
-          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
-          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="nom_pc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
-          <Property Name="Canceladas" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_empleado" />
-        </EntityType>
-        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa_sol" />
-            <PropertyRef Name="IdEmpleado_sol" />
-            <PropertyRef Name="IdSolicitud" />
-            <PropertyRef Name="IdEmpresa_vaca" />
-            <PropertyRef Name="IdEmpleado_vaca" />
-            <PropertyRef Name="IdVacacion" />
-          </Key>
-          <Property Name="IdEmpresa_sol" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado_sol" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa_vaca" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado_vaca" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdVacacion" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
-        </EntityType>
-        <Association Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_Solicitud_Vacaciones_x_empleado">
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Historico_Liquidacion_Vacaciones" Role="ro_Historico_Liquidacion_Vacaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Principal>
-            <Dependent Role="ro_Historico_Liquidacion_Vacaciones">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_historico_vacaciones_x_empleado">
-          <End Type="Model_rrhh.ro_historico_vacaciones_x_empleado" Role="ro_historico_vacaciones_x_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdVacacion" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa_vaca" />
-              <PropertyRef Name="IdEmpleado_vaca" />
-              <PropertyRef Name="IdVacacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-              <PropertyRef Name="IdSolicitud" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa_sol" />
-              <PropertyRef Name="IdEmpleado_vaca" />
-              <PropertyRef Name="IdSolicitud" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ro_prestamo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -11880,7 +11661,7 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <NavigationProperty Name="ro_rubros_calculados14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
           <NavigationProperty Name="ro_rubros_calculados15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
           <NavigationProperty Name="ro_rubros_calculados16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubro_tipo" ToRole="ro_rubros_calculados" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
           <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
           <End Type="Model_rrhh.ro_Acta_Finiquito_Detalle" Role="ro_Acta_Finiquito_Detalle" Multiplicity="*" />
@@ -12393,119 +12174,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Type="Int32" Name="num_cargas" Nullable="false" />
           <Property Type="Int32" Name="IdSucursal" Nullable="false" />
         </ComplexType>
-        <EntityType Name="ro_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdEmpleado_Supervisor" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoEmpleado" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo_Biometrico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_lugarNacimiento" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="em_CarnetIees" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_cedulaMil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
-          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="em_tipoCta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_NumCta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="em_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="IdCodSectorial" Type="Int32" />
-          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoSangre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCargo" Type="Int32" />
-          <Property Name="IdCtaCble_Emplea" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCiudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoLicencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdBanco" Type="Int32" />
-          <Property Name="IdArea" Type="Int32" />
-          <Property Name="IdDivision" Type="Int32" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="por_discapacidad" Type="Double" Nullable="false" />
-          <Property Name="carnet_conadis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="talla_pant" Type="Double" />
-          <Property Name="talla_camisa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="talla_zapato" Type="Double" />
-          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCondicionDiscapacidadSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoIdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdAplicaConvenioDobleImposicionSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoResidenciaSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoSistemaSalarioNetoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="es_AcreditaHorasExtras" Type="Boolean" Nullable="false" />
-          <Property Name="IdTipoAnticipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ValorAnticipo" Type="Double" />
-          <Property Name="CodigoSectorial" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="em_AnticipoSueldo" Type="Double" />
-          <Property Name="Marca_Biometrico" Type="Boolean" Nullable="false" />
-          <Property Name="IdHorario" Type="Int32" />
-          <Property Name="Tiene_ingresos_compartidos" Type="Boolean" Nullable="false" />
-          <Property Name="Pago_por_horas" Type="Boolean" Nullable="false" />
-          <Property Name="Valor_maximo_horas_vesp" Type="Double" />
-          <Property Name="Valor_maximo_horas_mat" Type="Double" />
-          <Property Name="Valor_horas_vespertina" Type="Double" />
-          <Property Name="Valor_horas_matutino" Type="Double" />
-          <Property Name="Valor_horas_brigada" Type="Double" />
-          <Property Name="Valor_hora_adicionales" Type="Double" />
-          <Property Name="Valor_hora_control_salida" Type="Double" />
-          <Property Name="GozaMasDeQuinceDiasVaciones" Type="Boolean" Nullable="false" />
-          <Property Name="DiasVacaciones" Type="Double" Nullable="false" />
-          <Property Name="IdEmpleadoPAdre" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursalContabilizacion" Type="Int32" />
-          <Property Name="ro_goza_utilidad" Type="Boolean" />
-          <NavigationProperty Name="ro_Acta_Finiquito" Relationship="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado" FromRole="ro_empleado" ToRole="ro_Acta_Finiquito" />
-          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDet" />
-          <NavigationProperty Name="ro_AjusteImpuestoRentaDetOI" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDetOI" />
-          <NavigationProperty Name="ro_archivos_bancos_generacion_x_empleado" Relationship="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_archivos_bancos_generacion_x_empleado" />
-          <NavigationProperty Name="ro_cargaFamiliar" Relationship="Model_rrhh.FK_ro_CargaFamiliar_ro_empleado" FromRole="ro_empleado" ToRole="ro_cargaFamiliar" />
-          <NavigationProperty Name="ro_contrato" Relationship="Model_rrhh.FK_ro_contrato_ro_empleado" FromRole="ro_empleado" ToRole="ro_contrato" />
-          <NavigationProperty Name="ro_empleado_Novedad" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_Novedad" />
-          <NavigationProperty Name="ro_empleado_Novedad1" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado1" FromRole="ro_empleado" ToRole="ro_empleado_Novedad" />
-          <NavigationProperty Name="ro_empleado_proyeccion_gastos" Relationship="Model_rrhh.FK_ro_empleado_proyeccion_gastos_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_proyeccion_gastos" />
-          <NavigationProperty Name="ro_empleado1" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado1" />
-          <NavigationProperty Name="ro_empleado2" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado" FromRole="ro_empleado1" ToRole="ro_empleado" />
-          <NavigationProperty Name="ro_empleado11" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado1" FromRole="ro_empleado" ToRole="ro_empleado1" />
-          <NavigationProperty Name="ro_empleado3" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado1" FromRole="ro_empleado1" ToRole="ro_empleado" />
-          <NavigationProperty Name="ro_empleado_x_division_x_area" Relationship="Model_rrhh.FK_ro_empleado_x_division_x_area_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_division_x_area" />
-          <NavigationProperty Name="ro_empleado_x_jornada" Relationship="Model_rrhh.FK_ro_empleado_x_jornada_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_jornada" />
-          <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_ro_rubro" />
-          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado" ToRole="ro_empleado_x_rubro_acumulado" />
-          <NavigationProperty Name="ro_empleado_x_titulos" Relationship="Model_rrhh.FK_ro_empleado_x_titulos_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_titulos" />
-          <NavigationProperty Name="ro_EmpleadoFoto" Relationship="Model_rrhh.FK_ro_EmpleadoFoto_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoFoto" />
-          <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva_det" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoNovedadCargaMasiva_det" />
-          <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" FromRole="ro_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
-          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_horario_planificacion_det" Relationship="Model_rrhh.FK_ro_horario_planificacion_ro_empleado" FromRole="ro_empleado" ToRole="ro_horario_planificacion_det" />
-          <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_HorasProfesores_det" />
-          <NavigationProperty Name="ro_marcaciones_x_empleado" Relationship="Model_rrhh.FK_ro_marcaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_marcaciones_x_empleado" />
-          <NavigationProperty Name="ro_nomina_x_horas_extras_det" Relationship="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_nomina_x_horas_extras_det" />
-          <NavigationProperty Name="ro_NominasPagosCheques_det" Relationship="Model_rrhh.FK_ro_NominasPagosCheques_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_NominasPagosCheques_det" />
-          <NavigationProperty Name="ro_permiso_x_empleado" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_permiso_x_empleado" />
-          <NavigationProperty Name="ro_permiso_x_empleado1" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" FromRole="ro_empleado" ToRole="ro_permiso_x_empleado" />
-          <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_empleado" FromRole="ro_empleado" ToRole="ro_prestamo" />
-          <NavigationProperty Name="ro_PrestamoMasivo_Det" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_empleado" FromRole="ro_empleado" ToRole="ro_PrestamoMasivo_Det" />
-          <NavigationProperty Name="ro_rdep_det" Relationship="Model_rrhh.FK_ro_rdep_ro_empleado" FromRole="ro_empleado" ToRole="ro_rdep_det" />
-          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle" />
-          <NavigationProperty Name="ro_rol_detalle_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle_x_rubro_acumulado" />
-          <NavigationProperty Name="ro_SancionesPorMarcaciones_det" Relationship="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_SancionesPorMarcaciones_det" />
-          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
-          <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_participacion_utilidad_empleado" />
-          <Property Name="ro_goza_utilida" Type="Boolean" />
-        </EntityType>
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12609,6 +12277,344 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IdSucursalContabilizacion" Type="Int32" />
           <Property Name="ro_goza_utilidad" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ro_Parametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_AsientoSueldoXPagar" Type="Int32" Nullable="false" />
+          <Property Name="Sueldo_basico" Type="Double" Nullable="false" />
+          <Property Name="Porcentaje_aporte_pers" Type="Double" Nullable="false" />
+          <Property Name="Porcentaje_aporte_patr" Type="Double" Nullable="false" />
+          <Property Name="IdRubro_acta_finiquito" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="genera_op_x_pago" Type="Boolean" Nullable="false" />
+          <Property Name="Genera_op_x_pago_x_empleao" Type="Boolean" Nullable="false" />
+          <Property Name="Genera_op_por_liq_vacaciones" Type="Boolean" Nullable="false" />
+          <Property Name="Genera_op_por_acta_finiquito" Type="Boolean" Nullable="false" />
+          <Property Name="Genera_op_por_prestamos" Type="Boolean" Nullable="false" />
+          <Property Name="IdTipo_op_vacaciones" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_op_prestamos" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_op_acta_finiquito" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_op_sueldo_por_pagar" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCreacionPrestamos" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Porcentaje_anticipo" Type="Double" Nullable="false" />
+          <Property Name="IdNomina_General" Type="Int32" />
+          <Property Name="IdNomina_TipoLiqui_PagoUtilidad" Type="Int32" />
+          <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_Parametros_ro_catalogo" FromRole="ro_Parametros" ToRole="ro_catalogo" />
+        </EntityType>
+        <EntityType Name="ro_participacion_utilidad">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUtilidad" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
+          <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
+          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaIngresa" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioIngresa" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioModifica" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_ultima_modif" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario_anula" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_anulacion" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad" ToRole="ro_participacion_utilidad_empleado" />
+        </EntityType>
+        <EntityType Name="ro_participacion_utilidad_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUtilidad" />
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
+          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
+          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
+          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="ValorTotal" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ro_participacion_utilidad" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_participacion_utilidad" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_empleado" />
+        </EntityType>
+        <Association Name="FK_ro_Parametros_ro_catalogo">
+          <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Parametros" Role="ro_Parametros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="ro_Parametros">
+              <PropertyRef Name="EstadoCreacionPrestamos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad">
+          <End Type="Model_rrhh.ro_participacion_utilidad" Role="ro_participacion_utilidad" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_participacion_utilidad_empleado" Role="ro_participacion_utilidad_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_participacion_utilidad">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdUtilidad" />
+            </Principal>
+            <Dependent Role="ro_participacion_utilidad_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdUtilidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwro_participacion_utilidad">
+          <Key>
+            <PropertyRef Name="pe_FechaIni" />
+            <PropertyRef Name="pe_FechaFin" />
+            <PropertyRef Name="UtilidadDerechoIndividual" />
+            <PropertyRef Name="UtilidadCargaFamiliar" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="IdUtilidad" />
+            <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="BaseUtilidad" />
+          </Key>
+          <Property Name="pe_FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
+          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwro_participacion_utilidad_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUtilidad" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="DiasTrabajados" />
+            <PropertyRef Name="CargasFamiliares" />
+            <PropertyRef Name="ValorIndividual" />
+            <PropertyRef Name="ValorCargaFamiliar" />
+            <PropertyRef Name="ValorTotal" />
+            <PropertyRef Name="IdPeriodo" />
+            <PropertyRef Name="ca_descripcion" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="UtilidadDerechoIndividual" />
+            <PropertyRef Name="UtilidadCargaFamiliar" />
+            <PropertyRef Name="Utilidad" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="NetoRecibir" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
+          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
+          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
+          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="ValorTotal" Type="Double" Nullable="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
+          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
+          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
+          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
+          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
+          <Property Name="Utilidad" Type="Double" Nullable="false" />
+          <Property Name="Descuento" Type="Double" Nullable="false" />
+          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ro_empleado_x_jefes_inmediatos">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado_aprueba" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Aprueba_vacaciones" Type="Boolean" Nullable="false" />
+          <Property Name="Aprueba_prestamo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ro_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEmpleado_Supervisor" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoEmpleado" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Biometrico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_lugarNacimiento" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="em_CarnetIees" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_cedulaMil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
+          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
+          <Property Name="em_tipoCta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_NumCta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="em_estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdCodSectorial" Type="Int32" />
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoSangre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCargo" Type="Int32" />
+          <Property Name="IdCtaCble_Emplea" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCiudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoLicencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco" Type="Int32" />
+          <Property Name="IdArea" Type="Int32" />
+          <Property Name="IdDivision" Type="Int32" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="por_discapacidad" Type="Double" Nullable="false" />
+          <Property Name="carnet_conadis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="talla_pant" Type="Double" />
+          <Property Name="talla_camisa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="talla_zapato" Type="Double" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCondicionDiscapacidadSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoIdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdentDiscapacitadoSustitutoSRI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdAplicaConvenioDobleImposicionSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoResidenciaSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoSistemaSalarioNetoSRI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="es_AcreditaHorasExtras" Type="Boolean" Nullable="false" />
+          <Property Name="IdTipoAnticipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ValorAnticipo" Type="Double" />
+          <Property Name="CodigoSectorial" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="em_AnticipoSueldo" Type="Double" />
+          <Property Name="Marca_Biometrico" Type="Boolean" Nullable="false" />
+          <Property Name="IdHorario" Type="Int32" />
+          <Property Name="Tiene_ingresos_compartidos" Type="Boolean" Nullable="false" />
+          <Property Name="Pago_por_horas" Type="Boolean" Nullable="false" />
+          <Property Name="Valor_maximo_horas_vesp" Type="Double" />
+          <Property Name="Valor_maximo_horas_mat" Type="Double" />
+          <Property Name="Valor_horas_vespertina" Type="Double" />
+          <Property Name="Valor_horas_matutino" Type="Double" />
+          <Property Name="Valor_horas_brigada" Type="Double" />
+          <Property Name="Valor_hora_adicionales" Type="Double" />
+          <Property Name="Valor_hora_control_salida" Type="Double" />
+          <Property Name="GozaMasDeQuinceDiasVaciones" Type="Boolean" Nullable="false" />
+          <Property Name="DiasVacaciones" Type="Double" Nullable="false" />
+          <Property Name="IdEmpleadoPAdre" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_x_pagar_empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursalContabilizacion" Type="Int32" />
+          <Property Name="ro_goza_utilidad" Type="Boolean" />
+          <NavigationProperty Name="ro_Acta_Finiquito" Relationship="Model_rrhh.FK_ro_Acta_Finiquito_ro_empleado" FromRole="ro_empleado" ToRole="ro_Acta_Finiquito" />
+          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDet" />
+          <NavigationProperty Name="ro_AjusteImpuestoRentaDetOI" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDetOI" />
+          <NavigationProperty Name="ro_archivos_bancos_generacion_x_empleado" Relationship="Model_rrhh.FK_ro_archivos_bancos_generacion_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_archivos_bancos_generacion_x_empleado" />
+          <NavigationProperty Name="ro_cargaFamiliar" Relationship="Model_rrhh.FK_ro_CargaFamiliar_ro_empleado" FromRole="ro_empleado" ToRole="ro_cargaFamiliar" />
+          <NavigationProperty Name="ro_contrato" Relationship="Model_rrhh.FK_ro_contrato_ro_empleado" FromRole="ro_empleado" ToRole="ro_contrato" />
+          <NavigationProperty Name="ro_empleado_Novedad" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_Novedad" />
+          <NavigationProperty Name="ro_empleado_Novedad1" Relationship="Model_rrhh.FK_ro_empleado_Novedad_ro_empleado1" FromRole="ro_empleado" ToRole="ro_empleado_Novedad" />
+          <NavigationProperty Name="ro_empleado_proyeccion_gastos" Relationship="Model_rrhh.FK_ro_empleado_proyeccion_gastos_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_proyeccion_gastos" />
+          <NavigationProperty Name="ro_empleado1" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado1" />
+          <NavigationProperty Name="ro_empleado2" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado" FromRole="ro_empleado1" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_empleado11" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado1" FromRole="ro_empleado" ToRole="ro_empleado1" />
+          <NavigationProperty Name="ro_empleado3" Relationship="Model_rrhh.FK_ro_empleado_ro_empleado1" FromRole="ro_empleado1" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_empleado_x_division_x_area" Relationship="Model_rrhh.FK_ro_empleado_x_division_x_area_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_division_x_area" />
+          <NavigationProperty Name="ro_empleado_x_jornada" Relationship="Model_rrhh.FK_ro_empleado_x_jornada_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_jornada" />
+          <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_ro_rubro" />
+          <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado" ToRole="ro_empleado_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_empleado_x_titulos" Relationship="Model_rrhh.FK_ro_empleado_x_titulos_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_titulos" />
+          <NavigationProperty Name="ro_EmpleadoFoto" Relationship="Model_rrhh.FK_ro_EmpleadoFoto_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoFoto" />
+          <NavigationProperty Name="ro_EmpleadoNovedadCargaMasiva_det" Relationship="Model_rrhh.FK_ro_EmpleadoNovedadCargaMasiva_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoNovedadCargaMasiva_det" />
+          <NavigationProperty Name="ro_Historico_Liquidacion_Vacaciones" Relationship="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" FromRole="ro_empleado" ToRole="ro_Historico_Liquidacion_Vacaciones" />
+          <NavigationProperty Name="ro_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_historico_vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_historico_vacaciones_x_empleado" />
+          <NavigationProperty Name="ro_horario_planificacion_det" Relationship="Model_rrhh.FK_ro_horario_planificacion_ro_empleado" FromRole="ro_empleado" ToRole="ro_horario_planificacion_det" />
+          <NavigationProperty Name="ro_HorasProfesores_det" Relationship="Model_rrhh.FK_ro_HorasProfesores_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_HorasProfesores_det" />
+          <NavigationProperty Name="ro_marcaciones_x_empleado" Relationship="Model_rrhh.FK_ro_marcaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_marcaciones_x_empleado" />
+          <NavigationProperty Name="ro_nomina_x_horas_extras_det" Relationship="Model_rrhh.FK_ro_nomina_x_horas_extras_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_nomina_x_horas_extras_det" />
+          <NavigationProperty Name="ro_NominasPagosCheques_det" Relationship="Model_rrhh.FK_ro_NominasPagosCheques_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_NominasPagosCheques_det" />
+          <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_participacion_utilidad_empleado" />
+          <NavigationProperty Name="ro_permiso_x_empleado" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_permiso_x_empleado" />
+          <NavigationProperty Name="ro_permiso_x_empleado1" Relationship="Model_rrhh.FK_ro_permiso_x_empleado_ro_empleado1" FromRole="ro_empleado" ToRole="ro_permiso_x_empleado" />
+          <NavigationProperty Name="ro_prestamo" Relationship="Model_rrhh.FK_ro_prestamo_ro_empleado" FromRole="ro_empleado" ToRole="ro_prestamo" />
+          <NavigationProperty Name="ro_PrestamoMasivo_Det" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_empleado" FromRole="ro_empleado" ToRole="ro_PrestamoMasivo_Det" />
+          <NavigationProperty Name="ro_rdep_det" Relationship="Model_rrhh.FK_ro_rdep_ro_empleado" FromRole="ro_empleado" ToRole="ro_rdep_det" />
+          <NavigationProperty Name="ro_rol_detalle" Relationship="Model_rrhh.FK_ro_rol_detalle_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle" />
+          <NavigationProperty Name="ro_rol_detalle_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_rol_detalle_x_rubro_acumulado_ro_empleado" FromRole="ro_empleado" ToRole="ro_rol_detalle_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_SancionesPorMarcaciones_det" Relationship="Model_rrhh.FK_ro_SancionesPorMarcaciones_det_ro_empleado" FromRole="ro_empleado" ToRole="ro_SancionesPorMarcaciones_det" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
+        </EntityType>
+        <EntityType Name="ro_rubros_calculados">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRubro_dias_trabajados" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_tot_ing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_tot_egr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_iess_perso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_sueldo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_tot_pagar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_aporte_patronal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_fondo_reserva" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_prov_vac" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_prov_DIII" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_prov_DIV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_prov_FR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_DIII" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_DIV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_IR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_matutina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_vespertina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_brigadas" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_adicionales" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_control_salida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_horas_recargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_bono_x_antiguedad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_anticipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_novedad_proceso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_primaria_vespertina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_utilidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRubro_vacaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo1" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo2" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo3" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo4" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo5" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo6" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo7" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo8" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo9" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo10" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo11" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo12" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo13" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
+          <NavigationProperty Name="ro_rubro_tipo16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -12960,6 +12966,20 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ro_participacion_utilidad_empleado_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_participacion_utilidad_empleado" Role="ro_participacion_utilidad_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_participacion_utilidad_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ro_permiso_x_empleado_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
           <End Type="Model_rrhh.ro_permiso_x_empleado" Role="ro_permiso_x_empleado" Multiplicity="*" />
@@ -13069,177 +13089,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             <Dependent Role="ro_SancionesPorMarcaciones_det">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ro_Parametros">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte_AsientoSueldoXPagar" Type="Int32" Nullable="false" />
-          <Property Name="Sueldo_basico" Type="Double" Nullable="false" />
-          <Property Name="Porcentaje_aporte_pers" Type="Double" Nullable="false" />
-          <Property Name="Porcentaje_aporte_patr" Type="Double" Nullable="false" />
-          <Property Name="IdRubro_acta_finiquito" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="genera_op_x_pago" Type="Boolean" Nullable="false" />
-          <Property Name="Genera_op_x_pago_x_empleao" Type="Boolean" Nullable="false" />
-          <Property Name="Genera_op_por_liq_vacaciones" Type="Boolean" Nullable="false" />
-          <Property Name="Genera_op_por_acta_finiquito" Type="Boolean" Nullable="false" />
-          <Property Name="Genera_op_por_prestamos" Type="Boolean" Nullable="false" />
-          <Property Name="IdTipo_op_vacaciones" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_op_prestamos" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_op_acta_finiquito" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_op_sueldo_por_pagar" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoCreacionPrestamos" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Porcentaje_anticipo" Type="Double" Nullable="false" />
-          <Property Name="IdNomina_General" Type="Int32" />
-          <Property Name="IdNomina_TipoLiqui_PagoUtilidad" Type="Int32" />
-          <NavigationProperty Name="ro_catalogo" Relationship="Model_rrhh.FK_ro_Parametros_ro_catalogo" FromRole="ro_Parametros" ToRole="ro_catalogo" />
-        </EntityType>
-        <EntityType Name="ro_participacion_utilidad">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdUtilidad" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
-          <Property Name="Utilidad" Type="Double" Nullable="false" />
-          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
-          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FechaIngresa" Type="DateTime" Precision="3" />
-          <Property Name="UsuarioIngresa" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioModifica" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_ultima_modif" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuario_anula" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_anulacion" Type="DateTime" Precision="3" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ro_participacion_utilidad_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad" ToRole="ro_participacion_utilidad_empleado" />
-        </EntityType>
-        <EntityType Name="ro_participacion_utilidad_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdUtilidad" />
-            <PropertyRef Name="IdEmpleado" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
-          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
-          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
-          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="ValorTotal" Type="Double" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Descuento" Type="Double" Nullable="false" />
-          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_empleado" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_empleado" />
-          <NavigationProperty Name="ro_participacion_utilidad" Relationship="Model_rrhh.FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad" FromRole="ro_participacion_utilidad_empleado" ToRole="ro_participacion_utilidad" />
-        </EntityType>
-        <EntityType Name="ro_rubros_calculados">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdRubro_dias_trabajados" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_tot_ing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_tot_egr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_iess_perso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_sueldo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_tot_pagar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_aporte_patronal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_fondo_reserva" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_prov_vac" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_prov_DIII" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_prov_DIV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_prov_FR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_DIII" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_DIV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_IR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_matutina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_vespertina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_brigadas" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_adicionales" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_control_salida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_horas_recargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_bono_x_antiguedad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_anticipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_novedad_proceso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_primaria_vespertina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRubro_utilidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo1" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo1" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo2" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo10" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo3" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo11" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo4" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo12" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo5" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo13" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo6" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo14" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo7" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo15" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo8" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo16" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo9" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo17" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo10" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo18" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo11" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo19" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo12" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo20" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo13" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo21" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo14" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo6" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo15" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo8" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <NavigationProperty Name="ro_rubro_tipo16" Relationship="Model_rrhh.FK_ro_rubros_calculados_ro_rubro_tipo9" FromRole="ro_rubros_calculados" ToRole="ro_rubro_tipo" />
-          <Property Name="IdRubro_vacaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_ro_Parametros_ro_catalogo">
-          <End Type="Model_rrhh.ro_catalogo" Role="ro_catalogo" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_Parametros" Role="ro_Parametros" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_catalogo">
-              <PropertyRef Name="CodCatalogo" />
-            </Principal>
-            <Dependent Role="ro_Parametros">
-              <PropertyRef Name="EstadoCreacionPrestamos" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_participacion_utilidad_empleado_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_participacion_utilidad_empleado" Role="ro_participacion_utilidad_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_participacion_utilidad_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ro_participacion_utilidad_empleado_ro_participacion_utilidad">
-          <End Type="Model_rrhh.ro_participacion_utilidad" Role="ro_participacion_utilidad" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_participacion_utilidad_empleado" Role="ro_participacion_utilidad_empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_participacion_utilidad">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdUtilidad" />
-            </Principal>
-            <Dependent Role="ro_participacion_utilidad_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdUtilidad" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13481,76 +13330,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwro_participacion_utilidad">
-          <Key>
-            <PropertyRef Name="pe_FechaIni" />
-            <PropertyRef Name="pe_FechaFin" />
-            <PropertyRef Name="UtilidadDerechoIndividual" />
-            <PropertyRef Name="UtilidadCargaFamiliar" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="IdUtilidad" />
-            <PropertyRef Name="Utilidad" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="BaseUtilidad" />
-          </Key>
-          <Property Name="pe_FechaIni" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
-          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Utilidad" Type="Double" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="BaseUtilidad" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vwro_participacion_utilidad_empleado">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdUtilidad" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="DiasTrabajados" />
-            <PropertyRef Name="CargasFamiliares" />
-            <PropertyRef Name="ValorIndividual" />
-            <PropertyRef Name="ValorCargaFamiliar" />
-            <PropertyRef Name="ValorTotal" />
-            <PropertyRef Name="IdPeriodo" />
-            <PropertyRef Name="ca_descripcion" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="UtilidadDerechoIndividual" />
-            <PropertyRef Name="UtilidadCargaFamiliar" />
-            <PropertyRef Name="Utilidad" />
-            <PropertyRef Name="Descuento" />
-            <PropertyRef Name="NetoRecibir" />
-            <PropertyRef Name="IdSucursal" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="DiasTrabajados" Type="Int32" Nullable="false" />
-          <Property Name="CargasFamiliares" Type="Int32" Nullable="false" />
-          <Property Name="ValorIndividual" Type="Double" Nullable="false" />
-          <Property Name="ValorCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="ValorTotal" Type="Double" Nullable="false" />
-          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
-          <Property Name="em_fechaSalida" Type="DateTime" Precision="3" />
-          <Property Name="UtilidadDerechoIndividual" Type="Double" Nullable="false" />
-          <Property Name="UtilidadCargaFamiliar" Type="Double" Nullable="false" />
-          <Property Name="Utilidad" Type="Double" Nullable="false" />
-          <Property Name="Descuento" Type="Double" Nullable="false" />
-          <Property Name="NetoRecibir" Type="Double" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="ro_biometrico">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -13577,6 +13356,126 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
           <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
+          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
+          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
+          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
+          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gozadas" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" />
+        </EntityType>
+        <EntityType Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdPeriodo_Inicio" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo_Fin" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ro_Solicitud_Vacaciones_x_empleado" Relationship="Model_rrhh.FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado" FromRole="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" ToRole="ro_Solicitud_Vacaciones_x_empleado" />
+          <Property Name="Dias_tomados" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado_ro_Solicitud_Vacaciones_x_empleado">
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_Solicitud_Vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSolicitud" />
+            </Principal>
+            <Dependent Role="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSolicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwRo_Solicitud_Vacaciones">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="AnioServicio" />
+            <PropertyRef Name="Dias_q_Corresponde" />
+            <PropertyRef Name="Dias_a_disfrutar" />
+            <PropertyRef Name="Dias_pendiente" />
+            <PropertyRef Name="Anio_Desde" />
+            <PropertyRef Name="Anio_Hasta" />
+            <PropertyRef Name="Fecha_Desde" />
+            <PropertyRef Name="Fecha_Hasta" />
+            <PropertyRef Name="Fecha_Retorno" />
+            <PropertyRef Name="Observacion" />
+            <PropertyRef Name="IdEstadoAprobacion" />
+            <PropertyRef Name="Gozadas" />
+            <PropertyRef Name="pe_cedulaRuc" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="AnioServicio" Type="Int32" Nullable="false" />
+          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
+          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
+          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
+          <Property Name="Anio_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Anio_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario_Anu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Gozadas" Type="Boolean" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado_liquidacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -14725,40 +14624,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwRo_Solicitud_Vacaciones">
-            <EntityTypeMapping TypeName="Model_rrhh.vwRo_Solicitud_Vacaciones">
-              <MappingFragment StoreEntitySet="vwRo_Solicitud_Vacaciones">
-                <ScalarProperty Name="Estado_liquidacion" ColumnName="Estado_liquidacion" />
-                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
-                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
-                <ScalarProperty Name="Canceladas" ColumnName="Canceladas" />
-                <ScalarProperty Name="Gozadas_Pgadas" ColumnName="Gozadas_Pgadas" />
-                <ScalarProperty Name="IdEmpleado_remp" ColumnName="IdEmpleado_remp" />
-                <ScalarProperty Name="IdEmpleado_aprue" ColumnName="IdEmpleado_aprue" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
-                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
-                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
-                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
-                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
-                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spRo_procesa_Rol_bono" FunctionName="Model_rrhh.Store.spRo_procesa_Rol_bono" />
           <EntitySetMapping Name="ro_NominasPagosCheques">
             <EntityTypeMapping TypeName="Model_rrhh.ro_NominasPagosCheques">
@@ -15716,55 +15581,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado">
-              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado">
-                <ScalarProperty Name="Canceladas" ColumnName="Canceladas" />
-                <ScalarProperty Name="Gozadas_Pgadas" ColumnName="Gozadas_Pgadas" />
-                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
-                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
-                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
-                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
-                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
-                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
-                <ScalarProperty Name="IdEmpleado_remp" ColumnName="IdEmpleado_remp" />
-                <ScalarProperty Name="IdEmpleado_aprue" ColumnName="IdEmpleado_aprue" />
-                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
-                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="IdVacacion" ColumnName="IdVacacion" />
-                <ScalarProperty Name="IdEmpleado_vaca" ColumnName="IdEmpleado_vaca" />
-                <ScalarProperty Name="IdEmpresa_vaca" ColumnName="IdEmpresa_vaca" />
-                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
-                <ScalarProperty Name="IdEmpleado_sol" ColumnName="IdEmpleado_sol" />
-                <ScalarProperty Name="IdEmpresa_sol" ColumnName="IdEmpresa_sol" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ro_prestamo">
             <EntityTypeMapping TypeName="Model_rrhh.ro_prestamo">
               <MappingFragment StoreEntitySet="ro_prestamo">
@@ -16134,82 +15950,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="ro_empleado">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_empleado">
-              <MappingFragment StoreEntitySet="ro_empleado">
-                <ScalarProperty Name="ro_goza_utilida" ColumnName="ro_goza_utilida" />
-                <ScalarProperty Name="ro_goza_utilidad" ColumnName="ro_goza_utilidad" />
-                <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
-                <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
-                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
-                <ScalarProperty Name="IdEmpleadoPAdre" ColumnName="IdEmpleadoPAdre" />
-                <ScalarProperty Name="DiasVacaciones" ColumnName="DiasVacaciones" />
-                <ScalarProperty Name="GozaMasDeQuinceDiasVaciones" ColumnName="GozaMasDeQuinceDiasVaciones" />
-                <ScalarProperty Name="Valor_hora_control_salida" ColumnName="Valor_hora_control_salida" />
-                <ScalarProperty Name="Valor_hora_adicionales" ColumnName="Valor_hora_adicionales" />
-                <ScalarProperty Name="Valor_horas_brigada" ColumnName="Valor_horas_brigada" />
-                <ScalarProperty Name="Valor_horas_matutino" ColumnName="Valor_horas_matutino" />
-                <ScalarProperty Name="Valor_horas_vespertina" ColumnName="Valor_horas_vespertina" />
-                <ScalarProperty Name="Valor_maximo_horas_mat" ColumnName="Valor_maximo_horas_mat" />
-                <ScalarProperty Name="Valor_maximo_horas_vesp" ColumnName="Valor_maximo_horas_vesp" />
-                <ScalarProperty Name="Pago_por_horas" ColumnName="Pago_por_horas" />
-                <ScalarProperty Name="Tiene_ingresos_compartidos" ColumnName="Tiene_ingresos_compartidos" />
-                <ScalarProperty Name="IdHorario" ColumnName="IdHorario" />
-                <ScalarProperty Name="Marca_Biometrico" ColumnName="Marca_Biometrico" />
-                <ScalarProperty Name="em_AnticipoSueldo" ColumnName="em_AnticipoSueldo" />
-                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
-                <ScalarProperty Name="ValorAnticipo" ColumnName="ValorAnticipo" />
-                <ScalarProperty Name="IdTipoAnticipo" ColumnName="IdTipoAnticipo" />
-                <ScalarProperty Name="es_AcreditaHorasExtras" ColumnName="es_AcreditaHorasExtras" />
-                <ScalarProperty Name="IdTipoSistemaSalarioNetoSRI" ColumnName="IdTipoSistemaSalarioNetoSRI" />
-                <ScalarProperty Name="IdTipoResidenciaSRI" ColumnName="IdTipoResidenciaSRI" />
-                <ScalarProperty Name="IdAplicaConvenioDobleImposicionSRI" ColumnName="IdAplicaConvenioDobleImposicionSRI" />
-                <ScalarProperty Name="IdentDiscapacitadoSustitutoSRI" ColumnName="IdentDiscapacitadoSustitutoSRI" />
-                <ScalarProperty Name="IdTipoIdentDiscapacitadoSustitutoSRI" ColumnName="IdTipoIdentDiscapacitadoSustitutoSRI" />
-                <ScalarProperty Name="IdCondicionDiscapacidadSRI" ColumnName="IdCondicionDiscapacidadSRI" />
-                <ScalarProperty Name="em_status" ColumnName="em_status" />
-                <ScalarProperty Name="talla_zapato" ColumnName="talla_zapato" />
-                <ScalarProperty Name="talla_camisa" ColumnName="talla_camisa" />
-                <ScalarProperty Name="talla_pant" ColumnName="talla_pant" />
-                <ScalarProperty Name="carnet_conadis" ColumnName="carnet_conadis" />
-                <ScalarProperty Name="por_discapacidad" ColumnName="por_discapacidad" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
-                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
-                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
-                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-                <ScalarProperty Name="IdTipoLicencia" ColumnName="IdTipoLicencia" />
-                <ScalarProperty Name="em_mail" ColumnName="em_mail" />
-                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
-                <ScalarProperty Name="IdCtaCble_Emplea" ColumnName="IdCtaCble_Emplea" />
-                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
-                <ScalarProperty Name="IdTipoSangre" ColumnName="IdTipoSangre" />
-                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
-                <ScalarProperty Name="IdCodSectorial" ColumnName="IdCodSectorial" />
-                <ScalarProperty Name="em_estado" ColumnName="em_estado" />
-                <ScalarProperty Name="em_NumCta" ColumnName="em_NumCta" />
-                <ScalarProperty Name="em_tipoCta" ColumnName="em_tipoCta" />
-                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
-                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
-                <ScalarProperty Name="em_cedulaMil" ColumnName="em_cedulaMil" />
-                <ScalarProperty Name="em_CarnetIees" ColumnName="em_CarnetIees" />
-                <ScalarProperty Name="em_lugarNacimiento" ColumnName="em_lugarNacimiento" />
-                <ScalarProperty Name="Codigo_Biometrico" ColumnName="Codigo_Biometrico" />
-                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
-                <ScalarProperty Name="IdTipoEmpleado" ColumnName="IdTipoEmpleado" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="IdEmpleado_Supervisor" ColumnName="IdEmpleado_Supervisor" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwro_empleado_datos_generales">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_empleado_datos_generales">
               <MappingFragment StoreEntitySet="vwro_empleado_datos_generales">
@@ -16357,40 +16097,6 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ro_rubros_calculados">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_rubros_calculados">
-              <MappingFragment StoreEntitySet="ro_rubros_calculados">
-                <ScalarProperty Name="IdRubro_vacaciones" ColumnName="IdRubro_vacaciones" />
-                <ScalarProperty Name="IdRubro_utilidad" ColumnName="IdRubro_utilidad" />
-                <ScalarProperty Name="IdRubro_primaria_vespertina" ColumnName="IdRubro_primaria_vespertina" />
-                <ScalarProperty Name="IdRubro_novedad_proceso" ColumnName="IdRubro_novedad_proceso" />
-                <ScalarProperty Name="IdRubro_anticipo" ColumnName="IdRubro_anticipo" />
-                <ScalarProperty Name="IdRubro_bono_x_antiguedad" ColumnName="IdRubro_bono_x_antiguedad" />
-                <ScalarProperty Name="IdRubro_horas_recargo" ColumnName="IdRubro_horas_recargo" />
-                <ScalarProperty Name="IdRubro_horas_control_salida" ColumnName="IdRubro_horas_control_salida" />
-                <ScalarProperty Name="IdRubro_horas_adicionales" ColumnName="IdRubro_horas_adicionales" />
-                <ScalarProperty Name="IdRubro_horas_brigadas" ColumnName="IdRubro_horas_brigadas" />
-                <ScalarProperty Name="IdRubro_horas_vespertina" ColumnName="IdRubro_horas_vespertina" />
-                <ScalarProperty Name="IdRubro_horas_matutina" ColumnName="IdRubro_horas_matutina" />
-                <ScalarProperty Name="IdRubro_IR" ColumnName="IdRubro_IR" />
-                <ScalarProperty Name="IdRubro_DIV" ColumnName="IdRubro_DIV" />
-                <ScalarProperty Name="IdRubro_DIII" ColumnName="IdRubro_DIII" />
-                <ScalarProperty Name="IdRubro_prov_FR" ColumnName="IdRubro_prov_FR" />
-                <ScalarProperty Name="IdRubro_prov_DIV" ColumnName="IdRubro_prov_DIV" />
-                <ScalarProperty Name="IdRubro_prov_DIII" ColumnName="IdRubro_prov_DIII" />
-                <ScalarProperty Name="IdRubro_prov_vac" ColumnName="IdRubro_prov_vac" />
-                <ScalarProperty Name="IdRubro_fondo_reserva" ColumnName="IdRubro_fondo_reserva" />
-                <ScalarProperty Name="IdRubro_aporte_patronal" ColumnName="IdRubro_aporte_patronal" />
-                <ScalarProperty Name="IdRubro_tot_pagar" ColumnName="IdRubro_tot_pagar" />
-                <ScalarProperty Name="IdRubro_sueldo" ColumnName="IdRubro_sueldo" />
-                <ScalarProperty Name="IdRubro_iess_perso" ColumnName="IdRubro_iess_perso" />
-                <ScalarProperty Name="IdRubro_tot_egr" ColumnName="IdRubro_tot_egr" />
-                <ScalarProperty Name="IdRubro_tot_ing" ColumnName="IdRubro_tot_ing" />
-                <ScalarProperty Name="IdRubro_dias_trabajados" ColumnName="IdRubro_dias_trabajados" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwro_participacion_utilidad">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_participacion_utilidad">
               <MappingFragment StoreEntitySet="vwro_participacion_utilidad">
@@ -16439,6 +16145,127 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ro_empleado_x_jefes_inmediatos">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_empleado_x_jefes_inmediatos">
+              <MappingFragment StoreEntitySet="ro_empleado_x_jefes_inmediatos">
+                <ScalarProperty Name="Aprueba_prestamo" ColumnName="Aprueba_prestamo" />
+                <ScalarProperty Name="Aprueba_vacaciones" ColumnName="Aprueba_vacaciones" />
+                <ScalarProperty Name="IdEmpleado_aprueba" ColumnName="IdEmpleado_aprueba" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_empleado">
+              <MappingFragment StoreEntitySet="ro_empleado">
+                <ScalarProperty Name="ro_goza_utilidad" ColumnName="ro_goza_utilidad" />
+                <ScalarProperty Name="IdSucursalContabilizacion" ColumnName="IdSucursalContabilizacion" />
+                <ScalarProperty Name="IdCtaCble_x_pagar_empleado" ColumnName="IdCtaCble_x_pagar_empleado" />
+                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
+                <ScalarProperty Name="IdEmpleadoPAdre" ColumnName="IdEmpleadoPAdre" />
+                <ScalarProperty Name="DiasVacaciones" ColumnName="DiasVacaciones" />
+                <ScalarProperty Name="GozaMasDeQuinceDiasVaciones" ColumnName="GozaMasDeQuinceDiasVaciones" />
+                <ScalarProperty Name="Valor_hora_control_salida" ColumnName="Valor_hora_control_salida" />
+                <ScalarProperty Name="Valor_hora_adicionales" ColumnName="Valor_hora_adicionales" />
+                <ScalarProperty Name="Valor_horas_brigada" ColumnName="Valor_horas_brigada" />
+                <ScalarProperty Name="Valor_horas_matutino" ColumnName="Valor_horas_matutino" />
+                <ScalarProperty Name="Valor_horas_vespertina" ColumnName="Valor_horas_vespertina" />
+                <ScalarProperty Name="Valor_maximo_horas_mat" ColumnName="Valor_maximo_horas_mat" />
+                <ScalarProperty Name="Valor_maximo_horas_vesp" ColumnName="Valor_maximo_horas_vesp" />
+                <ScalarProperty Name="Pago_por_horas" ColumnName="Pago_por_horas" />
+                <ScalarProperty Name="Tiene_ingresos_compartidos" ColumnName="Tiene_ingresos_compartidos" />
+                <ScalarProperty Name="IdHorario" ColumnName="IdHorario" />
+                <ScalarProperty Name="Marca_Biometrico" ColumnName="Marca_Biometrico" />
+                <ScalarProperty Name="em_AnticipoSueldo" ColumnName="em_AnticipoSueldo" />
+                <ScalarProperty Name="CodigoSectorial" ColumnName="CodigoSectorial" />
+                <ScalarProperty Name="ValorAnticipo" ColumnName="ValorAnticipo" />
+                <ScalarProperty Name="IdTipoAnticipo" ColumnName="IdTipoAnticipo" />
+                <ScalarProperty Name="es_AcreditaHorasExtras" ColumnName="es_AcreditaHorasExtras" />
+                <ScalarProperty Name="IdTipoSistemaSalarioNetoSRI" ColumnName="IdTipoSistemaSalarioNetoSRI" />
+                <ScalarProperty Name="IdTipoResidenciaSRI" ColumnName="IdTipoResidenciaSRI" />
+                <ScalarProperty Name="IdAplicaConvenioDobleImposicionSRI" ColumnName="IdAplicaConvenioDobleImposicionSRI" />
+                <ScalarProperty Name="IdentDiscapacitadoSustitutoSRI" ColumnName="IdentDiscapacitadoSustitutoSRI" />
+                <ScalarProperty Name="IdTipoIdentDiscapacitadoSustitutoSRI" ColumnName="IdTipoIdentDiscapacitadoSustitutoSRI" />
+                <ScalarProperty Name="IdCondicionDiscapacidadSRI" ColumnName="IdCondicionDiscapacidadSRI" />
+                <ScalarProperty Name="em_status" ColumnName="em_status" />
+                <ScalarProperty Name="talla_zapato" ColumnName="talla_zapato" />
+                <ScalarProperty Name="talla_camisa" ColumnName="talla_camisa" />
+                <ScalarProperty Name="talla_pant" ColumnName="talla_pant" />
+                <ScalarProperty Name="carnet_conadis" ColumnName="carnet_conadis" />
+                <ScalarProperty Name="por_discapacidad" ColumnName="por_discapacidad" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
+                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdTipoLicencia" ColumnName="IdTipoLicencia" />
+                <ScalarProperty Name="em_mail" ColumnName="em_mail" />
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="IdCtaCble_Emplea" ColumnName="IdCtaCble_Emplea" />
+                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
+                <ScalarProperty Name="IdTipoSangre" ColumnName="IdTipoSangre" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="IdCodSectorial" ColumnName="IdCodSectorial" />
+                <ScalarProperty Name="em_estado" ColumnName="em_estado" />
+                <ScalarProperty Name="em_NumCta" ColumnName="em_NumCta" />
+                <ScalarProperty Name="em_tipoCta" ColumnName="em_tipoCta" />
+                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
+                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
+                <ScalarProperty Name="em_cedulaMil" ColumnName="em_cedulaMil" />
+                <ScalarProperty Name="em_CarnetIees" ColumnName="em_CarnetIees" />
+                <ScalarProperty Name="em_lugarNacimiento" ColumnName="em_lugarNacimiento" />
+                <ScalarProperty Name="Codigo_Biometrico" ColumnName="Codigo_Biometrico" />
+                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
+                <ScalarProperty Name="IdTipoEmpleado" ColumnName="IdTipoEmpleado" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdEmpleado_Supervisor" ColumnName="IdEmpleado_Supervisor" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_rubros_calculados">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_rubros_calculados">
+              <MappingFragment StoreEntitySet="ro_rubros_calculados">
+                <ScalarProperty Name="IdRubro_vacaciones" ColumnName="IdRubro_vacaciones" />
+                <ScalarProperty Name="IdRubro_utilidad" ColumnName="IdRubro_utilidad" />
+                <ScalarProperty Name="IdRubro_primaria_vespertina" ColumnName="IdRubro_primaria_vespertina" />
+                <ScalarProperty Name="IdRubro_novedad_proceso" ColumnName="IdRubro_novedad_proceso" />
+                <ScalarProperty Name="IdRubro_anticipo" ColumnName="IdRubro_anticipo" />
+                <ScalarProperty Name="IdRubro_bono_x_antiguedad" ColumnName="IdRubro_bono_x_antiguedad" />
+                <ScalarProperty Name="IdRubro_horas_recargo" ColumnName="IdRubro_horas_recargo" />
+                <ScalarProperty Name="IdRubro_horas_control_salida" ColumnName="IdRubro_horas_control_salida" />
+                <ScalarProperty Name="IdRubro_horas_adicionales" ColumnName="IdRubro_horas_adicionales" />
+                <ScalarProperty Name="IdRubro_horas_brigadas" ColumnName="IdRubro_horas_brigadas" />
+                <ScalarProperty Name="IdRubro_horas_vespertina" ColumnName="IdRubro_horas_vespertina" />
+                <ScalarProperty Name="IdRubro_horas_matutina" ColumnName="IdRubro_horas_matutina" />
+                <ScalarProperty Name="IdRubro_IR" ColumnName="IdRubro_IR" />
+                <ScalarProperty Name="IdRubro_DIV" ColumnName="IdRubro_DIV" />
+                <ScalarProperty Name="IdRubro_DIII" ColumnName="IdRubro_DIII" />
+                <ScalarProperty Name="IdRubro_prov_FR" ColumnName="IdRubro_prov_FR" />
+                <ScalarProperty Name="IdRubro_prov_DIV" ColumnName="IdRubro_prov_DIV" />
+                <ScalarProperty Name="IdRubro_prov_DIII" ColumnName="IdRubro_prov_DIII" />
+                <ScalarProperty Name="IdRubro_prov_vac" ColumnName="IdRubro_prov_vac" />
+                <ScalarProperty Name="IdRubro_fondo_reserva" ColumnName="IdRubro_fondo_reserva" />
+                <ScalarProperty Name="IdRubro_aporte_patronal" ColumnName="IdRubro_aporte_patronal" />
+                <ScalarProperty Name="IdRubro_tot_pagar" ColumnName="IdRubro_tot_pagar" />
+                <ScalarProperty Name="IdRubro_sueldo" ColumnName="IdRubro_sueldo" />
+                <ScalarProperty Name="IdRubro_iess_perso" ColumnName="IdRubro_iess_perso" />
+                <ScalarProperty Name="IdRubro_tot_egr" ColumnName="IdRubro_tot_egr" />
+                <ScalarProperty Name="IdRubro_tot_ing" ColumnName="IdRubro_tot_ing" />
+                <ScalarProperty Name="IdRubro_dias_trabajados" ColumnName="IdRubro_dias_trabajados" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ro_biometrico">
             <EntityTypeMapping TypeName="Model_rrhh.ro_biometrico">
               <MappingFragment StoreEntitySet="ro_biometrico">
@@ -16462,6 +16289,79 @@ advertencia 6002: La tabla o vista 'agricolaytransporte.web.vwro_empleado_x_Proy
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdEquipo" ColumnName="IdEquipo" />
                 <ScalarProperty Name="IdBiometrico" ColumnName="IdBiometrico" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado">
+              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado">
+                <ScalarProperty Name="Gozadas" ColumnName="Gozadas" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
+                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
+                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
+                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
+                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
+                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+              <MappingFragment StoreEntitySet="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado">
+                <ScalarProperty Name="Dias_tomados" ColumnName="Dias_tomados" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdPeriodo_Fin" ColumnName="IdPeriodo_Fin" />
+                <ScalarProperty Name="IdPeriodo_Inicio" ColumnName="IdPeriodo_Inicio" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRo_Solicitud_Vacaciones">
+            <EntityTypeMapping TypeName="Model_rrhh.vwRo_Solicitud_Vacaciones">
+              <MappingFragment StoreEntitySet="vwRo_Solicitud_Vacaciones">
+                <ScalarProperty Name="Estado_liquidacion" ColumnName="Estado_liquidacion" />
+                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Gozadas" ColumnName="Gozadas" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuario_Anu" ColumnName="IdUsuario_Anu" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Anio_Hasta" ColumnName="Anio_Hasta" />
+                <ScalarProperty Name="Anio_Desde" ColumnName="Anio_Desde" />
+                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
+                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
+                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
+                <ScalarProperty Name="AnioServicio" ColumnName="AnioServicio" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
