@@ -313,7 +313,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 }
                 foreach (var item in info.lst_provisiones)
                 {
-                    item.IdCtaCble = item.IdCtaCble.Trim();
+                    item.IdCtaCble = (item.IdCtaCble==null ? null : item.IdCtaCble.Trim());
 
                     if (item.IdCtaCble == null || item.IdCtaCble == "")
                     {
