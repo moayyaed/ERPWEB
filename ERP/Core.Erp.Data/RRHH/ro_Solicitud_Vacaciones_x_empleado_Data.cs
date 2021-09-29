@@ -88,6 +88,18 @@ namespace Core.Erp.Data.RRHH
                         Gozadas = Entity.Gozadas,
                         Estado = Entity.Estado,
                     };
+
+                  info.lst_vacaciones = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(q => q.IdEmpresa == IdEmpresa && q.IdSolicitud == q.IdSolicitud ).Select(q => new ro_Solicitud_Vacaciones_x_empleado_det_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        IdEmpleado = q.IdEmpleado,
+                        IdSolicitud = q.IdSolicitud,
+                         IdPeriodo_Fin=q.IdPeriodo_Fin,
+                        IdPeriodo_Inicio=q.IdPeriodo_Inicio,
+                        Dias_tomados=q.Dias_tomados,
+                        Tipo_liquidacion=q.Tipo_liquidacion,
+                        Tipo_vacacion=q.Tipo_vacacion
+                    }).ToList();
                 }
 
                 return info;
@@ -165,7 +177,8 @@ namespace Core.Erp.Data.RRHH
                             IdPeriodo_Inicio=item.IdPeriodo_Inicio,
                             IdPeriodo_Fin=item.IdPeriodo_Fin,
                             Observacion=item.Observacion,
-
+                            Tipo_liquidacion=item.Tipo_liquidacion,
+                            Tipo_vacacion=item.Tipo_vacacion
                         };
                         Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
                        
@@ -242,6 +255,8 @@ namespace Core.Erp.Data.RRHH
                             IdPeriodo_Inicio = item.IdPeriodo_Inicio,
                             IdPeriodo_Fin = item.IdPeriodo_Fin,
                             Observacion = item.Observacion,
+                            Tipo_vacacion=item.Tipo_vacacion,
+                            Tipo_liquidacion=item.Tipo_liquidacion
                         };
                         Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
 

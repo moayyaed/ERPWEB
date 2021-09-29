@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_empleado_Bus bus_empleado = new ro_empleado_Bus();
+        ro_catalogo_Bus bus_catalogo = new ro_catalogo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -324,13 +325,47 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
+        #region funciones del detalle
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Solicitud_Vacaciones_x_empleado_det_Info info_det)
+        {
+            if (ModelState.IsValid)
+                ro_Solicitud_Vacaciones_x_empleado_det_List.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+           var model_ = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combo();
+            return PartialView("_GridViewPartial_solicitud_vacaciones_det", model_);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Solicitud_Vacaciones_x_empleado_det_Info info_det)
+        {
+            if (ModelState.IsValid)
+                ro_Solicitud_Vacaciones_x_empleado_det_List.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+           var model_ = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combo();
+            return PartialView("_GridViewPartial_solicitud_vacaciones_det", model_);
+        }
+
+        public ActionResult EditingDelete([ModelBinder(typeof(DevExpressEditorsBinder))] ro_Solicitud_Vacaciones_x_empleado_det_Info info_det)
+        {
+            ro_Solicitud_Vacaciones_x_empleado_det_List.DeleteRow(info_det.Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            var model_ = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combo();
+
+            return PartialView("_GridViewPartial_solicitud_vacaciones_det", model_);
+        }
+        #endregion
+
+
         private void cargar_combo()
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            Dictionary<string, string> lst_tipo_liquidacion = new Dictionary<string, string>();
-            lst_tipo_liquidacion.Add("GOZADAS", "GOZADAS");
-            lst_tipo_liquidacion.Add("PAGADAS", "PAGADAS");
+            var lst_tipo_liquidacion = bus_catalogo.get_list_x_tipo(45);
             ViewBag.lst_tipo_liquidacion = lst_tipo_liquidacion;
+
+            var lst_tipo_solicitud = bus_catalogo.get_list_x_tipo(46);
+            ViewBag.lst_tipo_solicitud = lst_tipo_solicitud;
+
         }
         public JsonResult calcular_vacaciones(decimal IdEmpleado, decimal IdTransaccionSession=0)
         {
@@ -361,7 +396,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     IdPeriodo_Fin= info_periodo_vac.IdPeriodo_Fin,
                     FechaIni=info_periodo_vac.FechaIni,
                     FechaFin=info_periodo_vac.FechaFin,
-                    Dias_tomados= dias,
+                    Tipo_liquidacion= "GOZA",
+                    Tipo_vacacion= "DIAS_VAC",
+                    Dias_tomados = dias-dias_adicionales,
                     };
                    if( ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s =>s.IdPeriodo_Inicio== info_periodo_vac.IdPeriodo_Inicio).Count()==0)
                     ro_Solicitud_Vacaciones_x_empleado_det_List.AddRow(info, IdTransaccionSession);
@@ -373,9 +410,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             IdPeriodo_Fin = info_periodo_vac.IdPeriodo_Fin,
                             FechaIni = info_periodo_vac.FechaIni,
                             FechaFin = info_periodo_vac.FechaFin,
-                            Dias_tomados = dias,
+                            Tipo_liquidacion = "GOZA",
+                            Tipo_vacacion = "DIAS_ADIC",
+                            Dias_tomados = dias_adicionales,
                         };
-                        if (ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s => s.IdPeriodo_Inicio == info_periodo_vac.IdPeriodo_Inicio).Count() == 0)
+                        if (ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(IdTransaccionSession).Where(s => s.IdPeriodo_Inicio == info_periodo_vac.IdPeriodo_Inicio&& s.Tipo_vacacion== "DIAS_ADIC").Count() == 0)
                             ro_Solicitud_Vacaciones_x_empleado_det_List.AddRow(info, IdTransaccionSession);
                     }
 
@@ -482,7 +521,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public void UpdateRow(ro_Solicitud_Vacaciones_x_empleado_det_Info info_det, decimal IdTransaccionSession)
         {
-          
+            ro_Solicitud_Vacaciones_x_empleado_det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
+            edited_info.Dias_tomados = info_det.Dias_tomados;
+            edited_info.Tipo_vacacion = info_det.Tipo_vacacion;
+            edited_info.Tipo_liquidacion = info_det.Tipo_liquidacion;
+
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)

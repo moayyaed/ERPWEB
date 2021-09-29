@@ -6,8 +6,12 @@
         settings.CallbackRouteValues = new { Controller = "Vacaciones", Action = "GridViewPartial_solicitud_vacaciones_det" };
 
         settings.Width = Unit.Percentage(100);
-        settings.KeyFieldName = "IdSolicitud";
+        settings.KeyFieldName = "Secuencia";
 
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Vacaciones", Action = "EditingAddNew", Area = "RRHH" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Vacaciones", Action = "EditingUpdate", Area = "RRHH" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Vacaciones", Action = "EditingDelete", Area = "RRHH" };
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -34,41 +38,73 @@
         {
             column.FieldName = "FechaIni";
             column.Caption = "Fecha desde";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
                 column.PropertiesEdit.DisplayFormatString = "d";
                 sp.Width = Unit.Percentage(100);
             });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
         });
-
-
         settings.Columns.Add(column =>
         {
             column.FieldName = "FechaFin";
             column.Caption = "Fecha hasta";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
                 column.PropertiesEdit.DisplayFormatString = "d";
                 sp.Width = Unit.Percentage(100);
             });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
         });
-        settings.Columns.Add("Dias_tomados", "Días solicitado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
         settings.Columns.Add(column =>
         {
-            column.FieldName = "Tipo_liquidacion";
-            column.Caption = "Tipo solicitud";
+            column.FieldName = "Dias_tomados";
+            column.Caption = "Días solicitar";
             column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Tipo_vacacion";
+            column.Caption = "Tipo";
+            column.Width = Unit.Percentage(35);
             column.EditorProperties().ComboBox(p =>
             {
-                p.ValueField = "Tipo_liquidacion";
+                p.Columns.Add("ca_descripcion", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "CodCatalogo";
+
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_tipo_liquidacion;
                 p.Width = Unit.Percentage(100);
             });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Tipo_liquidacion";
+            column.Caption = "Tipo solicitud";
+            column.Width = Unit.Percentage(35);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("ca_descripcion", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "CodCatalogo";
+
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_tipo_solicitud;
+                p.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
         });
 
     });

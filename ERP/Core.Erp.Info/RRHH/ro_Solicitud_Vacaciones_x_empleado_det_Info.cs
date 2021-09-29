@@ -17,6 +17,7 @@ namespace Core.Erp.Info.RRHH
         public string Observacion { get; set; }
         public int Dias_tomados { get; set; }
         public string Tipo_liquidacion { get; set; }
+        public string Tipo_vacacion { get; set; }
 
         public System.DateTime FechaIni { get; set; }
         public System.DateTime FechaFin { get; set; }
