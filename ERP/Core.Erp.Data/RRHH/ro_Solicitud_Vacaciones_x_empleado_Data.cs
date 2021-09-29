@@ -27,12 +27,7 @@ namespace Core.Erp.Data.RRHH
                         IdSolicitud = q.IdSolicitud,
                         IdEstadoAprobacion = q.IdEstadoAprobacion,
                         Fecha = q.Fecha,
-                        AnioServicio = q.AnioServicio,
-                        Dias_q_Corresponde = q.Dias_q_Corresponde,
-                        Dias_a_disfrutar = q.Dias_a_disfrutar,
-                        Dias_pendiente = q.Dias_pendiente,
-                        Anio_Desde = q.Anio_Desde,
-                        Anio_Hasta = q.Anio_Hasta,
+                       
                         Fecha_Desde = q.Fecha_Desde,
                         Fecha_Hasta = q.Fecha_Hasta,
                         Fecha_Retorno = q.Fecha_Retorno,
@@ -75,12 +70,7 @@ namespace Core.Erp.Data.RRHH
                         IdSolicitud = Entity.IdSolicitud,
                         IdEstadoAprobacion = Entity.IdEstadoAprobacion,
                         Fecha = Entity.Fecha,
-                        AnioServicio = Entity.AnioServicio,
-                        Dias_q_Corresponde = Entity.Dias_q_Corresponde,
-                        Dias_a_disfrutar = Entity.Dias_a_disfrutar,
-                        Dias_pendiente = Entity.Dias_pendiente,
-                        Anio_Desde = Entity.Anio_Desde,
-                        Anio_Hasta = Entity.Anio_Hasta,
+                       
                         Fecha_Desde = Entity.Fecha_Desde,
                         Fecha_Hasta = Entity.Fecha_Hasta,
                         Fecha_Retorno = Entity.Fecha_Retorno,
@@ -140,7 +130,6 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    info.Dias_pendiente = info.Dias_q_Corresponde - info.Dias_a_disfrutar;
                     ro_Solicitud_Vacaciones_x_empleado Entity = new ro_Solicitud_Vacaciones_x_empleado
                     {
                         IdEmpresa = info.IdEmpresa,
@@ -148,12 +137,6 @@ namespace Core.Erp.Data.RRHH
                         IdSolicitud = info.IdSolicitud = get_id(info.IdEmpresa),
                         IdEstadoAprobacion = "PEN",
                         Fecha = DateTime.Now.Date,
-                        AnioServicio = info.AnioServicio,
-                        Dias_q_Corresponde = info.Dias_q_Corresponde,
-                        Dias_a_disfrutar = info.Dias_a_disfrutar,
-                        Dias_pendiente = info.Dias_pendiente,
-                        Anio_Desde = info.Anio_Desde,
-                        Anio_Hasta = info.Anio_Hasta,
                         Fecha_Desde = info.Fecha_Desde,
                         Fecha_Hasta = info.Fecha_Hasta,
                         Fecha_Retorno = info.Fecha_Retorno,
@@ -176,9 +159,10 @@ namespace Core.Erp.Data.RRHH
                             Secuencia=item.Secuencia,
                             IdPeriodo_Inicio=item.IdPeriodo_Inicio,
                             IdPeriodo_Fin=item.IdPeriodo_Fin,
-                            Observacion=item.Observacion,
+                            Observacion=info.Observacion,
                             Tipo_liquidacion=item.Tipo_liquidacion,
-                            Tipo_vacacion=item.Tipo_vacacion
+                            Tipo_vacacion=item.Tipo_vacacion,
+                            
                         };
                         Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
                        
@@ -226,12 +210,6 @@ namespace Core.Erp.Data.RRHH
                     && q.IdSolicitud == info.IdSolicitud);
                     if (Entity == null)
                         return false;
-                         Entity.AnioServicio = info.AnioServicio;
-                         Entity.Dias_q_Corresponde = info.Dias_q_Corresponde;
-                         Entity.Dias_a_disfrutar = info.Dias_a_disfrutar;
-                         Entity.Dias_pendiente = info.Dias_pendiente;
-                         Entity.Anio_Desde = info.Anio_Desde;
-                         Entity.Anio_Hasta = info.Anio_Hasta;
                          Entity.Fecha_Desde = info.Fecha_Desde;
                          Entity.Fecha_Hasta = info.Fecha_Hasta;
                          Entity.Fecha_Retorno = info.Fecha_Retorno;

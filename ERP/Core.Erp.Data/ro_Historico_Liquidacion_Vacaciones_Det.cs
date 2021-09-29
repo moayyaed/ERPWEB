@@ -23,6 +23,7 @@ namespace Core.Erp.Data
         public double Total_Remuneracion { get; set; }
         public double Total_Vacaciones { get; set; }
         public double Valor_Cancelar { get; set; }
+        public int Secuencia { get; set; }
     
         public virtual ro_Historico_Liquidacion_Vacaciones ro_Historico_Liquidacion_Vacaciones { get; set; }
     }

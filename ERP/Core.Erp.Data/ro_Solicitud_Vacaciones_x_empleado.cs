@@ -24,12 +24,6 @@ namespace Core.Erp.Data
         public decimal IdEmpleado { get; set; }
         public string IdEstadoAprobacion { get; set; }
         public System.DateTime Fecha { get; set; }
-        public int AnioServicio { get; set; }
-        public int Dias_q_Corresponde { get; set; }
-        public int Dias_a_disfrutar { get; set; }
-        public int Dias_pendiente { get; set; }
-        public System.DateTime Anio_Desde { get; set; }
-        public System.DateTime Anio_Hasta { get; set; }
         public System.DateTime Fecha_Desde { get; set; }
         public System.DateTime Fecha_Hasta { get; set; }
         public System.DateTime Fecha_Retorno { get; set; }

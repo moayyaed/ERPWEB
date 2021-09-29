@@ -22,8 +22,8 @@ namespace Core.Erp.Data
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public int IdLiquidacion { get; set; }
-        public decimal IdOrdenPago { get; set; }
-        public int IdEmpresa_OP { get; set; }
+        public Nullable<decimal> IdOrdenPago { get; set; }
+        public Nullable<int> IdEmpresa_OP { get; set; }
         public double ValorCancelado { get; set; }
         public System.DateTime FechaPago { get; set; }
         public string Observaciones { get; set; }

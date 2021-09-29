@@ -152,12 +152,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
                
                     string mensaje = "";
-                    ro_historico_vacaciones_x_empleado_Info info_historico = null;
-                    info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta.AddDays(1) - info.Fecha_Desde).TotalDays);
-                    info.Dias_q_Corresponde = info.Dias_a_disfrutar;
-                    info.Dias_pendiente = 0;
-                    info.Fecha_Desde = info.Fecha_Desde.Date;
-                    info.Fecha_Hasta = info.Fecha_Hasta.Date;
+                    info.lst_vacaciones = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(info.IdTransaccionSession);
+                   
+                    info.IdUsuario = SessionFixed.IdUsuario;
                     mensaje = bus_solicitud.validar(info);
                     if (mensaje != "")
                     {
