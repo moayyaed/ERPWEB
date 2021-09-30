@@ -68,11 +68,11 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A"
-                 && ( Convert.ToInt32(DataBinder.Eval(tc.DataItem, "IdLiquidacion"))==0) )
+                 )
                 {
                     ViewContext.Writer.Write(
-                         Html.ActionLink("Modificar", "Modificar", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") }) + "&nbsp;" +
-                         Html.ActionLink("Anular", "Anular", new { IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") },
+                         Html.ActionLink("Modificar", "Modificar", new {  IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") }) + "&nbsp;" +
+                         Html.ActionLink("Anular", "Anular", new {  IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -154,28 +154,7 @@
 
             });
         });
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "#";
-            column.Width = Unit.Pixel(100);
-            column.SetDataItemTemplateContent(container =>
-            {
-
-                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Estado")) == "A" && Convert.ToInt32(DataBinder.Eval(container.DataItem, "IdLiquidacion")) == 0)
-                {
-
-
-                    Html.DevExpress().HyperLink(hyperlink =>
-                    {
-                        var IdEmpleado = DataBinder.Eval(container.DataItem, "IdEmpleado");
-                        var IdSolicitud = DataBinder.Eval(container.DataItem, "IdSolicitud");
-                        hyperlink.Properties.Text = "Liquidar";
-                        hyperlink.NavigateUrl = Url.Action("Nuevo", "LiquidacionVacaciones", new { Area = "RRHH", IdEmpleado = IdEmpleado, IdSolicitud = IdSolicitud});
-                    }).Render();
-                }
-
-            });
-        });
+       
         settings.Columns.Add(column =>
         {
             column.SetDataItemTemplateContent(c =>

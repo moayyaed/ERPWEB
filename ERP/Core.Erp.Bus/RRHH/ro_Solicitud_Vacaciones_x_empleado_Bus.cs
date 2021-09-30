@@ -22,12 +22,12 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public ro_Solicitud_Vacaciones_x_empleado_Info get_info(int IdEmpresa,decimal IdEmpleado, decimal IdSolicitud)
+        public ro_Solicitud_Vacaciones_x_empleado_Info get_info(int IdEmpresa, decimal IdSolicitud)
         {
             try
             {
                 
-                return odata.get_info(IdEmpresa,IdEmpleado, IdSolicitud);
+                return odata.get_info(IdEmpresa, IdSolicitud);
             }
             catch (Exception)
             {
@@ -85,8 +85,7 @@ namespace Core.Erp.Bus.RRHH
                     mensaje = "La fecha de retorno no puede ser menor a fecha fin de vacaciones";
                 if (info.Fecha_Hasta <= info.Fecha_Desde)
                     mensaje = "La fecha inicio no puede ser mayor que fecha fin";
-                if (info.Dias_a_disfrutar > info.Dias_q_Corresponde)
-                    mensaje = "No puede tomar mas dias de los ganados";
+               
 
 
                 return mensaje;

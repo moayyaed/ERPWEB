@@ -11,6 +11,7 @@ namespace Core.Erp.Data.RRHH
 {
     public class ro_Solicitud_Vacaciones_x_empleado_Data
     {
+        ro_Solicitud_Vacaciones_x_empleado_det_Data odata_det = new ro_Solicitud_Vacaciones_x_empleado_det_Data();
         public List<ro_Solicitud_Vacaciones_x_empleado_Info> get_list(int IdEmpresa, DateTime fechaInicio, DateTime FechaFin)
         {
             try
@@ -50,7 +51,7 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public ro_Solicitud_Vacaciones_x_empleado_Info get_info(int IdEmpresa,decimal IdEmpleado, decimal IdSolicitud)
+        public ro_Solicitud_Vacaciones_x_empleado_Info get_info(int IdEmpresa, decimal IdSolicitud)
         {
             try
             {
@@ -59,7 +60,6 @@ namespace Core.Erp.Data.RRHH
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     ro_Solicitud_Vacaciones_x_empleado Entity = Context.ro_Solicitud_Vacaciones_x_empleado.FirstOrDefault(q => q.IdEmpresa == IdEmpresa 
-                    && q.IdEmpleado==IdEmpleado
                     && q.IdSolicitud == IdSolicitud);
                     if (Entity == null) return null;
 
@@ -79,17 +79,7 @@ namespace Core.Erp.Data.RRHH
                         Estado = Entity.Estado,
                     };
 
-                  info.lst_vacaciones = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(q => q.IdEmpresa == IdEmpresa && q.IdSolicitud == q.IdSolicitud ).Select(q => new ro_Solicitud_Vacaciones_x_empleado_det_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdEmpleado = q.IdEmpleado,
-                        IdSolicitud = q.IdSolicitud,
-                         IdPeriodo_Fin=q.IdPeriodo_Fin,
-                        IdPeriodo_Inicio=q.IdPeriodo_Inicio,
-                        Dias_tomados=q.Dias_tomados,
-                        Tipo_liquidacion=q.Tipo_liquidacion,
-                        Tipo_vacacion=q.Tipo_vacacion
-                    }).ToList();
+                    info.lst_vacaciones = odata_det.get_list(IdEmpresa, IdSolicitud);
                 }
 
                 return info;
@@ -162,7 +152,9 @@ namespace Core.Erp.Data.RRHH
                             Observacion=info.Observacion,
                             Tipo_liquidacion=item.Tipo_liquidacion,
                             Tipo_vacacion=item.Tipo_vacacion,
-                            
+                            Dias_tomados = item.Dias_tomados,
+
+
                         };
                         Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);
                        
@@ -232,8 +224,9 @@ namespace Core.Erp.Data.RRHH
                             Secuencia = item.Secuencia,
                             IdPeriodo_Inicio = item.IdPeriodo_Inicio,
                             IdPeriodo_Fin = item.IdPeriodo_Fin,
-                            Observacion = item.Observacion,
+                            Observacion = info.Observacion,
                             Tipo_vacacion=item.Tipo_vacacion,
+                            Dias_tomados=item.Dias_tomados,
                             Tipo_liquidacion=item.Tipo_liquidacion
                         };
                         Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Add(add);

@@ -41,8 +41,6 @@ namespace Core.Erp.Data
         public DbSet<ro_empleado_x_horario> ro_empleado_x_horario { get; set; }
         public DbSet<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public DbSet<ro_empleado_x_titulos> ro_empleado_x_titulos { get; set; }
-        public DbSet<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
-        public DbSet<ro_Historico_Liquidacion_Vacaciones_Det> ro_Historico_Liquidacion_Vacaciones_Det { get; set; }
         public DbSet<ro_horario> ro_horario { get; set; }
         public DbSet<ro_horario_planificacion> ro_horario_planificacion { get; set; }
         public DbSet<ro_horario_planificacion_det> ro_horario_planificacion_det { get; set; }
@@ -58,8 +56,6 @@ namespace Core.Erp.Data
         public DbSet<vwRo_ActaFiniquito> vwRo_ActaFiniquito { get; set; }
         public DbSet<vwro_empleado_x_rubro_acumulado> vwro_empleado_x_rubro_acumulado { get; set; }
         public DbSet<vwro_empleado_x_titulos> vwro_empleado_x_titulos { get; set; }
-        public DbSet<vwro_Historico_Liquidacion_Vacaciones> vwro_Historico_Liquidacion_Vacaciones { get; set; }
-        public DbSet<vwro_horario_planificacion_det> vwro_horario_planificacion_det { get; set; }
         public DbSet<vwro_rubro_tipo> vwro_rubro_tipo { get; set; }
         public DbSet<ro_tabla_Impu_Renta> ro_tabla_Impu_Renta { get; set; }
         public DbSet<vwro_empleado_x_Proyeccion_Gastos_Personales> vwro_empleado_x_Proyeccion_Gastos_Personales { get; set; }
@@ -162,6 +158,10 @@ namespace Core.Erp.Data
         public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
         public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
         public DbSet<vwRo_Solicitud_Vacaciones> vwRo_Solicitud_Vacaciones { get; set; }
+        public DbSet<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
+        public DbSet<ro_Historico_Liquidacion_Vacaciones_Det> ro_Historico_Liquidacion_Vacaciones_Det { get; set; }
+        public DbSet<vwro_Historico_Liquidacion_Vacaciones> vwro_Historico_Liquidacion_Vacaciones { get; set; }
+        public DbSet<vwro_horario_planificacion_det> vwro_horario_planificacion_det { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

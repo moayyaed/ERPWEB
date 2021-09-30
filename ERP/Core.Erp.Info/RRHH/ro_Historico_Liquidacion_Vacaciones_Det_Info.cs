@@ -11,7 +11,7 @@ namespace Core.Erp.Info.RRHH
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public int IdLiquidacion { get; set; }
-        public int Sec { get; set; }
+        public int Secuencia { get; set; }
         public int Anio { get; set; }
         public int Mes { get; set; }
         public double Total_Remuneracion { get; set; }

@@ -22,13 +22,7 @@ namespace Core.Erp.Data
         public double ValorCancelado { get; set; }
         public System.DateTime FechaPago { get; set; }
         public string Observaciones { get; set; }
-        public int Dias_q_Corresponde { get; set; }
-        public int Dias_a_disfrutar { get; set; }
-        public int Dias_pendiente { get; set; }
-        public string Periodo { get; set; }
         public string Estado { get; set; }
-        public System.DateTime Anio_Desde { get; set; }
-        public System.DateTime Anio_Hasta { get; set; }
         public System.DateTime Fecha_Desde { get; set; }
         public System.DateTime Fecha_Hasta { get; set; }
         public System.DateTime Fecha_Retorno { get; set; }

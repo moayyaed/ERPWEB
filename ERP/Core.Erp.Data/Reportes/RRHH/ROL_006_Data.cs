@@ -26,19 +26,12 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  pe_cedulaRuc = q.pe_cedulaRuc,
                                  IdEmpleado = q.IdEmpleado,
                                  IdSolicitud = q.IdSolicitud,
-                                 Anio_Desde = q.Anio_Hasta,
-                                 Dias_pendiente = q.Dias_pendiente,
-                                 Dias_a_disfrutar = q.Dias_a_disfrutar,
-                                 Dias_q_Corresponde = q.Dias_q_Corresponde,
-                                 AnioServicio = q.AnioServicio,
                                  Fecha = q.Fecha,
                                  Fecha_Desde = q.Fecha_Desde,
                                  Fecha_Hasta = q.Fecha_Hasta,
                                  Fecha_Retorno = q.Fecha_Retorno,
                                  Observacion = q.Observacion,
                                  de_descripcion = q.de_descripcion,
-                                 Canceladas = q.Canceladas,
-                                 Gozadas_Pgadas = q.Gozadas_Pgadas,
                                  em_fechaIngaRol = q.em_fechaIngaRol,
                                  ca_descripcion = q.ca_descripcion,
                                  ValorCancelado = q.ValorCancelado,
@@ -48,7 +41,6 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  Total_Remuneracion = q.Total_Remuneracion,
                                  Total_Vacaciones = q.Total_Vacaciones,
                                  Valor_Cancelar = q.Valor_Cancelar,
-                                 Iess = q.Iess
                              }).ToList();
                 }
                 Lista.ForEach(v => v.periodo = v.Anio.ToString() + "-" + v.Mes.ToString());

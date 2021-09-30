@@ -189,7 +189,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                   
                 };
                 
-                var  info_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
+                var  info_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSolicitud);
                 model = bus_liquidacion.obtener_valores(info_solicitud);
                 model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
@@ -344,11 +344,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             string IdSolicitud = !string.IsNullOrEmpty(Request.Params["IdSolicitud"]) ? Request.Params["IdSolicitud"].ToString() : "0";
             string IdEmpleado = !string.IsNullOrEmpty(Request.Params["IdEmpleado"]) ? Request.Params["IdEmpleado"].ToString() : "0";
 
-            var ro_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(IdEmpleado), Convert.ToInt32(IdSolicitud));
+            var ro_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa),  Convert.ToInt32(IdSolicitud));
             if (ro_solicitud == null)
                 ro_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Info();
             info_det.Total_Vacaciones = info_det.Total_Remuneracion / 24;
-            info_det.Valor_Cancelar = (info_det.Total_Vacaciones / ro_solicitud.Dias_q_Corresponde)*ro_solicitud.Dias_a_disfrutar;
+           // info_det.Valor_Cancelar = (info_det.Total_Vacaciones / ro_solicitud.Dias_q_Corresponde)*ro_solicitud.Dias_a_disfrutar;
 
             ro_Historico_Liquidacion_Vacaciones_Det_Info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             model.detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)) as List<ro_Historico_Liquidacion_Vacaciones_Det_Info>;
@@ -358,9 +358,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public JsonResult get_list_vacaciones(DateTime? Anio_Desde, DateTime? Anio_Hasta, decimal IdEmpleado = 0, decimal IdSolicitud=0)
         {
             IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            var info_solicitud = bus_solicitud.get_info(IdEmpresa, IdEmpleado, IdSolicitud);
-            info_solicitud.Anio_Desde = Convert.ToDateTime(Anio_Desde);
-            info_solicitud.Anio_Hasta = Convert.ToDateTime(Anio_Hasta);
+            var info_solicitud = bus_solicitud.get_info(IdEmpresa, IdSolicitud);
+            //info_solicitud.Anio_Desde = Convert.ToDateTime(Anio_Desde);
+            //info_solicitud.Anio_Hasta = Convert.ToDateTime(Anio_Hasta);
             var  model = bus_liquidacion.obtener_valores(info_solicitud);
             if (model != null)
             {
@@ -414,7 +414,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
         public void UpdateRow(ro_Historico_Liquidacion_Vacaciones_Det_Info info_det, decimal IdTransaccionSession)
         {
-            ro_Historico_Liquidacion_Vacaciones_Det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Sec == info_det.Sec).First();
+            ro_Historico_Liquidacion_Vacaciones_Det_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).First();
             edited_info.IdLiquidacion = info_det.IdLiquidacion;
             edited_info.Total_Remuneracion = info_det.Total_Remuneracion;
             edited_info.Total_Vacaciones = info_det.Total_Vacaciones;

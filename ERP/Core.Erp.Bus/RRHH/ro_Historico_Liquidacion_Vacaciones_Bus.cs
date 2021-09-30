@@ -136,34 +136,28 @@ namespace Core.Erp.Bus.RRHH
                 {
                     info.IdSolicitud = info_solicitud.IdSolicitud;
                     info.IdEmpleado = info_solicitud.IdEmpleado;
-                    info.Dias_q_Corresponde = info_solicitud.Dias_q_Corresponde;
-                    info.Dias_pendiente = info_solicitud.Dias_pendiente;
-                    info.Dias_a_disfrutar = info_solicitud.Dias_a_disfrutar;
                     info.Fecha_Desde = info_solicitud.Fecha_Desde;
                     info.Fecha_Hasta = info_solicitud.Fecha_Hasta;
                     info.Fecha_Retorno = info_solicitud.Fecha_Retorno;
-                    info.Anio_Desde = info_solicitud.Anio_Desde;
-                    info.Anio_Hasta = info_solicitud.Anio_Hasta;
-                    info_solicitud.Anio_Hasta = info_solicitud.Anio_Hasta;
-                    while (info_solicitud.Anio_Desde<info_solicitud.Anio_Hasta)
-                    {
-                        double valor_provision = 0;
-                        valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(info_solicitud.IdEmpresa, info.IdEmpleado, info_solicitud.Anio_Desde.Year, info_solicitud.Anio_Desde.Month);
-                        ro_Historico_Liquidacion_Vacaciones_Det_Info info_det = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
-                        info_det.Anio = info_solicitud.Anio_Desde.Year;
-                        info_det.Mes = info_solicitud.Anio_Desde.Month;
-                        info_det.Total_Remuneracion = valor_provision*24;
-                        info_det.Total_Vacaciones = valor_provision;
-                        if (valor_provision != 0)
-                        {
-                            info_det.Valor_Cancelar =( valor_provision /15)* info_solicitud.Dias_a_disfrutar;
-                        }
+                    //while (info_solicitud.Anio_Desde<info_solicitud.Anio_Hasta)
+                    //{
+                    //    double valor_provision = 0;
+                    //    valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(info_solicitud.IdEmpresa, info.IdEmpleado, info_solicitud.Anio_Desde.Year, info_solicitud.Anio_Desde.Month);
+                    //    ro_Historico_Liquidacion_Vacaciones_Det_Info info_det = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
+                    //    info_det.Anio = info_solicitud.Anio_Desde.Year;
+                    //    info_det.Mes = info_solicitud.Anio_Desde.Month;
+                    //    info_det.Total_Remuneracion = valor_provision*24;
+                    //    info_det.Total_Vacaciones = valor_provision;
+                    //    if (valor_provision != 0)
+                    //    {
+                    //        info_det.Valor_Cancelar =( valor_provision /15)* info_solicitud.Dias_a_disfrutar;
+                    //    }
                         
-                        info_solicitud.Anio_Desde= info_solicitud.Anio_Desde.AddMonths(1);
-                        info_det.Sec = secuancia;
-                        info.detalle.Add(info_det);
-                        secuancia++;
-                    }
+                    //    info_solicitud.Anio_Desde= info_solicitud.Anio_Desde.AddMonths(1);
+                    //    info_det.Sec = secuancia;
+                    //    info.detalle.Add(info_det);
+                    //    secuancia++;
+                    //}
                     return info;
 
                 }

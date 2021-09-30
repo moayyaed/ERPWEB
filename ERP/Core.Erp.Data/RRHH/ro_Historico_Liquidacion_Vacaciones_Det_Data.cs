@@ -16,14 +16,13 @@ namespace Core.Erp.Data.RRHH
                 {
                     ro_Historico_Liquidacion_Vacaciones_Det add = new ro_Historico_Liquidacion_Vacaciones_Det();
                     add.IdEmpresa = info.IdEmpresa;
-                    add.IdEmpleado = info.IdEmpleado;
                     add.IdLiquidacion = info.IdLiquidacion;
                     add.Anio = info.Anio;
                     add.Mes = info.Mes;
                     add.Total_Remuneracion = info.Total_Remuneracion;
                     add.Total_Vacaciones = info.Total_Vacaciones;
                     add.Valor_Cancelar = info.Valor_Cancelar;
-                    add.Sec = info.Sec;
+                    add.Secuencia = info.Secuencia;
                     db.ro_Historico_Liquidacion_Vacaciones_Det.Add(add);
                     db.SaveChanges();
                     return true;
@@ -57,7 +56,6 @@ namespace Core.Erp.Data.RRHH
             {
                 var Query = from q in oEnti.ro_Historico_Liquidacion_Vacaciones_Det
                             where q.IdEmpresa == IdEmpresa
-                            && q.IdEmpleado == idempleado
                             && q.IdLiquidacion == idsolicitud
                             select q;
                 foreach (var item in Query)
@@ -65,14 +63,13 @@ namespace Core.Erp.Data.RRHH
 
                     ro_Historico_Liquidacion_Vacaciones_Det_Info add = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
                     add.IdEmpresa = item.IdEmpresa;
-                    add.IdEmpleado = item.IdEmpleado;
                     add.IdLiquidacion = item.IdLiquidacion;
                     add.Anio = item.Anio;
                     add.Mes = item.Mes;
                     add.Total_Remuneracion = item.Total_Remuneracion;
                     add.Total_Vacaciones = item.Total_Vacaciones;
                     add.Valor_Cancelar = item.Valor_Cancelar;
-                    add.Sec = item.Sec;
+                    add.Secuencia = item.Secuencia;
                     Lst.Add(add);
                 }
                 return Lst;

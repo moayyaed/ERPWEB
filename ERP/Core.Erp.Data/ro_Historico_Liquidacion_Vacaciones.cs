@@ -14,16 +14,13 @@ namespace Core.Erp.Data
     
     public partial class ro_Historico_Liquidacion_Vacaciones
     {
-        public ro_Historico_Liquidacion_Vacaciones()
-        {
-            this.ro_Historico_Liquidacion_Vacaciones_Det = new HashSet<ro_Historico_Liquidacion_Vacaciones_Det>();
-        }
-    
         public int IdEmpresa { get; set; }
-        public decimal IdEmpleado { get; set; }
         public int IdLiquidacion { get; set; }
+        public decimal IdEmpleado { get; set; }
+        public int IdSolicitud { get; set; }
         public Nullable<decimal> IdOrdenPago { get; set; }
         public Nullable<int> IdEmpresa_OP { get; set; }
+        public string IdTipo_op { get; set; }
         public double ValorCancelado { get; set; }
         public System.DateTime FechaPago { get; set; }
         public string Observaciones { get; set; }
@@ -35,13 +32,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> FechaHoraAnul { get; set; }
         public string MotiAnula { get; set; }
         public string IdUsuarioUltAnu { get; set; }
-        public string EstadoContrato { get; set; }
-        public Nullable<double> Iess { get; set; }
-        public string IdTipo_op { get; set; }
-        public string Gozadas_Pagadas { get; set; }
-        public int IdSolicitud { get; set; }
     
-        public virtual ICollection<ro_Historico_Liquidacion_Vacaciones_Det> ro_Historico_Liquidacion_Vacaciones_Det { get; set; }
         public virtual ro_empleado ro_empleado { get; set; }
     }
 }

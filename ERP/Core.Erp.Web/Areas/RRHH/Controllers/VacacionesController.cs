@@ -220,7 +220,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
                 if (ModelState.IsValid)
                 {
-                    
+
+                    info.lst_vacaciones= ro_Solicitud_Vacaciones_x_empleado_det_List.get_list( info.IdTransaccionSession);
 
                     if (mensaje != "")
                     {
@@ -250,7 +251,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdEmpleado = 0, decimal IdSolicitud = 0, bool Exito = false)
+        public ActionResult Modificar(decimal IdSolicitud = 0, bool Exito = false)
         {
             try
             {
@@ -262,9 +263,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 #endregion
 
                 cargar_combo();
-                ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
+                ro_Solicitud_Vacaciones_x_empleado_Info model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                
+                ro_Solicitud_Vacaciones_x_empleado_det_List.set_list(model.lst_vacaciones, model.IdTransaccionSession);
+                calcular_vacaciones(model.IdEmpresa, model.IdTransaccionSession);
                 if (Exito)
                     ViewBag.MensajeSuccess = MensajeSuccess;
 
@@ -307,7 +309,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
 
-                var model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdEmpleado, IdSolicitud);
+                var model = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSolicitud);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                
 

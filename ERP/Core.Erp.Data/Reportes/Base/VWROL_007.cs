@@ -20,21 +20,19 @@ namespace Core.Erp.Data.Reportes.Base
         public int IdEmpresa { get; set; }
         public decimal IdEmpleado { get; set; }
         public int IdSolicitud { get; set; }
-        public System.DateTime Anio_Desde { get; set; }
-        public System.DateTime Anio_Hasta { get; set; }
-        public int Dias_pendiente { get; set; }
-        public int Dias_a_disfrutar { get; set; }
-        public int Dias_q_Corresponde { get; set; }
-        public int AnioServicio { get; set; }
         public System.DateTime Fecha { get; set; }
         public System.DateTime Fecha_Desde { get; set; }
         public System.DateTime Fecha_Hasta { get; set; }
         public System.DateTime Fecha_Retorno { get; set; }
         public string Observacion { get; set; }
         public string de_descripcion { get; set; }
-        public bool Canceladas { get; set; }
-        public bool Gozadas_Pgadas { get; set; }
         public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
         public string ca_descripcion { get; set; }
+        public int IdPeriodo_Inicio { get; set; }
+        public int IdPeriodo_Fin { get; set; }
+        public int Dias_tomados { get; set; }
+        public int DiasGanado { get; set; }
+        public string Tipo_liquidacion { get; set; }
+        public string Tipo_vacacion { get; set; }
     }
 }
