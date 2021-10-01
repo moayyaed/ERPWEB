@@ -1848,9 +1848,6 @@
     <Compile Include="Reportes\Base\VWROL_030.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\Base\xxxx.cs">
-      <DependentUpon>Model_reportes.tt</DependentUpon>
-    </Compile>
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
