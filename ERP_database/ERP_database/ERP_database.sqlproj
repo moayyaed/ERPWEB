@@ -695,7 +695,6 @@
     <Build Include="dbo\Views\vwin_producto_x_tb_bodega_stock_x_lote.sql" />
     <Build Include="dbo\Views\vwin_Producto_Stock.sql" />
     <Build Include="web\Views\VWFAC_008_aplicaciones.sql" />
-    <Build Include="dbo\Views\vwro_Solicitud_Vacaciones_x_empleado.sql" />
     <Build Include="dbo\Views\vwin_Producto_Stock_x_Bodega.sql" />
     <Build Include="web\Views\VWFAC_009.sql" />
     <Build Include="dbo\Views\vwin_Producto_Stock_x_producto.sql" />
