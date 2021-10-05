@@ -31,11 +31,11 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public List<ro_Historico_Liquidacion_Vacaciones_Det_Info> Get_Lis(int IdEmpresa, decimal idempleado, decimal idsolicitud)
+        public List<ro_Historico_Liquidacion_Vacaciones_Det_Info> Get_Lis(int IdEmpresa, decimal idsolicitud)
         {
             try
             {
-                return data.Get_Lis(IdEmpresa, idempleado, idsolicitud);
+                return data.Get_Lis(IdEmpresa,  idsolicitud);
             }
             catch (Exception )
             {

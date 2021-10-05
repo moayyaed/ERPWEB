@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_Historico_Liquidacion_Vacaciones_Info info_liquidacion = new ro_Historico_Liquidacion_Vacaciones_Info();
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_Historico_Liquidacion_Vacaciones_List Lista_HistoricoVacaciones = new ro_Historico_Liquidacion_Vacaciones_List();
+        ro_Solicitud_Vacaciones_x_empleado_det_List ro_Solicitud_Vacaciones_x_empleado_det_List = new ro_Solicitud_Vacaciones_x_empleado_det_List();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         public static int IdSolicitud { get; set; }
@@ -134,10 +135,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     string mensaje = "";
-                    info.detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(info.IdTransaccionSession);
-                    if (info.detalle != null)
+                    info.lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(info.IdTransaccionSession);
+                    if (info.lst_detalle != null)
                     {
-                        foreach (var item in info.detalle)
+                        foreach (var item in info.lst_detalle)
                         {
                             if (item.Valor_Cancelar == 0)
                             {
@@ -190,11 +191,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 };
                 
                 var  info_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSolicitud);
-                model = bus_liquidacion.obtener_valores(info_solicitud);
+               // model = bus_liquidacion.obtener_valores(info_solicitud);
                 model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
                 IdSolicitud = model.IdSolicitud;
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.detalle, model.IdTransaccionSession);
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.lst_detalle, model.IdTransaccionSession);
 
                 cargar_combo();
                 return View(model);
@@ -215,10 +216,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     string mensaje = "";
-                    info.detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(info.IdTransaccionSession);
-                    if(info.detalle!=null)
+                    info.lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(info.IdTransaccionSession);
+                    if(info.lst_detalle!=null)
                     {
-                        foreach (var item in info.detalle)
+                        foreach (var item in info.lst_detalle)
                         {
                             if (item.Valor_Cancelar == 0)
                             {
@@ -255,7 +256,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdEmpleado = 0, decimal IdLiquidacion = 0, bool Exito = false)
+        public ActionResult Modificar(int IdEmpresa = 0,  decimal IdSolicitud = 0, bool Exito = false)
         {
             try
             {
@@ -266,9 +267,20 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
 
-                info_liquidacion = bus_liquidacion.get_info(IdEmpresa, IdEmpleado, IdLiquidacion);
+                info_liquidacion = bus_liquidacion.get_info(IdEmpresa, IdSolicitud);
                 info_liquidacion.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list( info_liquidacion.detalle, info_liquidacion.IdTransaccionSession);
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list( info_liquidacion.lst_detalle, info_liquidacion.IdTransaccionSession);
+                ro_Solicitud_Vacaciones_x_empleado_det_List.set_list(info_liquidacion.lst_periodos, info_liquidacion.IdTransaccionSession);
+
+                if(info_liquidacion.lst_detalle.Count==0)
+                {
+                    var info_sol_det = info_liquidacion.lst_periodos.FirstOrDefault(m => m.Tipo_liquidacion == "GOZA");
+                    if(info_sol_det!=null)
+                        info_liquidacion.lst_detalle = bus_liquidacion.obtener_valores(info_liquidacion.IdEmpresa, info_liquidacion.IdEmpleado,info_sol_det.FechaIni, info_sol_det.FechaFin,info_sol_det.Dias_tomados);
+                        ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(info_liquidacion.lst_detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                    
+                }
+               
                 cargar_combo();
                 if (Exito)
                     ViewBag.MensajeSuccess = MensajeSuccess;
@@ -303,7 +315,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Anular(int IdEmpresa=0, decimal IdEmpleado = 0, decimal IdLiquidacion = 0)
+        public ActionResult Anular(int IdEmpresa=0, decimal   IdSolicitud = 0)
         {
             try
             {
@@ -314,9 +326,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
                 #endregion
 
-                info_liquidacion = bus_liquidacion.get_info(IdEmpresa, IdEmpleado, IdLiquidacion);
+                info_liquidacion = bus_liquidacion.get_info(IdEmpresa, IdSolicitud);
                 info_liquidacion.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list( info_liquidacion.detalle, info_liquidacion.IdTransaccionSession);
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list( info_liquidacion.lst_detalle, info_liquidacion.IdTransaccionSession);
                 cargar_combo();
                 return View(info_liquidacion);
 
@@ -351,8 +363,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
            // info_det.Valor_Cancelar = (info_det.Total_Vacaciones / ro_solicitud.Dias_q_Corresponde)*ro_solicitud.Dias_a_disfrutar;
 
             ro_Historico_Liquidacion_Vacaciones_Det_Info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            model.detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)) as List<ro_Historico_Liquidacion_Vacaciones_Det_Info>;
-            return PartialView("_GridViewPartial_vacaciones_liquidadas_det", model.detalle);
+            model.lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)) as List<ro_Historico_Liquidacion_Vacaciones_Det_Info>;
+            return PartialView("_GridViewPartial_vacaciones_liquidadas_det", model.lst_detalle);
         }
 
         public JsonResult get_list_vacaciones(DateTime? Anio_Desde, DateTime? Anio_Hasta, decimal IdEmpleado = 0, decimal IdSolicitud=0)
@@ -361,12 +373,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             var info_solicitud = bus_solicitud.get_info(IdEmpresa, IdSolicitud);
             //info_solicitud.Anio_Desde = Convert.ToDateTime(Anio_Desde);
             //info_solicitud.Anio_Hasta = Convert.ToDateTime(Anio_Hasta);
-            var  model = bus_liquidacion.obtener_valores(info_solicitud);
-            if (model != null)
-            {
+            //var  model = bus_liquidacion.obtener_valores(info_solicitud);
+            //if (model != null)
+            //{
                 
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-            }
+            //    ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.lst_detalle, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //}
             return Json("", JsonRequestBehavior.AllowGet);
         }
     }
@@ -383,7 +395,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
                 HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ro_Historico_Liquidacion_Vacaciones_Info>)HttpContext.Current.Session[variable];
+            return (List<ro_Historico_Liquidacion_Vacaciones_Info>)HttpContext.Current.Session[variable + IdTransaccionSession.ToString()];
         }
 
         public void set_list(List<ro_Historico_Liquidacion_Vacaciones_Info> list, decimal IdTransaccionSession)

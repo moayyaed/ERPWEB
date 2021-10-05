@@ -6,7 +6,7 @@
         settings.CallbackRouteValues = new { Controller = "LiquidacionVacaciones", Action = "GridViewPartial_vacaciones_liquidadas", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin };
 
         settings.Width = Unit.Percentage(100);
-        settings.KeyFieldName = "IdLiquidacion";
+        settings.KeyFieldName = "IdSolicitud";
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -66,14 +66,14 @@
             c.Width = Unit.Percentage(5);
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
-                {
+                //if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == null )
+                //{
                     ViewContext.Writer.Write(
-                         Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") }) + "&nbsp;" +
-                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdEmpleado = DataBinder.Eval(tc.DataItem, "IdEmpleado"), IdLiquidacion = DataBinder.Eval(tc.DataItem, "IdLiquidacion") },
+                         Html.ActionLink("Liquidar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") }) + "&nbsp;" +
+                         Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSolicitud = DataBinder.Eval(tc.DataItem, "IdSolicitud") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
-                }
+                //}
 
             });
 
@@ -83,17 +83,38 @@
         });
 
 
-        settings.Columns.Add("IdLiquidacion", "ID").Width = Unit.Percentage(5);
-        settings.Columns.Add("empleado", "Empleado").Width = Unit.Percentage(25);
 
-        settings.Columns.Add("Observaciones", "Observación").Width = Unit.Percentage(15);
-        settings.Columns.Add("Dias_q_Corresponde", "Ganados").Width = Unit.Percentage(10);
-        settings.Columns.Add("Dias_a_disfrutar", "Tomados").Width = Unit.Percentage(10);
-        settings.Columns.Add("Dias_pendiente", "Pendientes").Width = Unit.Percentage(10);
+        settings.Columns.Add("IdSolicitud", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("pe_nombre_completo", "Empleado").Width = Unit.Percentage(25);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "FechaPago";
-            column.Caption = "Fecha pago";
+            column.FieldName = "Fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha";
+            column.Caption = "Solicitud";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_Desde";
+            column.Caption = "Desde";
             column.Width = Unit.Percentage(11);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
@@ -102,7 +123,30 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("Periodo","Periodo").Width = Unit.Percentage(20);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_Hasta";
+            column.Caption = "Hasta";
+            column.Width = Unit.Percentage(11);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_Retorno";
+            column.Caption = "Retorna";
+            column.Width = Unit.Percentage(11);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";

@@ -28,7 +28,6 @@ namespace Core.Erp.Data.RRHH
                         IdSolicitud = q.IdSolicitud,
                         IdEstadoAprobacion = q.IdEstadoAprobacion,
                         Fecha = q.Fecha,
-                       
                         Fecha_Desde = q.Fecha_Desde,
                         Fecha_Hasta = q.Fecha_Hasta,
                         Fecha_Retorno = q.Fecha_Retorno,
@@ -39,7 +38,9 @@ namespace Core.Erp.Data.RRHH
                         pe_nombre_completo = q.pe_apellido + " " + q.pe_nombre,
                         Estado = q.Estado,
                         Estado_liquidacion = q.Estado_liquidacion,
-                        EstadoBool = q.Estado == "A" ? true : false
+                        EstadoBool = q.Estado == "A" ? true : false,
+
+                       
                     }).ToList();
                 }
 

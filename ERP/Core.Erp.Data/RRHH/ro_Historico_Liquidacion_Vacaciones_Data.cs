@@ -11,7 +11,8 @@ namespace Core.Erp.Data.RRHH
 {
   public  class ro_Historico_Liquidacion_Vacaciones_Data
     {
-
+        ro_Solicitud_Vacaciones_x_empleado_det_Data odata_det = new ro_Solicitud_Vacaciones_x_empleado_det_Data();
+        ro_Historico_Liquidacion_Vacaciones_Det_Data odata_det_liq = new ro_Historico_Liquidacion_Vacaciones_Det_Data();
 
         public List<ro_Historico_Liquidacion_Vacaciones_Info> get_list(int IdEmpresa,DateTime FechaInicio, DateTime FechaFin)
         {
@@ -24,21 +25,28 @@ namespace Core.Erp.Data.RRHH
                 {
                     Lista = (from q in Context.vwro_Historico_Liquidacion_Vacaciones
                              where q.IdEmpresa == IdEmpresa
-                              && q.FechaPago >= FechaInicio
-                                 && q.FechaPago <= FechaFin
+                              && q.Fecha_Desde >= FechaInicio
+                                 && q.Fecha_Desde <= FechaFin
                              select new ro_Historico_Liquidacion_Vacaciones_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
                                  IdEmpleado = q.IdEmpleado,
-                                 IdSolicitud = q.IdLiquidacion,
-                                 IdLiquidacion=q.IdLiquidacion,
-                                 empleado=q.pe_apellido+" "+q.pe_nombre,
-                                 ValorCancelado=q.ValorCancelado,
-                                 Observaciones=q.Observaciones,
-                                 FechaPago=q.FechaPago,
-                                 Estado=q.Estado,
+                                 IdSolicitud = q.IdSolicitud,
+                                 IdEstadoAprobacion = q.IdEstadoAprobacion,
+                                 Fecha = q.Fecha,
 
-                                 EstadoBool = q.Estado == "A" ? true : false
+                                 Fecha_Desde = q.Fecha_Desde,
+                                 Fecha_Hasta = q.Fecha_Hasta,
+                                 Fecha_Retorno = q.Fecha_Retorno,
+                                 Gozadas = q.Gozadas,
+                                 pe_nombre_completo = q.pe_nombreCompleto,
+                                 Estado = q.Estado,
+                                 EstadoBool = q.Estado == "A" ? true : false,
+
+                                 IdOrdenPago=q.IdOrdenPago,
+                                 IdEmpresa_OP=q.IdEmpresa_OP,
+                                 IdTipo_op=q.IdTipo_op
+                                 
                              }).ToList();
                 }
                 return Lista;
@@ -49,7 +57,7 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public ro_Historico_Liquidacion_Vacaciones_Info get_info(int IdEmpresa, decimal IdEmpleado, decimal IdLiquidacion)
+        public ro_Historico_Liquidacion_Vacaciones_Info get_info(int IdEmpresa,  decimal IdSolicitud)
         {
             try
             {
@@ -57,24 +65,29 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    var q = Context.vwro_Historico_Liquidacion_Vacaciones.FirstOrDefault(v => v.IdEmpresa == IdEmpresa
-                    && v.IdEmpleado == IdEmpleado
-                    && v.IdLiquidacion == IdLiquidacion);
-                    if (q == null) return null;
+                    vwro_Historico_Liquidacion_Vacaciones Entity = Context.vwro_Historico_Liquidacion_Vacaciones.FirstOrDefault(q => q.IdEmpresa == IdEmpresa
+                   && q.IdSolicitud == IdSolicitud);
+                    if (Entity == null) return null;
+
                     info = new ro_Historico_Liquidacion_Vacaciones_Info
                     {
-                        IdEmpresa = q.IdEmpresa,
-                        IdEmpleado = q.IdEmpleado,
-                        IdSolicitud = q.IdLiquidacion,
-                        empleado = q.pe_apellido + " " + q.pe_nombre,
-                        ValorCancelado = q.ValorCancelado,
-                        Observaciones = q.Observaciones,
-                        FechaPago = q.FechaPago,
-                        Estado = q.Estado,
-                        Fecha_Desde=q.Fecha_Desde,
-                        Fecha_Hasta=q.Fecha_Hasta,
-                        Fecha_Retorno=q.Fecha_Retorno
+                        IdEmpresa = Entity.IdEmpresa,
+                        IdEmpleado = Entity.IdEmpleado,
+                        IdSolicitud = Entity.IdSolicitud,
+                        IdEstadoAprobacion = Entity.IdEstadoAprobacion,
+                        Fecha = Entity.Fecha,
+                        Fecha_Desde = Entity.Fecha_Desde,
+                        Fecha_Hasta = Entity.Fecha_Hasta,
+                        Fecha_Retorno = Entity.Fecha_Retorno,
+                        Observaciones = Entity.Observacion,
+                        Gozadas = Entity.Gozadas,
+                        Estado = Entity.Estado,
                     };
+
+                    info.lst_periodos = odata_det.get_list(IdEmpresa, IdSolicitud);
+                    if(Entity.IdLiquidacion!=null)
+                    info.lst_detalle = odata_det_liq.Get_Lis(IdEmpresa, IdSolicitud);
+
                 }
 
                 return info;
@@ -184,7 +197,6 @@ namespace Core.Erp.Data.RRHH
                 Entities_rrhh OEEmpleado = new Entities_rrhh();
                 var select = from q in OEEmpleado.ro_Historico_Liquidacion_Vacaciones
                              where q.IdEmpresa == IdEmpresa 
-                             && q.IdEmpleado == IdEmpleado
                              select q;
                 if (select.ToList().Count() == 0)
                 {
@@ -193,7 +205,7 @@ namespace Core.Erp.Data.RRHH
                 else
                 {
                     var select_em = (from q in OEEmpleado.ro_Historico_Liquidacion_Vacaciones
-                                     where q.IdEmpresa == IdEmpresa && q.IdEmpleado == IdEmpleado
+                                     where q.IdEmpresa == IdEmpresa 
                                      select q.IdLiquidacion).Max();
                     Id = Convert.ToInt32(select_em.ToString()) + 1;
                 }

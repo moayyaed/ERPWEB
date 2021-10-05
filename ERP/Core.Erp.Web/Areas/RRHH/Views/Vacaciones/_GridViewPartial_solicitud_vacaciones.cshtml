@@ -94,8 +94,18 @@
 
         settings.Columns.Add("IdSolicitud","ID").Width = Unit.Percentage(5);
         settings.Columns.Add("pe_nombre_completo","Empleado").Width=Unit.Percentage(25);
-        settings.Columns.Add("Fecha");
         settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        }); settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Solicitud";
@@ -154,7 +164,7 @@
 
             });
         });
-       
+
         settings.Columns.Add(column =>
         {
             column.SetDataItemTemplateContent(c =>

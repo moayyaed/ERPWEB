@@ -48,31 +48,25 @@ namespace Core.Erp.Data.RRHH
                 throw ;
             }
         }
-        public List<ro_Historico_Liquidacion_Vacaciones_Det_Info> Get_Lis(int IdEmpresa, decimal idempleado, decimal idsolicitud)
+        public List<ro_Historico_Liquidacion_Vacaciones_Det_Info> Get_Lis(int IdEmpresa,  decimal IdLiquidacion)
         {
             List<ro_Historico_Liquidacion_Vacaciones_Det_Info> Lst = new List<ro_Historico_Liquidacion_Vacaciones_Det_Info>();
             Entities_rrhh oEnti = new Entities_rrhh();
             try
             {
-                var Query = from q in oEnti.ro_Historico_Liquidacion_Vacaciones_Det
-                            where q.IdEmpresa == IdEmpresa
-                            && q.IdLiquidacion == idsolicitud
-                            select q;
-                foreach (var item in Query)
+              
+                Lst = oEnti.ro_Historico_Liquidacion_Vacaciones_Det.Where(q => q.IdEmpresa == IdEmpresa && q.IdLiquidacion ==IdLiquidacion).Select(q => new ro_Historico_Liquidacion_Vacaciones_Det_Info
                 {
-
-                    ro_Historico_Liquidacion_Vacaciones_Det_Info add = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
-                    add.IdEmpresa = item.IdEmpresa;
-                    add.IdLiquidacion = item.IdLiquidacion;
-                    add.Anio = item.Anio;
-                    add.Mes = item.Mes;
-                    add.Total_Remuneracion = item.Total_Remuneracion;
-                    add.Total_Vacaciones = item.Total_Vacaciones;
-                    add.Valor_Cancelar = item.Valor_Cancelar;
-                    add.Secuencia = item.Secuencia;
-                    Lst.Add(add);
-                }
-                return Lst;
+                    IdEmpresa = q.IdEmpresa,
+                    IdLiquidacion = q.IdLiquidacion,
+                    Anio = q.Anio,
+                    Mes = q.Mes,
+                    Total_Remuneracion = q.Total_Remuneracion,
+                    Total_Vacaciones = q.Total_Vacaciones,
+                    Valor_Cancelar = q.Valor_Cancelar,
+                    Secuencia = q.Secuencia,
+            }).ToList();
+            return Lst;
             }
             catch (Exception )
             {

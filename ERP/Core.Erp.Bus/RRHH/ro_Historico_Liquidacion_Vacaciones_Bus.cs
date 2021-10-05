@@ -12,7 +12,6 @@ namespace Core.Erp.Bus.RRHH
         #region MyRegion
         ro_Solicitud_Vacaciones_x_empleado_Bus bus_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Bus();
         ro_Historico_Liquidacion_Vacaciones_Data data = new ro_Historico_Liquidacion_Vacaciones_Data();
-        ro_Historico_Liquidacion_Vacaciones_Info info = new ro_Historico_Liquidacion_Vacaciones_Info();
         ro_Solicitud_Vacaciones_x_empleado_Info info_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Info();
         ro_rol_detalle_x_rubro_acumulado_Bus bus_rubros_acumulados = new ro_rol_detalle_x_rubro_acumulado_Bus();
         ro_Historico_Liquidacion_Vacaciones_Det_Bus bus_detalle = new ro_Historico_Liquidacion_Vacaciones_Det_Bus();
@@ -25,8 +24,8 @@ namespace Core.Erp.Bus.RRHH
 
                 if (data.guardarDB(Info))
                 {
-                    bus_detalle.Eliminar(info);
-                    foreach (var item in Info.detalle)
+                    bus_detalle.Eliminar(Info);
+                    foreach (var item in Info.lst_detalle)
                     {
                         item.IdEmpleado = Info.IdEmpleado;
                         item.IdEmpresa = Info.IdEmpresa;
@@ -42,7 +41,7 @@ namespace Core.Erp.Bus.RRHH
             catch (Exception ex )
             {
                 tb_LogError_Bus LogData = new tb_LogError_Bus();
-                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Bus", Metodo = "guardarDB", IdUsuario = info.IdUsuario });
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Bus", Metodo = "guardarDB", IdUsuario = Info.IdUsuario });
                 return false;
             }
 
@@ -51,11 +50,11 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                Info.ValorCancelado = Info.detalle.Sum(v=>v.Valor_Cancelar);
+                Info.ValorCancelado = Info.lst_detalle.Sum(v=>v.Valor_Cancelar);
                 if (data.modificarDB(Info))
                 {
                     bus_detalle.Eliminar(Info);
-                    foreach (var item in Info.detalle)
+                    foreach (var item in Info.lst_detalle)
                     {
                         item.IdEmpleado = Info.IdEmpleado;
                         item.IdEmpresa = Info.IdEmpresa;
@@ -71,7 +70,7 @@ namespace Core.Erp.Bus.RRHH
             catch (Exception ex)
             {
                 tb_LogError_Bus LogData = new tb_LogError_Bus();
-                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Bus", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Bus", Metodo = "modificarDB", IdUsuario = Info.IdUsuario });
                 return false;
             }
 
@@ -91,13 +90,13 @@ namespace Core.Erp.Bus.RRHH
 
         }
 
-        public ro_Historico_Liquidacion_Vacaciones_Info get_info(int IdEmpresa, decimal IdEmpleado, decimal IdLiquidacion)
+        public ro_Historico_Liquidacion_Vacaciones_Info get_info(int IdEmpresa, decimal IdLiquidacion)
         {
             try
             {
                 ro_Historico_Liquidacion_Vacaciones_Info info = new ro_Historico_Liquidacion_Vacaciones_Info();
-                info= data.get_info(IdEmpresa, IdEmpleado, IdLiquidacion);
-               info.detalle= bus_detalle.Get_Lis(IdEmpresa, IdEmpleado, IdLiquidacion);
+                info= data.get_info(IdEmpresa, IdLiquidacion);
+               info.lst_detalle= bus_detalle.Get_Lis(IdEmpresa, IdLiquidacion);
                 return info;
             }
             catch (Exception)
@@ -110,7 +109,7 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                Info.ValorCancelado = Info.detalle.Sum(v => v.Valor_Cancelar);
+                Info.ValorCancelado = Info.lst_detalle.Sum(v => v.Valor_Cancelar);
                 if (data.anularDB(Info))
                 {
                    
@@ -124,43 +123,34 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }      
-       public ro_Historico_Liquidacion_Vacaciones_Info obtener_valores(ro_Solicitud_Vacaciones_x_empleado_Info info_solicitud)
+       public List<ro_Historico_Liquidacion_Vacaciones_Det_Info> obtener_valores(int IdEmpresa, decimal IdEmpleado, DateTime Anio_Desde, DateTime Anio_Hasta, int dias)
         {
             try
             {
-                int secuancia = 1;
-               
-                if (info_solicitud == null)
-                    return new ro_Historico_Liquidacion_Vacaciones_Info();
-                else
-                {
-                    info.IdSolicitud = info_solicitud.IdSolicitud;
-                    info.IdEmpleado = info_solicitud.IdEmpleado;
-                    info.Fecha_Desde = info_solicitud.Fecha_Desde;
-                    info.Fecha_Hasta = info_solicitud.Fecha_Hasta;
-                    info.Fecha_Retorno = info_solicitud.Fecha_Retorno;
-                    //while (info_solicitud.Anio_Desde<info_solicitud.Anio_Hasta)
-                    //{
-                    //    double valor_provision = 0;
-                    //    valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(info_solicitud.IdEmpresa, info.IdEmpleado, info_solicitud.Anio_Desde.Year, info_solicitud.Anio_Desde.Month);
-                    //    ro_Historico_Liquidacion_Vacaciones_Det_Info info_det = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
-                    //    info_det.Anio = info_solicitud.Anio_Desde.Year;
-                    //    info_det.Mes = info_solicitud.Anio_Desde.Month;
-                    //    info_det.Total_Remuneracion = valor_provision*24;
-                    //    info_det.Total_Vacaciones = valor_provision;
-                    //    if (valor_provision != 0)
-                    //    {
-                    //        info_det.Valor_Cancelar =( valor_provision /15)* info_solicitud.Dias_a_disfrutar;
-                    //    }
-                        
-                    //    info_solicitud.Anio_Desde= info_solicitud.Anio_Desde.AddMonths(1);
-                    //    info_det.Sec = secuancia;
-                    //    info.detalle.Add(info_det);
-                    //    secuancia++;
-                    //}
-                    return info;
+                    int secuancia = 1;
+                List<ro_Historico_Liquidacion_Vacaciones_Det_Info> lst_detalle=new List<ro_Historico_Liquidacion_Vacaciones_Det_Info>();
+                    while (Anio_Desde < Anio_Hasta)
+                    {
+                        double valor_provision = 0;
+                        valor_provision = bus_rubros_acumulados.get_vac_x_mes_x_anio(info_solicitud.IdEmpresa, IdEmpleado, Anio_Desde.Year, Anio_Desde.Month);
+                        ro_Historico_Liquidacion_Vacaciones_Det_Info info_det = new ro_Historico_Liquidacion_Vacaciones_Det_Info();
+                        info_det.Anio = Anio_Desde.Year;
+                        info_det.Mes = Anio_Desde.Month;
+                        info_det.Total_Remuneracion = valor_provision * 24;
+                        info_det.Total_Vacaciones = valor_provision;
+                        if (valor_provision != 0)
+                        {
+                            info_det.Valor_Cancelar = (valor_provision / 15) * dias;
+                        }
 
-                }
+                        Anio_Desde = Anio_Desde.AddMonths(1);
+                        info_det.Secuencia = secuancia;
+                        lst_detalle.Add(info_det);
+                        secuancia++;
+                    }
+                    return lst_detalle;
+
+                
 
             }
             catch (Exception)

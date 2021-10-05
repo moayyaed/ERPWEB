@@ -2384,26 +2384,32 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Historico_Liquidacion_Vacacio
         <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
             <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdLiquidacion" />
-            <PropertyRef Name="ValorCancelado" />
-            <PropertyRef Name="FechaPago" />
-            <PropertyRef Name="Fecha_Desde" />
-            <PropertyRef Name="Fecha_Hasta" />
-            <PropertyRef Name="Fecha_Retorno" />
+            <PropertyRef Name="IdEstadoAprobacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Observacion" />
+            <PropertyRef Name="Gozadas" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSolicitud" Type="int" Nullable="false" />
           <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdLiquidacion" Type="int" Nullable="false" />
-          <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
-          <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
-          <Property Name="ValorCancelado" Type="float" Nullable="false" />
-          <Property Name="FechaPago" Type="date" Nullable="false" />
+          <Property Name="IdEstadoAprobacion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Desde" Type="date" />
+          <Property Name="Fecha_Hasta" Type="date" />
+          <Property Name="Fecha_Retorno" Type="date" />
+          <Property Name="Observacion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Gozadas" Type="bit" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="int" />
+          <Property Name="IdOrdenPago" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="IdEmpresa_OP" Type="int" />
+          <Property Name="IdTipo_op" Type="varchar" MaxLength="20" />
+          <Property Name="ValorCancelado" Type="float" />
+          <Property Name="FechaPago" Type="date" />
           <Property Name="Observaciones" Type="varchar" MaxLength="500" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" />
           <Property Name="Estado" Type="varchar" MaxLength="1" />
-          <Property Name="Fecha_Desde" Type="datetime" Nullable="false" />
-          <Property Name="Fecha_Hasta" Type="datetime" Nullable="false" />
-          <Property Name="Fecha_Retorno" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5932,17 +5938,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <EntitySet Name="vwro_Historico_Liquidacion_Vacaciones" EntityType="Self.vwro_Historico_Liquidacion_Vacaciones" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwro_Historico_Liquidacion_Vacaciones].[IdEmpresa] AS [IdEmpresa], 
+    [vwro_Historico_Liquidacion_Vacaciones].[IdSolicitud] AS [IdSolicitud], 
     [vwro_Historico_Liquidacion_Vacaciones].[IdEmpleado] AS [IdEmpleado], 
+    [vwro_Historico_Liquidacion_Vacaciones].[IdEstadoAprobacion] AS [IdEstadoAprobacion], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Fecha] AS [Fecha], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Desde] AS [Fecha_Desde], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Observacion] AS [Observacion], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Gozadas] AS [Gozadas], 
     [vwro_Historico_Liquidacion_Vacaciones].[IdLiquidacion] AS [IdLiquidacion], 
-    [vwro_Historico_Liquidacion_Vacaciones].[pe_apellido] AS [pe_apellido], 
-    [vwro_Historico_Liquidacion_Vacaciones].[pe_nombre] AS [pe_nombre], 
+    [vwro_Historico_Liquidacion_Vacaciones].[IdOrdenPago] AS [IdOrdenPago], 
+    [vwro_Historico_Liquidacion_Vacaciones].[IdEmpresa_OP] AS [IdEmpresa_OP], 
+    [vwro_Historico_Liquidacion_Vacaciones].[IdTipo_op] AS [IdTipo_op], 
     [vwro_Historico_Liquidacion_Vacaciones].[ValorCancelado] AS [ValorCancelado], 
     [vwro_Historico_Liquidacion_Vacaciones].[FechaPago] AS [FechaPago], 
     [vwro_Historico_Liquidacion_Vacaciones].[Observaciones] AS [Observaciones], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Estado] AS [Estado], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Desde] AS [Fecha_Desde], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Hasta] AS [Fecha_Hasta], 
-    [vwro_Historico_Liquidacion_Vacaciones].[Fecha_Retorno] AS [Fecha_Retorno]
+    [vwro_Historico_Liquidacion_Vacaciones].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwro_Historico_Liquidacion_Vacaciones].[Estado] AS [Estado]
     FROM [dbo].[vwro_Historico_Liquidacion_Vacaciones] AS [vwro_Historico_Liquidacion_Vacaciones]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_horario_planificacion_det" EntityType="Self.vwro_horario_planificacion_det" store:Type="Views" store:Schema="dbo">
@@ -8834,12 +8847,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           </AssociationSet>
           <EntitySet Name="ro_Historico_Liquidacion_Vacaciones" EntityType="Model_rrhh.ro_Historico_Liquidacion_Vacaciones" />
           <EntitySet Name="ro_Historico_Liquidacion_Vacaciones_Det" EntityType="Model_rrhh.ro_Historico_Liquidacion_Vacaciones_Det" />
-          <EntitySet Name="vwro_Historico_Liquidacion_Vacaciones" EntityType="Model_rrhh.vwro_Historico_Liquidacion_Vacaciones" />
           <AssociationSet Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado" Association="Model_rrhh.FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_Historico_Liquidacion_Vacaciones" EntitySet="ro_Historico_Liquidacion_Vacaciones" />
           </AssociationSet>
           <EntitySet Name="vwro_horario_planificacion_det" EntityType="Model_rrhh.vwro_horario_planificacion_det" />
+          <EntitySet Name="vwro_Historico_Liquidacion_Vacaciones" EntityType="Model_rrhh.vwro_Historico_Liquidacion_Vacaciones" />
           </EntityContainer>
         <EntityType Name="ro_tabla_Impu_Renta">
           <Key>
@@ -13279,30 +13292,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="Total_Vacaciones" Type="Double" Nullable="false" />
           <Property Name="Valor_Cancelar" Type="Double" Nullable="false" />
         </EntityType>
-        <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdLiquidacion" />
-            <PropertyRef Name="ValorCancelado" />
-            <PropertyRef Name="FechaPago" />
-            <PropertyRef Name="Fecha_Desde" />
-            <PropertyRef Name="Fecha_Hasta" />
-            <PropertyRef Name="Fecha_Retorno" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdLiquidacion" Type="Int32" Nullable="false" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ValorCancelado" Type="Double" Nullable="false" />
-          <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Retorno" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <Association Name="FK_ro_Historico_Liquidacion_Vacaciones_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
           <End Type="Model_rrhh.ro_Historico_Liquidacion_Vacaciones" Role="ro_Historico_Liquidacion_Vacaciones" Multiplicity="*" />
@@ -13356,6 +13345,36 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
           <Property Name="IdHorario" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
           <Property Name="IdCalendario" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdEstadoAprobacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Observacion" />
+            <PropertyRef Name="Gozadas" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitud" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Desde" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Retorno" Type="DateTime" Precision="0" />
+          <Property Name="Observacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gozadas" Type="Boolean" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="Int32" />
+          <Property Name="IdOrdenPago" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="IdEmpresa_OP" Type="Int32" />
+          <Property Name="IdTipo_op" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ValorCancelado" Type="Double" />
+          <Property Name="FechaPago" Type="DateTime" Precision="0" />
+          <Property Name="Observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -16180,24 +16199,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwro_Historico_Liquidacion_Vacaciones">
-            <EntityTypeMapping TypeName="Model_rrhh.vwro_Historico_Liquidacion_Vacaciones">
-              <MappingFragment StoreEntitySet="vwro_Historico_Liquidacion_Vacaciones">
-                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
-                <ScalarProperty Name="ValorCancelado" ColumnName="ValorCancelado" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwro_horario_planificacion_det">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_horario_planificacion_det">
               <MappingFragment StoreEntitySet="vwro_horario_planificacion_det">
@@ -16223,6 +16224,31 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwro_Historico_Liquidacion_Vacaciones">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_Historico_Liquidacion_Vacaciones">
+              <MappingFragment StoreEntitySet="vwro_Historico_Liquidacion_Vacaciones">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="ValorCancelado" ColumnName="ValorCancelado" />
+                <ScalarProperty Name="IdTipo_op" ColumnName="IdTipo_op" />
+                <ScalarProperty Name="IdEmpresa_OP" ColumnName="IdEmpresa_OP" />
+                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="Gozadas" ColumnName="Gozadas" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha_Retorno" ColumnName="Fecha_Retorno" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
