@@ -32,7 +32,7 @@ namespace Core.Erp.Web.Reportes.RRHH
             if (lst_rpt.Count > 0)
             {
                 ROL_007_Info info = lst_rpt[0];
-                txtSolicitud.Text = "Yo, " + info.pe_apellido + " con cedula identidad # " + info.pe_cedulaRuc + " solicitud se me conceda a disfrutar o se me cancelen las vacaciones correspondiente al periodo de: " + info.Anio_Desde.ToString().Substring(0, 10) + " al " + info.Anio_Hasta.ToString().Substring(0, 10) +
+                txtSolicitud.Text = "Yo, " + info.pe_apellido + " con cedula identidad # " + info.pe_cedulaRuc + " solicitud se me conceda a disfrutar o se me cancelen las vacaciones del periodo(s) correspondiente "+
                   " en las fechas de : " + info.Fecha_Desde.ToString().Substring(0, 10) + " al " + info.Fecha_Hasta.ToString().Substring(0, 10);
             }
             this.DataSource = lst_rpt;
