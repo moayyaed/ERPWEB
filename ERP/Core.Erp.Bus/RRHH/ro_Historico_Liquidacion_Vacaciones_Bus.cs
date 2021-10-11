@@ -22,21 +22,8 @@ namespace Core.Erp.Bus.RRHH
             try
             {
 
-                if (data.guardarDB(Info))
-                {
-                    bus_detalle.Eliminar(Info);
-                    foreach (var item in Info.lst_detalle)
-                    {
-                        item.IdEmpleado = Info.IdEmpleado;
-                        item.IdEmpresa = Info.IdEmpresa;
-                        item.IdLiquidacion = Info.IdLiquidacion;
-                        bus_detalle.Guardar_DB(item);
+                return data.guardarDB(Info);
 
-                    }
-                    return true;
-                }
-                else
-                    return false;
             }
             catch (Exception ex )
             {
@@ -50,22 +37,9 @@ namespace Core.Erp.Bus.RRHH
         {
             try
             {
-                Info.ValorCancelado = Info.lst_detalle.Sum(v=>v.Valor_Cancelar);
-                if (data.modificarDB(Info))
-                {
-                    bus_detalle.Eliminar(Info);
-                    foreach (var item in Info.lst_detalle)
-                    {
-                        item.IdEmpleado = Info.IdEmpleado;
-                        item.IdEmpresa = Info.IdEmpresa;
-                        item.IdLiquidacion = Info.IdLiquidacion;
-                        bus_detalle.Guardar_DB(item);
+               
+                      return data.guardarDB(Info);
 
-                    }
-                    return true;
-                }
-                else
-                    return false;
             }
             catch (Exception ex)
             {

@@ -74,6 +74,7 @@ namespace Core.Erp.Data.RRHH
                         IdEmpresa = Entity.IdEmpresa,
                         IdEmpleado = Entity.IdEmpleado,
                         IdSolicitud = Entity.IdSolicitud,
+                        IdLiquidacion=Entity.IdLiquidacion==null?0:Convert.ToInt32(Entity.IdLiquidacion),
                         IdEstadoAprobacion = Entity.IdEstadoAprobacion,
                         Fecha = Entity.Fecha,
                         Fecha_Desde = Entity.Fecha_Desde,
@@ -98,71 +99,73 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-        public Boolean guardarDB(ro_Historico_Liquidacion_Vacaciones_Info Info)
+        public Boolean guardarDB(ro_Historico_Liquidacion_Vacaciones_Info info)
         {
             try
             {
 
-                using (Entities_rrhh db = new Entities_rrhh())
+                using (Entities_rrhh context = new Entities_rrhh())
                 {
-                   
-                        ro_Historico_Liquidacion_Vacaciones Data = new ro_Historico_Liquidacion_Vacaciones();
-                        Data.IdEmpresa = Info.IdEmpresa;
-                        Data.IdSolicitud = Info.IdSolicitud;
-                        Data.IdLiquidacion =Info.IdLiquidacion= getId(Info.IdEmpresa, Convert.ToInt32(Info.IdEmpleado));
-                        Data.IdEmpresa_OP = Info.IdEmpresa_OP;
-                        Data.IdOrdenPago = Info.IdOrdenPago;
-                        Data.IdEmpleado = Info.IdEmpleado;
-                        Data.ValorCancelado = Info.ValorCancelado;
-                        Data.FechaPago = DateTime.Now;
-                        Data.Observaciones = Info.Observaciones;
-                        Data.IdUsuario = Info.IdUsuario;
-                        Data.Estado = "A";
-                        Data.Fecha_Transac = DateTime.Now;
-                        db.ro_Historico_Liquidacion_Vacaciones.Add(Data);
-                        db.SaveChanges();
-                    
-                }
+
+                    var contact = context.ro_Historico_Liquidacion_Vacaciones.FirstOrDefault(obj => obj.IdEmpresa == info.IdEmpresa &&
+                       obj.IdLiquidacion == info.IdLiquidacion && obj.IdEmpleado == info.IdEmpleado);
+                    if (contact == null)
+                    {
+                        context.ro_Historico_Liquidacion_Vacaciones.Add(new ro_Historico_Liquidacion_Vacaciones
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdSolicitud = info.IdSolicitud,
+                            IdLiquidacion = info.IdLiquidacion = getId(info.IdEmpresa, Convert.ToInt32(info.IdEmpleado)),
+                            IdEmpresa_OP = info.IdEmpresa_OP,
+                            IdOrdenPago = info.IdOrdenPago,
+                            IdEmpleado = info.IdEmpleado,
+                            ValorCancelado = info.ValorCancelado=info.lst_detalle.Sum(s =>s.Valor_Cancelar),
+                            FechaPago = DateTime.Now,
+                            Observaciones = info.Observaciones,
+                            IdUsuario = info.IdUsuario,
+                            Estado = "A",
+                            Fecha_Transac = DateTime.Now,
+                        });
+                        
+                    }
+                   else
+                   {
+                            var lst_delete = context.ro_Historico_Liquidacion_Vacaciones_Det.Where(obj => obj.IdEmpresa == info.IdEmpresa &&
+                            obj.IdLiquidacion == info.IdLiquidacion);
+                            context.ro_Historico_Liquidacion_Vacaciones_Det.RemoveRange(lst_delete);
+                            contact.Observaciones = info.Observaciones;
+                        contact.ValorCancelado = info.ValorCancelado = info.lst_detalle.Sum(s => s.Valor_Cancelar);
+                        contact.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
+                            contact.FechaHoraAnul = DateTime.Now;
+                            contact.MotiAnula = info.MotiAnula;
+                    }
+                    foreach (var item in info.lst_detalle)
+                    {
+                        context.ro_Historico_Liquidacion_Vacaciones_Det.Add(new ro_Historico_Liquidacion_Vacaciones_Det
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            IdLiquidacion = info.IdLiquidacion,
+                            Secuencia = item.Secuencia,
+                            Anio = item.Anio,
+                            Mes = item.Mes,
+                            Total_Remuneracion = item.Total_Remuneracion,
+                            Total_Vacaciones = item.Total_Vacaciones,
+                            Valor_Cancelar = item.Valor_Cancelar,
+                        });
+                    }
+                    context.SaveChanges();
+            }
                 return true;
             }
             catch (Exception ex )
             {
                 tb_LogError_Data LogData = new tb_LogError_Data();
-                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Data", Metodo = "guardarDB", IdUsuario =Info.IdUsuario});
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Data", Metodo = "guardarDB", IdUsuario =info.IdUsuario});
                 return false;
             }
 
         }
-        public Boolean modificarDB(ro_Historico_Liquidacion_Vacaciones_Info info)
-        {
-            try
-            {
-               
-                    using (Entities_rrhh context = new Entities_rrhh())
-                    {
-                        var contact = context.ro_Historico_Liquidacion_Vacaciones.First(obj => obj.IdEmpresa == info.IdEmpresa &&
-                        obj.IdLiquidacion == info.IdLiquidacion && obj.IdEmpleado == info.IdEmpleado);
-                    if (contact == null)
-                        return false;
-                        contact.Observaciones = info.Observaciones;
-                        contact.ValorCancelado = info.ValorCancelado;
-                        contact.IdUsuarioUltAnu = info.IdUsuarioUltAnu;
-                        contact.FechaHoraAnul = DateTime.Now;
-                        contact.MotiAnula = info.MotiAnula;
-                        context.SaveChanges();
-                    }
-
-                    return true;
-               
-            }
-            catch (Exception ex)
-            {
-                tb_LogError_Data LogData = new tb_LogError_Data();
-                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "ro_Historico_Liquidacion_Vacaciones_Data", Metodo = "modificarDB", IdUsuario = info.IdUsuario });
-                return false;
-            }
-        }
-
+      
         public Boolean anularDB(ro_Historico_Liquidacion_Vacaciones_Info info)
         {
             try

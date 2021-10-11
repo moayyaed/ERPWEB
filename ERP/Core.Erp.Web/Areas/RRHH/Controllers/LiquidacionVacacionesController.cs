@@ -127,87 +127,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Nuevo(ro_Historico_Liquidacion_Vacaciones_Info info)
-        {
-            try
-            {
-                bus_liquidacion = new ro_Historico_Liquidacion_Vacaciones_Bus();
-                if (ModelState.IsValid)
-                {
-                    string mensaje = "";
-                    info.lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(info.IdTransaccionSession);
-                    if (info.lst_detalle != null)
-                    {
-                        foreach (var item in info.lst_detalle)
-                        {
-                            if (item.Valor_Cancelar == 0)
-                            {
-                                mensaje = "Existen periodos con valores cero a cancelar";
-                            }
-                        }
-                    }
-                    if (mensaje != "")
-                    {
-                        ViewBag.mensaje = mensaje;
-                        cargar_combo();
-                        return View(info);
-                    }
-
-                    if (!bus_liquidacion.guardarDB(info))
-                    {
-                        SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
-                        cargar_combo();
-                        return View(info);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdLiquidacion = info.IdLiquidacion, Exito = true });
-                    }
-                }
-                else
-                    return View(info);
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public ActionResult Nuevo(decimal IdEmpleado=0, decimal IdSolicitud = 0)
-        {
-            try
-            {
-                #region Validar Session
-                if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
-                    return RedirectToAction("Login", new { Area = "", Controller = "Account" });
-                SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
-                SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
-                #endregion
-
-                ro_Historico_Liquidacion_Vacaciones_Info model = new ro_Historico_Liquidacion_Vacaciones_Info
-                {
-                  
-                };
-                
-                var  info_solicitud = bus_solicitud.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), IdSolicitud);
-               // model = bus_liquidacion.obtener_valores(info_solicitud);
-                model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
-                IdSolicitud = model.IdSolicitud;
-                ro_Historico_Liquidacion_Vacaciones_Det_Info.set_list(model.lst_detalle, model.IdTransaccionSession);
-
-                cargar_combo();
-                return View(model);
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        [HttpPost]
         public ActionResult Modificar(ro_Historico_Liquidacion_Vacaciones_Info info)
         {
             try
@@ -234,7 +153,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         return View(info);
                     }
 
-                    if (!bus_liquidacion.modificarDB(info))
+                    if (!bus_liquidacion.guardarDB(info))
                     {
                         SessionFixed.IdTransaccionSessionActual = info.IdTransaccionSession.ToString();
                         cargar_combo();
@@ -242,7 +161,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Modificar", new { IdEmpleado = info.IdEmpleado, IdLiquidacion = info.IdLiquidacion, Exito = true });
+                        return RedirectToAction("Modificar", new { IdEmpresa = info.IdEmpresa, IdSolicitud = info.IdSolicitud, Exito = true });
                     }
                 }
                 else
@@ -360,9 +279,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             if (ro_solicitud == null)
                 ro_solicitud = new ro_Solicitud_Vacaciones_x_empleado_Info();
             info_det.Total_Vacaciones = info_det.Total_Remuneracion / 24;
-           // info_det.Valor_Cancelar = (info_det.Total_Vacaciones / ro_solicitud.Dias_q_Corresponde)*ro_solicitud.Dias_a_disfrutar;
+            var info_sol_det = ro_Solicitud_Vacaciones_x_empleado_det_List.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)).FirstOrDefault(m => m.Tipo_liquidacion == "GOZA");
+            if (info_sol_det != null)
+                 info_det.Valor_Cancelar = (info_det.Total_Vacaciones / 15)* info_sol_det.Dias_tomados;
 
-            ro_Historico_Liquidacion_Vacaciones_Det_Info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                ro_Historico_Liquidacion_Vacaciones_Det_Info.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             model.lst_detalle = ro_Historico_Liquidacion_Vacaciones_Det_Info.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)) as List<ro_Historico_Liquidacion_Vacaciones_Det_Info>;
             return PartialView("_GridViewPartial_vacaciones_liquidadas_det", model.lst_detalle);
         }
