@@ -1,9 +1,6 @@
 ﻿CREATE view web.VWROL_007 as
-SELECT        per.pe_apellido, per.pe_nombre, per.pe_cedulaRuc, e.IdEmpresa, e.IdEmpleado, sv.IdSolicitud, 
-                        
-                          sv.Fecha, sv.Fecha_Desde, sv.Fecha_Hasta, sv.Fecha_Retorno, sv.Observacion, d.de_descripcion, 
-                         e.em_fechaIngaRol, carg.ca_descripcion, sv_det.IdPeriodo_Inicio, sv_det.IdPeriodo_Fin, sv_det.Dias_tomados, hv.DiasGanado, 
-                         ca_tl.ca_descripcion AS Tipo_liquidacion, ca_tv.ca_descripcion AS Tipo_vacacion
+SELECT        per.pe_apellido, per.pe_nombre, per.pe_cedulaRuc, e.IdEmpresa, e.IdEmpleado, sv.IdSolicitud, sv.Fecha, sv.Fecha_Desde, sv.Fecha_Hasta, sv.Fecha_Retorno, sv.Observacion, d.de_descripcion, e.em_fechaIngaRol, 
+                         carg.ca_descripcion, sv_det.IdPeriodo_Inicio, sv_det.IdPeriodo_Fin, sv_det.Dias_tomados, hv.DiasGanado, ca_tl.ca_descripcion AS Tipo_liquidacion, ca_tv.ca_descripcion AS Tipo_vacacion, hv.FechaIni, hv.FechaFin
 FROM            dbo.ro_Solicitud_Vacaciones_x_empleado AS sv INNER JOIN
                          dbo.ro_empleado AS e ON sv.IdEmpresa = e.IdEmpresa AND sv.IdEmpleado = e.IdEmpleado INNER JOIN
                          dbo.ro_Departamento AS d ON e.IdEmpresa = d.IdEmpresa AND e.IdDepartamento = d.IdDepartamento INNER JOIN

@@ -35,7 +35,12 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  de_descripcion = q.de_descripcion,
                                  em_fechaIngaRol = q.em_fechaIngaRol,
                                  ca_descripcion = q.ca_descripcion,
-                                 pe_nombre = q.pe_nombre
+                                 pe_nombre = q.pe_nombre,
+                                 FechaFin=q.FechaFin,
+                                 FechaIni=q.FechaIni,
+                                 Dias_a_disfrutar=q.Dias_tomados,
+                                 Tipo_liquidacion=q.Tipo_liquidacion,
+                                 Tipo_vacacion=q.Tipo_vacacion
                              }).ToList();
                 }
                 return Lista;

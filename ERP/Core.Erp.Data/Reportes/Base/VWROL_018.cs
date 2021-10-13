@@ -21,9 +21,6 @@ namespace Core.Erp.Data.Reportes.Base
         public int IdPeriodo_Fin { get; set; }
         public System.DateTime FechaIni { get; set; }
         public System.DateTime FechaFin { get; set; }
-        public int Dias_q_Corresponde { get; set; }
-        public int Dias_a_disfrutar { get; set; }
-        public int Dias_pendiente { get; set; }
         public Nullable<double> Total_Remuneracion { get; set; }
         public Nullable<double> Total_Vacaciones { get; set; }
         public Nullable<double> Valor_Cancelar { get; set; }

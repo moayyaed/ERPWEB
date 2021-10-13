@@ -34,5 +34,7 @@ namespace Core.Erp.Data.Reportes.Base
         public int DiasGanado { get; set; }
         public string Tipo_liquidacion { get; set; }
         public string Tipo_vacacion { get; set; }
+        public System.DateTime FechaIni { get; set; }
+        public System.DateTime FechaFin { get; set; }
     }
 }

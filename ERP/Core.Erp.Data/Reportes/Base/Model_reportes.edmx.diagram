@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="462b5bc3c67f47e599b1dc0beb6103b9" Name="Diagram1" ZoomLevel="11">
+      <Diagram DiagramId="462b5bc3c67f47e599b1dc0beb6103b9" Name="Diagram1" ZoomLevel="29">
         <EntityTypeShape EntityType="Model_reportes.VWACTF_001" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWACTF_002" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWACTF_003" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -72,7 +72,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWROL_011" Width="1.5" PointX="22.75" PointY="35.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_014" Width="1.5" PointX="24.75" PointY="35.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_016" Width="1.5" PointX="26.75" PointY="35.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_reportes.VWROL_018" Width="1.5" PointX="34.75" PointY="35.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_019" Width="1.5" PointX="36.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_020" Width="1.5" PointX="36.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_021" Width="1.5" PointX="36.75" PointY="14.75" IsExpanded="true" />
@@ -115,6 +114,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWROL_007" Width="1.5" PointX="21.375" PointY="43.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_006" Width="1.5" PointX="43.375" PointY="24.75" />
         <EntityTypeShape EntityType="Model_reportes.VWROL_030" Width="1.5" PointX="33.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWROL_018" Width="1.5" PointX="17.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,9 +29,9 @@ namespace Core.Erp.Data.Reportes.RRHH
                              {
                                  IdEmpleado = q.IdEmpleado,
                                  IdEmpresa = q.IdEmpresa,
-                                 Dias_a_disfrutar = q.Dias_a_disfrutar,
-                                 Dias_pendiente = q.Dias_pendiente,
-                                 Dias_q_Corresponde = q.Dias_q_Corresponde,
+                                 //Dias_a_disfrutar = q.Dias_a_disfrutar,
+                                 //Dias_pendiente = q.Dias_pendiente,
+                                 //Dias_q_Corresponde = q.Dias_q_Corresponde,
                                  FechaFin = q.FechaFin,
                                  FechaIni = q.FechaIni,
                                  FechaPago = q.FechaPago,

@@ -4207,6 +4207,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_007' no tiene definida ningu
             <PropertyRef Name="DiasGanado" />
             <PropertyRef Name="Tipo_liquidacion" />
             <PropertyRef Name="Tipo_vacacion" />
+            <PropertyRef Name="FechaIni" />
+            <PropertyRef Name="FechaFin" />
           </Key>
           <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
@@ -4228,6 +4230,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_007' no tiene definida ningu
           <Property Name="DiasGanado" Type="int" Nullable="false" />
           <Property Name="Tipo_liquidacion" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Tipo_vacacion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FechaIni" Type="date" Nullable="false" />
+          <Property Name="FechaFin" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWROL_008' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -4511,9 +4515,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_018' no tiene definida ningu
             <PropertyRef Name="IdPeriodo_Fin" />
             <PropertyRef Name="FechaIni" />
             <PropertyRef Name="FechaFin" />
-            <PropertyRef Name="Dias_q_Corresponde" />
-            <PropertyRef Name="Dias_a_disfrutar" />
-            <PropertyRef Name="Dias_pendiente" />
             <PropertyRef Name="pe_cedulaRuc" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="FechaPago" />
@@ -4527,9 +4528,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_018' no tiene definida ningu
           <Property Name="IdPeriodo_Fin" Type="int" Nullable="false" />
           <Property Name="FechaIni" Type="date" Nullable="false" />
           <Property Name="FechaFin" Type="date" Nullable="false" />
-          <Property Name="Dias_q_Corresponde" Type="int" Nullable="false" />
-          <Property Name="Dias_a_disfrutar" Type="int" Nullable="false" />
-          <Property Name="Dias_pendiente" Type="int" Nullable="false" />
           <Property Name="Total_Remuneracion" Type="float" />
           <Property Name="Total_Vacaciones" Type="float" />
           <Property Name="Valor_Cancelar" Type="float" />
@@ -8042,7 +8040,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
     [VWROL_007].[Dias_tomados] AS [Dias_tomados], 
     [VWROL_007].[DiasGanado] AS [DiasGanado], 
     [VWROL_007].[Tipo_liquidacion] AS [Tipo_liquidacion], 
-    [VWROL_007].[Tipo_vacacion] AS [Tipo_vacacion]
+    [VWROL_007].[Tipo_vacacion] AS [Tipo_vacacion], 
+    [VWROL_007].[FechaIni] AS [FechaIni], 
+    [VWROL_007].[FechaFin] AS [FechaFin]
     FROM [web].[VWROL_007] AS [VWROL_007]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWROL_008" EntityType="Self.VWROL_008" store:Type="Views" store:Schema="web">
@@ -8217,9 +8217,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
     [VWROL_018].[IdPeriodo_Fin] AS [IdPeriodo_Fin], 
     [VWROL_018].[FechaIni] AS [FechaIni], 
     [VWROL_018].[FechaFin] AS [FechaFin], 
-    [VWROL_018].[Dias_q_Corresponde] AS [Dias_q_Corresponde], 
-    [VWROL_018].[Dias_a_disfrutar] AS [Dias_a_disfrutar], 
-    [VWROL_018].[Dias_pendiente] AS [Dias_pendiente], 
     [VWROL_018].[Total_Remuneracion] AS [Total_Remuneracion], 
     [VWROL_018].[Total_Vacaciones] AS [Total_Vacaciones], 
     [VWROL_018].[Valor_Cancelar] AS [Valor_Cancelar], 
@@ -11198,43 +11195,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <Property Name="Contrato" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdTipoCatalogo" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="VWROL_018">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="IdLiquidacion" />
-            <PropertyRef Name="IdPeriodo_Inicio" />
-            <PropertyRef Name="IdPeriodo_Fin" />
-            <PropertyRef Name="FechaIni" />
-            <PropertyRef Name="FechaFin" />
-            <PropertyRef Name="Dias_q_Corresponde" />
-            <PropertyRef Name="Dias_a_disfrutar" />
-            <PropertyRef Name="Dias_pendiente" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="FechaPago" />
-            <PropertyRef Name="Fecha_Desde" />
-            <PropertyRef Name="Fecha_Hasta" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdLiquidacion" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo_Inicio" Type="Int32" Nullable="false" />
-          <Property Name="IdPeriodo_Fin" Type="Int32" Nullable="false" />
-          <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Dias_q_Corresponde" Type="Int32" Nullable="false" />
-          <Property Name="Dias_a_disfrutar" Type="Int32" Nullable="false" />
-          <Property Name="Dias_pendiente" Type="Int32" Nullable="false" />
-          <Property Name="Total_Remuneracion" Type="Double" />
-          <Property Name="Total_Vacaciones" Type="Double" />
-          <Property Name="Valor_Cancelar" Type="Double" />
-          <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="VWROL_019">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -11636,7 +11596,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <EntitySet Name="VWROL_011" EntityType="Self.VWROL_011" />
           <EntitySet Name="VWROL_014" EntityType="Self.VWROL_014" />
           <EntitySet Name="VWROL_016" EntityType="Self.VWROL_016" />
-          <EntitySet Name="VWROL_018" EntityType="Self.VWROL_018" />
           <EntitySet Name="VWROL_019" EntityType="Self.VWROL_019" />
           <EntitySet Name="VWROL_020" EntityType="Self.VWROL_020" />
           <EntitySet Name="VWROL_021" EntityType="Self.VWROL_021" />
@@ -12220,6 +12179,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <EntitySet Name="VWROL_007" EntityType="Model_reportes.VWROL_007" />
           <EntitySet Name="VWROL_006" EntityType="Model_reportes.VWROL_006" />
           <EntitySet Name="VWROL_030" EntityType="Model_reportes.VWROL_030" />
+          <EntitySet Name="VWROL_018" EntityType="Model_reportes.VWROL_018" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -15032,6 +14992,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
             <PropertyRef Name="DiasGanado" />
             <PropertyRef Name="Tipo_liquidacion" />
             <PropertyRef Name="Tipo_vacacion" />
+            <PropertyRef Name="FechaIni" />
+            <PropertyRef Name="FechaFin" />
           </Key>
           <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -15053,6 +15015,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <Property Name="DiasGanado" Type="Int32" Nullable="false" />
           <Property Name="Tipo_liquidacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Tipo_vacacion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="VWROL_006">
           <Key>
@@ -15124,6 +15088,37 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <Property Name="ru_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Orden" Type="Int32" />
           <Property Name="Valor" Type="Double" />
+        </EntityType>
+        <EntityType Name="VWROL_018">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="IdPeriodo_Inicio" />
+            <PropertyRef Name="IdPeriodo_Fin" />
+            <PropertyRef Name="FechaIni" />
+            <PropertyRef Name="FechaFin" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="FechaPago" />
+            <PropertyRef Name="Fecha_Desde" />
+            <PropertyRef Name="Fecha_Hasta" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdLiquidacion" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo_Inicio" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodo_Fin" Type="Int32" Nullable="false" />
+          <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Total_Remuneracion" Type="Double" />
+          <Property Name="Total_Vacaciones" Type="Double" />
+          <Property Name="Valor_Cancelar" Type="Double" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16948,30 +16943,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
                 <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
                 <ScalarProperty Name="Contrato" ColumnName="Contrato" />
                 <ScalarProperty Name="IdTipoCatalogo" ColumnName="IdTipoCatalogo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VWROL_018">
-            <EntityTypeMapping TypeName="Model_reportes.VWROL_018">
-              <MappingFragment StoreEntitySet="VWROL_018">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
-                <ScalarProperty Name="IdPeriodo_Inicio" ColumnName="IdPeriodo_Inicio" />
-                <ScalarProperty Name="IdPeriodo_Fin" ColumnName="IdPeriodo_Fin" />
-                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-                <ScalarProperty Name="Dias_q_Corresponde" ColumnName="Dias_q_Corresponde" />
-                <ScalarProperty Name="Dias_a_disfrutar" ColumnName="Dias_a_disfrutar" />
-                <ScalarProperty Name="Dias_pendiente" ColumnName="Dias_pendiente" />
-                <ScalarProperty Name="Total_Remuneracion" ColumnName="Total_Remuneracion" />
-                <ScalarProperty Name="Total_Vacaciones" ColumnName="Total_Vacaciones" />
-                <ScalarProperty Name="Valor_Cancelar" ColumnName="Valor_Cancelar" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -19693,6 +19664,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <EntitySetMapping Name="VWROL_007">
             <EntityTypeMapping TypeName="Model_reportes.VWROL_007">
               <MappingFragment StoreEntitySet="VWROL_007">
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
                 <ScalarProperty Name="Tipo_vacacion" ColumnName="Tipo_vacacion" />
                 <ScalarProperty Name="Tipo_liquidacion" ColumnName="Tipo_liquidacion" />
                 <ScalarProperty Name="DiasGanado" ColumnName="DiasGanado" />
@@ -19763,6 +19736,27 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
                 <ScalarProperty Name="IdNominaTipo" ColumnName="IdNominaTipo" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWROL_018">
+            <EntityTypeMapping TypeName="Model_reportes.VWROL_018">
+              <MappingFragment StoreEntitySet="VWROL_018">
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Valor_Cancelar" ColumnName="Valor_Cancelar" />
+                <ScalarProperty Name="Total_Vacaciones" ColumnName="Total_Vacaciones" />
+                <ScalarProperty Name="Total_Remuneracion" ColumnName="Total_Remuneracion" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
+                <ScalarProperty Name="IdPeriodo_Fin" ColumnName="IdPeriodo_Fin" />
+                <ScalarProperty Name="IdPeriodo_Inicio" ColumnName="IdPeriodo_Inicio" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

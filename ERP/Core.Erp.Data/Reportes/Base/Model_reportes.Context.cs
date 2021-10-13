@@ -94,7 +94,6 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWROL_011> VWROL_011 { get; set; }
         public virtual DbSet<VWROL_014> VWROL_014 { get; set; }
         public virtual DbSet<VWROL_016> VWROL_016 { get; set; }
-        public virtual DbSet<VWROL_018> VWROL_018 { get; set; }
         public virtual DbSet<VWROL_019> VWROL_019 { get; set; }
         public virtual DbSet<VWROL_020> VWROL_020 { get; set; }
         public virtual DbSet<VWROL_021> VWROL_021 { get; set; }
@@ -137,6 +136,7 @@ namespace Core.Erp.Data.Reportes.Base
         public virtual DbSet<VWROL_007> VWROL_007 { get; set; }
         public virtual DbSet<VWROL_006> VWROL_006 { get; set; }
         public virtual DbSet<VWROL_030> VWROL_030 { get; set; }
+        public virtual DbSet<VWROL_018> VWROL_018 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

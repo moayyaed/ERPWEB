@@ -30,5 +30,9 @@ namespace Core.Erp.Info.Reportes.RRHH
         public bool Gozadas_Pgadas { get; set; }
         public Nullable<System.DateTime> em_fechaIngaRol { get; set; }
         public string ca_descripcion { get; set; }
+        public string Tipo_liquidacion { get; set; }
+        public string Tipo_vacacion { get; set; }
+        public System.DateTime FechaIni { get; set; }
+        public System.DateTime FechaFin { get; set; }
     }
 }
