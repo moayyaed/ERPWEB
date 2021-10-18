@@ -154,26 +154,18 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh contex = new Entities_rrhh())
                 {
-                    var consultar = from q in contex.ro_historico_vacaciones_x_empleado
-                                    where q.IdEmpleado == IdEmpleado &&
-                                    q.IdEmpresa == IdEmpresa
-                                    && q.DiasGanado>q.DiasTomados
-                                    orderby q.FechaIni ascending
-                                    select q;
-                    foreach (var item in consultar)
-                    {
-                        ro_historico_vacaciones_x_empleado_Info info = new ro_historico_vacaciones_x_empleado_Info();
-                        info.IdEmpresa = item.IdEmpresa;
-                        info.IdEmpleado = item.IdEmpleado;
-                        info.IdVacacion = item.IdVacacion;
-                        info.IdPeriodo_Inicio = item.IdPeriodo_Inicio;
-                        info.IdPeriodo_Fin = item.IdPeriodo_Fin;
-                        info.FechaIni = item.FechaIni;
-                        info.FechaFin = item.FechaFin;
-                        info.DiasGanado = item.DiasGanado;
-                        info.DiasTomados = item.DiasTomados;
-                        lst.Add(info);
-                    }
+
+                    string sql = " SELECT hist.IdEmpresa, hist.IdEmpleado, hist.IdVacacion, hist.IdPeriodo_Inicio, hist.IdPeriodo_Fin, hist.FechaIni, hist.FechaFin, hist.DiasGanado, "+
+                                 " isnull(sum(sol_det.Dias_tomados), 0) DiasTomados " +
+                                 " FROM dbo.ro_Solicitud_Vacaciones_x_empleado AS sol INNER JOIN " +
+                                 " dbo.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado AS sol_det ON sol.IdEmpresa = sol_det.IdEmpresa AND sol.IdSolicitud = sol_det.IdSolicitud RIGHT OUTER JOIN " +
+                                 " dbo.ro_historico_vacaciones_x_empleado AS hist ON sol_det.IdEmpresa = hist.IdEmpresa AND sol_det.IdEmpleado = hist.IdEmpleado AND sol_det.IdPeriodo_Inicio = hist.IdPeriodo_Inicio AND " +
+                                 " sol_det.IdPeriodo_Fin = hist.IdPeriodo_Fin " +
+                                 " where ISNULL(sol.Estado,'A')= 'A' and hist.IdEmpresa="+IdEmpresa+" and hist.IdEmpleado="+IdEmpleado+""+
+                                 " group by ";
+
+                    lst = contex.Database.SqlQuery<ro_historico_vacaciones_x_empleado_Info>(sql).ToList();
+                    
                 }
 
                 return lst;
