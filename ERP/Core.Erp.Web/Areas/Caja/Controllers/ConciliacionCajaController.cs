@@ -540,8 +540,8 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             cp_conciliacion_Caja_Info model = new cp_conciliacion_Caja_Info();
-            model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
-            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            model.lst_det_vale = list_vale.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual);
             cargar_combos_detalle();
             return PartialView("_GridViewPartial_conciliacion_vales", model);
         }
