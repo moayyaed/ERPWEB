@@ -30,10 +30,10 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <canvas class="canvas" id="UltimasVentasAnio"></canvas>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <canvas class="canvas" id="UltimasVentasMeses"></canvas>
                 </div>                    
             </div>
@@ -51,10 +51,10 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <canvas class="canvas" id="VentasClientes"></canvas>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
                         <thead>
                             <tr role="row">
@@ -81,10 +81,10 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="col-md-8">
+                <div class="col-md-3">
                     <canvas class="canvas" id="VentasProductos"></canvas>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <table id="Table_VentasProductos" class="table table-responsive dataTable dataTables_paginate">
                         <thead>
                             <tr role="row">
@@ -133,7 +133,9 @@
             'searching': false,
             'ordering': true,
             'info': true,
-            'autoWidth': false
+            'autoWidth': true,
+            'scrollY': '200px',
+            'scrollCollapse': true,
         })
 
         $('#Table_VentasProductos').DataTable({
@@ -142,7 +144,9 @@
             'searching': false,
             'ordering': true,
             'info': true,
-            'autoWidth': false
+            'autoWidth': true,
+            'scrollY': '200px',
+            'scrollCollapse': true,
         })
     })
 
@@ -181,8 +185,9 @@
                     })
 
                     var miCanvasV = document.getElementById('UltimasVentasAnio').getContext('2d');
+
                     var chart = new Chart(miCanvasV, {
-                        type: 'bar',
+                        type: 'pie',
                         //labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
@@ -190,9 +195,14 @@
                                 [{
                                     label: "Ventas por año",
                                     data: Valores,
-                                    backgroundColor: 'rgba(55, 160, 235, 0.2)', // Color de fondo
-                                    borderColor: 'rgba(55, 160, 235, 1)', // Color del borde
+                                    //backgroundColor: 'rgba(55, 160, 235, 0.2)', // Color de fondo
+                                    //borderColor: 'rgba(55, 160, 235, 1)', // Color del borde
                                     borderWidth: 1,// Ancho del borde
+                                    backgroundColor: [
+                                    'rgba(41, 128, 185 )',
+                                    'rgba(39, 174, 96 )',
+                                    'rgba(93, 109, 126 )'
+                                        ],
                                 }]
                         },
                         options: {
@@ -251,8 +261,9 @@
                     })
 
                     var miCanvasV = document.getElementById('UltimasVentasMeses').getContext('2d');
+
                     var chart = new Chart(miCanvasV, {
-                        type: 'bar',
+                        type: 'doughnut',
                         //labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
@@ -260,9 +271,16 @@
                                 [{
                                     label: "Ventas por mes",
                                     data: Valores,
-                                    backgroundColor: 'rgba(60, 180, 115, 0.2)', // Color de fondo
-                                    borderColor: 'rgba(60, 180, 115, 1)', // Color del borde
+                                    //backgroundColor: 'rgba(60, 180, 115, 0.2)', // Color de fondo
+                                    //borderColor: 'rgba(60, 180, 115, 1)', // Color del borde
                                     borderWidth: 1,// Ancho del borde
+                                    backgroundColor: [
+                                    'rgba(205, 97, 85 )',
+                                    'rgba( 235, 152, 78  )',
+                                    'rgba( 244, 208, 63  )',
+                                    'rgba( 84, 153, 199 )',
+                                    'rgba(82, 190, 128 )'
+                                    ],
                                 }]
                         },
                         options: {
@@ -323,23 +341,31 @@
                     })
 
                     var miCanvasV = document.getElementById('VentasClientes').getContext('2d');
+                    //var chartEl = document.getElementById("VentasClientes");
+                    //chartEl.height = 500;
+
                     var chart = new Chart(miCanvasV, {
-                        type: 'bar',
-                        //labels: Etiquetas,
+                        type: 'line',
                         data: {
                             labels: Etiquetas,
                             datasets:
                                 [{
-                                    label: "Ventas por clientes",
+                                    label: "Ventas",
                                     data: Valores,
-                                    //backgroundColor:Background,
-                                    backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo
-                                    borderColor: 'rgba(231, 76, 60, 1)', // Color del borde
-                                    borderWidth: 1,// Ancho del borde
+                                    backgroundColor: 'rgb( 235, 152, 78 )',// Color de fondo
+                                    borderColor: 'rgb(255, 159, 64)',// Color del borde
+                                    //borderWidth: 1,// Ancho del borde
                                 }]
                         },
                         options: {
                             responsive: true,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }],
+                            },
                             plugins: {
                                 legend: {
                                     position: 'top',
@@ -429,9 +455,10 @@
                         }
                     })
                     //doughnut
-                    var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
+                    var miCanvasV = document.getElementById('VentasProductos').getContext('2d');                    
+
                     var chart = new Chart(miCanvasV, {
-                        type: 'bar',
+                        type: 'pie',
                         labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
@@ -440,8 +467,15 @@
                                     label: "Ventas por productos",
                                     data: Valores,
                                     //backgroundColor: Background, // Color de fondo
-                                    backgroundColor: 'rgba(2, 195, 202, 0.2)', // Color de fondo
-                                    borderColor: 'rgba(2, 195, 202, 1)', // Color del borde
+                                    //backgroundColor: 'rgba(2, 195, 202, 0.2)', // Color de fondo
+                                    //borderColor: 'rgba(2, 195, 202, 1)', // Color del borde
+                                    backgroundColor: [
+                                    'rgba(205, 97, 85 )',
+                                    'rgba( 235, 152, 78  )',
+                                    'rgba( 244, 208, 63  )',
+                                    'rgba( 84, 153, 199 )',
+                                    'rgba(82, 190, 128 )'
+                                    ],
                                     borderWidth: 1,// Ancho del borde
                                 }]
                         },
