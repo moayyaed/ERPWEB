@@ -1796,5 +1796,49 @@ namespace Core.Erp.Data.Facturacion
                 return new List<fa_Dashboard_Info>();
             }
         }
+
+        public fa_Dashboard_Info FacturadoPorDia(int IdEmpresa, DateTime Fecha)
+        {
+            try
+            {
+                fa_Dashboard_Info info = new fa_Dashboard_Info();
+                using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
+                {                    
+                    //connection.Open();
+                    //SqlCommand command = new SqlCommand("", connection);
+                    //command.CommandText = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    //+ " @Fecha date = DATEFROMPARTS(" + Fecha + ", " + Fecha.Month + ", " + Fecha.Day + "),"
+                    //+ " select sum(b.vt_total) Total"
+                    //+ " from fa_factura a "
+                    //+ " inner join fa_factura_det b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal "
+                    //+ " and a.IdBodega = b.IdBodega and a.IdCbteVta = b.IdCbteVta "
+                    //+ " where a.IdEmpresa = @IdEmpresa and a.vt_fecha = @Fecha and a.Estado = 'A' ";
+
+                    //var ResultValue = command.ExecuteScalar();
+
+                    //if (ResultValue == null)
+                    //    return null;
+
+                    //SqlDataReader reader = command.ExecuteReader();
+
+                    //while (reader.Read())
+                    //{
+                    //    info = new fa_Dashboard_Info
+                    //    {
+                    //        Total = Convert.ToDecimal(reader["Total"]),
+                    //    };
+                    //}
+                }
+
+                //info.Total_String = info.Total.ToString("C2");
+                return info;
+            }
+            catch (Exception ex)
+            {
+                tb_LogError_Data LogData = new tb_LogError_Data();
+                LogData.GuardarDB(new tb_LogError_Info { Descripcion = ex.Message, InnerException = ex.InnerException == null ? null : ex.InnerException.Message, Clase = "fa_factura_Data", Metodo = "get_list_UltimasVentasAnio", IdUsuario = "consulta" });
+                return new fa_Dashboard_Info();
+            }
+        }
     }
 }

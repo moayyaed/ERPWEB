@@ -31,25 +31,23 @@
             </div>
             <div class="box-body">
                 <div class="col-md-3">
-                </div>
-                <div class="col-md-3">
                     <canvas class="canvas" id="UltimasVentasAnio"></canvas>
+                </div>
+                <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
                     <canvas class="canvas" id="UltimasVentasMeses"></canvas>
                 </div> 
-                <div class="col-md-3">
+                <div class="col-md-1">
                 </div>
-                @*<div class="col-md-3">
+                <div class="col-md-3">
                     <!-- Info Boxes Style 2 -->
                     <div class="info-box bg-yellow">
                         <span class="info-box-icon"><i class="ion ion-cash"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Facturación</span>
-                            <span class="info-box-number">5,200</span>
-                            <span id="Facturado" class="progress-description">
-                                50% Increase in 30 Days
-                            </span>
+                            <span id="Facturado" class="info-box-number"></span>
+                            <span id="FechaFacturado" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -58,10 +56,8 @@
                         <span class="info-box-icon"><i class="ion ion-calculator"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Cobros</span>
-                            <span class="info-box-number">92,050</span>
-                            <span id="Cobrado" class="progress-description">
-                                20% Increase in 30 Days
-                            </span>
+                            <span id="Cobrado" class="info-box-number"></span>
+                            <span id="FechaCobrado" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -70,14 +66,14 @@
                         <span class="info-box-icon"><i class="ion-android-checkmark-circle"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Caja</span>
-                            <span class="info-box-number">163,921</span>
-                            <span id="Caja" class="progress-description">
-                                40% Increase in 30 Days
-                            </span>
+                            <span id="Caja" class="info-box-number"></span>
+                            <span id="FechaCaja" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
-                </div>*@                  
+                </div>
+                <div class="col-md-1">
+                </div>                  
             </div>
         </div>
         <div class="box">
@@ -145,24 +141,6 @@
                 </div>
             </div>
         </div>
-    @*<div class="col-md-6">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Dashboard</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="box-body">
-                
-            </div>
-        </div>
-    </div>*@
 }
 <script type="text/javascript">
     $(function () {
@@ -172,6 +150,7 @@
         VentasClientesListado();
         VentasProductos();
         VentasProductosListado();
+        RegistroDia();
 
         $('#Table_VentasClientes').DataTable({
             'paging': true,
@@ -501,7 +480,7 @@
                         }
                     })
                     //doughnut
-                    var miCanvasV = document.getElementById('VentasProductos').getContext('2d');                    
+                    var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
 
                     var chart = new Chart(miCanvasV, {
                         type: 'pie',
@@ -581,6 +560,37 @@
             }
         });
     };
+
+    function RegistroDia() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("RegistroDia", "Dashboard")',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $("#FechaFacturado").html(data.Fecha);
+                $("#FechaCobrado").html(data.Fecha);
+                $("#FechaCaja").html(data.Fecha);
+
+                $("#Facturado").html(data.Facturado);
+                $("#Cobrado").html(data.Cobrado);
+                $("#Caja").html(data.Caja);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
 
     function colorRGBFijos(Color) {
         var Color0 = "rgb(192, 57, 43)";

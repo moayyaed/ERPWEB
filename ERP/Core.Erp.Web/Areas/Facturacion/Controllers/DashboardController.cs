@@ -1,4 +1,6 @@
-﻿using Core.Erp.Bus.Facturacion;
+﻿using Core.Erp.Bus.Caja;
+using Core.Erp.Bus.CuentasPorCobrar;
+using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.Helps;
@@ -18,6 +20,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         fa_factura_Bus bus_factura = new fa_factura_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         fa_VentasClientes_List Lista_VentasClientes = new fa_VentasClientes_List();
+        cxc_cobro_Bus bus_cobros = new cxc_cobro_Bus();
+        caj_Caja_Bus bus_caja = new caj_Caja_Bus();
         #endregion
 
         #region Index
@@ -82,6 +86,16 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         {
             var lst_VentasClientesListado = bus_factura.get_list_VentasProductosListado(IdEmpresa, FechaIni, FechaFin);
             return Json(lst_VentasClientesListado, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RegistroDia(int IdEmpresa = 0, decimal IdTransaccionSession = 0)
+        {
+            var Fecha = DateTime.Now.Date;
+            var info_Facturacion = bus_factura.FacturadoPorDia(IdEmpresa, Fecha.Date);
+            var info_Cobros = bus_cobros.CobrosPorDia(IdEmpresa, Fecha.Date);
+            var info_Caja = new fa_Dashboard_Info();
+            
+            return Json(new { Fecha=Fecha.ToString("dd-MM-yyyy"), Facturado = info_Facturacion.Total_String, Cobrado = info_Cobros.Total_String, Caja = info_Caja.Total_String }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

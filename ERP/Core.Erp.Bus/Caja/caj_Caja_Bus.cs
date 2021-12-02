@@ -1,6 +1,7 @@
 ﻿using Core.Erp.Bus.General;
 using Core.Erp.Data.Caja;
 using Core.Erp.Info.Caja;
+using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
