@@ -2,6 +2,7 @@
 using Core.Erp.Data;
 using Core.Erp.Data.CuentasPorCobrar;
 using Core.Erp.Info.CuentasPorCobrar;
+using Core.Erp.Info.Facturacion;
 using Core.Erp.Info.General;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,19 @@ namespace Core.Erp.Bus.CuentasPorCobrar
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public fa_Dashboard_Info CobrosPorDia(int IdEmpresa, DateTime Fecha)
+        {
+            try
+            {
+                return odata.CobrosPorDia(IdEmpresa, Fecha);
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

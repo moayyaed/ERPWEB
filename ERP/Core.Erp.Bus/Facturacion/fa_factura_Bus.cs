@@ -268,5 +268,18 @@ namespace Core.Erp.Bus.Facturacion
                 throw;
             }
         }
+
+        public fa_Dashboard_Info FacturadoPorDia(int IdEmpresa, DateTime Fecha)
+        {
+            try
+            {
+                return odata.FacturadoPorDia(IdEmpresa, Fecha);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
