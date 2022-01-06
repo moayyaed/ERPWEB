@@ -41,13 +41,13 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
+                    <b><p id="FechaFacturado"></p></b>
                     <!-- Info Boxes Style 2 -->
                     <div class="info-box bg-yellow">
                         <span class="info-box-icon"><i class="ion ion-cash"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Facturación</span>
-                            <span id="Facturado" class="info-box-number"></span>
-                            <span id="FechaFacturado" class="progress-description"></span>
+                            <span id="Facturado" class="info-box-number"></span> 
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -57,7 +57,6 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Cobros</span>
                             <span id="Cobrado" class="info-box-number"></span>
-                            <span id="FechaCobrado" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -67,7 +66,6 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Banco</span>
                             <span id="Banco" class="info-box-number"></span>
-                            <span id="FechaBanco" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -286,9 +284,10 @@
                     })
 
                     var miCanvasV = document.getElementById('UltimasVentasMeses').getContext('2d');
-
+                    var chartEl = document.getElementById("UltimasVentasMeses");
+                    chartEl.height = 250;
                     var chart = new Chart(miCanvasV, {
-                        type: 'doughnut',
+                        type: 'line',
                         //labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
@@ -601,7 +600,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 console.log(data);
-                $("#FechaFacturado").html(data.FechaIni_String + " - " + data.FechaFin_String);
+                $("#FechaFacturado").html("Fecha: "+data.FechaIni_String + " - " + data.FechaFin_String);
                 $("#FechaCobrado").html(data.FechaIni_String + " - " + data.FechaFin_String);
                 $("#FechaBanco").html(data.FechaIni_String + " - " + data.FechaFin_String);
 
