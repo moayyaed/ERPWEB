@@ -91,11 +91,9 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
         public JsonResult RegistroDia(int IdEmpresa = 0, decimal IdTransaccionSession = 0)
         {
             var Fecha = DateTime.Now.Date;
-            var info_Facturacion = bus_factura.FacturadoPorDia(IdEmpresa, Fecha.Date);
-            var info_Cobros = bus_cobros.CobrosPorDia(IdEmpresa, Fecha.Date);
-            var info_Caja = new fa_Dashboard_Info();
+            var info_Flujo = bus_factura.FacturadoPorDia(IdEmpresa);
             
-            return Json(new { Fecha=Fecha.ToString("dd-MM-yyyy"), Facturado = info_Facturacion.Total_String, Cobrado = info_Cobros.Total_String, Caja = info_Caja.Total_String }, JsonRequestBehavior.AllowGet);
+            return Json(info_Flujo, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

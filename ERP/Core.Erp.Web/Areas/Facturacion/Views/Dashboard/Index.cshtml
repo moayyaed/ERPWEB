@@ -31,12 +31,12 @@
             </div>
             <div class="box-body">
                 <div class="col-md-3">
-                    <canvas class="canvas" id="UltimasVentasAnio"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="UltimasVentasAnio"></canvas>
                 </div>
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <canvas class="canvas" id="UltimasVentasMeses"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="UltimasVentasMeses"></canvas>
                 </div> 
                 <div class="col-md-1">
                 </div>
@@ -63,11 +63,11 @@
                     </div>
                     <!-- /.info-box -->
                     <div class="info-box bg-aqua">
-                        <span class="info-box-icon"><i class="ion-android-checkmark-circle"></i></span>
+                        <span class="info-box-icon"><i class="fa fa-bank"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Caja</span>
-                            <span id="Caja" class="info-box-number"></span>
-                            <span id="FechaCaja" class="progress-description"></span>
+                            <span class="info-box-text">Banco</span>
+                            <span id="Banco" class="info-box-number"></span>
+                            <span id="FechaBanco" class="progress-description"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="box-body">
                 <div class="col-md-6">
-                    <canvas class="canvas" id="VentasClientes"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="VentasClientes"></canvas>
                 </div>
                 <div class="col-md-6">
                     <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
@@ -122,7 +122,7 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <canvas class="canvas" id="VentasProductos"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="VentasProductos"></canvas>
                 </div>
                 <div class="col-md-2">
                 </div>
@@ -309,14 +309,21 @@
                                 }]
                         },
                         options: {
-                            responsive: true,
+                            responsive: false,
+                            animation: {
+                                radius: {
+                                    duration: 400,
+                                    easing: 'linear',
+                                    loop: (context) => context.active
+                                }
+                            },
                             plugins: {
                                 legend: {
                                     position: 'top',
                                 },
                                 title: {
                                     display: true,
-                                    text: 'VENTAS ULTIMOS 5 MESES'
+                                    text: 'VENTAS DE LOS ULTIMOS 5 MESES'
                                 }
                             }
                         }
@@ -370,7 +377,7 @@
                     //chartEl.height = 500;
 
                     var chart = new Chart(miCanvasV, {
-                        type: 'line',
+                        type: 'bar',
                         data: {
                             labels: Etiquetas,
                             datasets:
@@ -483,13 +490,13 @@
                     var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
 
                     var chart = new Chart(miCanvasV, {
-                        type: 'pie',
+                        type: 'bar',
                         labels: Etiquetas,
                         data: {
                             labels: Etiquetas,
                             datasets:
                                 [{
-                                    label: "Ventas por productos",
+                                    label: "Productos",
                                     data: Valores,
                                     //backgroundColor: Background, // Color de fondo
                                     //backgroundColor: 'rgba(2, 195, 202, 0.2)', // Color de fondo
@@ -505,7 +512,14 @@
                                 }]
                         },
                         options: {
-                            responsive: true,
+                        responsive: false,
+                        animation: {
+                        radius: {
+                        duration: 400,
+                        easing: 'linear',
+                        loop: (context) => context.active
+                                    }
+                            },
                             plugins: {
                                 legend: {
                                     position: 'top',
@@ -514,6 +528,15 @@
                                     display: true,
                                     text: 'TOP 5 VENTAS POR PRODUCTOS'
                                 }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        maxRotation: 90,
+                                        minRotation: 90
+                                    }
+                                }]
                             }
                         }
                     });
@@ -578,13 +601,13 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 console.log(data);
-                $("#FechaFacturado").html(data.Fecha);
-                $("#FechaCobrado").html(data.Fecha);
-                $("#FechaCaja").html(data.Fecha);
+                $("#FechaFacturado").html(data.FechaIni_String + " - " + data.FechaFin_String);
+                $("#FechaCobrado").html(data.FechaIni_String + " - " + data.FechaFin_String);
+                $("#FechaBanco").html(data.FechaIni_String + " - " + data.FechaFin_String);
 
-                $("#Facturado").html(data.Facturado);
-                $("#Cobrado").html(data.Cobrado);
-                $("#Caja").html(data.Caja);
+                $("#Facturado").html(data.TotalFactura_String);
+                $("#Cobrado").html(data.TotalCobro_String);
+                $("#Banco").html(data.TotalPagos_String);
             },
             error: function (error) {
 
