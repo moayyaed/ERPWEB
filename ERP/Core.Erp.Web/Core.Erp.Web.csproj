@@ -732,6 +732,12 @@
     <Compile Include="Reportes\Compra\COMP_001_Rpt.Designer.cs">
       <DependentUpon>COMP_001_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_014_Detalle_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Contabilidad\CONTA_014_Detalle_Rpt.Designer.cs">
+      <DependentUpon>CONTA_014_Detalle_Rpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Contabilidad\CONTA_014_Rpt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -10697,6 +10703,7 @@
     <Content Include="Areas\RRHH\Views\HorasExtras\_CmbEmpleado_HorasExtras.cshtml" />
     <Content Include="Areas\RRHH\Views\Empleado\_GridViewPartial_empleado_jefes_inmediatos.cshtml" />
     <Content Include="Areas\RRHH\Views\Vacaciones\_GridViewPartial_vacaciones_periodos.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_003 - Copia.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -10920,6 +10927,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Compra\COMP_001_Rpt.resx">
       <DependentUpon>COMP_001_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Contabilidad\CONTA_014_Detalle_Rpt.resx">
+      <DependentUpon>CONTA_014_Detalle_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Contabilidad\CONTA_014_Rpt.resx">
       <DependentUpon>CONTA_014_Rpt.cs</DependentUpon>

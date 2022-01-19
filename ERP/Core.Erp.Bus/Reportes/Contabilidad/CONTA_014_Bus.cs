@@ -16,5 +16,10 @@ namespace Core.Erp.Bus.Reportes.Contabilidad
         {
             return odata.GetList(IdEmpresa, FechaDesde, FechaHasta, MostrarAcumulado, ValoresOPorcentaje);
         }
+
+        public List<CONTA_014_Detalle_Info> GetList_Detalle(int IdEmpresa, DateTime FechaDesde, DateTime FechaHasta, bool MostrarAcumulado)
+        {
+            return odata.GetList_Detalle(IdEmpresa, FechaDesde, FechaHasta, MostrarAcumulado);
+        }
     }
 }

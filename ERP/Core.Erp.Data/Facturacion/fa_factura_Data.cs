@@ -1532,28 +1532,14 @@ namespace Core.Erp.Data.Facturacion
                     connection.Open();
 
                     #region Query
-                    string query = "select TOP(5) MONTH(f.vt_fecha) NumMes, "
-                    + " CASE MONTH(f.vt_fecha) "
-                        + " WHEN 1 then 'ENERO' "
-                        + " WHEN 2 THEN 'FEBRERO' "
-                        + " WHEN 3 THEN 'MARZO' "
-                        + " WHEN 4 THEN 'ABRIL' "
-                        + " WHEN 5 THEN 'MAYO' "
-                        + " WHEN 6 THEN 'JUNIO' "
-                        + " WHEN 7 THEN 'JULIO' "
-                        + " WHEN 8 THEN 'AGOSTO' "
-                        + " WHEN 9 THEN 'SEPTIEMBRE' "
-                        + " WHEN 10 THEN 'OCTUBRE' "
-                        + " WHEN 11 THEN 'NOVIEMBRE' "
-                        + " WHEN 12 THEN 'DICIEMBRE' "
-                        + " ELSE '' "
-                    + " END Mes, "
-                    + " round(SUM(fd.vt_total), 2) Total "
-                    + " from fa_factura f "
-                    + " inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
-                    + " where f.IdEmpresa = " + IdEmpresa.ToString() +" AND YEAR(f.vt_fecha) = YEAR(GETDATE()) "
-                    + " group by MONTH(f.vt_fecha) "
-                    + " order by MONTH(f.vt_fecha) desc ";
+                    string query = "select TOP 5 YEAR(f.vt_fecha), MONTH(f.vt_fecha) NumMes, "
+                    + " CASE MONTH(f.vt_fecha)WHEN 1 then 'ENERO'  WHEN 2 THEN 'FEBRERO'  WHEN 3 THEN 'MARZO'  WHEN 4 THEN 'ABRIL'  WHEN 5 THEN 'MAYO'"
+                    + " WHEN 6 THEN 'JUNIO'  WHEN 7 THEN 'JULIO'  WHEN 8 THEN 'AGOSTO'  WHEN 9 THEN 'SEPTIEMBRE'  WHEN 10 THEN 'OCTUBRE'  WHEN 11"
+                    + " THEN 'NOVIEMBRE'  WHEN 12 THEN 'DICIEMBRE'  ELSE ''  END Mes, round(SUM(fd.vt_total), 2) Total"
+                    + " from fa_factura f  inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal"
+                    + " and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta  where f.IdEmpresa = "+IdEmpresa.ToString()
+                    + " group by YEAR(f.vt_fecha), MONTH(f.vt_fecha)"
+                    + " order by YEAR(f.vt_fecha) DESC, MONTH(f.vt_fecha) DESC ";
                     #endregion
 
                     SqlCommand command = new SqlCommand(query, connection);
@@ -1797,40 +1783,63 @@ namespace Core.Erp.Data.Facturacion
             }
         }
 
-        public fa_Dashboard_Info FacturadoPorDia(int IdEmpresa, DateTime Fecha)
+        public fa_Dashboard_Info FacturadoPorDia(int IdEmpresa)
         {
             try
             {
                 fa_Dashboard_Info info = new fa_Dashboard_Info();
                 using (SqlConnection connection = new SqlConnection(ConexionesERP.GetConnectionString()))
-                {                    
-                    //connection.Open();
-                    //SqlCommand command = new SqlCommand("", connection);
-                    //command.CommandText = "declare @IdEmpresa int = " + IdEmpresa + ", "
-                    //+ " @Fecha date = DATEFROMPARTS(" + Fecha + ", " + Fecha.Month + ", " + Fecha.Day + "),"
-                    //+ " select sum(b.vt_total) Total"
-                    //+ " from fa_factura a "
-                    //+ " inner join fa_factura_det b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal "
-                    //+ " and a.IdBodega = b.IdBodega and a.IdCbteVta = b.IdCbteVta "
-                    //+ " where a.IdEmpresa = @IdEmpresa and a.vt_fecha = @Fecha and a.Estado = 'A' ";
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("", connection);
+                    command.CommandText = "declare @IdEmpresa int = " + IdEmpresa + ", "
+                    + " @FechaInicio date = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1),"
+                    + " @FechaFin date = EOMONTH(GETDATE()),"
+                    + " @TotalCobro money,"
+                    + " @TotalFactura money,"
+                    + " @TotalPagos money"
+                    + " select @TotalFactura = SUM(B.Total)"
+                    + " from fa_factura as a with(nolock) join"
+                    + " fa_factura_resumen as b with(nolock) on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdBodega = b.IdBodega and a.IdCbteVta = b.IdCbteVta"
+                    + " where a.IdEmpresa = @IdEmpresa and a.Estado = 'A' and a.vt_fecha between @FechaInicio and @FechaFin"
+                    + " group by A.IdEmpresa"
+                    + " select @TotalCobro = SUM(B.dc_ValorPago) from cxc_cobro as a"
+                    + " join cxc_cobro_det as b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdCobro = b.IdCobro"
+                    + " WHERE A.cr_estado = 'A' AND B.IdCobro_tipo NOT LIKE 'RT%' AND B.IdCobro_tipo NOT LIKE 'NT%'"
+                    + " AND A.IdEmpresa = @IdEmpresa AND A.cr_fecha BETWEEN @FechaInicio AND @FechaFin"
+                    + " group by a.IdEmpresa"
+                    + " select @TotalPagos = sum(a.cb_Valor)  from ba_Cbte_Ban as a"
+                    + " where a.IdEmpresa = @IdEmpresa and a.cb_Fecha between @FechaInicio and @FechaFin"
+                    + " and a.Estado = 'A' and a.IdTipocbte in (2,5)"
+                    + " group by a.IdEmpresa"
+                    + " select @IdEmpresa IdEmpresa, @FechaInicio FechaIni, @FechaFin FechaFin, @TotalFactura TotalFactura, @TotalCobro TotalCobro, @TotalPagos TotalPagos";
 
-                    //var ResultValue = command.ExecuteScalar();
+                    var ResultValue = command.ExecuteScalar();
 
-                    //if (ResultValue == null)
-                    //    return null;
+                    if (ResultValue == null)
+                        return null;
 
-                    //SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
 
-                    //while (reader.Read())
-                    //{
-                    //    info = new fa_Dashboard_Info
-                    //    {
-                    //        Total = Convert.ToDecimal(reader["Total"]),
-                    //    };
-                    //}
+                    while (reader.Read())
+                    {
+                        info = new fa_Dashboard_Info
+                        {
+                            FechaIni = Convert.ToDateTime(reader["FechaIni"]),
+                            FechaFin = Convert.ToDateTime(reader["FechaFin"]),
+                            TotalFactura = Convert.ToDecimal(reader["TotalFactura"]),
+                            TotalCobro = Convert.ToDecimal(reader["TotalCobro"]),
+                            TotalPagos = Convert.ToDecimal(reader["TotalPagos"]),
+                        };
+                    }
                 }
 
-                //info.Total_String = info.Total.ToString("C2");
+                info.FechaIni_String = info.FechaIni.ToString("dd-MM-yyyy");
+                info.FechaFin_String = info.FechaFin.ToString("dd-MM-yyyy");
+                info.TotalFactura_String = info.TotalFactura.ToString("C2");
+                info.TotalCobro_String = info.TotalCobro.ToString("C2");
+                info.TotalPagos_String = info.TotalPagos.ToString("C2");
+
                 return info;
             }
             catch (Exception ex)

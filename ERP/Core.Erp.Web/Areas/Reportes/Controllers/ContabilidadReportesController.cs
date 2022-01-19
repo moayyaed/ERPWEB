@@ -1026,6 +1026,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
+
+            CONTA_014_Detalle_Rpt ReportDetalle = new CONTA_014_Detalle_Rpt();
+
+            ReportDetalle.p_IdEmpresa.Value = model.IdEmpresa;
+            ReportDetalle.p_FechaDesde.Value = model.fecha_ini;
+            ReportDetalle.p_FechaHasta.Value = model.fecha_fin;
+            ReportDetalle.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            ReportDetalle.usuario = SessionFixed.IdUsuario;
+            ReportDetalle.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.ReportDetalle = ReportDetalle;
+
             return View(model);
         }
         [HttpPost]
@@ -1040,6 +1052,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.empresa = SessionFixed.NomEmpresa;
             report.RequestParameters = false;
             ViewBag.Report = report;
+
+            CONTA_014_Detalle_Rpt ReportDetalle = new CONTA_014_Detalle_Rpt();
+
+            ReportDetalle.p_IdEmpresa.Value = model.IdEmpresa;
+            ReportDetalle.p_FechaDesde.Value = model.fecha_ini;
+            ReportDetalle.p_FechaHasta.Value = model.fecha_fin;
+            ReportDetalle.p_MostrarAcumulado.Value = model.MostrarSaldoAcumulado;
+            ReportDetalle.usuario = SessionFixed.IdUsuario;
+            ReportDetalle.empresa = SessionFixed.NomEmpresa;
+
+            ViewBag.ReportDetalle = ReportDetalle;
+
             return View(model);
         }
         #endregion
