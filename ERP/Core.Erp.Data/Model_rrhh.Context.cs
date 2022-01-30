@@ -151,17 +151,18 @@ namespace Core.Erp.Data
         public DbSet<ro_participacion_utilidad_empleado> ro_participacion_utilidad_empleado { get; set; }
         public DbSet<vwro_participacion_utilidad> vwro_participacion_utilidad { get; set; }
         public DbSet<vwro_participacion_utilidad_empleado> vwro_participacion_utilidad_empleado { get; set; }
-        public DbSet<ro_empleado_x_jefes_inmediatos> ro_empleado_x_jefes_inmediatos { get; set; }
-        public DbSet<ro_empleado> ro_empleado { get; set; }
         public DbSet<ro_rubros_calculados> ro_rubros_calculados { get; set; }
         public DbSet<ro_biometrico> ro_biometrico { get; set; }
+        public DbSet<vwro_horario_planificacion_det> vwro_horario_planificacion_det { get; set; }
         public DbSet<ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado { get; set; }
-        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
         public DbSet<vwRo_Solicitud_Vacaciones> vwRo_Solicitud_Vacaciones { get; set; }
+        public DbSet<vwro_Historico_Liquidacion_Vacaciones> vwro_Historico_Liquidacion_Vacaciones { get; set; }
         public DbSet<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
         public DbSet<ro_Historico_Liquidacion_Vacaciones_Det> ro_Historico_Liquidacion_Vacaciones_Det { get; set; }
-        public DbSet<vwro_horario_planificacion_det> vwro_horario_planificacion_det { get; set; }
-        public DbSet<vwro_Historico_Liquidacion_Vacaciones> vwro_Historico_Liquidacion_Vacaciones { get; set; }
+        public DbSet<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
+        public DbSet<ro_empleado_x_jefes_inmediatos> ro_empleado_x_jefes_inmediatos { get; set; }
+        public DbSet<ro_empleado> ro_empleado { get; set; }
+        public DbSet<ro_canasta_basica> ro_canasta_basica { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {
