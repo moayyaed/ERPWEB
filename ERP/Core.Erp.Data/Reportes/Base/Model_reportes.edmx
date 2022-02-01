@@ -924,14 +924,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCONTA_013' no tiene definida nin
             <PropertyRef Name="IdCtaCble" />
             <PropertyRef Name="pc_Cuenta" />
             <PropertyRef Name="dc_Valor" />
-            
-            
             <PropertyRef Name="cb_Fecha" />
             <PropertyRef Name="tc_TipoCbte" />
             <PropertyRef Name="TituloGrupo" />
             <PropertyRef Name="TituloTotalGrupo" />
-            
-            
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdTipoCbte" Type="int" Nullable="false" />
@@ -943,14 +939,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWCONTA_013' no tiene definida nin
           <Property Name="cb_Observacion" Type="varchar(max)" />
           <Property Name="IdPunto_cargo_grupo" Type="int" />
           <Property Name="IdPunto_cargo" Type="int" />
-          <Property Name="nom_punto_cargo" Type="varchar(max)" Nullable="false" />
-          <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" Nullable="false" />
+          <Property Name="nom_punto_cargo" Type="varchar(max)" />
+          <Property Name="nom_punto_cargo_grupo" Type="varchar(max)" />
           <Property Name="cb_Fecha" Type="datetime" Nullable="false" />
           <Property Name="tc_TipoCbte" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TituloGrupo" Type="varchar" MaxLength="523" Nullable="false" />
           <Property Name="TituloTotalGrupo" Type="varchar" MaxLength="506" Nullable="false" />
-          <Property Name="nom_punto_cargo_grupoFiltro" Type="varchar(max)" Nullable="false" />
-          <Property Name="TotalFinal" Type="varchar(max)" Nullable="false" />
+          <Property Name="nom_punto_cargo_grupoFiltro" Type="varchar(max)" />
+          <Property Name="TotalFinal" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWCXC_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -4937,6 +4933,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_029' no tiene definida ningu
           <Property Name="LiquidacionFinal" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="PorRebaja" Type="int" />
+          <Property Name="Rebaja" Type="float" />
+          <Property Name="DecimoTerceroProyectado" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="DecimocuartoProyectado" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="FondoReservaProyectado" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -8490,7 +8491,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
     [VWROL_029].[DescontadoFechaCorte] AS [DescontadoFechaCorte], 
     [VWROL_029].[LiquidacionFinal] AS [LiquidacionFinal], 
     [VWROL_029].[IdPersona] AS [IdPersona], 
-    [VWROL_029].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    [VWROL_029].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [VWROL_029].[PorRebaja] AS [PorRebaja], 
+    [VWROL_029].[Rebaja] AS [Rebaja], 
+    [VWROL_029].[DecimoTerceroProyectado] AS [DecimoTerceroProyectado], 
+    [VWROL_029].[DecimocuartoProyectado] AS [DecimocuartoProyectado], 
+    [VWROL_029].[FondoReservaProyectado] AS [FondoReservaProyectado]
     FROM [web].[VWROL_029] AS [VWROL_029]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWROL_030" EntityType="Self.VWROL_030" store:Type="Views" store:Schema="web">
@@ -14720,14 +14726,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <Property Name="cb_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdPunto_cargo_grupo" Type="Int32" />
           <Property Name="IdPunto_cargo" Type="Int32" />
-          <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nom_punto_cargo_grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nom_punto_cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nom_punto_cargo_grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cb_Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="tc_TipoCbte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TituloGrupo" Type="String" Nullable="false" MaxLength="523" FixedLength="false" Unicode="false" />
           <Property Name="TituloTotalGrupo" Type="String" Nullable="false" MaxLength="506" FixedLength="false" Unicode="false" />
-          <Property Name="nom_punto_cargo_grupoFiltro" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TotalFinal" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nom_punto_cargo_grupoFiltro" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalFinal" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="SPCXP_019_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -14905,6 +14911,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <Property Name="LiquidacionFinal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PorRebaja" Type="Int32" />
+          <Property Name="Rebaja" Type="Double" />
+          <Property Name="DecimoTerceroProyectado" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DecimocuartoProyectado" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FondoReservaProyectado" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <ComplexType Name="SPCXP_018_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -19577,6 +19588,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_030' no tiene definida ningu
           <EntitySetMapping Name="VWROL_029">
             <EntityTypeMapping TypeName="Model_reportes.VWROL_029">
               <MappingFragment StoreEntitySet="VWROL_029">
+                <ScalarProperty Name="FondoReservaProyectado" ColumnName="FondoReservaProyectado" />
+                <ScalarProperty Name="DecimocuartoProyectado" ColumnName="DecimocuartoProyectado" />
+                <ScalarProperty Name="DecimoTerceroProyectado" ColumnName="DecimoTerceroProyectado" />
+                <ScalarProperty Name="Rebaja" ColumnName="Rebaja" />
+                <ScalarProperty Name="PorRebaja" ColumnName="PorRebaja" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="LiquidacionFinal" ColumnName="LiquidacionFinal" />

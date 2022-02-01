@@ -8,16 +8,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Mpdificar", "CanastaBasica", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Modificar", "CanastaBasica", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa)
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="ca_descripcion">Anio*</label>
-                    @Html.TextBoxFor(q => q.Anio, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ca_descripcion, "", new { @class = "text-danger" })
+                    <label for="ca_descripcion">Año fiscal*</label>
+                    @Html.DropDownListFor(q => q.Anio, new SelectList(ViewBag.lst_anio, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Anio, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

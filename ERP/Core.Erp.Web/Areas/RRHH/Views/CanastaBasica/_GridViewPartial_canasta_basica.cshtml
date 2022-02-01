@@ -1,8 +1,8 @@
 @using System.Web.UI.WebControls;
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "GridView_canasta_basica";
-        settings.CallbackRouteValues = new { Controller = "CanastaBasica", Action = "GridView_canasta_basica" };
+        settings.Name = "GridViewPartial_canasta_basica";
+        settings.CallbackRouteValues = new { Controller = "CanastaBasica", Action = "GridViewPartial_canasta_basica" };
 
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "Anio";
@@ -58,7 +58,7 @@
             {
 
                 ViewContext.Writer.Write(
-            Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCanastaBasica = DataBinder.Eval(tc.DataItem, "IdCanastaBasica") }) + "&nbsp;" +
+            Html.ActionLink("Modificar", "Modificar", new { Anio = DataBinder.Eval(tc.DataItem, "Anio") }) + "&nbsp;" 
 
                                        );
 

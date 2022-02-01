@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Bus.RRHH;
 using Core.Erp.Web.Helps;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -57,7 +58,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     if (!bus_canasta.guardarDB(info))
+                    {
+                        ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
+                        ViewBag.lst_anio = bus_anio_fiscal.get_list(false);
                         return View(info);
+
+                    }
                     else
                         return RedirectToAction("Index");
                 }
@@ -75,6 +81,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
+                ViewBag.lst_anio = bus_anio_fiscal.get_list(false);
                 ro_canasta_basica_Info info = new ro_canasta_basica_Info();
                 return View(info);
 
@@ -94,7 +102,12 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 if (ModelState.IsValid)
                 {
                     if (!bus_canasta.modificarDB(info))
+                    {
+                        ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
+                        ViewBag.lst_anio = bus_anio_fiscal.get_list(false);
                         return View(info);
+
+                    }
                     else
                         return RedirectToAction("Index");
                 }
@@ -113,6 +126,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             try
             {
+                ct_anio_fiscal_Bus bus_anio_fiscal = new ct_anio_fiscal_Bus();
+                ViewBag.lst_anio = bus_anio_fiscal.get_list(false);
                 return View(bus_canasta.get_info(IdEmpresa, Anio));
 
             }
