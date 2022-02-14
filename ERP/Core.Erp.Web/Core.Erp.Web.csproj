@@ -10703,7 +10703,6 @@
     <Content Include="Areas\RRHH\Views\HorasExtras\_CmbEmpleado_HorasExtras.cshtml" />
     <Content Include="Areas\RRHH\Views\Empleado\_GridViewPartial_empleado_jefes_inmediatos.cshtml" />
     <Content Include="Areas\RRHH\Views\Vacaciones\_GridViewPartial_vacaciones_periodos.cshtml" />
-    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_003 - Copia.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Properties\PublishProfiles\PUBLICACION.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

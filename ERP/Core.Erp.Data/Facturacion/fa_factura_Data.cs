@@ -1492,8 +1492,8 @@ namespace Core.Erp.Data.Facturacion
 
                     #region Query
                     string query = "select TOP(3) YEAR(f.vt_fecha) Anio, round( SUM(fd.vt_total),2) Total "
-                    + " from fa_factura f "
-                    + " inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
+                    + " from fa_factura f with (nolock) "
+                    + " inner join fa_factura_det fd with (nolock) on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta "
                     + " where f.IdEmpresa = " + IdEmpresa.ToString()
                     + " group by YEAR(f.vt_fecha) "
                     + " order by YEAR(f.vt_fecha) desc ";
@@ -1536,7 +1536,7 @@ namespace Core.Erp.Data.Facturacion
                     + " CASE MONTH(f.vt_fecha)WHEN 1 then 'ENERO'  WHEN 2 THEN 'FEBRERO'  WHEN 3 THEN 'MARZO'  WHEN 4 THEN 'ABRIL'  WHEN 5 THEN 'MAYO'"
                     + " WHEN 6 THEN 'JUNIO'  WHEN 7 THEN 'JULIO'  WHEN 8 THEN 'AGOSTO'  WHEN 9 THEN 'SEPTIEMBRE'  WHEN 10 THEN 'OCTUBRE'  WHEN 11"
                     + " THEN 'NOVIEMBRE'  WHEN 12 THEN 'DICIEMBRE'  ELSE ''  END Mes, round(SUM(fd.vt_total), 2) Total"
-                    + " from fa_factura f  inner join fa_factura_det fd on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal"
+                    + " from fa_factura f with (nolock) inner join fa_factura_det fd with (nolock) on f.IdEmpresa = fd.IdEmpresa and f.IdSucursal = fd.IdSucursal"
                     + " and f.IdBodega = fd.IdBodega and f.IdCbteVta = fd.IdCbteVta  where f.IdEmpresa = "+IdEmpresa.ToString()
                     + " group by YEAR(f.vt_fecha), MONTH(f.vt_fecha)"
                     + " order by YEAR(f.vt_fecha) DESC, MONTH(f.vt_fecha) DESC ";

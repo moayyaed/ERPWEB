@@ -177,7 +177,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                             + " declare @Year int = year(@FechaDesde)"
                             + " select a.IdEmpresa, b.IdCtaCble, d.pc_Cuenta, case when isnull(c.IdCentroCosto, '') in ('','004','005','007') then '001' else c.IdCentroCosto end IdCentroCosto, case when isnull(c.IdCentroCosto, '') in ('','004','005','007') then 'Offset' else c.cc_Descripcion end cc_Descripcion,"
                             + " case when b.IdCtaCble like '4%' then 'Ventas' when b.IdCtaCble like '51%' then 'Materia Prima' when b.IdCtaCble like '52%' then 'Mano de Obra Directa' when b.IdCtaCble like '53%' or b.IdCtaCble like '540%' then 'Gastos Indirectos de Fabricación' END gc_GrupoCble"
-                            + " ,case when b.IdCtaCble like '4%' then 4 when b.IdCtaCble like '51%' then 4.1 when b.IdCtaCble like '52%' then 4.2 when b.IdCtaCble like '53%' or b.IdCtaCble like '540%' then 4.3 END gc_Orden,"
+                            + " ,case when b.IdCtaCble like '4%' then 1 ELSE 2 END gc_Orden,"
                             + " sum(dc_Valor * e.gc_signo_operacion) ValorMostrar, sum(dc_Valor) ValorReal,"
                             + " case when b.IdCtaCble like '4%' then 'Ventas' else 'Costos' END GrupoPrincipal"
                             + " from ct_cbtecble as a"
