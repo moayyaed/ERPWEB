@@ -33,6 +33,7 @@ namespace Core.Erp.Data
             this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
             this.ro_empleado_x_titulos = new HashSet<ro_empleado_x_titulos>();
             this.ro_EmpleadoNovedadCargaMasiva_det = new HashSet<ro_EmpleadoNovedadCargaMasiva_det>();
+            this.ro_Historico_Liquidacion_Vacaciones = new HashSet<ro_Historico_Liquidacion_Vacaciones>();
             this.ro_historico_vacaciones_x_empleado = new HashSet<ro_historico_vacaciones_x_empleado>();
             this.ro_horario_planificacion_det = new HashSet<ro_horario_planificacion_det>();
             this.ro_HorasProfesores_det = new HashSet<ro_HorasProfesores_det>();
@@ -49,7 +50,6 @@ namespace Core.Erp.Data
             this.ro_rol_detalle_x_rubro_acumulado = new HashSet<ro_rol_detalle_x_rubro_acumulado>();
             this.ro_SancionesPorMarcaciones_det = new HashSet<ro_SancionesPorMarcaciones_det>();
             this.ro_Solicitud_Vacaciones_x_empleado = new HashSet<ro_Solicitud_Vacaciones_x_empleado>();
-            this.ro_Historico_Liquidacion_Vacaciones = new HashSet<ro_Historico_Liquidacion_Vacaciones>();
         }
     
         public int IdEmpresa { get; set; }
@@ -142,6 +142,7 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_empleado_x_titulos> ro_empleado_x_titulos { get; set; }
         public virtual ro_EmpleadoFoto ro_EmpleadoFoto { get; set; }
         public virtual ICollection<ro_EmpleadoNovedadCargaMasiva_det> ro_EmpleadoNovedadCargaMasiva_det { get; set; }
+        public virtual ICollection<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
         public virtual ICollection<ro_historico_vacaciones_x_empleado> ro_historico_vacaciones_x_empleado { get; set; }
         public virtual ICollection<ro_horario_planificacion_det> ro_horario_planificacion_det { get; set; }
         public virtual ICollection<ro_HorasProfesores_det> ro_HorasProfesores_det { get; set; }
@@ -158,6 +159,5 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_rol_detalle_x_rubro_acumulado> ro_rol_detalle_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_SancionesPorMarcaciones_det> ro_SancionesPorMarcaciones_det { get; set; }
         public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
-        public virtual ICollection<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
     }
 }

@@ -45,7 +45,13 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  ImpuestoRentaCausado = q.ImpuestoRentaCausado,
                                  DescontadoFechaCorte = q.DescontadoFechaCorte,
                                  LiquidacionFinal = q.LiquidacionFinal,
-                                 pe_nombreCompleto = q.pe_nombreCompleto
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+
+                                 PorRebaja=q.PorRebaja,
+                                 Rebaja=q.Rebaja,
+                                 DecimocuartoProyectado=q.DecimocuartoProyectado,
+                                 DecimoTerceroProyectado=q.DecimoTerceroProyectado,
+                                 FondoReservaProyectado=q.FondoReservaProyectado
 
                              }).ToList();
                 }

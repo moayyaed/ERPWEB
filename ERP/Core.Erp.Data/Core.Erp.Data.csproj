@@ -2020,6 +2020,9 @@
     <Compile Include="ro_biometrico.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_canasta_basica.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_Capacitaciones_x_Empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -2251,6 +2254,7 @@
     <Compile Include="RRHH\ro_area_Data.cs" />
     <Compile Include="RRHH\ro_area_x_departamento_Data.cs" />
     <Compile Include="RRHH\ro_biometrico_Data.cs" />
+    <Compile Include="RRHH\ro_canasta_basica_Data.cs" />
     <Compile Include="RRHH\ro_Capacitaciones_x_Empleado_Data.cs" />
     <Compile Include="RRHH\ro_cargaFamiliar_Data.cs" />
     <Compile Include="RRHH\ro_cargo_Data.cs" />

@@ -20,6 +20,22 @@ set @IdPeriodoFin = dbo.fxGetIdPeriodo(@FechaCorte)
 set @MesesHastaDiciembre = 12 - month(@FechaCorte)
 select @IdRubroAportePatronal = IdRubro_iess_perso, @IdRubro_IR = IdRubro_IR from ro_rubros_calculados where IdEmpresa = @IdEmpresa
 
+declare 
+@CanastaBasicaMensual float,
+@MultipoCanastaBasica float,
+
+@FraccionBasica float,
+@fraccionBasicaCalculada float,
+@MultiploFraccionBasica float,
+
+@PorcentajeRebaja int,
+@CanastaBasicaCalculada float,
+@IngresosBrutosGrabados float,
+@SalarioBasico float
+
+select @FraccionBasica= MIN(ExcesoHasta) from ro_tabla_Impu_Renta where AnioFiscal=@IdAnio
+select @CanastaBasicaMensual=valorCanasta, @MultipoCanastaBasica=MultiploCanastaBasica,@MultiploFraccionBasica=MultiploFraccionBasica from ro_canasta_basica where Anio=@IdAnio
+select @SalarioBasico=sueldo_basico from ro_Parametros where idempresa=@IdEmpresa
 PRINT 'GET ID'
 BEGIN --GET ID
 	IF(@IdAjuste = 0)
@@ -100,7 +116,9 @@ BEGIN --INSERT DEL DETALLE
            ,[ImpuestoFraccionBasica]
            ,[ImpuestoRentaCausado]
            ,[DescontadoFechaCorte]
-           ,[LiquidacionFinal])
+           ,[LiquidacionFinal]
+		   ,[PorRebaja]
+		   ,[Rebaja])
      SELECT
             e.IdEmpresa
            ,@IdAjuste
@@ -119,6 +137,8 @@ BEGIN --INSERT DEL DETALLE
            ,0
            ,0
            ,0
+		   ,0
+		   ,0
 		   FROM ro_empleado as e inner join 
 		   ro_contrato as c on c.IdEmpresa = e.IdEmpresa and c.IdEmpleado = e.IdEmpleado
 		   where e.IdEmpresa = @IdEmpresa and e.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 999999999999 else @IdEmpleado end
@@ -170,7 +190,7 @@ BEGIN --UPDATE DE SUELDO A LA FECHA
 		--and ro_rol.IdNominaTipo = 1
 		AND ro_rol.IdPeriodo BETWEEN @IdPeriodoIni and @IdPeriodoFin
 		AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
-		AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
+		--AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
 		and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
 		GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
 	) A
@@ -197,7 +217,7 @@ BEGIN --UPDATE SUELDO DESDE FECHA CORTE A DICIEMBRE
 			--and ro_rol.IdNominaTipo = 1
 			AND ro_rol.IdPeriodo = @IdPeriodoFin
 			AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
-			AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
+			--AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
 			and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
 			GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
 		) A
@@ -220,7 +240,7 @@ BEGIN --UPDATE SUELDO DESDE FECHA CORTE A DICIEMBRE
 			-- and ro_rol.IdNominaTipo = 1
 			AND ro_rol.IdPeriodo = CAST(CAST(@IdAnio AS VARCHAR)+'12' AS INT)
 			AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
-			AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
+			--AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
 			and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
 			GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
 		) A
@@ -230,6 +250,13 @@ BEGIN --UPDATE SUELDO DESDE FECHA CORTE A DICIEMBRE
 		and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado = a.IdEmpleado
 	END
 END
+
+PRINT 'UPDATE DECIMO TERCERO PROYECTADO'
+update [dbo].[ro_AjusteImpuestoRentaDet] set DecimoTerceroProyectado=SueldoProyectado/12 where IdAjuste=@IdAjuste
+PRINT 'UPDATE DECIMO CUARTO PRPYECTADO'
+update [dbo].[ro_AjusteImpuestoRentaDet] set DecimocUARTOProyectado=(@SalarioBasico/12)*@MesesHastaDiciembre where IdAjuste=@IdAjuste
+PRINT 'UPDATE FONDO DE RESERVA PROYECTADO'
+update [dbo].[ro_AjusteImpuestoRentaDet] set FondoReservaProyectado=(SueldoProyectado)*0.0833 where IdAjuste=@IdAjuste
 
 PRINT 'UPDATE OTROS INGRESOS'
 BEGIN --UPDATE OTROS INGRESOS
@@ -282,7 +309,7 @@ END
 
 PRINT 'UPDATE BASE IMPONIBLE'
 BEGIN --UPDATE BASE IMPONIBLE
-	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET BaseImponible = dbo.BankersRounding(IngresosLiquidos - GastosPersonales - AporteFechaCorte,2)
+	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET BaseImponible = dbo.BankersRounding(IngresosLiquidos  - AporteFechaCorte,2)
 	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
 	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste	
 	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado between @IdEmpleado AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
@@ -341,4 +368,27 @@ END
 	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
 	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
 END
+
+
+--2.13 FRACCIÓN BÁSICA
+set @fraccionBasicaCalculada=@FraccionBasica*@MultiploFraccionBasica
+--CANASTA BÁSICA DIC/2021 * 7
+set @CanastaBasicaCalculada=@CanastaBasicaMensual*@MultipoCanastaBasica
+
+
+update  [dbo].[ro_AjusteImpuestoRentaDet] set PorRebaja=iif(GastosPersonales=0,0,  iif(ingresosLiquidos>@fraccionBasicaCalculada,10,20))
+WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+
+
+update  [dbo].[ro_AjusteImpuestoRentaDet] set Rebaja=iif(@CanastaBasicaCalculada>GastosPersonales,(GastosPersonales*porRebaja)/100,(@CanastaBasicaCalculada*porRebaja)/100)
+WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+
+	update  [dbo].[ro_AjusteImpuestoRentaDet] set 
+LiquidacionFinal=ImpuestoRentaCausado-Rebaja
+WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+
+
 END

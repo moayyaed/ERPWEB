@@ -36,5 +36,11 @@ namespace Core.Erp.Info.Reportes.RRHH
 
         public string DescripcionOI { get; set; }
         public decimal Valor { get; set; }
+
+        public Nullable<int> PorRebaja { get; set; }
+        public Nullable<double> Rebaja { get; set; }
+        public Nullable<decimal> DecimoTerceroProyectado { get; set; }
+        public Nullable<decimal> DecimocuartoProyectado { get; set; }
+        public Nullable<decimal> FondoReservaProyectado { get; set; }
     }
 }

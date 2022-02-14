@@ -39,5 +39,10 @@ namespace Core.Erp.Data.Reportes.Base
         public decimal LiquidacionFinal { get; set; }
         public decimal IdPersona { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public Nullable<int> PorRebaja { get; set; }
+        public Nullable<double> Rebaja { get; set; }
+        public Nullable<decimal> DecimoTerceroProyectado { get; set; }
+        public Nullable<decimal> DecimocuartoProyectado { get; set; }
+        public Nullable<decimal> FondoReservaProyectado { get; set; }
     }
 }

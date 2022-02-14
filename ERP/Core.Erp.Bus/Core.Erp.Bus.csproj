@@ -474,6 +474,7 @@
     <Compile Include="RRHH\ro_area_Bus.cs" />
     <Compile Include="RRHH\ro_area_x_departamento_Bus.cs" />
     <Compile Include="RRHH\ro_biometrico_Bus.cs" />
+    <Compile Include="RRHH\ro_canasta_basica_Bus.cs" />
     <Compile Include="RRHH\ro_Capacitaciones_x_Empleado_Bus.cs" />
     <Compile Include="RRHH\ro_cargaFamiliar_Bus.cs" />
     <Compile Include="RRHH\ro_cargo_Bus.cs" />
