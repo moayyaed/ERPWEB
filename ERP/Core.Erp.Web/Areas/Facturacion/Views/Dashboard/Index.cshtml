@@ -31,12 +31,12 @@
             </div>
             <div class="box-body">
                 <div class="col-md-3">
-                    <canvas class="canvas" id="UltimasVentasAnio"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="UltimasVentasAnio"></canvas>
                 </div>
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <canvas class="canvas" id="UltimasVentasMeses"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="UltimasVentasMeses"></canvas>
                 </div> 
                 <div class="col-md-1">
                 </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="box-body">
                 <div class="col-md-6">
-                    <canvas class="canvas" id="VentasClientes"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="VentasClientes"></canvas>
                 </div>
                 <div class="col-md-6">
                     <table id="Table_VentasClientes" class="table table-responsive dataTable dataTables_paginate">
@@ -120,7 +120,7 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <canvas class="canvas" id="VentasProductos"></canvas>
+                    <canvas style="margin: 0px auto;" class="canvas" id="VentasProductos"></canvas>
                 </div>
                 <div class="col-md-2">
                 </div>
@@ -157,7 +157,7 @@
             'ordering': true,
             'info': true,
             'autoWidth': true,
-            'scrollY': '200px',
+            'scrollY': '500px',
             'scrollCollapse': true,
         })
 
@@ -168,7 +168,7 @@
             'ordering': true,
             'info': true,
             'autoWidth': true,
-            'scrollY': '200px',
+            'scrollY': '500px',
             'scrollCollapse': true,
         })
     })
@@ -285,7 +285,7 @@
 
                     var miCanvasV = document.getElementById('UltimasVentasMeses').getContext('2d');
                     var chartEl = document.getElementById("UltimasVentasMeses");
-                    chartEl.height = 250;
+                    chartEl.height = 300;
                     var chart = new Chart(miCanvasV, {
                         type: 'line',
                         //labels: Etiquetas,
@@ -372,8 +372,8 @@
                     })
 
                     var miCanvasV = document.getElementById('VentasClientes').getContext('2d');
-                    //var chartEl = document.getElementById("VentasClientes");
-                    //chartEl.height = 500;
+                    var chartEl = document.getElementById("VentasClientes");
+                    chartEl.height = 500;
 
                     var chart = new Chart(miCanvasV, {
                         type: 'bar',
@@ -487,6 +487,8 @@
                     })
                     //doughnut
                     var miCanvasV = document.getElementById('VentasProductos').getContext('2d');
+                    var chartEl = document.getElementById("VentasProductos");
+                    chartEl.height = 500;
 
                     var chart = new Chart(miCanvasV, {
                         type: 'bar',
