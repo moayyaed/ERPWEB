@@ -157,9 +157,9 @@ namespace Core.Erp.Data.RRHH
 
                     string sql = " SELECT hist.IdEmpresa, hist.IdEmpleado, hist.IdVacacion, hist.IdPeriodo_Inicio, hist.IdPeriodo_Fin, hist.FechaIni, hist.FechaFin, hist.DiasGanado, "+
                                  " isnull(sum(sol_det.Dias_tomados), 0) DiasTomados " +
-                                 " FROM dbo.ro_Solicitud_Vacaciones_x_empleado AS sol INNER JOIN " +
-                                 " dbo.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado AS sol_det ON sol.IdEmpresa = sol_det.IdEmpresa AND sol.IdSolicitud = sol_det.IdSolicitud RIGHT OUTER JOIN " +
-                                 " dbo.ro_historico_vacaciones_x_empleado AS hist ON sol_det.IdEmpresa = hist.IdEmpresa AND sol_det.IdEmpleado = hist.IdEmpleado AND sol_det.IdPeriodo_Inicio = hist.IdPeriodo_Inicio AND " +
+                                 " FROM dbo.ro_Solicitud_Vacaciones_x_empleado AS sol with(nolock) INNER JOIN " +
+                                 " dbo.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado AS sol_det with(nolock) ON sol.IdEmpresa = sol_det.IdEmpresa AND sol.IdSolicitud = sol_det.IdSolicitud RIGHT OUTER JOIN " +
+                                 " dbo.ro_historico_vacaciones_x_empleado AS hist with(nolock) ON sol_det.IdEmpresa = hist.IdEmpresa AND sol_det.IdEmpleado = hist.IdEmpleado AND sol_det.IdPeriodo_Inicio = hist.IdPeriodo_Inicio AND " +
                                  " sol_det.IdPeriodo_Fin = hist.IdPeriodo_Fin " +
                                  " where ISNULL(sol.Estado,'A')= 'A' and hist.IdEmpresa="+IdEmpresa+" and hist.IdEmpleado="+IdEmpleado+""+
                                  " group by ";
