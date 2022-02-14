@@ -1827,9 +1827,9 @@ namespace Core.Erp.Data.Facturacion
                         {
                             FechaIni = Convert.ToDateTime(reader["FechaIni"]),
                             FechaFin = Convert.ToDateTime(reader["FechaFin"]),
-                            TotalFactura = Convert.ToDecimal(reader["TotalFactura"]),
-                            TotalCobro = Convert.ToDecimal(reader["TotalCobro"]),
-                            TotalPagos = Convert.ToDecimal(reader["TotalPagos"]),
+                            TotalFactura = string.IsNullOrEmpty(reader["TotalFactura"].ToString()) ? 0 : Convert.ToDecimal(reader["TotalFactura"]),
+                            TotalCobro = string.IsNullOrEmpty(reader["TotalCobro"].ToString()) ? 0 : Convert.ToDecimal(reader["TotalCobro"]),
+                            TotalPagos = string.IsNullOrEmpty(reader["TotalPagos"].ToString()) ? 0 : Convert.ToDecimal(reader["TotalPagos"]),
                         };
                     }
                 }
