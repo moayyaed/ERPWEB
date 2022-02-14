@@ -601,8 +601,6 @@
             success: function (data) {
                 console.log(data);
                 $("#FechaFacturado").html("Fecha: "+data.FechaIni_String + " - " + data.FechaFin_String);
-                $("#FechaCobrado").html(data.FechaIni_String + " - " + data.FechaFin_String);
-                $("#FechaBanco").html(data.FechaIni_String + " - " + data.FechaFin_String);
 
                 $("#Facturado").html(data.TotalFactura_String);
                 $("#Cobrado").html(data.TotalCobro_String);
